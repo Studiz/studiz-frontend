@@ -1,9 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar fixed app flat class="bg-primary" height="70" dense color="background">
+    <v-app-bar
+      fixed
+      app
+      flat
+      class="bg-primary"
+      height="70"
+      dense
+      color="background"
+    >
       <div class="flex justify-between items-center container">
         <img src="../assets/logo/Studiz logo.svg" />
-        <v-menu offset-y left>
+        <v-menu offset-y left color="primary">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark v-bind="attrs" v-on="on">
               Dropdown
@@ -88,8 +96,10 @@ export default {
       if (theme) {
         if (theme === 'true') {
           this.$vuetify.theme.dark = true
+          console.log('Dark')
         } else {
           this.$vuetify.theme.dark = false
+          console.log('Light')
         }
       } else if (
         window.matchMedia &&
@@ -104,6 +114,9 @@ export default {
   },
   mounted() {
     this.systemTheme()
+    setTimeout(() => {
+      this.systemTheme()
+    }, 10)
   },
 }
 </script>
