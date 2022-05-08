@@ -8,6 +8,6 @@ EXPOSE 9090
 
 FROM nginx as deploy-stage
 WORKDIR /app
-COPY --from=build-stage /dist /usr/share/nginx/html/studiz-student/
+COPY --from=build-stage /app/dist /app
 COPY nginx.conf /etc/nginx/nginx.conf
 CMD ["nginx", "-g", "daemon off;"]
