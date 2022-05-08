@@ -1,9 +1,8 @@
 name: studiz-student-prd
 
 on:
-  pull_request:
-    branches: [ main ]
-    types: [closed]
+  push:
+    branches: [ develop ]
 
 jobs:
   build:
@@ -24,4 +23,4 @@ jobs:
       - with:
           context: .
           push: true
-          tags: ghcr.io/int222/frontend:prd
+          tags: ghcr.io/int222/frontend:dev
