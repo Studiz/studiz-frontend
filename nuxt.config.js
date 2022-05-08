@@ -2,6 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  ssr: false,
   head: {
     titleTemplate: '%s - Studiz',
     title: 'Studiz',
@@ -84,16 +85,24 @@ export default {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         light: {
-          primary: colors.purple,
-          secondary: colors.grey.darken1,
-          accent: colors.shades.black,
-          error: colors.red.accent3,
+          primary: '#1976D2',
+          primary_shade: '#d7eeff',
+          Secondary: '#ff6b35',
+          secondary_shade: '#ffe3d9',
+          background: '#FFFFFF',
+
+          accent: '#82B1FF',
+          error: '#FF5252',
+          info: '#2196F3',
+          success: '#4CAF50',
+          warning: '#FFC107',
         },
         dark: {
-          primary: colors.blue.darken2,
+          primary: '#004E89',
+          background: '#18191A',
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
