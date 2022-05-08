@@ -12,6 +12,7 @@ RUN npm run build
 
 FROM nginx:latest as deploy-stage
 WORKDIR /usr/share/nginx/html
+RUN ls -la
 COPY ./nginx.conf /etc/nginx/conf.d
 COPY --from=build-stage /usr/app/dist ./
 
