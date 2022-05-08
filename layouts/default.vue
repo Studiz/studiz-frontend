@@ -1,22 +1,42 @@
 <template>
   <v-app>
     <v-app-bar
-      :clipped-left="clipped"
       fixed
       app
       flat
       class="bg-primary"
-      color="#F35B04"
+      height="70"
+      color="#FFF"
     >
       <div class="flex justify-between items-center container">
-        <h1>test</h1>
+        <img src="../assets/logo/Studiz logo.svg" />
         <v-switch v-model="$vuetify.theme.dark" hide-details inset></v-switch>
+        <v-menu offset-y left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark v-bind="attrs" v-on="on">
+              Dropdown
+              <v-icon right>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in route"
+              :key="index"
+              :to="item.to"
+            >
+              <v-icon>{{ item.icon }}</v-icon>
+              <v-list-item-title>{{ item.title }}sdfsfsdfsd</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </div>
     </v-app-bar>
+
     <v-main class="web-theme">
       <v-container>
         <v-list>
-          <v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
+          <v-list-item v-for="(item, i) in route" :key="i" :to="item.to">
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -36,10 +56,7 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
+      route: [
         {
           icon: 'mdi-apps',
           title: 'Welcome',
@@ -56,10 +73,7 @@ export default {
           to: '/teste',
         },
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
+      offset: true,
     }
   },
 }

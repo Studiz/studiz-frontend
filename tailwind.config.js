@@ -23,4 +23,15 @@ module.exports = {
 
     // }),
   ],
+  variants: {
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked', 'responsive', 'dark', 'group-hover', 'focus-within', 'hover', 'focus'],
+      ringColor: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+      ringOffsetColor: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+      ringOffsetWidth: ['responsive', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+      ringOpacity: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+      ringWidth: ['responsive', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+    }
+  }
 }
