@@ -6,7 +6,7 @@ COPY . .
 RUN npm run build
 EXPOSE 9090
 
-FROM nginx:lts-alpine as deploy-stage
+FROM nginx as deploy-stage
 WORKDIR /app
 COPY --from=build-stage /app/dist /usr/share/nginx/html/studiz-student/
 COPY nginx.conf /etc/nginx/nginx.conf
