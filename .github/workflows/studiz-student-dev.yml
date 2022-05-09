@@ -1,4 +1,4 @@
-name: studiz-student-prd
+name: studiz-student-dev
 
 on:
   push:
