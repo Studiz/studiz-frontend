@@ -17,6 +17,11 @@ module.exports = {
       },
       height: {
         '60px': '60px',
+      },
+      fontSize: {
+        H1: '32px',
+        H2: '24px',
+        H3: '18px',
       }
     },
   },
