@@ -88,11 +88,12 @@ export default {
       dark: true,
       themes: {
         light: {
-          primary: '#1976D2',
+          primary: '#004E89',
           primary_shade: '#d7eeff',
           Secondary: '#ff6b35',
           secondary_shade: '#ffe3d9',
           background: '#FFFFFF',
+          text_disable: '#C4CDD4',
 
           accent: '#82B1FF',
           error: '#FF5252',

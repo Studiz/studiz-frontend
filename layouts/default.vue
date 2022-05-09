@@ -4,7 +4,7 @@
       fixed
       app
       flat
-      class="bg-primary"
+      class="drop-shadow-md"
       height="70"
       dense
       color="background"

@@ -13,6 +13,10 @@ module.exports = {
         // dark_primary: '#15202B',
         // dark_secondary: '#192734',
         // dark_tertiary: '#22303C',
+        // text_disable: '#C4CDD4'
+      },
+      height: {
+        '60px': '60px',
       }
     },
   },
