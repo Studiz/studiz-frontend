@@ -6,12 +6,12 @@
       flat
       class="bg-primary"
       height="70"
-      color="#FFF"
+      dense
+      color="background"
     >
       <div class="flex justify-between items-center container">
         <img src="../assets/logo/Studiz logo.svg" />
-        <v-switch v-model="$vuetify.theme.dark" hide-details inset></v-switch>
-        <v-menu offset-y left>
+        <v-menu offset-y left color="primary">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark v-bind="attrs" v-on="on">
               Dropdown
@@ -28,6 +28,14 @@
               <v-icon>{{ item.icon }}</v-icon>
               <v-list-item-title>{{ item.title }}sdfsfsdfsd</v-list-item-title>
             </v-list-item>
+            <v-list-item>
+              <v-btn @click="trun_ligth_mode" hide-details inset>Light</v-btn>
+              <v-btn @click="trun_dark_mode" hide-details inset>Dark</v-btn>
+              <v-btn @click="toggle_dark_mode" hide-details inset
+                >toggle mode</v-btn
+              >
+              <v-btn @click="systemTheme" hide-details inset>systemTheme</v-btn>
+            </v-list-item>
           </v-list>
         </v-menu>
       </div>
@@ -35,16 +43,6 @@
 
     <v-main class="web-theme">
       <v-container>
-        <v-list>
-          <v-list-item v-for="(item, i) in route" :key="i" :to="item.to">
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
         <Nuxt />
       </v-container>
     </v-main>
@@ -74,7 +72,58 @@ export default {
         },
       ],
       offset: true,
+      ThemeMode: [
+        { icon: 'mdi-white-balance-sunny', title: '' },
+        { icon: 'mdi-weather-night', title: '' },
+        { icon: 'mdi-desktop-tower-monitor', title: '' },
+      ],
     }
+  },
+  methods: {
+    toggle_dark_mode() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+      localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
+    },
+    trun_dark_mode() {
+      this.$vuetify.theme.dark = true
+      localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
+    },
+    trun_ligth_mode() {
+      this.$vuetify.theme.dark = false
+      localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
+    },
+    resetTheme() {
+      // localStorage.setItem('theme', {})
+      localStorage.removeItem('theme')
+      localStorage.
+      this.systemTheme()
+    },
+    systemTheme() {
+      const theme = localStorage.getItem('theme')
+      if (theme) {
+        if (theme === 'true') {
+          this.$vuetify.theme.dark = true
+          console.log('Dark')
+        } else {
+          this.$vuetify.theme.dark = false
+          console.log('Light')
+        }
+      } else if (
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
+        this.$vuetify.theme.dark = true
+        localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
+      } else {
+        this.$vuetify.theme.dark = false
+      }
+    },
+  },
+  mounted() {
+    this.systemTheme()
+    setTimeout(() => {
+      this.systemTheme()
+    }, 10)
   },
 }
 </script>
