@@ -24,4 +24,4 @@ jobs:
       - with:
           context: .
           push: true
-          tags: ghcr.io/int222/frontend:prd
+          tags: ghcr.io/studiz/studiz-student:prd
