@@ -34,6 +34,7 @@
               <v-btn @click="toggle_dark_mode" hide-details inset
                 >toggle mode</v-btn
               >
+
             </v-list-item>
           </v-list>
         </v-menu>
@@ -91,6 +92,7 @@ export default {
       this.$vuetify.theme.dark = false
       localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
     },
+
     systemTheme() {
       const theme = localStorage.getItem('theme')
       if (theme) {
