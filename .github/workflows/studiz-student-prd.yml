@@ -24,4 +24,4 @@ jobs:
       - with:
           context: .
           push: true
-          tags: ghcr.io/Studiz/studiz-student:prd
+          tags: ghcr.io/studiz/studiz-student:prd
