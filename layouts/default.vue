@@ -31,10 +31,7 @@
             <v-list-item>
               <v-btn @click="trun_ligth_mode" hide-details inset>Light</v-btn>
               <v-btn @click="trun_dark_mode" hide-details inset>Dark</v-btn>
-              <v-btn @click="toggle_dark_mode" hide-details inset
-                >toggle mode</v-btn
-              >
-
+              <v-btn @click="resetTheme" hide-details inset>systemTheme</v-btn>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -80,10 +77,6 @@ export default {
     }
   },
   methods: {
-    toggle_dark_mode() {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
-      localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
-    },
     trun_dark_mode() {
       this.$vuetify.theme.dark = true
       localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
@@ -92,7 +85,10 @@ export default {
       this.$vuetify.theme.dark = false
       localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
     },
-
+    resetTheme() {
+      localStorage.removeItem('theme')
+      this.systemTheme()
+    },
     systemTheme() {
       const theme = localStorage.getItem('theme')
       if (theme) {
