@@ -1,4 +1,4 @@
-name: studiz-student-prd
+name: studiz-frontend-prd
 
 on:
   pull_request:
