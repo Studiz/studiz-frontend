@@ -46,7 +46,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    // '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -90,7 +91,7 @@ export default {
       }
     },
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         light: {
           primary: '#004E89',

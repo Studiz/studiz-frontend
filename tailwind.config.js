@@ -1,8 +1,9 @@
 module.exports = {
   content: ['./public/**/*.html', './src/**/*.vue'],
+  darkMode: 'class',
   theme: {
     extend: {
-      textOpacity: ['dark'],
+      // textOpacity: ['dark'],
       colors: {
         // primary: '#F88100',
         // primaryfocus: '#F35B04',

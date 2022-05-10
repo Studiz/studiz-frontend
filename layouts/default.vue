@@ -78,45 +78,49 @@ export default {
   },
   methods: {
     trun_dark_mode() {
+      localStorage.theme = 'dark'
       this.$vuetify.theme.dark = true
-      localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
+      document.getElementById('dark')
+      this.mode()
     },
     trun_ligth_mode() {
+      localStorage.theme = 'light'
       this.$vuetify.theme.dark = false
-      localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
+      document.getElementById('light')
+      this.mode()
     },
     resetTheme() {
       localStorage.removeItem('theme')
-      this.systemTheme()
+      this.mode()
     },
-    systemTheme() {
-      const theme = localStorage.getItem('theme')
-      if (theme) {
-        if (theme === 'true') {
-          this.$vuetify.theme.dark = true
-          console.log('Dark')
-        } else {
-          this.$vuetify.theme.dark = false
-          console.log('Light')
-        }
-      } else if (
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches
+    mode() {
+      if (
+        localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
       ) {
+        document.documentElement.classList.add('dark')
         this.$vuetify.theme.dark = true
-        localStorage.setItem('theme', this.$vuetify.theme.dark.toString())
       } else {
+        document.documentElement.classList.remove('dark')
         this.$vuetify.theme.dark = false
       }
     },
   },
   mounted() {
-    this.systemTheme()
+    this.mode()
     setTimeout(() => {
-      this.systemTheme()
+      this.mode()
     }, 10)
   },
 }
 </script>
 
-<style scoped></style>
+<style>
+.dark:root {
+  color-scheme: dark;
+}
+.light:root {
+  color-scheme: light;
+}
+</style>

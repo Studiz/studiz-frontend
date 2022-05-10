@@ -9,7 +9,7 @@
           id="pincode"
           name="pincode"
           type="tel"
-          class="bg-white p-2 w-full h-60px rounded-lg focus:outline-none text-H3 md:text-H2 "
+          class="p-2 w-full h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-gray-500"
           minlength="10"
           maxlength="10"
           pattern="\d*"
