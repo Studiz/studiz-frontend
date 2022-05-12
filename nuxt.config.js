@@ -94,12 +94,12 @@ export default {
       dark: false,
       themes: {
         light: {
-          primary: '#004E89',
+          primary: '#0c8ce9',
           primary_shade: '#d7eeff',
-          Secondary: '#ff6b35',
+          secondary: '#ff6b35',
           secondary_shade: '#ffe3d9',
+          bg_disable: '#C4CDD4',
           background: '#FFFFFF',
-          text_disable: '#C4CDD4',
 
           accent: '#82B1FF',
           error: '#FF5252',
@@ -108,13 +108,17 @@ export default {
           warning: '#FFC107',
         },
         dark: {
-          primary: '#004E89',
-          background: '#18191A',
+          primary: '#22A1EE',
+          primary_shade: '#d7eeff',
+          secondary: '#FF6B35',
+          secondary_shade: '#ffe3d9',
+          bg_disable: '#84898c',
+          background: '#272727',
+
           accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
+          error: '#FF3F3F',
           success: colors.green.accent3,
         },
       },

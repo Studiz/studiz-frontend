@@ -7,11 +7,12 @@ module.exports = {
       colors: {
         // primary: '#F88100',
         // primaryfocus: '#F35B04',
-        // secondary: '#FFB703',
+        secondary: '#ff6b35',
         // tertiary: '#FAE445',
         // neutral: '#f8f8f8',
 
-        // dark_primary: '#15202B',
+        dark_primary: '#121212',
+        bg_disable: '#84898c',
         // dark_secondary: '#192734',
         // dark_tertiary: '#22303C',
         // text_disable: '#C4CDD4'
