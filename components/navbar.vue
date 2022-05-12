@@ -15,7 +15,7 @@
           <v-menu offset-y left color="primary">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                color="primary"
+                color="primary text"
                 dark
                 v-bind="attrs"
                 height="50"
@@ -39,12 +39,17 @@
                 <v-icon>{{ item.icon }}</v-icon>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item>
-              <v-list-item>
-                <v-btn @click="trun_ligth_mode" hide-details inset>Light</v-btn>
-                <v-btn @click="trun_dark_mode" hide-details inset>Dark</v-btn>
+              <v-list-item class="space-x-2">
+                <v-btn @click="trun_ligth_mode" hide-details inset
+                  ><v-icon left>mdi-white-balance-sunny</v-icon>Light</v-btn
+                >
+                <v-btn @click="trun_dark_mode" hide-details inset
+                  ><v-icon left>mdi-weather-night</v-icon>Dark</v-btn
+                >
               </v-list-item>
               <v-list-item>
-                <v-btn @click="resetTheme" hide-details inset
+                <v-btn @click="resetTheme" hide-details inset block
+                  ><v-icon left>mdi-desktop-tower-monitor</v-icon
                   >systemTheme</v-btn
                 >
               </v-list-item>
@@ -91,11 +96,11 @@ export default {
           to: '/login',
         },
       ],
-      ThemeMode: [
-        { icon: 'mdi-white-balance-sunny', title: '' },
-        { icon: 'mdi-weather-night', title: '' },
-        { icon: 'mdi-desktop-tower-monitor', title: '' },
-      ],
+      // ThemeMode: [
+      //   { icon: 'mdi-white-balance-sunny', methods: 'trun_ligth_mode' },
+      //   { icon: 'mdi-weather-night', methods: 'trun_dark_mode' },
+      //   { icon: 'mdi-desktop-tower-monitor', methods: 'resetTheme' },
+      // ],
     }
   },
   methods: {
@@ -138,4 +143,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.text {
+  text-transform: capitalize;
+}
+</style>
