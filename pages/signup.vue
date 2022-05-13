@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
     <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
-      <p class="text-secondary text-H1 font-bold text-center">Sign in</p>
+      <p class="text-secondary text-H1 font-bold text-center">Sign up</p>
 
       <script src="https://accounts.google.com/gsi/client" async defer></script>
       <div
@@ -44,7 +44,7 @@
             :loading="loading"
             @click="submit"
             @keypress.enter="submit"
-            >Login</v-btn
+            >Sign up</v-btn
           >
         </v-form>
       </div>

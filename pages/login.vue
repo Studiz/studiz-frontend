@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-lg mx-auto">
-    <v-card class="px-6 py-6 md:px-10 md:py-10 w-screen" color="background">
+    <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
       <p class="text-secondary text-H1 font-bold text-center">Login</p>
 
       <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -52,8 +52,12 @@
             block
             :loading="loading"
             @click="submit"
-            >Login</v-btn
+            >Next</v-btn
           >
+          <div class="flex items-center mt-7">
+            <span>Don’t have an account?</span>
+            <v-btn outlined color="secondary" class="text-nor-btn ml-2">Sign up</v-btn>
+          </div>
         </v-form>
       </div>
     </v-card>
