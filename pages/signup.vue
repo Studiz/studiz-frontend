@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
-    <v-card class="px-6 py-6 md:px-10 md:py-10 w-screen" color="background">
-      <p class="text-secondary text-H1 font-bold text-center">Login</p>
+    <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
+      <p class="text-secondary text-H1 font-bold text-center">Sign in</p>
 
       <script src="https://accounts.google.com/gsi/client" async defer></script>
       <div
@@ -33,20 +33,19 @@
             required
             label="E-mail"
             outlined
-            v-model.trim="email"
-            :rules="[rules.required, rules.email]"
+            v-model.lazy="email"
+            :rules="[rules.required, rules.email, checkDuplicate]"
           ></v-text-field>
-          <v-text-field
-            required
-            v-model="password"
-            outlined
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show ? 'text' : 'password'"
-            label="Password"
-            @click:append="show = !show"
-          ></v-text-field>
-          <v-btn color="primary" height="60" block @click="submit">Login</v-btn>
+
+          <v-btn
+            color="primary"
+            height="60"
+            block
+            :loading="loading"
+            @click="submit"
+            @keypress.enter="submit"
+            >Login</v-btn
+          >
         </v-form>
       </div>
     </v-card>
@@ -61,20 +60,31 @@ export default {
       password: '',
       show: false,
       rules: {
-        required: (v) => !!v || 'Required.',
-        min: (v) => v.length >= 5 || 'Min 5 characters',
         email: (v) => {
           const pattern =
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(v) || 'Invalid e-mail.'
         },
       },
+      loading: false,
     }
   },
   methods: {
-    submit() {
+    async submit() {
       if (this.$refs.form.validate()) {
-        this.$route.push('/')
+        this.loading = true
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+        this.loading = false
+        this.$router.push('/')
+      }
+    },
+    checkDuplicate(val) {
+      // write your api call and return the below statement if it already exist
+      //ให้ back check น่าจะเร็วกว่ามั้ง
+      if (val == 'jakkapong.q@mail.kmutt.ac.th') {
+        return `Account "${val}" already exist, please login `
+      } else {
+        return true
       }
     },
   },

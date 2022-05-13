@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- TOP -->
     <div class="hidden md:inline-block">
       <v-app-bar
         fixed
@@ -59,6 +60,7 @@
       </v-app-bar>
     </div>
 
+    <!-- Bottom -->
     <div class="md:hidden">
       <v-app-bar
         bottom
