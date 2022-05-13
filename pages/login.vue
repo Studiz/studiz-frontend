@@ -46,7 +46,14 @@
             label="Password"
             @click:append="show = !show"
           ></v-text-field>
-          <v-btn color="primary" height="60" block @click="submit">Login</v-btn>
+          <v-btn
+            color="primary"
+            height="60"
+            block
+            :loading="loading"
+            @click="submit"
+            >Login</v-btn
+          >
         </v-form>
       </div>
     </v-card>
@@ -69,11 +76,15 @@ export default {
           return pattern.test(v) || 'Invalid e-mail.'
         },
       },
+      loading: false,
     }
   },
   methods: {
-    submit() {
+    async submit() {
       if (this.$refs.form.validate()) {
+        this.loading = true
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+        this.loading = false
         this.$route.push('/')
       }
     },
