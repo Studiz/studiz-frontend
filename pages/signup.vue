@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
     <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
-      <p class="text-secondary text-H1 font-bold text-center">Sign in</p>
+      <p class="text-secondary text-H1 font-bold text-center">Sign up</p>
 
       <script src="https://accounts.google.com/gsi/client" async defer></script>
       <div
@@ -28,24 +28,34 @@
       </div>
 
       <div>
-        <v-form ref="form" lazy-validation>
+        <v-form ref="form" lazy-validation @submit.prevent="submit">
           <v-text-field
             required
             label="E-mail"
             outlined
-            v-model.lazy="email"
+            v-model.trim="email"
+            @keypress.enter="submit"
             :rules="[rules.required, rules.email, checkDuplicate]"
           ></v-text-field>
-
           <v-btn
             color="primary"
             height="60"
             block
             :loading="loading"
-            @click="submit"
-            @keypress.enter="submit"
-            >Login</v-btn
+            type="submit"
+            >Next</v-btn
           >
+          <div class="flex items-center mt-7">
+            <span>Have an account?</span>
+            <v-btn
+              outlined
+              color="secondary"
+              class="text-nor-btn ml-2"
+              to="login"
+            >
+              login</v-btn
+            >
+          </div>
         </v-form>
       </div>
     </v-card>

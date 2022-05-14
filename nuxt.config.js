@@ -112,7 +112,7 @@ export default {
           primary_shade: '#d7eeff',
           secondary: '#FF6B35',
           secondary_shade: '#ffe3d9',
-          bg_disable: '#84898c',
+          bg_disable: '#464646',
           background: '#272727',
 
           accent: colors.grey.darken3,
