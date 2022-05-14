@@ -84,45 +84,7 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    treeShake: true,
-    defaultAssets: {
-      font: {
-        family: 'Montserrat'
-      }
-    },
-    theme: {
-      dark: false,
-      themes: {
-        light: {
-          primary: '#0c8ce9',
-          primary_shade: '#d7eeff',
-          secondary: '#ff6b35',
-          secondary_shade: '#ffe3d9',
-          bg_disable: '#C4CDD4',
-          background: '#FFFFFF',
-
-          accent: '#82B1FF',
-          error: '#FF5252',
-          info: '#2196F3',
-          success: '#4CAF50',
-          warning: '#FFC107',
-        },
-        dark: {
-          primary: '#22A1EE',
-          primary_shade: '#d7eeff',
-          secondary: '#FF6B35',
-          secondary_shade: '#ffe3d9',
-          bg_disable: '#464646',
-          background: '#272727',
-
-          accent: colors.grey.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: '#FF3F3F',
-          success: colors.green.accent3,
-        },
-      },
-    },
+    optionsPath: "./vuetify.options.js",
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

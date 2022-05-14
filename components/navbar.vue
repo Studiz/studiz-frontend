@@ -23,6 +23,7 @@
               :src="require('../static/logo/Studiz_logo.svg')"
               max-width="80"
             />
+            <!-- <v-icon x-large>$vuetify.icons.Studiz_logo</v-icon> -->
           </v-btn>
           <div class="flex items-center space-x-4">
             <v-spacer></v-spacer>
@@ -105,7 +106,6 @@
 </template>
 
 <script>
-import Studiz_logo from '../static/logo/Studiz_logo.svg'
 export default {
   data() {
     return {
