@@ -11,14 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Docker Login
-      #   uses: docker/login-action@v2.0.0
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.repository_owner }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Log in to a container registry
+      - name: Log in to a container registry and build, push docker images
         uses: azure/docker-login@v1
         with:
           login-server: studiz.azurecr.io
@@ -27,6 +20,14 @@ jobs:
       - run: |
             docker build . -t studiz.azurecr.io/studiz-frontend:dev
             docker push studiz.azurecr.io/studiz-frontend:dev
+
+      # Github Registry
+      # - name: Docker Login
+      #   uses: docker/login-action@v2.0.0
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.repository_owner }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Build and push Docker images 
       #   uses: docker/build-push-action@v3.0.0
