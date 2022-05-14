@@ -24,9 +24,9 @@ jobs:
           login-server: studiz.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-        run:  |
-          docker build . -t studiz.azurecr.io/studiz-frontend:dev
-          docker push studiz.azurecr.io/studiz-frontend:dev
+      - run: |
+            docker build . -t studiz.azurecr.io/studiz-frontend:dev
+            docker push studiz.azurecr.io/studiz-frontend:dev
 
       # - name: Build and push Docker images 
       #   uses: docker/build-push-action@v3.0.0
