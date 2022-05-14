@@ -56,8 +56,13 @@
           >
           <div class="flex items-center mt-7">
             <span>Don’t have an account?</span>
-            <v-btn outlined color="secondary" class="text-nor-btn ml-2"
-              >Sign up</v-btn
+            <v-btn
+              outlined
+              color="secondary"
+              class="text-nor-btn ml-2"
+              to="signup"
+            >
+              Sign up</v-btn
             >
           </div>
         </v-form>

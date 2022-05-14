@@ -45,6 +45,17 @@
             type="submit"
             >Next</v-btn
           >
+          <div class="flex items-center mt-7">
+            <span>Have an account?</span>
+            <v-btn
+              outlined
+              color="secondary"
+              class="text-nor-btn ml-2"
+              to="login"
+            >
+              login</v-btn
+            >
+          </div>
         </v-form>
       </div>
     </v-card>

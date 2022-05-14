@@ -192,6 +192,6 @@ export default {
 
 <style scoped>
 .font {
-  @apply font-bold text-H2;
+  @apply font-medium text-H2;
 }
 </style>
