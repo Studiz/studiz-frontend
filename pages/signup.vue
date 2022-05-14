@@ -28,23 +28,22 @@
       </div>
 
       <div>
-        <v-form ref="form" lazy-validation>
+        <v-form ref="form" lazy-validation @submit.prevent="submit">
           <v-text-field
             required
             label="E-mail"
             outlined
-            v-model.lazy="email"
+            v-model.trim="email"
+            @keypress.enter="submit"
             :rules="[rules.required, rules.email, checkDuplicate]"
           ></v-text-field>
-
           <v-btn
             color="primary"
             height="60"
             block
             :loading="loading"
-            @click="submit"
-            @keypress.enter="submit"
-            >Sign up</v-btn
+            type="submit"
+            >Next</v-btn
           >
         </v-form>
       </div>

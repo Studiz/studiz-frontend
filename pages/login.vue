@@ -28,7 +28,7 @@
       </div>
 
       <div>
-        <v-form ref="form" lazy-validation>
+        <v-form ref="form" lazy-validation @submit.prevent="submit">
           <v-text-field
             required
             label="E-mail"
@@ -51,12 +51,14 @@
             height="60"
             block
             :loading="loading"
-            @click="submit"
-            >Next</v-btn
+            type="submit"
+            >Login</v-btn
           >
           <div class="flex items-center mt-7">
             <span>Don’t have an account?</span>
-            <v-btn outlined color="secondary" class="text-nor-btn ml-2">Sign up</v-btn>
+            <v-btn outlined color="secondary" class="text-nor-btn ml-2"
+              >Sign up</v-btn
+            >
           </div>
         </v-form>
       </div>
