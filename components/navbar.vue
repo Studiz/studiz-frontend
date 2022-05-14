@@ -7,22 +7,26 @@
         app
         flat
         class="drop-shadow-md"
-        height="70"
+        height="60"
         dense
         color="background"
       >
         <div class="flex justify-between items-center container">
           <v-btn
-            height="60px"
+            height="50px"
             elevation="0"
             color="background"
             class=""
             @click="goHomePage"
           >
-            <img src="../static/logo/Studiz logo.svg" />
+            <v-img
+              :src="require('../static/logo/Studiz_logo.svg')"
+              max-width="80"
+            />
           </v-btn>
           <div class="flex items-center space-x-4">
             <v-spacer></v-spacer>
+            <!-- right  -->
             <v-menu offset-y left color="primary">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -37,27 +41,14 @@
               </template>
               <v-list>
                 <v-list-item
-                  @click="ligthMode"
+                  v-for="mode in ThemeMode"
+                  :key="mode"
+                  @click="themeMode(mode.methods)"
                   hide-details
                   inset
                   class="text-cap-btn"
-                  ><v-icon left>mdi-white-balance-sunny</v-icon
-                  >Light</v-list-item
-                >
-                <v-list-item
-                  @click="darkMode"
-                  hide-details
-                  inset
-                  class="text-cap-btn"
-                  ><v-icon left>mdi-weather-night</v-icon>Dark</v-list-item
-                >
-                <v-list-item
-                  @click="resetTheme"
-                  hide-details
-                  inset
-                  class="text-cap-btn"
-                  ><v-icon left>mdi-desktop-tower-monitor</v-icon
-                  >SystemTheme</v-list-item
+                  ><v-icon left>{{ mode.icon }}</v-icon
+                  >{{ mode.title }}</v-list-item
                 >
               </v-list>
             </v-menu>
@@ -114,6 +105,7 @@
 </template>
 
 <script>
+import Studiz_logo from '../static/logo/Studiz_logo.svg'
 export default {
   data() {
     return {
@@ -128,40 +120,45 @@ export default {
         },
       ],
       themeIcon: '',
-      // ThemeMode: [
-      //   {
-      //     icon: 'mdi-white-balance-sunny',
-      //     methods: 'ligthMode',
-      //     title: 'Light',
-      //   },
-      //   { icon: 'mdi-weather-night', methods: 'darkMode', title: 'Dark' },
-      //   {
-      //     icon: 'mdi-desktop-tower-monitor',
-      //     methods: 'resetTheme',
-      //     title: 'SystemTheme',
-      //   },
-      // ],
+      ThemeMode: [
+        {
+          icon: 'mdi-white-balance-sunny',
+          methods: 'light',
+          title: 'Light',
+        },
+        {
+          icon: 'mdi-weather-night',
+          methods: 'dark',
+          title: 'Dark',
+        },
+        {
+          icon: 'mdi-desktop-tower-monitor',
+          methods: 'theme',
+          title: 'SystemTheme',
+        },
+      ],
     }
   },
   methods: {
-    darkMode() {
-      localStorage.theme = 'dark'
-      this.$vuetify.theme.dark = true
-      document.getElementById('dark')
-      this.mode()
-      this.themeIcon = 'mdi-weather-night'
+    themeMode(mode) {
+      if (mode === 'dark') {
+        localStorage.theme = 'dark'
+        this.$vuetify.theme.dark = true
+        document.getElementById('dark')
+        this.themeIcon = mode.icon
+        this.mode()
+      } else if (mode === 'light') {
+        localStorage.theme = 'light'
+        this.$vuetify.theme.dark = false
+        document.getElementById('light')
+        this.themeIcon = mode.icon
+        this.mode()
+      } else {
+        localStorage.removeItem('theme')
+        this.mode()
+      }
     },
-    ligthMode() {
-      localStorage.theme = 'light'
-      this.$vuetify.theme.dark = false
-      document.getElementById('light')
-      this.mode()
-      this.themeIcon = 'mdi-white-balance-sunny'
-    },
-    resetTheme() {
-      localStorage.removeItem('theme')
-      this.mode()
-    },
+
     mode() {
       if (
         localStorage.theme === 'dark' ||
