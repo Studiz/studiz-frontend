@@ -58,13 +58,13 @@
                   color="primary text-cap-btn"
                   dark
                   v-bind="attrs"
-                  height="50"
+                  height="40"
                   rounded
                   v-on="on"
                 >
-                  <v-icon left x-large class="mr-5 p-3"
-                    >mdi-account-circle</v-icon
-                  >
+                  <v-avatar class="-m-5 mr-1">
+                    <v-icon large>mdi-account-circle</v-icon>
+                  </v-avatar>
                   User Grest
                   <v-icon right>mdi-chevron-down</v-icon>
                 </v-btn>

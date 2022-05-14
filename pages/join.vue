@@ -13,7 +13,7 @@
           id="pincode"
           name="pincode"
           type="tel"
-          class="p-2 w-full md:w-11/12 h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-gray-500"
+          class="p-2 w-full md:w-11/12 h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-dark_background"
           minlength="6"
           maxlength="6"
           placeholder="Enter a join qiuz"

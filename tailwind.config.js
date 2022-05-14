@@ -11,8 +11,8 @@ module.exports = {
         // tertiary: '#FAE445',
         // neutral: '#f8f8f8',
 
-        dark_primary: '#121212',
-        bg_disable: '#84898c',
+        dark_background: '#272727',
+        bg_disable: '#464646',
         // dark_secondary: '#192734',
         // dark_tertiary: '#22303C',
         // text_disable: '#C4CDD4'
