@@ -2,7 +2,7 @@ name: studiz-frontend-dev
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   build:
@@ -18,9 +18,39 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker images 
+      - name: Build and push Docker images
         uses: docker/build-push-action@v3.0.0
         with:
           context: .
           push: true
           tags: ghcr.io/studiz/studiz-frontend:dev
+
+      - name: Copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: ./docker-compose.dev.yml
+          target: ~/studiz-frontend/dev/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pull images and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker rm -f studiz-frontend
+            docker rmi ghcr.io/studiz/studiz-frontend:dev
+            docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml pull
+            docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up -d
