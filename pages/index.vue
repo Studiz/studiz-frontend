@@ -1,81 +1,37 @@
 <template>
-  <v-row justify="center" align="center" class="">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+  <v-row>
+    <v-col cols="0" md="1" lg="2" class="d-none d-lg-block">
+      <v-sheet class="rounded-lg">
+        <v-list color="background" class="rounded-lg">
+          <v-list-item
+            v-for="page in pages"
+            :key="page.icon"
+            :to="page.to"
+            link
           >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
-      </v-card>
+            <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
+            <v-list-item-content>
+              <v-list-item-title class="text-cap-btn items-center">
+                {{ page.title }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider class="my-2"></v-divider>
+
+          <v-list-item link color="grey lighten-4">
+            <v-list-item-content>
+              <v-list-item-title> Refresh </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-sheet>
+    </v-col>
+
+    <v-col cols="12" md="11" lg="10">
+      <v-sheet min-height="70vh" rounded="lg" color="background">
+        <Nuxt />
+      </v-sheet>
     </v-col>
   </v-row>
 </template>
@@ -83,5 +39,26 @@
 <script>
 export default {
   name: 'IndexPage',
+  data() {
+    return {
+      pages: [
+        {
+          title: 'classroom',
+          icon: '$vuetify.icons.classroom',
+          to: '/classroom',
+        },
+        { title: 'quiz', icon: '$vuetify.icons.quiz', to: '/quiz' },
+        {
+          title: 'notification',
+          icon: '$vuetify.icons.notification',
+          to: '/notification',
+        },
+        // { title: 'more', icon: '$vuetify.icons.more' },
+      ],
+    }
+  },
+  created() {
+    this.$router.push('/classroom')
+  },
 }
 </script>

@@ -1,20 +1,37 @@
 module.exports = {
   content: ['./public/**/*.html', './src/**/*.vue'],
+  darkMode: 'class',
   theme: {
     extend: {
-      textOpacity: ['dark'],
+      // textOpacity: ['dark'],
       colors: {
         // primary: '#F88100',
         // primaryfocus: '#F35B04',
-        // secondary: '#FFB703',
+        secondary: '#ff6b35',
         // tertiary: '#FAE445',
         // neutral: '#f8f8f8',
 
-        // dark_primary: '#15202B',
+        dark_background: '#272727',
+        bg_disable: '#464646',
         // dark_secondary: '#192734',
         // dark_tertiary: '#22303C',
+        // text_disable: '#C4CDD4'
+      },
+      height: {
+        '60px': '60px',
+      },
+      fontSize: {
+        H1: '32px',
+        H2: '24px',
+        H3: '18px',
       }
     },
+    screens: {
+      'sm': '600px',
+      'md': '960px',
+      'lg': '1264px',
+      'xl': '1904px',
+    }
   },
   plugins: [
     // require('daisyui'),

@@ -45,8 +45,9 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
+    '@nuxtjs/tailwindcss',
     '@nuxtjs/vuetify',
-    '@nuxtjs/tailwindcss'
+    // '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -83,34 +84,12 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    optionsPath: "./vuetify.options.js",
     treeShake: true,
-    theme: {
-      dark: true,
-      themes: {
-        light: {
-          primary: '#1976D2',
-          primary_shade: '#d7eeff',
-          Secondary: '#ff6b35',
-          secondary_shade: '#ffe3d9',
-          background: '#FFFFFF',
-
-          accent: '#82B1FF',
-          error: '#FF5252',
-          info: '#2196F3',
-          success: '#4CAF50',
-          warning: '#FFC107',
-        },
-        dark: {
-          primary: '#004E89',
-          background: '#18191A',
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
+    defaultAssets: {
+      font: {
+        family: 'Montserrat'
+      }
     },
   },
 

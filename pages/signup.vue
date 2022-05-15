@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
     <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
-      <p class="text-secondary text-H1 font-bold text-center">Login</p>
+      <p class="text-secondary text-H1 font-bold text-center">Sign up</p>
 
       <script src="https://accounts.google.com/gsi/client" async defer></script>
       <div
@@ -34,17 +34,8 @@
             label="E-mail"
             outlined
             v-model.trim="email"
-            :rules="[rules.required, rules.email]"
-          ></v-text-field>
-          <v-text-field
-            required
-            v-model="password"
-            outlined
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show ? 'text' : 'password'"
-            label="Password"
-            @click:append="show = !show"
+            @keypress.enter="submit"
+            :rules="[rules.required, rules.email, checkDuplicate]"
           ></v-text-field>
           <v-btn
             color="primary"
@@ -52,17 +43,17 @@
             block
             :loading="loading"
             type="submit"
-            >Login</v-btn
+            >Next</v-btn
           >
           <div class="flex items-center mt-7">
-            <span>Don’t have an account?</span>
+            <span>Have an account?</span>
             <v-btn
               outlined
               color="secondary"
               class="text-nor-btn ml-2"
-              to="signup"
+              to="login"
             >
-              Sign up</v-btn
+              login</v-btn
             >
           </div>
         </v-form>
@@ -79,8 +70,6 @@ export default {
       password: '',
       show: false,
       rules: {
-        required: (v) => !!v || 'Required.',
-        min: (v) => v.length >= 5 || 'Min 5 characters',
         email: (v) => {
           const pattern =
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -96,7 +85,16 @@ export default {
         this.loading = true
         await new Promise((resolve) => setTimeout(resolve, 3000))
         this.loading = false
-        this.$route.push('/')
+        this.$router.push('/')
+      }
+    },
+    checkDuplicate(val) {
+      // write your api call and return the below statement if it already exist
+      //ให้ back check น่าจะเร็วกว่ามั้ง
+      if (val == 'jakkapong.q@mail.kmutt.ac.th') {
+        return `Account "${val}" already exist, please login `
+      } else {
+        return true
       }
     },
   },
