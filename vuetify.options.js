@@ -6,12 +6,12 @@ import Studiz_logo from 'static/logo/Studiz_logo.vue'
 
 
 export default {
-  treeShake: true,
-  defaultAssets: {
-    font: {
-      family: 'Montserrat'
-    }
-  },
+  // treeShake: true,
+  // defaultAssets: {
+  //   font: {
+  //     family: 'Montserrat'
+  //   }
+  // },
   theme: {
     dark: false,
     themes: {

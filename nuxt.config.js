@@ -85,6 +85,12 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     optionsPath: "./vuetify.options.js",
+    treeShake: true,
+    defaultAssets: {
+      font: {
+        family: 'Montserrat'
+      }
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
