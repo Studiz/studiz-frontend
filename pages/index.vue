@@ -1,12 +1,19 @@
 <template>
   <v-row>
-    <v-col cols="1" lg="2" class="hidden md:inline-block">
-      <v-sheet rounded="lg">
-        <v-list>
-          <v-list-item v-for="page in pages" :key="page" link>
-            <v-icon left>{{ page.icon }}</v-icon>
+    <v-col cols="0" sm="1" lg="2" class="hidden md:inline-block">
+      <v-sheet class="rounded-lg">
+        <v-list color="background" class="rounded-lg">
+          <v-list-item
+            v-for="page in pages"
+            :key="page.icon"
+            :to="page.to"
+            link
+          >
+            <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
             <v-list-item-content>
-              <v-list-item-title class="text-cap-btn flex items-center">
+              <v-list-item-title
+                class="text-cap-btn items-center hidden lg:inline-block"
+              >
                 {{ page.title }}
               </v-list-item-title>
             </v-list-item-content>
@@ -23,8 +30,10 @@
       </v-sheet>
     </v-col>
 
-    <v-col cols="11" lg="12">
-      <v-sheet min-height="70vh" rounded="lg"> </v-sheet>
+    <v-col cols="12" sm="11" lg="10">
+      <v-sheet min-height="70vh" rounded="lg" color="background">
+        <Nuxt />
+      </v-sheet>
     </v-col>
   </v-row>
 </template>
@@ -35,12 +44,23 @@ export default {
   data() {
     return {
       pages: [
-        { title: 'classroom', icon: '$vuetify.icons.classroom' },
-        { title: 'quiz', icon: '$vuetify.icons.quiz' },
-        { title: 'notification', icon: '$vuetify.icons.notification' },
-        { title: 'more', icon: '$vuetify.icons.more' },
+        {
+          title: 'classroom',
+          icon: '$vuetify.icons.classroom',
+          to: '/classroom',
+        },
+        { title: 'quiz', icon: '$vuetify.icons.quiz', to: '/quiz' },
+        {
+          title: 'notification',
+          icon: '$vuetify.icons.notification',
+          to: '/notification',
+        },
+        // { title: 'more', icon: '$vuetify.icons.more' },
       ],
     }
+  },
+  created() {
+    this.$router.push('/classroom')
   },
 }
 </script>

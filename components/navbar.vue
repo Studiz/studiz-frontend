@@ -43,13 +43,13 @@
               <v-list>
                 <v-list-item
                   v-for="mode in ThemeMode"
-                  :key="mode"
+                  :key="mode.mode"
                   @click="themeMode(mode.methods)"
                   hide-details
                   inset
                   class="text-cap-btn"
                   ><v-icon left>{{ mode.icon }}</v-icon
-                  >{{ mode.title }}</v-list-item
+                  >{{ mode.mode }}</v-list-item
                 >
               </v-list>
             </v-menu>
@@ -73,8 +73,8 @@
 
               <v-list>
                 <v-list-item
-                  v-for="(item, index) in route"
-                  :key="index"
+                  v-for="item in route"
+                  :key="item.to"
                   :to="item.to"
                   class="font"
                 >
@@ -124,17 +124,17 @@ export default {
         {
           icon: 'mdi-white-balance-sunny',
           methods: 'light',
-          title: 'Light',
+          mode: 'Light',
         },
         {
           icon: 'mdi-weather-night',
           methods: 'dark',
-          title: 'Dark',
+          mode: 'Dark',
         },
         {
           icon: 'mdi-desktop-tower-monitor',
           methods: 'theme',
-          title: 'SystemTheme',
+          mode: 'SystemTheme',
         },
       ],
     }
