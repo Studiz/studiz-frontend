@@ -24,7 +24,7 @@ export default {
       },
       dark: {
         primary: "#22A1EE",
-        primary_shade: "#d7eeff",
+        primary_shade: "#6b7e8c",
         secondary: "#FF6B35",
         secondary_shade: "#ffe3d9",
         bg_disable: "#464646",

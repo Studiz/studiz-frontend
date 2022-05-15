@@ -27,10 +27,13 @@ export default {
 .light:root {
   color-scheme: light;
 }
-.text-cap-btn {
+.text-cap {
   @apply capitalize;
 }
-.text-nor-btn {
+.text-nor {
   @apply normal-case;
+}
+.fontbold {
+  @apply font-bold;
 }
 </style>
