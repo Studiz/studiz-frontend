@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Docker Login
-      - uses: docker/login-action@v2.0.0
-      - with:
+        uses: docker/login-action@v2.0.0
+        with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker images 
-      - uses: docker/build-push-action@v3.0.0
-      - with:
+        uses: docker/build-push-action@v3.0.0
+        with:
           context: .
           push: true
           tags: ghcr.io/studiz/studiz-frontend:prd
