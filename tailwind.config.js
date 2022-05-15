@@ -26,6 +26,12 @@ module.exports = {
         H3: '18px',
       }
     },
+    screens: {
+      'sm': '600px',
+      'md': '960px',
+      'lg': '1264px',
+      'xl': '1904px',
+    }
   },
   plugins: [
     // require('daisyui'),
