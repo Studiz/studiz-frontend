@@ -28,7 +28,12 @@
           <div class="flex items-center space-x-4">
             <v-spacer></v-spacer>
             <!-- right  -->
-            <v-menu offset-y left color="primary">
+            <v-menu
+              offset-y
+              left
+              color="primary"
+              transition="slide-y-transition"
+            >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   color="primary text-cap-btn"
@@ -53,7 +58,12 @@
                 >
               </v-list>
             </v-menu>
-            <v-menu offset-y left color="primary">
+            <v-menu
+              offset-y
+              left
+              color="primary"
+              transition="slide-y-transition"
+            >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   color="primary text-cap-btn"

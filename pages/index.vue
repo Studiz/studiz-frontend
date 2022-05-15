@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="0" sm="1" lg="2" class="hidden md:inline-block">
+    <v-col cols="0" md="1" lg="2" class="d-none d-lg-block">
       <v-sheet class="rounded-lg">
         <v-list color="background" class="rounded-lg">
           <v-list-item
@@ -11,9 +11,7 @@
           >
             <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
             <v-list-item-content>
-              <v-list-item-title
-                class="text-cap-btn items-center hidden lg:inline-block"
-              >
+              <v-list-item-title class="text-cap-btn items-center">
                 {{ page.title }}
               </v-list-item-title>
             </v-list-item-content>
@@ -30,7 +28,7 @@
       </v-sheet>
     </v-col>
 
-    <v-col cols="12" sm="11" lg="10">
+    <v-col cols="12" md="11" lg="10">
       <v-sheet min-height="70vh" rounded="lg" color="background">
         <Nuxt />
       </v-sheet>

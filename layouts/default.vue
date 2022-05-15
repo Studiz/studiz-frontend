@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navbar />
-    <v-main class="-mt-6">
+    <v-main class="-mt-14 md:-mt-6">
       <v-container>
         <Nuxt />
       </v-container>
@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Navbar from '~/components/navbar.vue'
+import navbar from '~/components/navbar.vue'
 export default {
-  components: { Navbar },
+  components: { navbar },
   name: 'DefaultLayout',
   data() {
     return {}
