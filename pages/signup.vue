@@ -43,6 +43,7 @@
             block
             :loading="loading"
             type="submit"
+            class="fontbold"
             >Next</v-btn
           >
           <div class="flex items-center mt-7">
@@ -50,7 +51,7 @@
             <v-btn
               outlined
               color="secondary"
-              class="text-nor-btn ml-2"
+              class="text-nor-btn ml-2 text-cap"
               to="login"
             >
               login</v-btn

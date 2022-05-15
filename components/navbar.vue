@@ -36,7 +36,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="primary text-cap-btn"
+                  color="primary text-cap"
                   v-bind="attrs"
                   rounded
                   icon
@@ -52,7 +52,7 @@
                   @click="themeMode(mode.methods)"
                   hide-details
                   inset
-                  class="text-cap-btn"
+                  class="text-cap"
                   ><v-icon left>{{ mode.icon }}</v-icon
                   >{{ mode.mode }}</v-list-item
                 >
@@ -66,7 +66,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="primary text-cap-btn"
+                  color="primary text-cap"
                   dark
                   v-bind="attrs"
                   height="40"

@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent=""
-    class="bg_disable p-2 md:p-4 flex flex-col md:flex-row items-center rounded-lg"
+    class="primary_shade p-2 md:p-4 flex flex-col md:flex-row items-center rounded-lg"
   >
     <input
       id="pincode"
@@ -20,7 +20,7 @@
       inset
       height="60"
       color="primary"
-      class="mt-2 mt-md-0 ml-md-4 w-full md:w-1/12 rounded-lg"
+      class="mt-2 mt-md-0 ml-md-4 w-full md:w-1/12 rounded-lg text-cap"
       :disabled="pincode.length !== 6"
       @click="join"
     >

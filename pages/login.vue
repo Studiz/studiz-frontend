@@ -47,7 +47,7 @@
             @click:append="show = !show"
           ></v-text-field>
           <v-btn
-            color="primary"
+            color="primary fontbold"
             height="60"
             block
             :loading="loading"
@@ -59,7 +59,7 @@
             <v-btn
               outlined
               color="secondary"
-              class="text-nor-btn ml-2"
+              class="text-nor-btn ml-2 text-cap"
               to="signup"
             >
               Sign up</v-btn
