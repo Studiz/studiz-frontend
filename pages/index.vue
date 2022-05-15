@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="0" md="1" lg="2" class="d-none d-lg-block">
+    <v-col cols="0" md="1" lg="2" class="d-none d-md-block">
       <v-sheet class="rounded-lg">
         <v-list color="background" class="rounded-lg">
           <v-list-item
@@ -11,7 +11,7 @@
           >
             <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
             <v-list-item-content>
-              <v-list-item-title class="text-cap-btn items-center">
+              <v-list-item-title class="text-cap-btn items-center text-cap">
                 {{ page.title }}
               </v-list-item-title>
             </v-list-item-content>

@@ -1,36 +1,49 @@
 <template>
   <form
     @submit.prevent=""
-    class="primary_shade p-2 md:p-4 flex flex-col md:flex-row items-center rounded-lg"
+    class="primary_shade p-2 md:p-4 rounded-lg grid grid-rows-2 grid-flow-col gap-2"
   >
     <input
       id="pincode"
       name="pincode"
       v-model="pincode"
       type="tel"
-      class="p-2 w-full md:w-11/12 h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-dark_background"
+      class="p-2 w-full col-span-12 h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-dark_background"
       minlength="6"
       maxlength="6"
       placeholder="Enter a join qiuz"
       autocomplete="off"
       @keypress="filterNumber(evt)"
     />
+    <!-- <div class="w-full md:w-2/12"> -->
+    <slot></slot>
     <v-btn
       hide-details
       inset
       height="60"
       color="primary"
-      class="mt-2 mt-md-0 ml-md-4 w-full md:w-1/12 rounded-lg text-cap"
+      class="rounded-lg text-cap"
+      :class="[
+        this.$route.name == 'index-classroom'
+          ? 'w-full col-span-6'
+          : 'w-full col-span-12',
+      ]"
       :disabled="pincode.length !== 6"
       @click="join"
     >
       join</v-btn
     >
+    <!-- </div> -->
   </form>
 </template>
 
 <script>
 export default {
+  props: {
+    showInput: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       pincode: '',
@@ -48,6 +61,7 @@ export default {
     },
     join() {
       this.$emit('join-number', this.pincode)
+      console.log(this.$nuxt.$route.name)
     },
   },
 }
