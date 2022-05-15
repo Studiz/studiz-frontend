@@ -1,0 +1,5 @@
+services:
+  frontend:
+    container_name: frontend-dev
+    build: .
+    image: ghcr.io/studiz/studiz-frontend:dev
