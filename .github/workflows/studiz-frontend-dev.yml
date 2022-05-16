@@ -39,22 +39,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v3
-
-      # - name: Pull images and deploy
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     password: ${{ secrets.PASSWORD }}
-      #     port: ${{ secrets.PORT }}
-      #     script: |
-      #       docker rm -f studiz-frontend
-      #       docker rmi ghcr.io/studiz/studiz-frontend:dev
-      #       docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml pull
-      #       docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up -d
-      
       - name: Pull images and deploy
         uses: appleboy/ssh-action@master
         with:
@@ -62,12 +46,10 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          # env:
-          #   TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #   USERNAME: ${{ github.repository_owner }}
           script: |
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
             docker rmi -f ghcr.io/studiz/studiz-frontend:dev
             docker pull ghcr.io/studiz/studiz-frontend:dev
             docker rm -f studiz-frontend
-            docker run --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev
+            docker run --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev -d
+            docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up -d
