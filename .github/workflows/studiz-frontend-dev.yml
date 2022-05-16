@@ -64,8 +64,11 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             echo ${{ secrets.STUDIZ_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            docker rmi -f ghcr.io/studiz/studiz-frontend:dev
             docker pull ghcr.io/studiz/studiz-frontend:dev
-            docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up --build -d
+            docker rm -f studiz-frontend
+            docker run -d -p 80:80 -p 443:443 --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev
+            
            
       # - name: Docker Login
       #   uses: docker/login-action@v2.0.0
