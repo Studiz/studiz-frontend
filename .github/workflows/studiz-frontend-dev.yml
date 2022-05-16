@@ -64,8 +64,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           # run: docker login ghcr.io --username ${{ github.repository_owner }} | ${{ secrets.STUDIZ_TOKEN }}
+          run: echo $CR_PAT | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           script: |
             docker pull -f ghcr.io/studiz/studiz-frontend:dev
             docker run studiz-frontend:dev
