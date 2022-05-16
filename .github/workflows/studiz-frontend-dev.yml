@@ -61,14 +61,14 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          # port: ${{ secrets.PORT }}
+          port: ${{ secrets.PORT }}
           
-      # - name: Docker Login
-      #   uses: docker/login-action@v2.0.0
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.repository_owner }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
-      #     script: |
-      #       docker pull -f ghcr.io/studiz/studiz-frontend:dev
-      #       docker run studiz-frontend:dev
+      - name: Docker Login
+        uses: docker/login-action@v2.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            docker pull -f ghcr.io/studiz/studiz-frontend:dev
+            docker run studiz-frontend:dev
