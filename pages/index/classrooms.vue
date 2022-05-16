@@ -46,18 +46,20 @@
         <nuxt-link
           :to="{ name: 'index-classroom-classroomsid', params: { classroomsid: classroom.name } }"
         >
-          <v-card flat rounded="lg" class="bg-gradient-to-r from-cyan-500 to-blue-500">
+          <v-card flat rounded="lg" class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text">
             <v-card-title class="w-full">
               <div class="text-h5 w-10/12 truncate">
-                <span class="font-bold">{{classroom.name}}</span>
+                <span class="font-bold white--text">{{classroom.name}}</span>
               </div>
             </v-card-title>
 
-            <v-card-subtitle class="h-24 overflow-auto scrollbar">{{classroom.description}}</v-card-subtitle>
-            <v-card-text class="text--primary flex justify-between items-start">
-              <div>{{classroom.teachName}}</div>
-              <v-avatar class="-m-5 mr-1">
-                <v-icon x-large>mdi-account-circle</v-icon>
+            <v-card-subtitle
+              class="h-24 overflow-auto scrollbar white--text"
+            >{{classroom.description}}</v-card-subtitle>
+            <v-card-text class="flex justify-between items-start white--text">
+              {{classroom.teachName}}
+              <v-avatar class="-m-5 mr-1 white--text">
+                <v-icon x-large color="white">mdi-account-circle</v-icon>
               </v-avatar>
             </v-card-text>
           </v-card>
