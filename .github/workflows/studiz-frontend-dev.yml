@@ -65,9 +65,9 @@ jobs:
           # env:
           #   TOKEN: ${{ secrets.GITHUB_TOKEN }}
           #   USERNAME: ${{ github.repository_owner }}
-          script: |
-            echo ${{ secrets.STUDIZ_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-            docker rmi -f ghcr.io/studiz/studiz-frontend:dev
-            docker pull ghcr.io/studiz/studiz-frontend:dev
-            docker rm -f studiz-frontend
-            docker run --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev
+          # script: |
+          #   echo ${{ secrets.STUDIZ_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          #   docker rmi -f ghcr.io/studiz/studiz-frontend:dev
+          #   docker pull ghcr.io/studiz/studiz-frontend:dev
+          #   docker rm -f studiz-frontend
+          #   docker run --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev
