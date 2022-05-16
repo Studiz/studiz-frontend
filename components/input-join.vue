@@ -1,17 +1,27 @@
 <template>
   <form
     @submit.prevent=""
-    class="primary_shade p-2 md:p-4 rounded-lg grid grid-rows-2 grid-flow-col gap-2"
+    class="primary_shade rounded-lg grid grid-rows-2 md:grid-rows-1 grid-flow-col gap-2"
+    :class="[this.$route.name == 'index-classroom' ? 'p-2' : 'p-2 md:p-4']"
   >
     <input
       id="pincode"
       name="pincode"
       v-model="pincode"
       type="tel"
-      class="p-2 w-full col-span-12 h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-dark_background"
+      class="p-2 w-full h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-dark_background"
+      :class="[
+        this.$route.name == 'index-classroom'
+          ? 'col-span-12 md:col-span-9'
+          : 'col-span-12 ',
+      ]"
       minlength="6"
       maxlength="6"
-      placeholder="Enter a join qiuz"
+      :placeholder="[
+        this.$route.name == 'index-classroom'
+          ? 'Enter a join classroom'
+          : 'Enter a join qiuz',
+      ]"
       autocomplete="off"
       @keypress="filterNumber(evt)"
     />
@@ -25,7 +35,7 @@
       class="rounded-lg text-cap"
       :class="[
         this.$route.name == 'index-classroom'
-          ? 'w-full col-span-6'
+          ? 'w-full col-span-6 md:col-span-3'
           : 'w-full col-span-12',
       ]"
       :disabled="pincode.length !== 6"
