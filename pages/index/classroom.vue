@@ -37,14 +37,28 @@
         </Input-join>
       </v-card>
     </v-expand-transition>
+
     <v-row class="mt-2" no-gutters>
-      <v-col cols="12" md="4" v-for="i in 5" :key="i" class="pa-md-1 py-1">
+      <v-col cols="12" md="4" v-for="classroom in classlist" :key="classroom.name" class="pa-md-1 py-1">
         <v-card
           flat
           rounded="lg"
-          height="150"
           class="bg-gradient-to-r from-cyan-500 to-blue-500"
-        ></v-card>
+        >
+          <v-card-title class="w-full">          
+            <div class="text-h5 w-10/12 truncate"><span class="font-bold">{{classroom.name}}</span></div>
+          </v-card-title>
+
+          <v-card-subtitle class="h-24 overflow-auto scrollbar"
+            >{{classroom.description}}</v-card-subtitle
+          >
+          <v-card-text class="text--primary flex justify-between items-start">
+            <div>{{classroom.teachName}}</div>
+            <v-avatar class="-m-5 mr-1">
+              <v-icon x-large>mdi-account-circle</v-icon>
+            </v-avatar>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </div>
@@ -60,6 +74,12 @@ export default {
         { color1: '', color2: '' },
         { color1: '', color2: '' },
       ],
+      classlist: [
+        { name: 'INT 100', description: 'IT Fundamentals', teachName: 'john seana', teachImage: '' },
+        { name: 'INT 101', description: 'PROGRAMMING FUNDAMENTALS', teachName: 'john seana', teachImage: '' },
+        { name: 'INT 102', description: 'WEB TECHNOLOGY', teachName: 'john seana', teachImage: '' },
+        { name: 'LNG 120', description: 'GENERAL ENGLISH', teachName: 'john seana', teachImage: '' },
+      ], 
     }
   },
   methods: {
@@ -70,4 +90,30 @@ export default {
 }
 </script>
 
-<style></style>
+<style csoped>
+
+/* width */
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 8px;
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #ffb703;
+    border-radius: 50px;
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #f88100;
+    border-radius: 50px;
+}
+
+</style>
+</style>
