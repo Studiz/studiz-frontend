@@ -71,3 +71,5 @@ jobs:
             docker pull ghcr.io/studiz/studiz-frontend:dev
             docker rm -f studiz-frontend
             docker run --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev
+
+            
