@@ -7,6 +7,7 @@ RUN npm run generate
 EXPOSE 9090
 FROM nginx as deploy-stage
 RUN mkdir /app
-COPY --from=build-stage /app/dist /app
+# COPY --from=build-stage /app/dist /app
+COPY --from=build-stage /app/dist /usr/share/nginx/html/studiz-frontend/
 COPY nginx.conf /etc/nginx/nginx.conf
 CMD ["nginx", "-g", "daemon off;"]
