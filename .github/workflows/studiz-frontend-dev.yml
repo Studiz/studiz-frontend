@@ -68,7 +68,7 @@ jobs:
           # run: docker login ghcr.io --username ${{ github.repository_owner }} | ${{ secrets.STUDIZ_TOKEN }}
           script: |
             echo ${{ secrets.STUDIZ_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-            docker pull -f ghcr.io/studiz/studiz-frontend:dev
+            docker pull ghcr.io/studiz/studiz-frontend:dev
             docker run studiz-frontend:dev
 
       # - name: Docker Login
