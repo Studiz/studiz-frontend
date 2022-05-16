@@ -21,7 +21,7 @@
 
           <v-list-item link color="grey lighten-4">
             <v-list-item-content>
-              <v-list-item-title> Refresh </v-list-item-title>
+              <v-list-item-title> ... </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -29,7 +29,7 @@
     </v-col>
 
     <v-col cols="12" md="11" lg="10">
-      <v-sheet min-height="70vh" rounded="lg" color="background">
+      <v-sheet min-height="70vh" rounded="lg" color="background" class="pa-5">
         <Nuxt />
       </v-sheet>
     </v-col>
