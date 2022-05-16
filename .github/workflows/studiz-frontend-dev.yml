@@ -75,4 +75,4 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull Image from ghcr.io
-        run: docker pull ghcr.io/USERNAME/MY_PRIVATE_IMAGE
+        run: docker pull ghcr.io/studiz/studiz-frontend:dev
