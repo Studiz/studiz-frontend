@@ -5,38 +5,38 @@ on:
     branches: [develop]
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Docker Login
-  #       uses: docker/login-action@v2.0.0
-  #       with:
-  #         registry: ghcr.io
-  #         username: ${{ github.repository_owner }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Docker Login
+        uses: docker/login-action@v2.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-  #     - name: Build and push Docker images
-  #       uses: docker/build-push-action@v3.0.0
-  #       with:
-  #         context: .
-  #         push: true
-  #         tags: ghcr.io/studiz/studiz-frontend:dev
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v3.0.0
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/studiz/studiz-frontend:dev
 
-      # - name: Copy file via ssh password
-      #   uses: appleboy/scp-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     password: ${{ secrets.PASSWORD }}
-      #     port: ${{ secrets.PORT }}
-      #     source: ./docker-compose.dev.yml
-      #     target: ~/studiz-frontend/dev/
+      - name: Copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: ./docker-compose.dev.yml
+          target: ~/studiz-frontend/dev/
 
   deploy:
-    # needs: build
+    needs: build
     runs-on: ubuntu-latest
     steps:
       # - name: Checkout code
@@ -55,8 +55,6 @@ jobs:
       #       docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml pull
       #       docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up -d
       
-      
-
       - name: Pull images and deploy
         uses: appleboy/ssh-action@master
         with:
@@ -64,14 +62,12 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          # run: docker login ghcr.io --username ${{ github.repository_owner }} | ${{ secrets.STUDIZ_TOKEN }}
           script: |
             echo ${{ secrets.STUDIZ_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
             docker pull ghcr.io/studiz/studiz-frontend:dev
+            cd ~/studiz-frontend/dev/
             docker-compose up --build -d
            
-      # docker run studiz-frontend:dev
       # - name: Docker Login
       #   uses: docker/login-action@v2.0.0
       #   with:
