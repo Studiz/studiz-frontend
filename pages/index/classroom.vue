@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-5">
+  <div>
     <div class="md:flex justify-between items-center mb-1">
       <h1 class="text-H1 font-bold">Classroom</h1>
       <v-btn
