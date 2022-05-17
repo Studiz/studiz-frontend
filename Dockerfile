@@ -4,10 +4,9 @@ COPY package*.json ./
 RUN npm install
 COPY ./ .
 RUN npm run generate
-EXPOSE 9090
+EXPOSE 80
 FROM nginx as deploy-stage
 RUN mkdir /app
-# COPY --from=build-stage /app/dist /app
-COPY --from=build-stage /app/dist /usr/share/nginx/html/studiz-frontend/
+COPY --from=build-stage /app/dist /app
 COPY nginx.conf /etc/nginx/nginx.conf
 CMD ["nginx", "-g", "daemon off;"]
