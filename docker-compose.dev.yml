@@ -7,12 +7,9 @@ services:
         restart: on-failure
     reverse-poxy:
         image: nginx
-        environment:
-            API_HOST: http://20.239.140.141:9091/api
         container_name: reverse-poxy
         volumes: 
             - ./reverse-poxy.conf:/etc/nginx/nginx.conf
         restart: on-failure
         ports:
             - "80:80"
-  
