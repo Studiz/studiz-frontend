@@ -1,21 +1,16 @@
 version: "3"
-networks:
-    client :  
 services:
     frontend:
         container_name: studiz-frontend
         build: .
         image: ghcr.io/studiz/studiz-frontend:dev
-        networks:
-            - client
+        restart: on-failure
     reverse-poxy:
         image: nginx
         container_name: reverse-poxy
         volumes: 
-            - ./nginx.conf:/etc/nginx/nginx.conf
+            - ./reverse-poxy.conf:/etc/nginx/nginx.conf
         restart: on-failure
-        networks:
-            - client
         ports:
             - "80:80"
   
