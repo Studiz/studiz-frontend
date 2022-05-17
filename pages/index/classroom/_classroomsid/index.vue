@@ -4,24 +4,23 @@
       <h1 class="text-H1 font-bold">{{ $route.params.classroomsid }}</h1>
       <p class="text-H3">description</p>
     </div>
-    <div class="grid grid-rows-1 grid-cols-2 gap-2">
-      <nuxt-link
-        :to="({
+    <div class="mb-4">
+      <v-tabs fixed-tabs background-color="transparent">
+        <v-tab
+          :to="({
                 name: 'index-classroom-classroomsid-index-quiz',
                 params: { quiz: 'quiz' , classid: $route.params.classroomsid},
             })"
-      >
-        <v-btn color="primary" class="text-cap w-full">quiz</v-btn>
-      </nuxt-link>
-      <nuxt-link
-        :to="({
+        >quiz</v-tab>
+        <v-tab
+          :to="({
                 name: 'index-classroom-classroomsid-index-member',
                 params: { member: 'member' , classid: $route.params.classroomsid},
             })"
-      >
-        <v-btn color="primary" class="text-cap w-full">member</v-btn>
-      </nuxt-link>
+        >member</v-tab>
+      </v-tabs>
     </div>
+
     <Nuxt />
   </div>
 </template>
