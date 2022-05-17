@@ -39,12 +39,13 @@
       <v-col
         cols="12"
         md="4"
+        xl="3"
         v-for="classroom in classlist"
         :key="classroom.name"
         class="pa-md-1 py-1"
       >
         <nuxt-link
-          :to="{ name: 'index-classroom-classroomsid', params: { classroomsid: classroom.name } }"
+          :to="{ name: 'index-classroom-classroomsid-index-quiz', params: { classroomsid: classroom.name, quiz: 'quiz'} }"
         >
           <v-card flat rounded="lg" class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text">
             <v-card-title class="w-full">
