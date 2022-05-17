@@ -51,5 +51,5 @@ jobs:
             docker rmi -f ghcr.io/studiz/studiz-frontend:dev
             docker pull ghcr.io/studiz/studiz-frontend:dev
             docker rm -f studiz-frontend
-            docker run --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev -d
+            docker run --name studiz-frontend ghcr.io/studiz/studiz-frontend:dev -d -it -p 9090:80 
             docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up -d
