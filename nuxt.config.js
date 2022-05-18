@@ -73,6 +73,9 @@ export default {
       }
     ]
   ],
+  env: {
+    baseURL: "http://20.239.140.141:9091/api"
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
