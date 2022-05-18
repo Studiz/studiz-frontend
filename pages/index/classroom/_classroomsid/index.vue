@@ -9,7 +9,7 @@
         <v-tab
           :to="({
                 name: 'index-classroom-classroomsid-index-quiz',
-                params: { quiz: 'quiz' , classid: $route.params.classroomsid},
+                params: { a_quiz: 'quiz' , classid: $route.params.classroomsid},
             })"
         >
           <span class="text-cap">quiz</span>

@@ -1,7 +1,8 @@
 <template>
   <p>
-    quizzzzzzzzzzz
+    member page
     {{$route.params.classroomsid}}
+    {{$route.params.member}}
   </p>
 </template>
 
