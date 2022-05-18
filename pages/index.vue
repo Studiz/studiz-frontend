@@ -4,7 +4,7 @@
       <v-sheet class="rounded-lg">
         <v-list color="background" class="rounded-lg">
           <v-list-item v-for="page in pages" :key="page.icon" :to="page.to" link>
-            <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
+            <v-icon color="white" left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
             <v-list-item-content>
               <v-list-item-title class="text-cap-btn items-center text-cap">{{ page.title }}</v-list-item-title>
             </v-list-item-content>
@@ -41,7 +41,7 @@ export default {
                     icon: '$vuetify.icons.classroom',
                     to: '/classrooms',
                 },
-                { title: 'quiz', icon: '$vuetify.icons.quiz', to: '/quiz' },
+                { title: 'join quiz', icon: '$vuetify.icons.quiz', to: '/quiz' },
                 {
                     title: 'notification',
                     icon: '$vuetify.icons.notification',

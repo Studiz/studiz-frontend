@@ -5,15 +5,16 @@
     viewBox="0 0 43 10"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    class="ionic"
   >
-    <ellipse cx="4.96154" cy="5" rx="4.96154" ry="5" fill="#22A1EE" />
-    <ellipse cx="21.5001" cy="5" rx="4.96154" ry="5" fill="#22A1EE" />
-    <ellipse cx="38.0387" cy="5" rx="4.96154" ry="5" fill="#22A1EE" />
+    <ellipse cx="4.96154" cy="5" rx="4.96154" ry="5" />
+    <ellipse cx="21.5001" cy="5" rx="4.96154" ry="5" />
+    <ellipse cx="38.0387" cy="5" rx="4.96154" ry="5" />
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'more',
+<style scoped>
+.ionic {
+    fill: currentColor;
 }
-</script>
+</style>

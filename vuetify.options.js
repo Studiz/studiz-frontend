@@ -3,6 +3,7 @@ import more from "static/menu_icon/more.vue";
 import notification from "static/menu_icon/notification.vue";
 import quiz from "static/menu_icon/quiz.vue";
 import Studiz_logo from 'static/logo/Studiz_logo.vue'
+import member from 'static/menu_icon/member.vue'
 
 
 export default {
@@ -54,6 +55,9 @@ export default {
       },
       Studiz_logo: {
         component: Studiz_logo
+      },
+      member: {
+        component: member
       },
     }
   }
