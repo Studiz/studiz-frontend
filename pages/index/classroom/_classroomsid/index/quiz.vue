@@ -1,7 +1,5 @@
 <template>
   <p>
-    quizzzzzzzzzzz
-    {{$route.params.classroomsid}}
     <v-row class="mt-2" no-gutters>
       <v-col
         cols="12"
@@ -34,7 +32,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+    data() {
+        return {}
+    },
+    created() {
+        console.log(this.$route.params.classroomsid)
+    },
+}
 </script>
 
 <style>
