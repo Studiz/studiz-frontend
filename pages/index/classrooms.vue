@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import classroomServeice from '@/services/ClassroomService.js'
 export default {
     data() {
         return {
@@ -112,6 +113,12 @@ export default {
         cancel() {
             this.showInput = !this.showInput
         },
+
+    },
+    created() {
+        classroomServeice.getStudents().then(res => {
+            console.log(res.data);
+        })
     },
 }
 </script>
