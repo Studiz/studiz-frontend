@@ -22,7 +22,7 @@
     </v-col>
 
     <v-col cols="12" md="11" lg="10">
-      <v-sheet min-height="70vh" rounded="lg" color="background" class="pa-5">
+      <v-sheet min-height="70vh" rounded="lg" color="background" class="pa-5 mb-16">
         <Nuxt />
         <div v-if="this.$route.name === 'index' ? this.$router.push('/classrooms') : ''" />
       </v-sheet>
@@ -41,7 +41,11 @@ export default {
                     icon: '$vuetify.icons.classroom',
                     to: '/classrooms',
                 },
-                { title: 'quiz', icon: '$vuetify.icons.quiz', to: '/quiz' },
+                {
+                    title: 'join quiz',
+                    icon: '$vuetify.icons.quiz',
+                    to: '/quiz',
+                },
                 {
                     title: 'notification',
                     icon: '$vuetify.icons.notification',

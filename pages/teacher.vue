@@ -1,8 +1,5 @@
 <template>
-  <p>
-    quizzzzzzzzzzz
-    {{$route.params.classroomsid}}
-  </p>
+  <div></div>
 </template>
 
 <script>
