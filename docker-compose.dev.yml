@@ -5,11 +5,11 @@ services:
         build: .
         image: ghcr.io/studiz/studiz-frontend:dev
         restart: on-failure
-    # backend:
-    #     container_name: studiz-backend
-    #     build: .
-    #     image: ghcr.io/studiz/studiz-backend:dev
-    #     restart: on-failure
+    backend:
+        container_name: studiz-backend
+        build: .
+        image: ghcr.io/studiz/studiz-backend:dev
+        restart: on-failure
     reverse-poxy:
         image: nginx
         container_name: reverse-poxy
