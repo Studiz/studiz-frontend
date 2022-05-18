@@ -47,23 +47,16 @@
             @click:append="show = !show"
           ></v-text-field>
           <v-btn
-            color="primary fontbold"
+            color="primary"
             height="60"
             block
             :loading="loading"
             type="submit"
-            >Login</v-btn
-          >
+            class="text-cap"
+          >Login</v-btn>
           <div class="flex items-center mt-7">
             <span>Don’t have an account?</span>
-            <v-btn
-              outlined
-              color="secondary"
-              class="text-nor-btn ml-2 text-cap"
-              to="signup"
-            >
-              Sign up</v-btn
-            >
+            <v-btn outlined color="secondary" class="ml-2 text-cap" to="signup">Sign up</v-btn>
           </div>
         </v-form>
       </div>
@@ -73,33 +66,33 @@
 
 <script>
 export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      show: false,
-      rules: {
-        required: (v) => !!v || 'Required.',
-        min: (v) => v.length >= 5 || 'Min 5 characters',
-        email: (v) => {
-          const pattern =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(v) || 'Invalid e-mail.'
-        },
-      },
-      loading: false,
-    }
-  },
-  methods: {
-    async submit() {
-      if (this.$refs.form.validate()) {
-        this.loading = true
-        await new Promise((resolve) => setTimeout(resolve, 3000))
-        this.loading = false
-        this.$route.push('/')
-      }
+    data() {
+        return {
+            email: '',
+            password: '',
+            show: false,
+            rules: {
+                required: (v) => !!v || 'Required.',
+                min: (v) => v.length >= 5 || 'Min 5 characters',
+                email: (v) => {
+                    const pattern =
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(v) || 'Invalid e-mail.'
+                },
+            },
+            loading: false,
+        }
     },
-  },
+    methods: {
+        async submit() {
+            if (this.$refs.form.validate()) {
+                this.loading = true
+                await new Promise((resolve) => setTimeout(resolve, 3000))
+                this.loading = false
+                this.$route.push('/')
+            }
+        },
+    },
 }
 </script>
 
