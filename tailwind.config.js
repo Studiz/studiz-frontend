@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       // textOpacity: ['dark'],
       colors: {
-        // primary: '#F88100',
-        // primaryfocus: '#F35B04',
+        ligh_tprimary: "#0c8ce9",
+        dark_primary: "#22A1EE",
         secondary: '#ff6b35',
         // tertiary: '#FAE445',
         // neutral: '#f8f8f8',

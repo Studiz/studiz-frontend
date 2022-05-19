@@ -23,11 +23,10 @@
           <v-btn
             hide-details
             inset
-            height="60"
-            color="white"
+            height="56"
             class="rounded-lg text-cap d-md-none"
             :class="[
-              this.$route.name == 'index-classroom' ? 'w-full col-span-6' : '',
+              this.$route.name == 'index-classrooms' ? 'w-full col-span-6' : '',
             ]"
             @click="cancel()"
           >cancel</v-btn>
@@ -113,11 +112,10 @@ export default {
         cancel() {
             this.showInput = !this.showInput
         },
-
     },
     created() {
-        classroomServeice.getStudents().then(res => {
-            console.log(res.data);
+        classroomServeice.getStudents().then((res) => {
+            console.log(res.data)
         })
     },
 }
