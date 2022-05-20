@@ -47,30 +47,30 @@
 
 <script>
 export default {
-    props: {
-        showInput: {
-            type: Boolean,
-        },
+  props: {
+    showInput: {
+      type: Boolean,
     },
-    data() {
-        return {
-            pincode: '',
-        }
+  },
+  data() {
+    return {
+      pincode: '',
+    }
+  },
+  methods: {
+    filterNumber(evt) {
+      evt = evt ? evt : window.event
+      let expect = evt.target.value.toString() + evt.key.toString()
+      if (!/^[-+]?[0-9]*\.?[0-9]*$/.test(expect)) {
+        evt.preventDefault()
+      } else {
+        return
+      }
     },
-    methods: {
-        filterNumber(evt) {
-            evt = evt ? evt : window.event
-            let expect = evt.target.value.toString() + evt.key.toString()
-            if (!/^[-+]?[0-9]*\.?[0-9]*$/.test(expect)) {
-                evt.preventDefault()
-            } else {
-                return
-            }
-        },
-        join() {
-            this.$emit('join-number', this.pincode)
-            console.log(this.$nuxt.$route.name)
-        },
+    join() {
+      this.$emit('join-number', this.pincode)
+      console.log(this.$nuxt.$route.name)
     },
+  },
 }
 </script>
