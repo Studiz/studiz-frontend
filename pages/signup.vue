@@ -12,7 +12,7 @@
       <v-stepper-items class="background px-2 py-8 px-md-10 py-md-10 -mt-2">
         <v-stepper-content step="1" class="px-0 py-0">
           <v-card color="background" flat>
-            <p class="secondary--text text-H1 font-bold text-center">Sign up</p>
+            <p class="primary--text text-H1 font-bold text-center">Sign up</p>
 
             <script src="https://accounts.google.com/gsi/client" async defer></script>
             <div
@@ -71,7 +71,7 @@
         </v-stepper-content>
         <v-stepper-content step="2" class="px-0 py-0">
           <v-card color="background" flat>
-            <p class="secondary--text text-H1 font-bold text-center">I am a...</p>
+            <p class="primary--text text-H1 font-bold text-center">I am a...</p>
             <div class="space-y-3 px-1">
               <div
                 @click="data.role = 'teacher'"
@@ -108,8 +108,9 @@
                 color="primary"
                 height="56"
                 block
+                :loading="loading"
                 :disabled="data.role == null"
-                @click="stepPage = 3"
+                @click="selectRole"
               >Confirm</v-btn>
               <!-- <v-btn class="text-cap" height="56" @click="stepPage = 1">Cancel</v-btn> -->
             </div>
@@ -117,7 +118,7 @@
         </v-stepper-content>
         <v-stepper-content step="3" class="px-0 py-0">
           <v-card color="background" flat>
-            <p class="secondary--text text-H1 font-bold text-center">Create your account</p>
+            <p class="primary--text text-H1 font-bold text-center">Create your account</p>
             <div>
               <v-form :ref="[passStep1?'form':'']" lazy-validation @submit.prevent="createAccount">
                 <v-text-field
@@ -221,7 +222,7 @@ export default {
                 if (this.first_password == this.con_password) {
                     this.data.password = this.con_password
                     this.loading = true
-                    await new Promise((resolve) => setTimeout(resolve, 3000))
+                    await new Promise((resolve) => setTimeout(resolve, 1000))
                     this.loading = false
                     console.log(this.data)
                     this.$router.push('/')
@@ -231,14 +232,17 @@ export default {
         async submitEmail() {
             if (this.$refs.form.validate()) {
                 this.loading = true
-                await new Promise((resolve) => setTimeout(resolve, 3000))
+                await new Promise((resolve) => setTimeout(resolve, 1000))
                 this.loading = false
                 this.passStep1 = true
                 this.stepPage = 2
             }
         },
 
-        selectRole() {
+        async selectRole() {
+            this.loading = true
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+            this.loading = false
             this.stepPage = 3
         },
         checkDuplicate(val) {
