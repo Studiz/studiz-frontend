@@ -1,5 +1,4 @@
 <template>
-  <!-- <v-row justify="center"> -->
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
@@ -12,7 +11,7 @@
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">User Profile</span>
+        <span class="text-H1">Create classroom</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -58,7 +57,6 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <!-- </v-row> -->
 </template>
 <script>
 export default {
