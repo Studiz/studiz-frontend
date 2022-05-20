@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         color="primary"
-        class="text-cap w-full md:w-auto rounded-lg"
+        class="text-cap w-full md:w-auto rounded-lg text-"
         height="50"
         v-bind="attrs"
         v-on="on"

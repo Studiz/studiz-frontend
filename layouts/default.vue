@@ -36,4 +36,13 @@ export default {
 .fontbold {
   @apply font-bold;
 }
+.text-H1 {
+  @apply text-H_1 font-bold;
+}
+.text-H2 {
+  @apply text-H_2 font-bold;
+}
+.text-H3 {
+  @apply text-H_3 font-bold;
+}
 </style>

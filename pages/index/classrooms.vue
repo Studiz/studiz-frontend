@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="md:flex justify-between items-center space-y-2 md:space-y-0">
-      <h1 class="text-H1 font-bold">Classroom</h1>
-      <Create-classroom  />
+      <h1 class="text-H1">Classroom</h1>
+      <Create-classroom />
       <v-btn
         height="50"
         color="primary"

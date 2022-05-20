@@ -12,7 +12,7 @@
       <v-stepper-items class="background px-2 py-8 px-md-10 py-md-10 -mt-2">
         <v-stepper-content step="1" class="px-0 py-0">
           <v-card color="background" flat>
-            <p class="primary--text text-H1 font-bold text-center">Sign up</p>
+            <p class="primary--text text-H1 text-center">Sign up</p>
 
             <script src="https://accounts.google.com/gsi/client" async defer></script>
             <div
@@ -71,7 +71,7 @@
         </v-stepper-content>
         <v-stepper-content step="2" class="px-0 py-0">
           <v-card color="background" flat>
-            <p class="primary--text text-H1 font-bold text-center">I am a...</p>
+            <p class="primary--text text-H1 text-center">I am a...</p>
             <div class="space-y-3 px-1">
               <div
                 @click="data.role = 'teacher'"
@@ -118,7 +118,7 @@
         </v-stepper-content>
         <v-stepper-content step="3" class="px-0 py-0">
           <v-card color="background" flat>
-            <p class="primary--text text-H1 font-bold text-center">Create your account</p>
+            <p class="primary--text text-H1 text-center">Create your account</p>
             <div>
               <v-form :ref="[passStep1?'form':'']" lazy-validation @submit.prevent="createAccount">
                 <v-text-field
@@ -165,7 +165,7 @@
                   :loading="loading"
                   type="submit"
                   :disabled="data.email==''"
-                  class="fontbold text-H1 text-cap"
+                  class="text-H1 text-cap"
                 >Create account</v-btn>
               </v-form>
             </div>
@@ -178,88 +178,86 @@
 
 <script>
 export default {
-    data() {
-        return {
-            data: {
-                email: '',
-                fname: '',
-                lname: '',
-                role: null,
-                password: '',
-            },
-            passStep1: false,
-            first_password: '',
-            con_password: '',
-            show_password1: false,
-            show_password2: false,
-            loading: false,
-            stepPage: 1,
-            rules: {
-                required: (v) => !!v || 'Required.',
-                min: (v) => v.length >= 5 || 'Min 5 characters',
-                nameRules: [
-                    (v) => !!v || 'Name is required',
-                    (v) =>
-                        (v && v.length <= 10) ||
-                        'Name must be less than 10 characters',
-                ],
-                email: (v) => {
-                    const pattern =
-                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    return pattern.test(v) || 'Invalid e-mail.'
-                },
-                confirmPass: [
-                    (v) => !!v || 'Confirm password',
-                    (v) =>
-                        v === this.first_password || 'Passwords do not match',
-                ],
-            },
+  data() {
+    return {
+      data: {
+        email: '',
+        fname: '',
+        lname: '',
+        role: null,
+        password: '',
+      },
+      passStep1: false,
+      first_password: '',
+      con_password: '',
+      show_password1: false,
+      show_password2: false,
+      loading: false,
+      stepPage: 1,
+      rules: {
+        required: (v) => !!v || 'Required.',
+        min: (v) => v.length >= 5 || 'Min 5 characters',
+        nameRules: [
+          (v) => !!v || 'Name is required',
+          (v) =>
+            (v && v.length <= 10) || 'Name must be less than 10 characters',
+        ],
+        email: (v) => {
+          const pattern =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(v) || 'Invalid e-mail.'
+        },
+        confirmPass: [
+          (v) => !!v || 'Confirm password',
+          (v) => v === this.first_password || 'Passwords do not match',
+        ],
+      },
+    }
+  },
+  methods: {
+    async createAccount() {
+      if (this.$refs.form.validate()) {
+        if (this.first_password == this.con_password) {
+          this.data.password = this.con_password
+          this.loading = true
+          await new Promise((resolve) => setTimeout(resolve, 1000))
+          this.loading = false
+          console.log(this.data)
+          this.$router.push('/')
         }
+      }
     },
-    methods: {
-        async createAccount() {
-            if (this.$refs.form.validate()) {
-                if (this.first_password == this.con_password) {
-                    this.data.password = this.con_password
-                    this.loading = true
-                    await new Promise((resolve) => setTimeout(resolve, 1000))
-                    this.loading = false
-                    console.log(this.data)
-                    this.$router.push('/')
-                }
-            }
-        },
-        async submitEmail() {
-            if (this.$refs.form.validate()) {
-                this.loading = true
-                await new Promise((resolve) => setTimeout(resolve, 1000))
-                this.loading = false
-                this.passStep1 = true
-                this.stepPage = 2
-            }
-        },
+    async submitEmail() {
+      if (this.$refs.form.validate()) {
+        this.loading = true
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        this.loading = false
+        this.passStep1 = true
+        this.stepPage = 2
+      }
+    },
 
-        async selectRole() {
-            this.loading = true
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            this.loading = false
-            this.stepPage = 3
-        },
-        checkDuplicate(val) {
-            /// write your api call and return the below statement if it already exist
-            ///ให้ back check น่าจะเร็วกว่ามั้ง
-            // if (val == 'jakkapong.q@mail.kmutt.ac.th') {
-            //     return `Account "${val}" already exist, please login `
-            // } else {
-            return true
-            // }
-        },
+    async selectRole() {
+      this.loading = true
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      this.loading = false
+      this.stepPage = 3
     },
+    checkDuplicate(val) {
+      /// write your api call and return the below statement if it already exist
+      ///ให้ back check น่าจะเร็วกว่ามั้ง
+      // if (val == 'jakkapong.q@mail.kmutt.ac.th') {
+      //     return `Account "${val}" already exist, please login `
+      // } else {
+      return true
+      // }
+    },
+  },
 }
 </script>
 
 <style>
 .outlineselect {
-    @apply outline outline-offset-2 rounded-sm outline-ligh_tprimary dark:outline-dark_primary;
+  @apply outline outline-offset-2 rounded-sm outline-ligh_tprimary dark:outline-dark_primary;
 }
 </style>

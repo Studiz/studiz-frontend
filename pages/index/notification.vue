@@ -1,5 +1,5 @@
 <template>
-  <p>notification</p>
+  <h1 class="text-H1">Notification</h1>
 </template>
 
 <script>

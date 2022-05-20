@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
     <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
-      <p class="primary--text text-H1 font-bold text-center">Login</p>
+      <p class="primary--text text-H1 text-center">Login</p>
 
       <script src="https://accounts.google.com/gsi/client" async defer></script>
       <div
@@ -66,33 +66,33 @@
 
 <script>
 export default {
-    data() {
-        return {
-            email: '',
-            password: '',
-            show: false,
-            rules: {
-                required: (v) => !!v || 'Required.',
-                min: (v) => v.length >= 5 || 'Min 5 characters',
-                email: (v) => {
-                    const pattern =
-                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    return pattern.test(v) || 'Invalid e-mail.'
-                },
-            },
-            loading: false,
-        }
-    },
-    methods: {
-        async submit() {
-            if (this.$refs.form.validate()) {
-                this.loading = true
-                await new Promise((resolve) => setTimeout(resolve, 3000))
-                this.loading = false
-                this.$route.push('/')
-            }
+  data() {
+    return {
+      email: '',
+      password: '',
+      show: false,
+      rules: {
+        required: (v) => !!v || 'Required.',
+        min: (v) => v.length >= 5 || 'Min 5 characters',
+        email: (v) => {
+          const pattern =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(v) || 'Invalid e-mail.'
         },
+      },
+      loading: false,
+    }
+  },
+  methods: {
+    async submit() {
+      if (this.$refs.form.validate()) {
+        this.loading = true
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+        this.loading = false
+        this.$route.push('/')
+      }
     },
+  },
 }
 </script>
 

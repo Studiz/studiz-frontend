@@ -143,9 +143,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.font {
-  @apply font-medium text-H2;
-}
-</style>

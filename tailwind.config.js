@@ -21,9 +21,11 @@ module.exports = {
         '60px': '60px',
       },
       fontSize: {
-        H1: '32px',
-        H2: '24px',
-        H3: '18px',
+        H_1: '32px',
+        H_2: '24px',
+        H_3: '18px',
+        P: '14px',
+        ST: '12px',
       }
     },
     screens: {
