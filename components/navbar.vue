@@ -54,23 +54,26 @@
     </div>
 
     <!-- Bottom -->
-    <div class="md:hidden">
-      <v-bottom-navigation
-        grow
-        fixed
-        height="70"
-        class="drop-shadow-md"
-        color="primary-title"
-        active-class="primary--text"
+    <v-bottom-navigation
+      grow
+      fixed
+      height="70"
+      class="drop-shadow-md d-md-none"
+      color="primary-title"
+      active-class="primary--text"
+    >
+      <v-btn
+        color="background"
+        class="px-0"
+        min-width="10"
+        v-for="b in buttonNav"
+        :key="b.icon"
+        :to="b.to"
       >
-        <!-- <v-tabs v-model="tab" flat grow centered icons-and-text class="d-flex"> -->
-        <v-btn class="px-0" min-width="10" v-for="b in buttonNav" :key="b.icon" :to="b.to">
-          <span class="text-cap text-sm d-none d-sm-inline-block">{{b.title}}</span>
-          <v-icon>{{b.icon}}</v-icon>
-        </v-btn>
-        <!-- </v-tabs> -->
-      </v-bottom-navigation>
-    </div>
+        <span class="text-cap text-sm">{{b.title}}</span>
+        <v-icon>{{b.icon}}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </div>
 </template>
 
