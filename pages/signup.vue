@@ -122,6 +122,16 @@ export default {
                 return true
             }
         },
+        signup() {
+          this.$fireModule.auth.createUserWithEmailAndPassword(this.email, this.password)
+            .then((res) => {
+              console.log(res)
+              this.$router.push('/')
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        },
     },
 }
 </script>
