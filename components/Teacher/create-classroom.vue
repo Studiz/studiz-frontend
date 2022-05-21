@@ -92,9 +92,7 @@ export default {
     },
     close() {
       this.dialog = false
-      this.data = name = ''
-      this.data = description = ''
-      this.data = tag = ''
+      this.$refs.form.reset()
     },
   },
 }
