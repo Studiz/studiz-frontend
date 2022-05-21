@@ -64,7 +64,7 @@
     >
       <v-btn
         color="background"
-        class="py-auto"
+        height="70"
         min-width="10"
         v-for="b in buttonNav"
         :key="b.icon"
