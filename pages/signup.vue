@@ -233,7 +233,6 @@ export default {
         this.stepPage = 2
       }
     },
-
     async selectRole() {
       // this.loading = true
       // await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -248,6 +247,16 @@ export default {
       // } else {
       return true
       // }
+    },
+    signup() {
+          this.$fireModule.auth.createUserWithEmailAndPassword(this.email, this.password)
+            .then((res) => {
+              console.log(res)
+              this.$router.push('/')
+            })
+            .catch((err) => {
+              console.log(err)
+            })
     },
     cancel() {
       this.stepPage = 1

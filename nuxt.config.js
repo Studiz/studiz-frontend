@@ -1,6 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  ssr: false,
+  // ssr: false,
+  mode: 'spa',
   target: 'static',
   head: {
     titleTemplate: '%s - Studiz',
@@ -56,13 +57,13 @@ export default {
     ['@nuxtjs/firebase',
       {
         config: {
-          apiKey: 'AIzaSyB-HKwqUYKKwNTwZ2JZc2i3dlQnVeYDleg',
-          authDomain: 'orangequiz-a1567.firebaseapp.com',
-          projectId: 'orangequiz-a1567',
-          storageBucket: 'orangequiz-a1567.appspot.com',
-          messagingSenderId: '654468903990',
-          appId: '1:654468903990:web:c25930fce2301ef4ca5497',
-          measurementId: 'G-E493KNZ3BS'
+          apiKey: 'AIzaSyBGYCsOpzKtnrcCTUIflOZr_phSv1DSY4s',
+          authDomain: 'studiz-ce53f.firebaseapp.com',
+          projectId: 'studiz-ce53f',
+          storageBucket: 'studiz-ce53f.appspot.com',
+          messagingSenderId: '874564223143',
+          appId: '1:874564223143:web:9d292f2f1f60fd61815b82',
+          measurementId: 'G-1Z69XQJNN6'
         },
         services: {
           auth: {
@@ -74,7 +75,12 @@ export default {
     ]
   ],
   env: {
-    baseURL: "http://20.239.140.141:9091/api"
+    baseURL: "http://20.239.140.141:9091/api",
+    FIRE_ENV: process.env.FIRE_ENV
+  },
+
+  router: {
+    middleware: ['auth']
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
