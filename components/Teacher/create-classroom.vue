@@ -14,47 +14,40 @@
         <span class="text-H1">Create classroom</span>
       </v-card-title>
       <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field label="Legal first name*" required></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                label="Legal last name*"
-                hint="example of persistent helper text"
-                persistent-hint
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field label="Email*" required></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field label="Password*" type="password" required></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-select :items="['0-17', '18-29', '30-54', '54+']" label="Age*" required></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-autocomplete
-                :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                label="Interests"
-                multiple
-              ></v-autocomplete>
-            </v-col>
-          </v-row>
-        </v-container>
-        <small>*indicates required field</small>
+        <v-form ref="form" lazy-validation @submit.prevent="createClassroom">
+          <v-container>
+            <v-text-field
+              label="Classroom name"
+              outlined
+              required
+              v-model="data.name"
+              :rules="rules.nameRules"
+              :counter="10"
+            ></v-text-field>
+            <v-text-field
+              label="Description"
+              outlined
+              v-model="data.description"
+              :rules="rules.descriptionRules"
+              :counter="10"
+            ></v-text-field>
+            <v-autocomplete
+              :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+              label="Choose relevant subject"
+              :rules="[rules.required]"
+              v-model="data.tag"
+              multiple
+              outlined
+              chips
+            ></v-autocomplete>
+          </v-container>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text class="text-cap" @click="close">Close</v-btn>
+            <v-btn type="submit" color="primary" :loading="loading">create</v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -63,7 +56,46 @@ export default {
   data() {
     return {
       dialog: false,
+      loading: false,
+      data: {
+        name: '',
+        description: '',
+        tag: '',
+      },
+      rules: {
+        required: (v) => !!v || 'Required.',
+        nameRules: [
+          (v) => !!v || 'Required.',
+          (v) =>
+            (v && v.length <= 10) ||
+            'Classroom name must be less than 10 characters',
+        ],
+        descriptionRules: [
+          (v) => !!v || 'Required.',
+          (v) =>
+            (v && v.length <= 10) ||
+            'DescriptionRules must be less than 10 characters',
+        ],
+        // tagRule: [(v) => v || 'This field is required'],
+      },
     }
+  },
+  methods: {
+    async createClassroom() {
+      if (this.$refs.form.validate()) {
+        console.log(this.data)
+        this.loading = true
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        this.loading = false
+        this.dialog = false
+      }
+    },
+    close() {
+      this.dialog = false
+      this.data = name = ''
+      this.data = description = ''
+      this.data = tag = ''
+    },
   },
 }
 </script>
