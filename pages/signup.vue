@@ -115,7 +115,7 @@
             </v-btn>
             <p class="primary--text text-H1 text-center">Create your account</p>
             <div>
-              <v-form :ref="[passStep1?'form':'']" lazy-validation @submit.prevent="createAccount">
+              <v-form ref="form2" lazy-validation @submit.prevent="createAccount">
                 <v-text-field
                   v-model.trim="data.fname"
                   :counter="10"
@@ -184,7 +184,6 @@ export default {
         role: null,
         password: '',
       },
-      passStep1: false,
       first_password: '',
       confirm_password: '',
       show_password1: false,
@@ -193,7 +192,7 @@ export default {
       stepPage: 1,
       rules: {
         required: (v) => !!v || 'Required.',
-        min: (v) => v.length >= 5 || 'Min 5 characters',
+        min: (v) => (v && v.length >= 5) || 'Min 5 characters',
         nameRules: [
           (v) => !!v || 'Required.',
           (v) =>
@@ -213,7 +212,7 @@ export default {
   },
   methods: {
     async createAccount() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form2.validate()) {
         if (this.first_password == this.confirm_password) {
           this.data.password = this.confirm_password
           this.loading = true
@@ -229,10 +228,10 @@ export default {
         this.loading = true
         await new Promise((resolve) => setTimeout(resolve, 1000))
         this.loading = false
-        this.passStep1 = true
         this.stepPage = 2
       }
     },
+
     async selectRole() {
       // this.loading = true
       // await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -248,24 +247,11 @@ export default {
       return true
       // }
     },
-    signup() {
-          this.$fireModule.auth.createUserWithEmailAndPassword(this.email, this.password)
-            .then((res) => {
-              console.log(res)
-              this.$router.push('/')
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-    },
     cancel() {
-      this.stepPage = 1
-      this.data.email = ''
-      this.data.fname = ''
-      this.data.lname = ''
+      this.$refs.form.reset()
+      this.$refs.form2.reset()
       this.data.role = null
-      this.data.first_password = ''
-      this.data.confirm_password = ''
+      this.stepPage = 1
     },
   },
 }
