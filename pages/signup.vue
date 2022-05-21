@@ -190,7 +190,7 @@ export default {
       show_password1: false,
       show_password2: false,
       loading: false,
-      stepPage: 2,
+      stepPage: 1,
       rules: {
         required: (v) => !!v || 'Required.',
         min: (v) => v.length >= 5 || 'Min 5 characters',
