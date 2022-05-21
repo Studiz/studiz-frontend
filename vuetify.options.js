@@ -30,6 +30,7 @@ export default {
         secondary_shade: "#ffe3d9",
         bg_disable: "#464646",
         background: "#272727",
+        last_background: "#121212",
         accent: "#424242",
         info: "#26a69a",
         warning: "#ffc107",

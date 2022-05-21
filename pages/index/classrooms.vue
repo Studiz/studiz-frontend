@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class="md:flex justify-between items-center mb-1">
-      <h1 class="text-H1 font-bold">Classroom</h1>
+    <div class="md:flex justify-between items-center space-y-2 md:space-y-0">
+      <h1 class="text-H1">Classroom</h1>
+      <Create-classroom />
       <v-btn
         height="50"
         color="primary"
@@ -23,11 +24,10 @@
           <v-btn
             hide-details
             inset
-            height="60"
-            color="white"
+            height="56"
             class="rounded-lg text-cap d-md-none"
             :class="[
-              this.$route.name == 'index-classroom' ? 'w-full col-span-6' : '',
+              this.$route.name == 'index-classrooms' ? 'w-full col-span-6' : '',
             ]"
             @click="cancel()"
           >cancel</v-btn>
@@ -72,79 +72,80 @@
 
 <script>
 import classroomServeice from '@/services/ClassroomService.js'
+import CreateClassroom from '~/components/Teacher/create-classroom.vue'
 export default {
-    data() {
-        return {
-            showInput: false,
-            color: [
-                { color1: '', color2: '' },
-                { color1: '', color2: '' },
-                { color1: '', color2: '' },
-            ],
-            classlist: [
-                {
-                    name: 'INT 100',
-                    description: 'IT Fundamentals',
-                    teachName: 'john seana',
-                    teachImage: '',
-                },
-                {
-                    name: 'INT 101',
-                    description: 'PROGRAMMING FUNDAMENTALS',
-                    teachName: 'john seana',
-                    teachImage: '',
-                },
-                {
-                    name: 'INT 102',
-                    description: 'WEB TECHNOLOGY',
-                    teachName: 'john seana',
-                    teachImage: '',
-                },
-                {
-                    name: 'LNG 120',
-                    description: 'GENERAL ENGLISH',
-                    teachName: 'john seana',
-                    teachImage: '',
-                },
-            ],
-        }
-    },
-    methods: {
-        cancel() {
-            this.showInput = !this.showInput
+  components: { CreateClassroom },
+  data() {
+    return {
+      showInput: false,
+      color: [
+        { color1: '', color2: '' },
+        { color1: '', color2: '' },
+        { color1: '', color2: '' },
+      ],
+      classlist: [
+        {
+          name: 'INT 100',
+          description: 'IT Fundamentals',
+          teachName: 'john seana',
+          teachImage: '',
         },
-
+        {
+          name: 'INT 101',
+          description: 'PROGRAMMING FUNDAMENTALS',
+          teachName: 'john seana',
+          teachImage: '',
+        },
+        {
+          name: 'INT 102',
+          description: 'WEB TECHNOLOGY',
+          teachName: 'john seana',
+          teachImage: '',
+        },
+        {
+          name: 'LNG 120',
+          description: 'GENERAL ENGLISH',
+          teachName: 'john seana',
+          teachImage: '',
+        },
+      ],
+    }
+  },
+  methods: {
+    cancel() {
+      this.showInput = !this.showInput
     },
-    created() {
-        classroomServeice.getStudents().then(res => {
-            console.log(res.data);
-        })
-    },
+  },
+  created() {
+    classroomServeice.getStudents().then((res) => {
+      console.log(res.data)
+    })
+  },
 }
 </script>
 
 <style csoped>
 /* width */
 .scrollbar::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
 /* Track */
 .scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 8px 8px;
+  background: transparent;
+  margin: 8px 8px;
 }
 
 /* Handle */
 .scrollbar::-webkit-scrollbar-thumb {
-    background: #ffb703;
-    border-radius: 50px;
+  background: #ffb703;
+  border-radius: 50px;
 }
 
 /* Handle on hover */
 .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #f88100;
-    border-radius: 50px;
+  background: #f88100;
+  border-radius: 50px;
 }
 </style>
 </style>

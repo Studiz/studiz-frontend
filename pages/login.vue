@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
     <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
-      <p class="text-secondary text-H1 font-bold text-center">Login</p>
+      <p class="primary--text text-H1 text-center">Login</p>
 
       <script src="https://accounts.google.com/gsi/client" async defer></script>
       <div
@@ -50,7 +50,7 @@
           ></v-text-field>
           <v-btn
             color="primary"
-            height="60"
+            height="56"
             block
             :loading="loading"
             type="submit"
@@ -89,10 +89,10 @@ export default {
     async submit() {
       // this.loginWithGoogle()
       if (this.$refs.form.validate()) {
-          this.loading = true
-          await new Promise((resolve) => setTimeout(resolve, 3000))
-          this.loading = false
-          this.$route.push('/')
+        this.loading = true
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+        this.loading = false
+        this.$route.push('/')
       }
     },
     login() {

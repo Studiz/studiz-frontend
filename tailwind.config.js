@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       // textOpacity: ['dark'],
       colors: {
-        // primary: '#F88100',
-        // primaryfocus: '#F35B04',
+        ligh_tprimary: "#0c8ce9",
+        dark_primary: "#22A1EE",
         secondary: '#ff6b35',
         // tertiary: '#FAE445',
         // neutral: '#f8f8f8',
@@ -21,9 +21,11 @@ module.exports = {
         '60px': '60px',
       },
       fontSize: {
-        H1: '32px',
-        H2: '24px',
-        H3: '18px',
+        H_1: '32px',
+        H_2: '24px',
+        H_3: '18px',
+        P: '14px',
+        ST: '12px',
       }
     },
     screens: {

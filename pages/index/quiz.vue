@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-H1 font-bold">Quiz</h1>
+    <h1 class="text-H1">Quiz</h1>
     <div class="mx-auto max-w-lg mt-5">
       <Input-join />
     </div>
