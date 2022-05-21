@@ -64,13 +64,13 @@
     >
       <v-btn
         color="background"
-        class="px-0"
+        class="py-auto"
         min-width="10"
         v-for="b in buttonNav"
         :key="b.icon"
         :to="b.to"
       >
-        <span class="text-cap text-sm">{{b.title}}</span>
+        {{b.title}}
         <v-icon>{{b.icon}}</v-icon>
       </v-btn>
     </v-bottom-navigation>
