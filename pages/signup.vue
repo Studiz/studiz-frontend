@@ -9,7 +9,7 @@
         <v-stepper-step class="text-sm" step="3">Create account</v-stepper-step>
       </v-stepper-header>
 
-      <v-stepper-items class="background px-2 py-8 px-md-10 py-md-10 -mt-2">
+      <v-stepper-items class="background px-2 py-8 px-md-10 pb-md-10 pt-md-5 -mt-2">
         <v-stepper-content step="1" class="px-0 py-0">
           <v-card color="background" flat>
             <p class="primary--text text-H1 text-center">Sign up</p>
@@ -48,14 +48,7 @@
                   @keypress.enter="submitEmail"
                   :rules="[rules.required, rules.email, checkDuplicate]"
                 ></v-text-field>
-                <v-btn
-                  color="primary"
-                  height="60"
-                  block
-                  :loading="loading"
-                  type="submit"
-                  class="fontbold"
-                >Next</v-btn>
+                <v-btn color="primary" height="60" block :loading="loading" type="submit" class>Next</v-btn>
                 <div class="flex items-center mt-7">
                   <span>Have an account?</span>
                   <v-btn
@@ -102,36 +95,37 @@
                 </v-btn>
               </div>
             </div>
-            <div class="mt-7">
+            <div class="mt-7 grid grid-cols-2 gap-3">
+              <v-btn text @click="cancel" outlined height="56" block class="text-cap">cancel</v-btn>
               <v-btn
-                class="text-cap px-md-5"
                 color="primary"
                 height="56"
                 block
                 :loading="loading"
                 :disabled="data.role == null"
                 @click="selectRole"
-              >Confirm</v-btn>
-              <!-- <v-btn class="text-cap" height="56" @click="stepPage = 1">Cancel</v-btn> -->
+              >Next</v-btn>
             </div>
           </v-card>
         </v-stepper-content>
         <v-stepper-content step="3" class="px-0 py-0">
           <v-card color="background" flat>
+            <v-btn text @click="stepPage = 2" class="mb-3">
+              <v-icon left>mdi-arrow-left</v-icon>back
+            </v-btn>
             <p class="primary--text text-H1 text-center">Create your account</p>
             <div>
               <v-form :ref="[passStep1?'form':'']" lazy-validation @submit.prevent="createAccount">
                 <v-text-field
-                  v-model="data.fname"
+                  v-model.trim="data.fname"
                   :counter="10"
                   :rules="rules.nameRules"
-                  autofocus
                   label="First name"
                   outlined
                   required
                 ></v-text-field>
                 <v-text-field
-                  v-model="data.lname"
+                  v-model.trim="data.lname"
                   :counter="10"
                   :rules="rules.nameRules"
                   label="Last name"
@@ -150,7 +144,7 @@
                 ></v-text-field>
                 <v-text-field
                   required
-                  v-model="con_password"
+                  v-model="confirm_password"
                   outlined
                   :append-icon="show_password2 ? 'mdi-eye' : 'mdi-eye-off'"
                   :rules="rules.confirmPass"
@@ -158,15 +152,18 @@
                   label="Confirm Password"
                   @click:append="show_password2 = !show_password2"
                 ></v-text-field>
-                <v-btn
-                  color="primary"
-                  height="56"
-                  block
-                  :loading="loading"
-                  type="submit"
-                  :disabled="data.email==''"
-                  class="text-H1 text-cap"
-                >Create account</v-btn>
+                <div class="grid grid-cols-2 gap-3">
+                  <v-btn text @click="cancel" outlined height="56" block class="text-cap">cancel</v-btn>
+                  <v-btn
+                    color="primary"
+                    height="56"
+                    block
+                    :loading="loading"
+                    type="submit"
+                    :disabled="data.email==''"
+                    class="text-H1"
+                  >Create account</v-btn>
+                </div>
               </v-form>
             </div>
           </v-card>
@@ -189,16 +186,16 @@ export default {
       },
       passStep1: false,
       first_password: '',
-      con_password: '',
+      confirm_password: '',
       show_password1: false,
       show_password2: false,
       loading: false,
-      stepPage: 1,
+      stepPage: 2,
       rules: {
         required: (v) => !!v || 'Required.',
         min: (v) => v.length >= 5 || 'Min 5 characters',
         nameRules: [
-          (v) => !!v || 'Name is required',
+          (v) => !!v || 'Required.',
           (v) =>
             (v && v.length <= 10) || 'Name must be less than 10 characters',
         ],
@@ -208,7 +205,7 @@ export default {
           return pattern.test(v) || 'Invalid e-mail.'
         },
         confirmPass: [
-          (v) => !!v || 'Confirm password',
+          (v) => !!v || 'Required.',
           (v) => v === this.first_password || 'Passwords do not match',
         ],
       },
@@ -217,8 +214,8 @@ export default {
   methods: {
     async createAccount() {
       if (this.$refs.form.validate()) {
-        if (this.first_password == this.con_password) {
-          this.data.password = this.con_password
+        if (this.first_password == this.confirm_password) {
+          this.data.password = this.confirm_password
           this.loading = true
           await new Promise((resolve) => setTimeout(resolve, 1000))
           this.loading = false
@@ -238,9 +235,9 @@ export default {
     },
 
     async selectRole() {
-      this.loading = true
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      this.loading = false
+      // this.loading = true
+      // await new Promise((resolve) => setTimeout(resolve, 1000))
+      // this.loading = false
       this.stepPage = 3
     },
     checkDuplicate(val) {
@@ -251,6 +248,15 @@ export default {
       // } else {
       return true
       // }
+    },
+    cancel() {
+      this.stepPage = 1
+      this.data.email = ''
+      this.data.fname = ''
+      this.data.lname = ''
+      this.data.role = null
+      this.data.first_password = ''
+      this.data.confirm_password = ''
     },
   },
 }
