@@ -55,9 +55,21 @@
 
     <!-- Bottom -->
     <div class="md:hidden">
-      <v-app-bar bottom fixed flat class="drop-shadow-md" height="70" dense color="background">
-        <p>teat</p>
-      </v-app-bar>
+      <v-bottom-navigation
+        grow
+        fixed
+        height="70"
+        class="drop-shadow-md"
+        color="primary-title"
+        active-class="primary--text"
+      >
+        <!-- <v-tabs v-model="tab" flat grow centered icons-and-text class="d-flex"> -->
+        <v-btn class="px-0" min-width="10" v-for="b in buttonNav" :key="b.icon" :to="b.to">
+          <span class="text-cap text-sm d-none d-sm-inline-block">{{b.title}}</span>
+          <v-icon>{{b.icon}}</v-icon>
+        </v-btn>
+        <!-- </v-tabs> -->
+      </v-bottom-navigation>
     </div>
   </div>
 </template>
@@ -92,6 +104,28 @@ export default {
           icon: 'mdi-desktop-tower-monitor',
           methods: 'theme',
           mode: 'SystemTheme',
+        },
+      ],
+      buttonNav: [
+        {
+          title: 'classroom',
+          icon: '$vuetify.icons.classroom',
+          to: '/classrooms',
+        },
+        {
+          title: 'join quiz',
+          icon: '$vuetify.icons.quiz',
+          to: '/quiz',
+        },
+        {
+          title: 'notification',
+          icon: '$vuetify.icons.notification',
+          to: '/notification',
+        },
+        {
+          title: 'more',
+          icon: '$vuetify.icons.more',
+          to: '/',
         },
       ],
     }

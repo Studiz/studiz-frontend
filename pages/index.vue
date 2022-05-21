@@ -27,8 +27,14 @@
       </v-sheet>
     </v-col>
 
-    <v-col cols="12" md="11" lg="10">
-      <v-sheet min-height="70vh" rounded="lg" elevation="1" color="background" class="pa-5 mb-16">
+    <v-col cols="12" md="11" lg="10" class="pa-1 pa-md-3">
+      <v-sheet
+        min-height="70vh"
+        rounded="lg"
+        elevation="1"
+        color="background"
+        class="pa-2 pa-md-5 mb-16 overflow-hidden"
+      >
         <Nuxt />
         <div v-if="this.$route.name === 'index' ? this.$router.push('/classrooms') : ''" />
       </v-sheet>
@@ -56,6 +62,11 @@ export default {
           title: 'notification',
           icon: '$vuetify.icons.notification',
           to: '/notification',
+        },
+        {
+          title: 'more',
+          icon: '$vuetify.icons.more',
+          to: '/',
         },
         // { title: 'more', icon: '$vuetify.icons.more' },
       ],
