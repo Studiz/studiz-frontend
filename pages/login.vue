@@ -2,26 +2,7 @@
   <div class="max-w-lg mx-auto">
     <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
       <p class="primary--text text-H1 text-center">Login</p>
-
-      <script src="https://accounts.google.com/gsi/client" async defer></script>
-      <div
-        id="g_id_onload"
-        data-client_id="YOUR_GOOGLE_CLIENT_ID"
-        data-login_uri="https://your.domain/your_login_endpoint"
-        data-auto_prompt="false"
-      ></div>
-      <div
-        class="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left"
-      ></div>
-      <div id="buttonDiv"></div>
-
-      <!-- <div id='firebaseui-auth-container'></div> -->
+      <div id='firebaseui-auth-container'></div>
 
       <div class="flex justify-center items-center my-5">
         <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
@@ -92,19 +73,16 @@ export default {
         this.loading = true
         await new Promise((resolve) => setTimeout(resolve, 3000))
         this.loading = false
-        this.$route.push('/')
+        // this.$route.push('/')
       }
     },
     login() {
       this.$fire.auth
-        .signInWithEmailAndPassword(this.auth.email, this.auth.password)
-        .catch((error) => {
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then((res) => {
           this.loading = false
-          console.log(error.message)
-        })
-        .then(() => {
-          this.loading = false
-          this.$route.push('/')
+          console.log(res);
+          // this.$route.push('/')
         })
     },
     loginWithGoogle() {
@@ -127,8 +105,6 @@ export default {
 
     const config = {
       signInOptions: [
-        
-        this.$fireModule.auth.EmailAuthProvider.PROVIDER_ID,
         this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID,
       ],
       signInSuccessUrl: '/',
