@@ -38,8 +38,7 @@
       grow
       fixed
       height="70"
-      class="drop-shadow-md d-md-none"
-      color="primary-title"
+      class="drop-shadow-md d-md-none background"
       active-class="primary--text"
     >
       <v-btn
@@ -92,7 +91,7 @@ export default {
         {
           title: 'more',
           icon: '$vuetify.icons.more',
-          to: '/',
+          to: '/more',
         },
       ],
     }
