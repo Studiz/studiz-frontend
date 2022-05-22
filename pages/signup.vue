@@ -13,7 +13,7 @@
         <v-stepper-content step="1" class="px-0 py-0">
           <v-card color="background" flat>
             <p class="primary--text text-H1 text-center">Sign up</p>
-            <div id="firebaseui-auth-container" class="w-27"></div>
+            <div id="firebaseui-auth-container"></div>
 
             <div class="flex justify-center items-center my-5">
               <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
@@ -29,7 +29,7 @@
                   outlined
                   v-model.trim="data.email"
                   @keypress.enter="submitEmail"
-                  :rules="[rules.required, rules.email, checkDuplicate]"
+                  :rules="[rules.required, rules.email]"
                 ></v-text-field>
                 <v-btn color="primary" height="60" block :loading="loading" type="submit" class>Next</v-btn>
                 <div class="flex items-center mt-7">
@@ -86,7 +86,7 @@
                 block
                 :loading="loading"
                 :disabled="data.role == null"
-                @click="selectRole"
+                @click="isGoogleAccount?confirmRole():selectRole()"
               >{{isGoogleAccount?"Confirm":"Next"}}</v-btn>
             </div>
           </v-card>
@@ -97,7 +97,7 @@
               <v-icon left>mdi-arrow-left</v-icon>back
             </v-btn>
             <p class="primary--text text-H1 text-center">Create your account</p>
-            <div v-if="isGoogleAccount">
+            <div v-if="!isGoogleAccount">
               <v-form ref="form2" lazy-validation @submit.prevent="createAccount">
                 <v-text-field
                   v-model.trim="data.fname"
@@ -157,6 +157,7 @@
 </template>
 
 <script>
+import userService from '../services/UserService.js'
 export default {
   data() {
     return {
@@ -172,7 +173,7 @@ export default {
       show_password1: false,
       show_password2: false,
       loading: false,
-      isGoogleAccount: true,
+      isGoogleAccount: false,
       stepPage: 1,
       rules: {
         required: (v) => !!v || 'Required.',
@@ -200,7 +201,6 @@ export default {
         if (this.first_password == this.confirm_password) {
           this.data.password = this.confirm_password
           this.loading = true
-
           let data = {
             email: this.data.email,
             fname: this.data.fname,
@@ -210,10 +210,9 @@ export default {
           }
           const sign = require('jwt-encode')
           const secret = 'secret'
-          const jwt = sign(data, secret)
-
+          const dataToken = sign(data, secret)
+          userService.signUpStudentWithEmail(dataToken)
           this.loading = false
-          console.log(this.data)
           this.$router.push('/')
         }
       }
@@ -221,9 +220,16 @@ export default {
     async submitEmail() {
       if (this.$refs.form.validate()) {
         this.loading = true
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        this.loading = false
-        this.stepPage = 2
+        await userService
+          .checkDuplicateEmail(this.data.email)
+          .then((isAvailable) => {
+            if (isAvailable) {
+              this.loading = false
+              this.stepPage = 2
+            } else {
+              this.loading = false
+            }
+          })
       }
     },
 
@@ -233,14 +239,8 @@ export default {
       // this.loading = false
       this.stepPage = 3
     },
-    checkDuplicate(val) {
-      /// write your api call and return the below statement if it already exist
-      ///ให้ back check น่าจะเร็วกว่ามั้ง
-      // if (val == 'jakkapong.q@mail.kmutt.ac.th') {
-      //     return `Account "${val}" already exist, please login `
-      // } else {
-      return true
-      // }
+    confirmRole() {
+      localStorage.clear('user')
     },
     cancel() {
       this.$refs.form.reset()
@@ -248,8 +248,17 @@ export default {
       this.data.role = null
       this.stepPage = 1
     },
+    signUpWithGoogle() {
+      this.isGoogleAccount = true
+      this.stepPage = 2
+    },
   },
   mounted() {
+    if (localStorage.getItem('user')) {
+      this.isGoogleAccount = true
+      this.stepPage = 2
+    }
+
     const firebaseui = require('firebaseui')
     require('firebaseui/dist/firebaseui.css')
 
@@ -258,14 +267,10 @@ export default {
       new firebaseui.auth.AuthUI(this.$fire.auth)
 
     const config = {
-      signInOptions: [
-        this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID,
-      ],
-      signInSuccessUrl: '/',
+      signInOptions: [this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID],
       callbacks: {
         signInSuccessWithAuthResult(res) {
-          console.log(res)
-          window.location = '/'
+          localStorage.setItem('user', JSON.stringify(res))
         },
       },
     }
