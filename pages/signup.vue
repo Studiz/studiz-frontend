@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
     <v-stepper v-model="stepPage" rounded="lg" color="last_background">
-      <v-stepper-header class="background">
+      <v-stepper-header class="background" v-if="!isGoogleAccount">
         <v-stepper-step class="text-sm" :complete="stepPage > 1" step="1">Sign up</v-stepper-step>
         <v-divider></v-divider>
         <v-stepper-step class="text-sm" :complete="stepPage > 2" step="2">Choose your role</v-stepper-step>
@@ -13,24 +13,7 @@
         <v-stepper-content step="1" class="px-0 py-0">
           <v-card color="background" flat>
             <p class="primary--text text-H1 text-center">Sign up</p>
-
-            <script src="https://accounts.google.com/gsi/client" async defer></script>
-            <div
-              id="g_id_onload"
-              data-client_id="YOUR_GOOGLE_CLIENT_ID"
-              data-login_uri="https://your.domain/your_login_endpoint"
-              data-auto_prompt="false"
-            ></div>
-            <div
-              class="g_id_signin"
-              data-type="standard"
-              data-size="large"
-              data-theme="outline"
-              data-text="sign_in_with"
-              data-shape="rectangular"
-              data-logo_alignment="left"
-            ></div>
-            <div id="buttonDiv"></div>
+            <div id="firebaseui-auth-container" class="w-27"></div>
 
             <div class="flex justify-center items-center my-5">
               <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
@@ -104,7 +87,7 @@
                 :loading="loading"
                 :disabled="data.role == null"
                 @click="selectRole"
-              >Next</v-btn>
+              >{{isGoogleAccount?"Confirm":"Next"}}</v-btn>
             </div>
           </v-card>
         </v-stepper-content>
@@ -114,7 +97,7 @@
               <v-icon left>mdi-arrow-left</v-icon>back
             </v-btn>
             <p class="primary--text text-H1 text-center">Create your account</p>
-            <div>
+            <div v-if="isGoogleAccount">
               <v-form ref="form2" lazy-validation @submit.prevent="createAccount">
                 <v-text-field
                   v-model.trim="data.fname"
@@ -189,6 +172,7 @@ export default {
       show_password1: false,
       show_password2: false,
       loading: false,
+      isGoogleAccount: true,
       stepPage: 1,
       rules: {
         required: (v) => !!v || 'Required.',
@@ -216,7 +200,18 @@ export default {
         if (this.first_password == this.confirm_password) {
           this.data.password = this.confirm_password
           this.loading = true
-          await new Promise((resolve) => setTimeout(resolve, 1000))
+
+          let data = {
+            email: this.data.email,
+            fname: this.data.fname,
+            lname: this.data.lname,
+            role: this.data.role,
+            password: this.data.password,
+          }
+          const sign = require('jwt-encode')
+          const secret = 'secret'
+          const jwt = sign(data, secret)
+
           this.loading = false
           console.log(this.data)
           this.$router.push('/')
@@ -253,6 +248,29 @@ export default {
       this.data.role = null
       this.stepPage = 1
     },
+  },
+  mounted() {
+    const firebaseui = require('firebaseui')
+    require('firebaseui/dist/firebaseui.css')
+
+    const ui =
+      firebaseui.auth.AuthUI.getInstance() ||
+      new firebaseui.auth.AuthUI(this.$fire.auth)
+
+    const config = {
+      signInOptions: [
+        this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID,
+      ],
+      signInSuccessUrl: '/',
+      callbacks: {
+        signInSuccessWithAuthResult(res) {
+          console.log(res)
+          window.location = '/'
+        },
+      },
+    }
+
+    ui.start('#firebaseui-auth-container', config)
   },
 }
 </script>

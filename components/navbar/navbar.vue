@@ -64,7 +64,7 @@ export default {
     return {
       route: [
         {
-          title: 'login',
+          title: 'Login',
           to: '/login',
         },
         {
