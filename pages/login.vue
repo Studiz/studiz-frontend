@@ -2,13 +2,6 @@
   <div class="max-w-lg mx-auto">
     <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
       <p class="primary--text text-H1 text-center">Login</p>
-      <div id='firebaseui-auth-container'></div>
-
-      <div class="flex justify-center items-center my-5">
-        <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
-        <span class="text-H3 font-bold bg_disable--text">or</span>
-        <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
-      </div>
 
       <div>
         <v-form ref="form" lazy-validation @submit.prevent="submit">
@@ -36,12 +29,20 @@
             :loading="loading"
             type="submit"
             class="text-cap"
-            >Login</v-btn>
+          >Login</v-btn>
           <div class="flex items-center mt-7">
             <span>Don’t have an account?</span>
             <v-btn outlined color="secondary" class="ml-2 text-cap" to="signup">Sign up</v-btn>
           </div>
         </v-form>
+
+        <div class="flex justify-center items-center my-5">
+          <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
+          <span class="text-H3 font-bold bg_disable--text">or</span>
+          <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
+        </div>
+
+        <div id="firebaseui-auth-container"></div>
       </div>
     </v-card>
   </div>
@@ -81,7 +82,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((res) => {
           this.loading = false
-          console.log(res);
+          console.log(res)
           // this.$route.push('/')
         })
     },
@@ -104,9 +105,7 @@ export default {
       new firebaseui.auth.AuthUI(this.$fire.auth)
 
     const config = {
-      signInOptions: [
-        this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID,
-      ],
+      signInOptions: [this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID],
       signInSuccessUrl: '/',
       callbacks: {
         signInSuccessWithAuthResult() {

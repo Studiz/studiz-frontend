@@ -63,11 +63,11 @@ export default {
           icon: '$vuetify.icons.notification',
           to: '/notification',
         },
-        // {
-        //   title: 'more',
-        //   icon: '$vuetify.icons.more',
-        //   to: '/',
-        // },
+        {
+          title: 'more',
+          icon: '$vuetify.icons.more',
+          to: '/more',
+        },
       ],
     }
   },
