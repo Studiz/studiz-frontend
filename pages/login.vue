@@ -41,7 +41,6 @@
           <span class="text-H3 font-bold bg_disable--text">or</span>
           <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
         </div>
-
         <div id="firebaseui-auth-container"></div>
       </div>
     </v-card>
@@ -49,6 +48,8 @@
 </template>
 
 <script>
+// import { mapMutations, mapGetters, mapState } from 'vuex'
+import userService from '../services/UserService.js'
 export default {
   data() {
     return {
@@ -57,7 +58,7 @@ export default {
       show: false,
       rules: {
         required: (v) => !!v || 'Required.',
-        min: (v) => v.length >= 5 || 'Min 5 characters',
+        min: (v) => v.length >= 6 || 'Min 6 characters',
         email: (v) => {
           const pattern =
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -69,31 +70,36 @@ export default {
   },
   methods: {
     async submit() {
-      // this.loginWithGoogle()
       if (this.$refs.form.validate()) {
         this.loading = true
-        await new Promise((resolve) => setTimeout(resolve, 3000))
-        this.loading = false
-        // this.$route.push('/')
+        this.$fire.auth
+          .signInWithEmailAndPassword(this.email, this.password)
+          .then((res) => {
+            userService
+              .signInGetProfile(res.user._delegate.accessToken)
+              .then((res) => {
+                console.log(res.data)
+                this.loading = false
+                this.$router.push('/')
+              })
+          })
+          .catch((err) => {
+            alert(err)
+            this.loading = false
+          })
       }
     },
-    login() {
-      this.$fire.auth
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then((res) => {
-          this.loading = false
-          console.log(res)
-          // this.$route.push('/')
-        })
+
+    async loginWithEmail() {
+      return await this.$fire.auth.signInWithEmailAndPassword(
+        this.email,
+        this.password
+      )
     },
-    loginWithGoogle() {
-      this.$fire.auth
-        .signInWithPopup(this.$fire.googleProvider)
-        .then((userCred) => {
-          console.log(userCred)
-          this.loading = false
-          this.$route.push('/')
-        })
+  },
+  computed: {
+    user() {
+      return this.$store.getters.getUser
     },
   },
   mounted() {
@@ -108,9 +114,9 @@ export default {
       signInOptions: [this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID],
       signInSuccessUrl: '/',
       callbacks: {
-        signInSuccessWithAuthResult() {
-          console.log('Successfully signed in')
-          window.location = '/'
+        signInSuccessWithAuthResult(res) {
+          console.log(res)
+          this.$router.push('/')
         },
       },
     }
