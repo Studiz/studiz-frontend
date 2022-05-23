@@ -27,10 +27,7 @@
 
     <v-list color="transparent" rounded class="pa-0">
       <v-list-item link class="px-3" @click="clickTheme">
-        <v-icon size="36px" color="primary" left class="mr-4">
-          {{ themeicon }}
-          <LightDarkMode />
-        </v-icon>
+        <v-icon size="36px" color="primary" left class="mr-4">{{ themeicon }}</v-icon>
         <v-list-item-content>
           <v-list-item-title class="text-cap">theme: {{ themeName }}</v-list-item-title>
         </v-list-item-content>
@@ -69,7 +66,6 @@ export default {
   },
   methods: {
     clickTheme() {
-      // this.$refs.theme.click()
       document.getElementById('theme').click()
     },
   },

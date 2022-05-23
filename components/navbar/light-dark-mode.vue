@@ -58,7 +58,6 @@ export default {
         document.getElementById('light')
         this.mode()
       } else {
-        // localStorage.removeItem('theme')
         localStorage.theme = 'system'
         this.mode()
       }
