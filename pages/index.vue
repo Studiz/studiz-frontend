@@ -9,7 +9,7 @@
               <v-img src="https://api.lorem.space/image/face?hash=92310" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title class="text-cap items-center text-cap">User</v-list-item-title>
+              <v-list-item-title class="text-cap">User</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider class="my-2"></v-divider>
@@ -19,7 +19,7 @@
             <v-list-item :to="page.to" link active-class="primary--text">
               <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
               <v-list-item-content>
-                <v-list-item-title class="text-cap-btn items-center text-cap">{{ page.title }}</v-list-item-title>
+                <v-list-item-title class="text-cap">{{ page.title }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </div>
