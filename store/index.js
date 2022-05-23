@@ -33,7 +33,6 @@ const mutations = {
   SET_THEME_MODE(state, value) {
     state.themeIcon = value.icon
     state.themeName = value.title
-    console.log(value.icon);
   }
 }
 

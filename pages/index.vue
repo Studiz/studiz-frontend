@@ -44,8 +44,6 @@
       >
         <Nuxt />
         <div v-if="this.$route.name === 'index' ? this.$router.push('/classrooms') : ''" />
-
-        <v-btn color="success" @click="test">{{test}}</v-btn>
       </v-sheet>
     </v-col>
   </v-row>
@@ -84,13 +82,6 @@ export default {
         // },
       ],
     }
-  },
-  computed: {
-    test() {
-      // console.log(this.$store.getters.user)
-      return this.$store.getters.user
-      //  console.log(this.$store.getters.themeIcon)
-    },
   },
 }
 </script>
