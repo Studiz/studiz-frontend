@@ -86,7 +86,7 @@
                 block
                 :loading="loading"
                 :disabled="data.role == null"
-                @click="isGoogleAccount?confirmRole():selectRole()"
+                @click="isGoogleAccount?signUpWithGoogleAccount():selectRole()"
               >{{isGoogleAccount?"Confirm":"Next"}}</v-btn>
             </div>
           </v-card>
@@ -222,13 +222,15 @@ export default {
         this.loading = true
         await userService
           .checkDuplicateEmail(this.data.email)
-          .then((isAvailable) => {
-            if (isAvailable) {
+          .then((res) => {
+            if (res.status === 200) {
               this.loading = false
               this.stepPage = 2
-            } else {
-              this.loading = false
             }
+          })
+          .catch((err) => {
+            alert(err.response.data)
+            this.loading = false
           })
       }
     },
@@ -239,26 +241,37 @@ export default {
       // this.loading = false
       this.stepPage = 3
     },
-    confirmRole() {
-      localStorage.clear('user')
+    signUpWithGoogleAccount() {
+      let userData = JSON.parse(localStorage.getItem('googleAccountSignUp'))
+      let fullName = userData.displayName.split(' ')
+      let data = {
+        email: userData.email,
+        fname: fullName[0],
+        lname: fullName[1],
+        role: this.data.role,
+        imageUrl: userData.photoURL,
+        uid: userData.uid,
+      }
+      const sign = require('jwt-encode')
+      const secret = 'secret'
+      const dataToken = sign(data, secret)
+      console.log(dataToken)
+      userService.signUpStudentWithGoogle(dataToken)
+      localStorage.clear('googleAccountSignUp')
+      this.loading = false
+      this.$router.push('/')
     },
     cancel() {
-      this.$refs.form.reset()
-      this.$refs.form2.reset()
+      if (localStorage.getItem('googleAccountSignUp')) {
+      } else {
+        this.$refs.form.reset()
+        this.$refs.form2.reset()
+      }
       this.data.role = null
       this.stepPage = 1
     },
-    signUpWithGoogle() {
-      this.isGoogleAccount = true
-      this.stepPage = 2
-    },
   },
   mounted() {
-    if (localStorage.getItem('user')) {
-      this.isGoogleAccount = true
-      this.stepPage = 2
-    }
-
     const firebaseui = require('firebaseui')
     require('firebaseui/dist/firebaseui.css')
 
@@ -270,12 +283,35 @@ export default {
       signInOptions: [this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID],
       callbacks: {
         signInSuccessWithAuthResult(res) {
-          localStorage.setItem('user', JSON.stringify(res))
+          let user = res.user
+          userService
+            .checkDuplicateEmail(res.user._delegate.email)
+            .then((res) => {
+              if (res.status === 200) {
+                localStorage.setItem(
+                  'googleAccountSignUp',
+                  JSON.stringify(user)
+                )
+                window.location.reload()
+              }
+            })
+            .catch((err) => {
+              alert(err.response.data)
+              'googleAccountSignUp', JSON.stringify(false)
+            })
         },
       },
     }
-
     ui.start('#firebaseui-auth-container', config)
+  },
+  created() {
+    if (localStorage.getItem('googleAccountSignUp')) {
+      this.isGoogleAccount = true
+      this.stepPage = 2
+    }
+  },
+  destroyed() {
+    localStorage.clear('googleAccountSignUp')
   },
 }
 </script>
