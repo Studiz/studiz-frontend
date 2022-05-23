@@ -4,6 +4,7 @@ import notification from "static/menu_icon/notification.vue";
 import quiz from "static/menu_icon/quiz.vue";
 import Studiz_logo from 'static/logo/Studiz_logo.vue'
 import member from 'static/menu_icon/member.vue'
+import setting from 'static/menu_icon/setting.vue'
 
 
 export default {
@@ -59,6 +60,9 @@ export default {
       },
       member: {
         component: member
+      },
+      setting: {
+        component: setting
       },
     }
   }
