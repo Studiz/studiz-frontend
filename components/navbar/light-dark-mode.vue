@@ -1,8 +1,8 @@
 <template>
   <v-menu offset-y left color="primary" transition="slide-y-transition">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary text-cap" v-bind="attrs" rounded icon v-on="on">
-        <v-icon>{{ themeIcon }}</v-icon>
+      <v-btn color="primary text-cap" id="theme" v-bind="attrs" rounded icon v-on="on">
+        <v-icon>{{icon}}</v-icon>
       </v-btn>
     </template>
     <v-list>
@@ -15,7 +15,7 @@
         class="text-cap"
       >
         <v-icon left>{{ mode.icon }}</v-icon>
-        {{ mode.mode }}
+        {{ mode.title }}
       </v-list-item>
     </v-list>
   </v-menu>
@@ -30,17 +30,17 @@ export default {
         {
           icon: 'mdi-white-balance-sunny',
           methods: 'light',
-          mode: 'Light',
+          title: 'Light',
         },
         {
           icon: 'mdi-weather-night',
           methods: 'dark',
-          mode: 'Dark',
+          title: 'Dark',
         },
         {
           icon: 'mdi-desktop-tower-monitor',
           methods: 'theme',
-          mode: 'SystemTheme',
+          title: 'System',
         },
       ],
     }
@@ -51,16 +51,14 @@ export default {
         localStorage.theme = 'dark'
         this.$vuetify.theme.dark = true
         document.getElementById('dark')
-        this.themeIcon = mode.icon
         this.mode()
       } else if (mode === 'light') {
         localStorage.theme = 'light'
         this.$vuetify.theme.dark = false
         document.getElementById('light')
-        this.themeIcon = mode.icon
         this.mode()
       } else {
-        localStorage.removeItem('theme')
+        localStorage.theme = 'system'
         this.mode()
       }
     },
@@ -72,13 +70,33 @@ export default {
           window.matchMedia('(prefers-color-scheme: dark)').matches)
       ) {
         document.documentElement.classList.add('dark')
+        localStorage.theme = 'dark'
         this.$vuetify.theme.dark = true
         this.themeIcon = 'mdi-weather-night'
-      } else {
+        this.$store.commit('SET_THEME_MODE', this.ThemeMode[1])
+      } else if (localStorage.theme === 'light') {
         document.documentElement.classList.remove('dark')
+        localStorage.theme = 'light'
         this.$vuetify.theme.dark = false
         this.themeIcon = 'mdi-white-balance-sunny'
+        this.$store.commit('SET_THEME_MODE', this.ThemeMode[0])
+      } else {
+        localStorage.theme = 'system'
+        this.themeIcon = 'mdi-desktop-tower-monitor'
+        this.$store.commit('SET_THEME_MODE', this.ThemeMode[2])
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          this.$vuetify.theme.dark = true
+          document.documentElement.classList.add('dark')
+        } else {
+          this.$vuetify.theme.dark = false
+          document.documentElement.classList.remove('dark')
+        }
       }
+    },
+  },
+  computed: {
+    icon() {
+      return this.$store.getters.themeIcon
     },
   },
   mounted() {

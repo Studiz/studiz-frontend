@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  getUser: state => state.user,
+  user: state => state.user,
 }
 
 export const mutations = {
@@ -13,4 +13,10 @@ export const mutations = {
   setPass(state, user) {
     state.user = user
   }
+}
+export default {
+  state,
+  getters,
+  // actions,
+  mutations
 }
