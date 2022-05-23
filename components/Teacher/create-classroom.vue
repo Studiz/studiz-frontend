@@ -10,44 +10,42 @@
       >create classroom</v-btn>
     </template>
     <v-card>
-      <v-card-title>
-        <span class="text-H1">Create classroom</span>
+      <v-card-title class="px-3 px-md-5">
+        <span class="break-normal text-H1">Create classroom</span>
       </v-card-title>
-      <v-card-text>
-        <v-form ref="form" lazy-validation @submit.prevent="createClassroom">
-          <v-container>
-            <v-text-field
-              label="Classroom name"
-              outlined
-              required
-              v-model="data.name"
-              :rules="rules.nameRules"
-              :counter="10"
-            ></v-text-field>
-            <v-text-field
-              label="Description"
-              outlined
-              v-model="data.description"
-              :rules="rules.descriptionRules"
-              :counter="10"
-            ></v-text-field>
-            <v-autocomplete
-              :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-              label="Choose relevant subject"
-              :rules="[rules.required]"
-              v-model="data.tag"
-              multiple
-              outlined
-              chips
-            ></v-autocomplete>
-          </v-container>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text class="text-cap" @click="close">Close</v-btn>
-            <v-btn type="submit" color="primary" :loading="loading">create</v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card-text>
+      <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="createClassroom">
+        <v-container>
+          <v-text-field
+            label="Classroom name"
+            outlined
+            required
+            v-model="data.name"
+            :rules="rules.nameRules"
+            :counter="10"
+          ></v-text-field>
+          <v-text-field
+            label="Description"
+            outlined
+            v-model="data.description"
+            :rules="rules.descriptionRules"
+            :counter="10"
+          ></v-text-field>
+          <v-autocomplete
+            :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+            label="Choose relevant subject"
+            :rules="[rules.required]"
+            v-model="data.tag"
+            multiple
+            outlined
+            chips
+          ></v-autocomplete>
+        </v-container>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text class="text-cap" @click="close">Close</v-btn>
+          <v-btn type="submit" color="primary" :loading="loading">create</v-btn>
+        </v-card-actions>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
