@@ -3,7 +3,7 @@
     <v-col cols="0" md="1" lg="2" class="d-none d-md-block">
       <v-sheet color="transparent">
         <v-list color="transparent" rounded class="pa-0">
-          <v-list-item to="profile" class="px-2">
+          <v-list-item to="/profile" class="px-2">
             <v-list-item-avatar color="primary" size="36px">
               <!-- <v-icon large color="white">mdi-account-circle</v-icon> -->
               <v-img src="https://api.lorem.space/image/face?hash=92310" />
