@@ -12,7 +12,7 @@
         :showInput="showInput"
         v-if="userRole === 'STUDENT'"
       >join classroom</v-btn>
-      <Create-classroom v-if="userRole === 'TEACHER'"/>
+      <Create-classroom v-if="userRole === 'TEACHER'" />
     </div>
     <v-expand-transition>
       <v-card
@@ -120,7 +120,7 @@ export default {
   },
   computed: {
     classRoomList() {
-      return this.$store.getters.classRooms
+      return this.$store.getters.user ? this.$store.getters.classRooms : []
     },
     userRole() {
       return this.$store.getters.user ? this.$store.getters.user.role : ''
