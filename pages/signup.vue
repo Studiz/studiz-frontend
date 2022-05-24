@@ -50,10 +50,10 @@
             <p class="primary--text text-H1 text-center">I am a...</p>
             <div class="space-y-3 px-1">
               <div
-                @click="data.role = 'teacher'"
+                @click="data.role = 'student'"
                 :class="[data.role== 'teacher'?'outlineselect':'']"
               >
-                <v-btn block depressed height="100" color="primary">
+                <v-btn block depressed height="100" color="primary" disabled>
                   <v-img
                     left
                     max-height="80"

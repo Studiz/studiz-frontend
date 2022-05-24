@@ -1,5 +1,5 @@
 <template>
-  <p>
+  <div>
     <v-row class="mt-2" no-gutters>
       <v-col
         cols="12"
@@ -19,26 +19,18 @@
           <v-card-subtitle
             class="h-24 overflow-auto scrollbar white--text"
           >{{classroom.description}}</v-card-subtitle>
-          <v-card-text class="flex justify-between items-start white--text">
-            {{classroom.teachName}}
-            <v-avatar class="-m-5 mr-1 white--text">
-              <v-icon x-large color="white">mdi-account-circle</v-icon>
-            </v-avatar>
-          </v-card-text>
+          <v-card-text class="flex justify-between items-start white--text">{{classroom.teachName}}</v-card-text>
         </v-card>
       </v-col>
     </v-row>
-  </p>
+  </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {}
-    },
-    created() {
-        console.log(this.$route.params.classroomsid)
-    },
+  data() {
+    return {}
+  },
 }
 </script>
 
