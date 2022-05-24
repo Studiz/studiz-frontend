@@ -2,7 +2,7 @@
   <div>
     <div class="md:flex justify-between items-center space-y-2 md:space-y-0">
       <h1 class="text-H1">Classroom</h1>
-      <Create-classroom />
+
       <v-btn
         height="50"
         color="primary"
@@ -10,7 +10,9 @@
         :class="[showInput ? 'd-none d-md-block' : '']"
         @click="showInput = !showInput"
         :showInput="showInput"
+        v-if="userRole === 'STUDENT'"
       >join classroom</v-btn>
+      <Create-classroom v-if="userRole === 'TEACHER'"/>
     </div>
     <v-expand-transition>
       <v-card
@@ -20,7 +22,7 @@
         hide-details
         class="w-full md:w-6/12 lg:w-4/12 ml-auto mb-3"
       >
-        <Input-join>
+        <Input-join v-if="userRole == 'STUDENT'">
           <v-btn
             hide-details
             inset
@@ -40,7 +42,7 @@
         cols="12"
         md="4"
         xl="3"
-        v-for="classroom in classlist"
+        v-for="classroom in classRoomList"
         :key="classroom.name"
         class="pa-md-1 py-1"
       >
@@ -58,7 +60,7 @@
               class="h-24 overflow-auto scrollbar white--text"
             >{{classroom.description}}</v-card-subtitle>
             <v-card-text class="flex justify-between items-start white--text">
-              {{classroom.teachName}}
+              {{classroom.teacherName}}
               <v-avatar class="-m-5 mr-1 white--text">
                 <v-icon x-large color="white">mdi-account-circle</v-icon>
               </v-avatar>
@@ -116,10 +118,13 @@ export default {
       this.showInput = !this.showInput
     },
   },
-  created() {
-    classroomServeice.getStudents().then((res) => {
-      console.log(res.data)
-    })
+  computed: {
+    classRoomList() {
+      return this.$store.getters.classRooms
+    },
+    userRole() {
+      return this.$store.getters.user ? this.$store.getters.user.role : ''
+    },
   },
 }
 </script>

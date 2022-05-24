@@ -31,7 +31,6 @@ const mutations = {
   SET_THEME_MODE(state, value) {
     state.themeIcon = value.icon
     state.themeName = value.title
-    console.log(value.icon);
   }
 }
 
@@ -42,8 +41,14 @@ const state = () => ({
 })
 
 const getters = {
-  getUser(state) {
-    return state.user
+  user(state) {
+    return state.user ? state.user.data : null
+  },
+  userId(state) {
+    return state.user ? state.user.id : ''
+  },
+  classRooms(state) {
+    return state.user ? state.user.data.classrooms : []
   },
   themeIcon(state) {
     return state.themeIcon

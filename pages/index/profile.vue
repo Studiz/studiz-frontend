@@ -10,20 +10,40 @@
     <v-card flat class="background">
       <div class="d-flex justify-center my-5">
         <v-avatar size="94" color="primary">
-          <v-icon size="94" color="white">mdi-account-circle</v-icon>
-          <!-- <v-img src="https://api.lorem.space/image/face?hash=92310" /> -->
+          <v-icon size="94" color="white" v-if="!imageProfile">mdi-account-circle</v-icon>
+          <v-img :src="imageProfile" v-else />
         </v-avatar>
       </div>
       <v-card-title primary-title class="text-cap d-block">
-        <p>Dsiplay name:</p>
-        <p>name:</p>
+        <p>Display name: {{displayName}}</p>
+        <p>name: {{name}}</p>
       </v-card-title>
     </v-card>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    displayName() {
+      return this.$store.getters.user
+        ? this.$store.getters.user.displayName
+          ? this.$store.getters.user.displayName
+          : this.$store.getters.user.firstName
+        : ''
+    },
+    name() {
+      return this.$store.getters.user
+        ? this.$store.getters.user.firstName +
+            ' ' +
+            this.$store.getters.user.lastName
+        : ''
+    },
+    imageProfile() {
+      return this.$store.getters.user ? this.$store.getters.user.imageUrl : ''
+    },
+  },
+}
 </script>
 
 <style>

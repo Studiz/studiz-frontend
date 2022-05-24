@@ -5,11 +5,11 @@
         <v-list color="transparent" rounded class="pa-0">
           <v-list-item to="/profile" class="px-2">
             <v-list-item-avatar color="primary" size="36px">
-              <!-- <v-icon large color="white">mdi-account-circle</v-icon> -->
-              <v-img src="https://api.lorem.space/image/face?hash=92310" />
+              <v-icon large color="white" v-if="!imageProfile">mdi-account-circle</v-icon>
+              <v-img v-else :src="imageProfile" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title class="text-cap">User</v-list-item-title>
+              <v-list-item-title class="text-cap">{{displayName}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider class="my-2"></v-divider>
@@ -42,17 +42,21 @@
         class="pa-2 pa-md-5 mb-16 overflow-hidden"
       >
         <Nuxt />
-        <div v-if="this.$route.name === 'index' ? this.$router.push('/classrooms') : ''" />
+        <div
+          v-if="this.$route.name === 'index' ? this.$store.getters.user?this.$router.push('/classrooms'):this.$router.push('/join') : ''"
+        />
       </v-sheet>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import userService from '../services/UserService'
 export default {
   name: 'IndexPage',
   data() {
     return {
+      isAuthenticated: false,
       pages: [
         {
           title: 'classroom',
@@ -80,6 +84,36 @@ export default {
         //   to: '/more',
         // },
       ],
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
+    },
+    imageProfile() {
+      return this.$store.getters.user ? this.$store.getters.user.imageUrl : ''
+    },
+    displayName() {
+      return this.$store.getters.user
+        ? this.$store.getters.user.displayName
+          ? this.$store.getters.user.displayName
+          : this.$store.getters.user.firstName
+        : ''
+    },
+  },
+  created() {
+    if (this.$store.getters.user || localStorage.getItem('accessToken')) {
+      // userService
+      //   .signInGetProfile(localStorage.getItem('accessToken'))
+      //   .then((res) => {
+      //     this.$store.commit('SET_USER', res.data)
+      //     localStorage.setItem('user', JSON.stringify(res.data))
+      //     this.$router.push('/classrooms')
+      //   })
+      this.isAuthenticated = true
+    } else {
+      this.isAuthenticated = false
+      this.$router.push('/join')
     }
   },
 }

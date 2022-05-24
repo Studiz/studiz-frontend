@@ -1,7 +1,18 @@
-export default function ({store, redirect}){
-  // if (!store.state.user) {
+import userService from '../services/UserService'
+
+export default function ({
+  store,
+  redirect
+}) {
+  if (localStorage.getItem('accessToken') && !store.state.user) {
+    userService.signInGetProfile(localStorage.getItem('accessToken')).then(res => {
+      store.commit('SET_USER', res.data)
+      localStorage.setItem('user', JSON.stringify(res.data))
+    })
+  }
+  // if (!localStorage.getItem('accessToken') && !store.state.user) {
   //   console.log("in middleware");
-  //   redirect("/login");
+  //   redirect("/join");
   //   console.log("routed");
   // }
 

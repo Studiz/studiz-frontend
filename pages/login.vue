@@ -74,13 +74,14 @@ export default {
         this.$fire.auth
           .signInWithEmailAndPassword(this.email, this.password)
           .then((res) => {
-            userService
-              .signInGetProfile(res.user._delegate.accessToken)
-              .then((res) => {
-                console.log(res.data)
-                this.loading = false
-                this.$router.push('/')
-              })
+            let accessToken = res.user._delegate.accessToken
+            userService.signInGetProfile(accessToken).then((res) => {
+              this.$store.commit('SET_USER', res.data)
+              localStorage.setItem('user', JSON.stringify(res.data))
+              localStorage.setItem('accessToken', accessToken)
+              this.loading = false
+              this.$router.push('/classrooms')
+            })
           })
           .catch((err) => {
             alert(err)
@@ -98,7 +99,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters.getUser
+      return this.$store.getters.user
     },
   },
   mounted() {
@@ -109,13 +110,17 @@ export default {
       firebaseui.auth.AuthUI.getInstance() ||
       new firebaseui.auth.AuthUI(this.$fire.auth)
 
-    const config = {
+    let config = {
       signInOptions: [this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID],
-      signInSuccessUrl: '/',
+      signInSuccessUrl: '/classrooms',
       callbacks: {
         signInSuccessWithAuthResult(res) {
-          console.log(res)
-          this.$router.push('/')
+          let accessToken = res.user._delegate.accessToken
+          userService.signInGetProfile(accessToken).then((res) => {
+            localStorage.setItem('user', JSON.stringify(res.data))
+            localStorage.setItem('accessToken', accessToken)
+            window.location.href = '/classrooms'
+          })
         },
       },
     }

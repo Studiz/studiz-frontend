@@ -16,15 +16,23 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary text-cap" dark v-bind="attrs" height="40" rounded v-on="on">
                   <v-avatar class="-m-5 mr-1">
-                    <v-icon large>mdi-account-circle</v-icon>
-                  </v-avatar>User Grest
+                    <v-icon large v-if="!user">mdi-account-circle</v-icon>
+                    <v-icon large v-else-if="!user.imageUrl">mdi-account-circle</v-icon>
+                    <v-img v-else :src="user.imageUrl" />
+                  </v-avatar>
+                  {{user?user.displayName?user.displayName:user.firstName:"User Guest"}}
                   <v-icon right>mdi-chevron-down</v-icon>
                 </v-btn>
               </template>
-              <v-list>
+              <v-list v-if="!user">
                 <v-list-item v-for="item in route" :key="item.to" :to="item.to" class="font">
                   <v-icon>{{ item.icon }}</v-icon>
                   <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+              <v-list v-else>
+                <v-list-item @click="logout" class="font">
+                  <v-icon>mdi-logout</v-icon>Logout
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -98,7 +106,24 @@ export default {
   },
   methods: {
     goHomePage() {
-      this.$router.push('/join')
+      if (this.user) {
+        this.$router.push('/classrooms')
+      } else {
+        this.$router.push('/join')
+      }
+    },
+    logout() {
+      this.$fire.auth.signOut().then(() => {
+        localStorage.clear('accessToken')
+        localStorage.clear('user')
+        this.$store.commit('SET_USER', null)
+        this.$router.push('/join')
+      })
+    },
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
     },
   },
 }
