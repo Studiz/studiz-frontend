@@ -48,7 +48,6 @@
 </template>
 
 <script>
-// import { mapMutations, mapGetters, mapState } from 'vuex'
 import userService from '../services/UserService.js'
 export default {
   data() {
