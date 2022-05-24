@@ -1,13 +1,12 @@
 <template>
   <div>
     <div>
-      <h1 class="text-H1">{{ $route.params.classroomsid }}</h1>
-      <p class="text-H3">description</p>
+      <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
+      <p class="text-H3">{{ classroom?classroom.description:'' }}</p>
     </div>
     <div class="mb-4">
       <v-tabs grow background-color="transparent">
         <v-tab
-        
           :to="({
                 name: 'index-classroom-classroomsid-index-quiz',
                 params: { classid: $route.params.classroomsid},
@@ -17,7 +16,6 @@
           <span class="text-cap">quiz</span>
         </v-tab>
         <v-tab
-        
           :to="({
                 name: 'index-classroom-classroomsid-index-member',
                 params: { classid: $route.params.classroomsid},
@@ -34,7 +32,21 @@
 </template>
 
 <script>
-export default {}
+import ClassroomService from '../../../../services/ClassroomService'
+export default {
+  data() {
+    return {
+      classroom: null,
+    }
+  },
+  created() {
+    ClassroomService.getClassroom(this.$route.params.classroomsid).then(
+      (res) => {
+        this.classroom = res.data
+      }
+    )
+  },
+}
 </script>
 
 <style></style>

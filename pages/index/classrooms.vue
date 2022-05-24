@@ -47,7 +47,7 @@
         class="pa-md-1 py-1"
       >
         <nuxt-link
-          :to="{ name: 'index-classroom-classroomsid-index-quiz', params: { classroomsid: classroom.name} }"
+          :to="{ name: 'index-classroom-classroomsid-index-quiz', params: { classroomsid: classroom.id} }"
         >
           <v-card flat rounded="lg" class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text">
             <v-card-title class="w-full">

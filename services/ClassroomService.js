@@ -3,7 +3,7 @@ import studizAPI from "./AxiosConfig";
 const baseURL = process.env.baseURL;
 
 export default {
-    getStudents(){
-        return studizAPI(baseURL).get('/students');
-    }
+  getClassroom(classId) {
+    return studizAPI(baseURL).get(`/getClassroom/byClassroomId/${classId})`);
+  }
 }
