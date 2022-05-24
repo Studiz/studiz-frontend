@@ -24,7 +24,6 @@
             </v-list-item>
           </div>
           <!-- <v-divider class="my-2"></v-divider>
-
           <v-list-item link color="grey lighten-4">
             <v-list-item-content>
               <v-list-item-title>...</v-list-item-title>

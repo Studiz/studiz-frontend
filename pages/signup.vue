@@ -101,7 +101,7 @@
               <v-form ref="form2" lazy-validation @submit.prevent="createAccount">
                 <v-text-field
                   v-model.trim="data.fname"
-                  :counter="10"
+                  :counter="30"
                   :rules="rules.nameRules"
                   label="First name"
                   outlined
@@ -109,7 +109,7 @@
                 ></v-text-field>
                 <v-text-field
                   v-model.trim="data.lname"
-                  :counter="10"
+                  :counter="30"
                   :rules="rules.nameRules"
                   label="Last name"
                   outlined
@@ -177,11 +177,11 @@ export default {
       stepPage: 1,
       rules: {
         required: (v) => !!v || 'Required.',
-        min: (v) => (v && v.length >= 5) || 'Min 5 characters',
+        min: (v) => (v && v.length >= 6) || 'Min 6 characters',
         nameRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 10) || 'Name must be less than 10 characters',
+            (v && v.length <= 30) || 'Name must be less than 30 characters',
         ],
         email: (v) => {
           const pattern =

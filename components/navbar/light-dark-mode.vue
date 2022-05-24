@@ -62,7 +62,6 @@ export default {
         this.mode()
       }
     },
-
     mode() {
       if (
         localStorage.theme === 'dark' ||
