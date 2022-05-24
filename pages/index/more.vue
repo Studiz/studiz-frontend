@@ -2,7 +2,7 @@
   <div>
     <v-list color="transparent" rounded class="pa-0">
       <v-list-item to="profile" link class="px-3">
-        <v-list-item-avatar color="primary" size="36px">
+        <v-list-item-avatar color="primary" size="36px" class="align-self-start align-self-md-center">
           <v-icon large color="white">mdi-account-circle</v-icon>
           <!-- <v-img src="https://api.lorem.space/image/face?hash=92310" /> -->
         </v-list-item-avatar>
@@ -26,13 +26,6 @@
     </v-list>
 
     <v-list color="transparent" rounded class="pa-0">
-      <v-list-item link class="px-3" @click="clickTheme">
-        <v-icon size="36px" color="primary" left class="mr-4">{{ themeicon }}</v-icon>
-        <v-list-item-content>
-          <v-list-item-title class="text-cap">theme: {{ themeName }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
       <v-list-item v-for="page in pages" :key="page.icon" :to="page.to" link class="px-3">
         <v-icon size="36px" color="primary" left class="mr-4">{{ page.icon }}</v-icon>
         <v-list-item-content>
@@ -63,19 +56,6 @@ export default {
         // },
       ],
     }
-  },
-  methods: {
-    clickTheme() {
-      document.getElementById('theme').click()
-    },
-  },
-  computed: {
-    themeicon() {
-      return this.$store.getters.themeIcon
-    },
-    themeName() {
-      return this.$store.getters.themeName
-    },
   },
 }
 </script>
