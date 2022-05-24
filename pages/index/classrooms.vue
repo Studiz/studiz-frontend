@@ -12,7 +12,7 @@
         :showInput="showInput"
         v-if="userRole === 'STUDENT'"
       >join classroom</v-btn>
-      <Create-classroom v-if="userRole === 'TEACHER'" />
+      <Create-classroom v-else />
     </div>
     <v-expand-transition>
       <v-card
@@ -22,7 +22,7 @@
         hide-details
         class="w-full md:w-6/12 lg:w-4/12 ml-auto mb-3"
       >
-        <Input-join v-if="userRole == 'STUDENT'">
+        <Input-join @join-number="joinPinCode" v-if="userRole == 'STUDENT' ">
           <v-btn
             hide-details
             inset
@@ -43,7 +43,7 @@
         md="4"
         xl="3"
         v-for="classroom in classRoomList"
-        :key="classroom.name"
+        :key="classroom.id"
         class="pa-md-1 py-1"
       >
         <nuxt-link
@@ -55,11 +55,13 @@
                 <span class="font-bold white--text">{{classroom.name}}</span>
               </div>
             </v-card-title>
-
             <v-card-subtitle
               class="h-24 overflow-auto scrollbar white--text"
             >{{classroom.description}}</v-card-subtitle>
-            <v-card-text class="flex justify-between items-start white--text">
+            <v-card-text
+              class="flex justify-between items-start white--text"
+              v-if="userRole == 'STUDENT'"
+            >
               {{classroom.teacherName}}
               <v-avatar class="-m-5 mr-1 white--text">
                 <v-icon x-large color="white">mdi-account-circle</v-icon>
@@ -73,7 +75,7 @@
 </template>
 
 <script>
-import classroomServeice from '@/services/ClassroomService.js'
+import StudentService from '../../services/StudentService.js'
 import CreateClassroom from '~/components/Teacher/create-classroom.vue'
 export default {
   components: { CreateClassroom },
@@ -85,37 +87,21 @@ export default {
         { color1: '', color2: '' },
         { color1: '', color2: '' },
       ],
-      classlist: [
-        {
-          name: 'INT 100',
-          description: 'IT Fundamentals',
-          teachName: 'john seana',
-          teachImage: '',
-        },
-        {
-          name: 'INT 101',
-          description: 'PROGRAMMING FUNDAMENTALS',
-          teachName: 'john seana',
-          teachImage: '',
-        },
-        {
-          name: 'INT 102',
-          description: 'WEB TECHNOLOGY',
-          teachName: 'john seana',
-          teachImage: '',
-        },
-        {
-          name: 'LNG 120',
-          description: 'GENERAL ENGLISH',
-          teachName: 'john seana',
-          teachImage: '',
-        },
-      ],
     }
   },
   methods: {
     cancel() {
       this.showInput = !this.showInput
+    },
+    joinPinCode(num) {
+      StudentService.joinClassroom(num, this.$store.getters.userId)
+        .then((res) => {
+          console.log(res)
+          this.$router.push('/')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
   },
   computed: {
@@ -152,5 +138,4 @@ export default {
   background: #f88100;
   border-radius: 50px;
 }
-</style>
 </style>

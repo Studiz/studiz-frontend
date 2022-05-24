@@ -3,8 +3,8 @@ import studizAPI from "./AxiosConfig";
 const baseURL = process.env.baseURL;
 
 export default {
-  createClassroom(data) {
-    return studizAPI(baseURL).post('/create/classroom', data);
+  joinClassroom(pinCode, studentId) {
+    return studizAPI(baseURL).put(`/join/classroom/${pinCode}/${studentId}`);
   },
 
   generatePinCode(classId) {

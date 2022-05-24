@@ -14,7 +14,7 @@
             <LightDarkMode />
             <v-menu offset-y left transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" height="46" rounded v-on="on" elevation="0">
+                <v-btn v-bind="attrs" height="46" rounded v-on="on" elevation="0" class="text-cap">
                   <v-avatar class="-m-3 mr-1" size="40px">
                     <v-icon large v-if="!user">mdi-account-circle</v-icon>
                     <v-icon large v-else-if="!user.imageUrl">mdi-account-circle</v-icon>

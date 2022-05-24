@@ -3,6 +3,7 @@
     <div>
       <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
       <p class="text-H3">{{ classroom?classroom.description:'' }}</p>
+      <p class="text-H3">PinCode: {{ classroom?classroom.pinCode:'' }}</p>
     </div>
     <div class="mb-4">
       <v-tabs grow background-color="transparent">
