@@ -27,9 +27,9 @@
 
     <v-list color="transparent" rounded class="pa-0">
       <v-list-item link class="px-3" @click="clickTheme">
-        <v-icon size="36px" color="primary" left class="mr-4">{{ this.$store.getters.themeIcon }}</v-icon>
+        <v-icon size="36px" color="primary" left class="mr-4">{{ themeicon }}</v-icon>
         <v-list-item-content>
-          <v-list-item-title class="text-cap">theme: {{ this.$store.getters.themeName }}</v-list-item-title>
+          <v-list-item-title class="text-cap">theme: {{ themeName }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -67,6 +67,14 @@ export default {
   methods: {
     clickTheme() {
       document.getElementById('theme').click()
+    },
+  },
+  computed: {
+    themeicon() {
+      return this.$store.getters.themeIcon
+    },
+    themeName() {
+      return this.$store.getters.themeName
     },
   },
 }

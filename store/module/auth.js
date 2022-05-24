@@ -1,10 +1,6 @@
 export const state = () => ({
-  user: 'asdsad',
+  user: null,
 })
-
-export const getters = {
-  user: state => state.user,
-}
 
 export const mutations = {
   setUser(state, user) {
@@ -13,10 +9,4 @@ export const mutations = {
   setPass(state, user) {
     state.user = user
   }
-}
-export default {
-  state,
-  getters,
-  // actions,
-  mutations
 }
