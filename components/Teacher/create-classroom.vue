@@ -81,17 +81,19 @@ export default {
   methods: {
     async createClassroom() {
       if (this.$refs.form.validate()) {
-        console.log(this.data)
+        let data = Object.assign({}, this.data)
+        console.log(data)
         this.loading = true
         await new Promise((resolve) => setTimeout(resolve, 1000))
         this.loading = false
-        this.dialog = false
-        this.$refs.form.reset()
+        this.close()
       }
     },
     close() {
       this.dialog = false
-      this.$refs.form.reset()
+      this.data.name = ''
+      this.data.description = ''
+      this.data.tag = ''
     },
   },
 }
