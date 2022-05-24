@@ -12,16 +12,16 @@
             <v-spacer></v-spacer>
             <!-- right  -->
             <LightDarkMode />
-            <v-menu offset-y left color="primary" transition="slide-y-transition">
+            <v-menu offset-y left transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary text-cap" dark v-bind="attrs" height="40" rounded v-on="on">
-                  <v-avatar class="-m-5 mr-1">
+                <v-btn v-bind="attrs" height="46" rounded v-on="on" elevation="0">
+                  <v-avatar class="-m-3 mr-1" size="40px">
                     <v-icon large v-if="!user">mdi-account-circle</v-icon>
                     <v-icon large v-else-if="!user.imageUrl">mdi-account-circle</v-icon>
                     <v-img v-else :src="user.imageUrl" />
                   </v-avatar>
                   {{user?user.displayName?user.displayName:user.firstName:"User Guest"}}
-                  <v-icon right>mdi-chevron-down</v-icon>
+                  <v-icon right color="secondary">mdi-chevron-down</v-icon>
                 </v-btn>
               </template>
               <v-list v-if="!user">

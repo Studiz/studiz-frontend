@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="0" md="1" lg="2" class="d-none d-md-block">
+    <v-col cols="0" md="1" lg="2" class="d-none d-md-block pr-xl-12">
       <v-sheet color="transparent">
         <v-list color="transparent" rounded class="pa-0">
           <v-list-item to="/profile" active-class="primary--text" class="px-2">
@@ -97,7 +97,7 @@ export default {
       return this.$store.getters.user
         ? this.$store.getters.user.displayName
           ? this.$store.getters.user.displayName
-          : this.$store.getters.user.firstName
+          : `${this.$store.getters.user.firstName} ${this.$store.getters.user.lastName}`
         : ''
     },
   },
