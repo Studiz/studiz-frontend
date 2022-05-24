@@ -85,13 +85,14 @@ export default {
         this.loading = true
         await new Promise((resolve) => setTimeout(resolve, 1000))
         this.loading = false
-        this.dialog = false
-        this.$refs.form.reset()
+        // this.close()
       }
     },
     close() {
       this.dialog = false
-      this.$refs.form.reset()
+      this.data.name = ''
+      this.data.description = ''
+      this.data.tag = ''
     },
   },
 }
