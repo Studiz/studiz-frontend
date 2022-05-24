@@ -174,7 +174,7 @@ export default {
       show_password2: false,
       loading: false,
       isGoogleAccount: false,
-      stepPage: 2,
+      stepPage: 1,
       rules: {
         required: (v) => !!v || 'Required.',
         min: (v) => (v && v.length >= 6) || 'Min 6 characters',
