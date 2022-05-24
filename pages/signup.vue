@@ -50,10 +50,10 @@
             <p class="primary--text text-H1 text-center">I am a...</p>
             <div class="space-y-3 px-1">
               <div
-                @click="data.role = 'teacher'"
+                @click="data.role = 'student'"
                 :class="[data.role== 'teacher'?'outlineselect':'']"
               >
-                <v-btn block depressed height="100" color="primary">
+                <v-btn block depressed height="100" color="primary" disabled>
                   <v-img
                     left
                     max-height="80"
@@ -174,7 +174,7 @@ export default {
       show_password2: false,
       loading: false,
       isGoogleAccount: false,
-      stepPage: 1,
+      stepPage: 2,
       rules: {
         required: (v) => !!v || 'Required.',
         min: (v) => (v && v.length >= 6) || 'Min 6 characters',
