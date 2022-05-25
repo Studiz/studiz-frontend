@@ -9,7 +9,7 @@
       <div class="flex justify-center items-center pt-4">
         <nuxt-link to="/signup" class="text-H3 font-bold secondary--text whitespace-nowrap">Sign Up</nuxt-link>
         <span class="border-l-4 mx-4 h-10 bg_disable"></span>
-        <nuxt-link to="/login" class="text-H3 font-bold secondary--text whitespace-nowrap">Sign In</nuxt-link>
+        <nuxt-link to="/login" class="text-H3 font-bold secondary--text whitespace-nowrap">login</nuxt-link>
       </div>
     </v-card>
   </div>
