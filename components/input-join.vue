@@ -19,8 +19,8 @@
       maxlength="6"
       :placeholder="[
         this.$route.name == 'index-classrooms'
-          ? 'Enter a join classroom'
-          : 'Enter a join qiuz',
+          ? 'Enter code to join classroom'
+          : 'Enter code to join qiuz',
       ]"
       autocomplete="off"
       @keypress="filterNumber(evt)"
