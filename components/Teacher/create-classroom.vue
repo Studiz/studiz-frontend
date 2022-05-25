@@ -34,7 +34,7 @@
             :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
             label="Choose relevant subject"
             :rules="[rules.required]"
-            v-model="data.tag"
+            v-model="data.relevantSubjects"
             multiple
             outlined
             chips
@@ -50,6 +50,7 @@
   </v-dialog>
 </template>
 <script>
+import TeacherService from '../../services/TeacherService'
 export default {
   data() {
     return {
@@ -58,7 +59,8 @@ export default {
       data: {
         name: '',
         description: '',
-        tag: '',
+        relevantSubjects: '',
+        color: '',
       },
       rules: {
         required: (v) => !!v || 'Required.',
@@ -74,7 +76,7 @@ export default {
             (v && v.length <= 10) ||
             'DescriptionRules must be less than 10 characters',
         ],
-        // tagRule: [(v) => v || 'This field is required'],
+        // relevantSubjectsRule: [(v) => v || 'This field is required'],
       },
     }
   },
@@ -82,18 +84,22 @@ export default {
     async createClassroom() {
       if (this.$refs.form.validate()) {
         let data = Object.assign({}, this.data)
-        console.log(data)
+        data.teacherId = this.$store.getters.userId
         this.loading = true
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        this.loading = false
-        this.close()
+        console.log(data)
+        TeacherService.createClassroom(data).then((res) => {
+          TeacherService.generatePinCode(res.data.id).then(() => {
+            this.loading = false
+            this.close()
+          })
+        })
       }
     },
     close() {
       this.dialog = false
       this.data.name = ''
       this.data.description = ''
-      this.data.tag = ''
+      this.data.relevantSubjects = ''
     },
   },
 }
