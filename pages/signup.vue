@@ -232,7 +232,7 @@ export default {
             }
           })
           .catch((err) => {
-            // alert(err.response.data)
+            alert(err.response.data)
             this.textError = `Account already exists, please login`
             this.loading = false
           })
@@ -259,7 +259,6 @@ export default {
       const sign = require('jwt-encode')
       const secret = 'secret'
       const dataToken = sign(data, secret)
-      console.log(dataToken)
       userService.signUpStudentWithGoogle(dataToken)
       localStorage.clear('googleAccountSignUp')
       this.loading = false

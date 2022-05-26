@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import UserService from '../services/UserService.js'
 import userService from '../services/UserService.js'
 export default {
   data() {

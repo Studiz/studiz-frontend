@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import UserService from '../../services/UserService.js'
 import StudentService from '../../services/StudentService.js'
 import CreateClassroom from '~/components/Teacher/create-classroom.vue'
 export default {
@@ -97,7 +98,12 @@ export default {
       StudentService.joinClassroom(num, this.$store.getters.userId)
         .then((res) => {
           console.log(res)
-          this.$router.push('/')
+          UserService.signInGetProfile(
+            localStorage.getItem('accessToken')
+          ).then((res) => {
+            this.$store.commit('SET_USER', res.data)
+            this.$router.push('/')
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -106,7 +112,7 @@ export default {
   },
   computed: {
     classRoomList() {
-      return this.$store.getters.user ? this.$store.getters.classRooms : []
+      return this.$store.getters.classRooms
     },
     userRole() {
       return this.$store.getters.user ? this.$store.getters.user.role : ''

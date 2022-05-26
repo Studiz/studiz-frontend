@@ -50,6 +50,7 @@
   </v-dialog>
 </template>
 <script>
+import UserService from '~/services/UserService'
 import TeacherService from '../../services/TeacherService'
 export default {
   data() {
@@ -86,11 +87,15 @@ export default {
         let data = Object.assign({}, this.data)
         data.teacherId = this.$store.getters.userId
         this.loading = true
-        console.log(data)
         TeacherService.createClassroom(data).then((res) => {
           TeacherService.generatePinCode(res.data.id).then(() => {
-            this.loading = false
-            this.close()
+            UserService.signInGetProfile(
+              localStorage.getItem('accessToken')
+            ).then((res) => {
+              this.$store.commit('SET_USER', res.data)
+              this.loading = false
+              this.close()
+            })
           })
         })
       }

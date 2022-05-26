@@ -103,13 +103,6 @@ export default {
   },
   created() {
     if (this.$store.getters.user || localStorage.getItem('accessToken')) {
-      // userService
-      //   .signInGetProfile(localStorage.getItem('accessToken'))
-      //   .then((res) => {
-      //     this.$store.commit('SET_USER', res.data)
-      //     localStorage.setItem('user', JSON.stringify(res.data))
-      //     this.$router.push('/classrooms')
-      //   })
       this.isAuthenticated = true
     } else {
       this.isAuthenticated = false
