@@ -32,6 +32,7 @@
                   :rules="[rules.required, rules.email]"
                 ></v-text-field>
                 <v-btn color="primary" height="60" block :loading="loading" type="submit" class>Next</v-btn>
+                <div class="py-2 secondary--text">{{textError === '' ? '':textError}}</div>
                 <div class="flex items-center mt-7">
                   <span>Have an account?</span>
                   <v-btn
@@ -168,6 +169,7 @@ export default {
         role: null,
         password: '',
       },
+      textError: '',
       first_password: '',
       confirm_password: '',
       show_password1: false,
@@ -226,10 +228,12 @@ export default {
             if (res.status === 200) {
               this.loading = false
               this.stepPage = 2
+              this.textError = ''
             }
           })
           .catch((err) => {
-            alert(err.response.data)
+            // alert(err.response.data)
+            this.textError = `Account already exists, please login`
             this.loading = false
           })
       }

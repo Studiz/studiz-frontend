@@ -20,7 +20,7 @@
         color="transparent"
         flat
         hide-details
-        class="w-full md:w-6/12 lg:w-4/12 ml-auto mb-3"
+        class="w-full md:w-6/12 lg:w-4/12 ml-auto mb-3 mt-2"
       >
         <Input-join @join-number="joinPinCode" v-if="userRole == 'STUDENT' ">
           <v-btn
