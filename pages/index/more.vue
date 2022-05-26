@@ -29,14 +29,14 @@
       </v-list-item>
     </v-list>
 
-    <v-list color="transparent" rounded class="pa-0">
+    <v-list color="transparent" rounded class="pa-0 space-y-2 mt-2">
       <v-list-item v-for="page in pages" :key="page.icon" :to="page.to" link class="px-3">
         <v-icon size="36px" color="primary" left class="mr-4">{{ page.icon }}</v-icon>
         <v-list-item-content>
           <v-list-item-title class="text-cap">{{ page.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link class="px-3" @click="logout">
+      <v-list-item link class="px-3" @click="logout()">
         <v-icon size="36px" color="red" left class="mr-4">mdi-logout</v-icon>
         <v-list-item-content>
           <v-list-item-title class="text-cap">Logout</v-list-item-title>
