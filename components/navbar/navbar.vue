@@ -48,6 +48,7 @@
       height="70"
       class="drop-shadow-md d-md-none background"
       active-class="primary--text"
+      v-if="!isGuest"
     >
       <v-btn
         color="background"

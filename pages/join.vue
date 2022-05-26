@@ -1,15 +1,41 @@
 <template>
   <div class="max-w-lg mx-auto">
+    <div class="d-flex justify-center my-8">
+      <v-img
+        class="self-center"
+        :src="require('../static/logo/Studiz_logo.svg')"
+        min-width="100"
+        max-width="150"
+      />
+    </div>
     <v-card
       flat
       color="background"
-      class="drop-shadow-md rounded-xl p-3 md:p-5 lg:p-10 overflow-hidden md:mt-10"
+      class="drop-shadow-md rounded-xl p-3 md:p-5 lg:p-10 overflow-hidden"
     >
       <Input-join @join-number="joinnumber" />
-      <div class="flex justify-center items-center pt-4">
-        <nuxt-link to="/signup" class="text-H3 font-bold secondary--text whitespace-nowrap">Sign Up</nuxt-link>
-        <span class="border-l-4 mx-4 h-10 bg_disable"></span>
-        <nuxt-link to="/login" class="text-H3 font-bold secondary--text whitespace-nowrap">login</nuxt-link>
+      <div class="text-center">
+        <div class="flex justify-center items-center my-3">
+          <v-divider></v-divider>
+          <span class="text-H3 font-bold bg_disable--text px-3">or</span>
+          <v-divider></v-divider>
+        </div>
+
+        <div class="flex items-center">
+          <nuxt-link
+            to="/signup"
+            class="text-H3 font-bold secondary--text whitespace-nowrap text-center w-full"
+          >
+            <v-btn height="56" block outlined color="secondary" class="text-cap">Sign Up</v-btn>
+          </nuxt-link>
+          <span class="mx-3 h-10"></span>
+          <nuxt-link
+            to="/login"
+            class="text-H3 font-bold secondary--text whitespace-nowrap text-center w-full"
+          >
+            <v-btn height="56" block color="primary" class="text-cap">login</v-btn>
+          </nuxt-link>
+        </div>
       </div>
     </v-card>
   </div>
@@ -17,13 +43,13 @@
 
 <script>
 export default {
-    data() {
-        return {}
+  data() {
+    return {}
+  },
+  methods: {
+    joinnumber(num) {
+      console.log(num)
     },
-    methods: {
-        joinnumber(num) {
-            console.log(num)
-        },
-    },
+  },
 }
 </script>

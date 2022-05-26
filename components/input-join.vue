@@ -23,7 +23,7 @@
           : 'Enter code to join quiz',
       ]"
       autocomplete="off"
-      @keypress="filterNumber(evt)"
+      @keypress="filterNumber()"
     />
     <!-- <div class="w-full md:w-2/12"> -->
     <slot></slot>
@@ -40,7 +40,8 @@
       ]"
       :disabled="pincode.length !== 6"
       @click="join"
-    >join</v-btn>
+    >{{this.$store.getters.user?'join':'join guest'}}</v-btn>
+
     <!-- </div> -->
   </form>
 </template>
@@ -71,6 +72,11 @@ export default {
       this.$emit('join-number', this.pincode)
       console.log(this.$nuxt.$route.name)
     },
+  },
+  components: {
+    // isGuest() {
+    //   return this.$store.getters.user ? false : true
+    // },
   },
 }
 </script>

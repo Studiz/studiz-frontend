@@ -232,8 +232,9 @@ export default {
             }
           })
           .catch((err) => {
-            alert(err.response.data)
-            this.textError = `Account already exists, please login`
+            let mail = this.data.email
+            // alert(err.response.data) Account "${val}" already exist, please login
+            this.textError = `Account "${mail}" already exists, please login`
             this.loading = false
           })
       }
