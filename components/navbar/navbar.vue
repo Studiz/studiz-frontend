@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isGuest">
+  <div>
     <!-- TOP -->
     <div class="hidden md:inline-block">
       <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background">
@@ -48,6 +48,7 @@
       height="70"
       class="drop-shadow-md d-md-none background"
       active-class="primary--text"
+      v-if="!isGuest"
     >
       <v-btn
         color="background"

@@ -36,8 +36,13 @@
           <v-list-item-title class="text-cap">{{ page.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item link class="px-3" @click="logout">
+        <v-icon size="36px" color="red" left class="mr-4">mdi-logout</v-icon>
+        <v-list-item-content>
+          <v-list-item-title class="text-cap">Logout</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
-    {{user}}
   </div>
 </template>
 
@@ -72,6 +77,14 @@ export default {
           ? this.$store.getters.user.displayName
           : `${this.$store.getters.user.firstName} ${this.$store.getters.user.lastName}`
         : ''
+    },
+    logout() {
+      this.$fire.auth.signOut().then(() => {
+        localStorage.clear('accessToken')
+        localStorage.clear('user')
+        this.$store.commit('SET_USER', null)
+        this.$router.push('/join')
+      })
     },
   },
 }
