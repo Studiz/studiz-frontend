@@ -20,7 +20,7 @@
       :placeholder="[
         this.$route.name == 'index-classrooms'
           ? 'Enter code to join classroom'
-          : 'Enter code to join qiuz',
+          : 'Enter code to join quiz',
       ]"
       autocomplete="off"
       @keypress="filterNumber(evt)"

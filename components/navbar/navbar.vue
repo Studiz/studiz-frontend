@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!isGuest">
     <!-- TOP -->
     <div class="hidden md:inline-block">
       <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background">
@@ -124,6 +124,9 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user
+    },
+    isGuest() {
+      return this.$store.getters.user ? false : true
     },
   },
 }
