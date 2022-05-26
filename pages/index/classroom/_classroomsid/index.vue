@@ -2,8 +2,11 @@
   <div>
     <div>
       <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
-      <p class="text-H3">{{ classroom?classroom.description:'' }}</p>
-      <p class="text-H3">PinCode: {{ classroom?classroom.pinCode:'' }}</p>
+      <p>{{ classroom?classroom.description:'' }}</p>
+      <p>
+        PinCode:
+        <span class="text-H2">{{ classroom?classroom.pinCode:'' }}</span>
+      </p>
     </div>
     <div class="mb-4">
       <v-tabs grow background-color="transparent">
