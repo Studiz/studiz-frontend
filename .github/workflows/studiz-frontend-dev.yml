@@ -49,10 +49,7 @@ jobs:
           script: |
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
             docker rmi -f ghcr.io/studiz/studiz-frontend:dev
-            docker rmi -f ghcr.io/studiz/studiz-backend:dev
             docker pull ghcr.io/studiz/studiz-frontend:dev
-            docker pull ghcr.io/studiz/studiz-backend:dev
-            docker rm -f studiz-backend
             docker rm -f studiz-frontend
             docker rm -f reverse-poxy
             docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up -d
