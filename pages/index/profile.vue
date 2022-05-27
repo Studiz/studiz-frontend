@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="d-flex justify-space-between">
-      <h1 class="text-H1">Profile</h1>
+      <h1 class="text-H1">
+        Profile
+        <v-chip class="capitalize">{{userRole}}</v-chip>
+      </h1>
       <v-btn color="secondary" outlined class="align-self-center" disabled>
         <v-icon left>mdi-pencil</v-icon>edit
       </v-btn>
@@ -14,9 +17,10 @@
           <v-img :src="imageProfile" v-else />
         </v-avatar>
       </div>
-      <v-card-title primary-title class="text-cap d-block">
+      <v-card-title primary-title class="d-block">
         <p>Display name: {{displayName}}</p>
-        <p>name: {{name}}</p>
+        <p>Name: {{name}}</p>
+        <p>Email: {{email}}</p>
       </v-card-title>
     </v-card>
   </div>
@@ -24,6 +28,35 @@
 
 <script>
 export default {
+  data() {
+    return {
+      your: {
+        Uid: 'JAk2lLX5qLUBnzdUpyUA7SubrGE3',
+        ImageUrl:
+          'Https://Lh3.Googleusercontent.Com/A-/AOh14Gih0FnwhK1tydzZ4IyeRuE5amWuSJ1_nnA-3mjuNS4=S96-C',
+        FirstName: 'HerCuLes',
+        LastName: 'C',
+        DisplayName: '',
+        Email: 'Qjakkapong@Gmail.Com',
+        Classrooms: [
+          {
+            Id: 'AwHUMYLxUwwjk7bRLv5X',
+            Name: 'Uooo',
+            Description: 'Asddd',
+            Teacher: {
+              Email: 'Teacher@Mail.Kmutt.Ac.Th',
+              FirstName: 'John',
+              DisplayName: 'Teacherzz',
+              ImageUrl: 'Https://Api.Lorem.Space/Image/Face?Hash=47449',
+              LastName: 'Cena',
+            },
+            Color: '',
+          },
+        ],
+        Role: 'STUDENT',
+      },
+    }
+  },
   computed: {
     displayName() {
       return this.$store.getters.user
@@ -41,6 +74,12 @@ export default {
     },
     imageProfile() {
       return this.$store.getters.user ? this.$store.getters.user.imageUrl : ''
+    },
+    userRole() {
+      return this.$store.getters.userRole
+    },
+    email() {
+      return this.$store.getters.userEmail
     },
   },
 }
