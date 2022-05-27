@@ -62,6 +62,9 @@ export default {
     leave() {
       console.log('leave')
     },
+    deleteclass() {
+      console.log('deleteclass')
+    },
   },
   computed: {
     userRole() {
