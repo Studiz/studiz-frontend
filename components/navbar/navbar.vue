@@ -51,18 +51,18 @@
       active-class="primary--text"
       v-if="!isGuest"
     >
-      <div v-for="(b, index) in buttonNav" :key="index">
-        <v-btn
-          color="background"
-          height="70"
-          min-width="10"
-          v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2"
-          :to="b.to"
-        >
-          {{b.title}}
-          <v-icon>{{b.icon}}</v-icon>
-        </v-btn>
-      </div>
+      <v-btn
+        color="background"
+        height="70"
+        v-for="(b, index) in buttonNav"
+        min-width="50"
+        :key="index"
+        v-show="userRole == 'TEACHER' ? index !== 1 : index !== 2"
+        :to="b.to"
+      >
+        <span class="text-xs d-none d-sm-inline">{{b.title}}</span>
+        <v-icon>{{b.icon}}</v-icon>
+      </v-btn>
     </v-bottom-navigation>
   </div>
 </template>
