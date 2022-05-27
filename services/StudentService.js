@@ -7,6 +7,10 @@ export default {
     return studizAPI(baseURL).put(`/join/classroom/${pinCode}/${studentId}`);
   },
 
+  leaveClassroom(classroomId, studentId) {
+    return studizAPI(baseURL).delete(`/leftClassroom/${classroomId}/${studentId}`);
+  },
+
   generatePinCode(classId) {
     return studizAPI(baseURL).get(`/getPinCode/${classId}`);
   }
