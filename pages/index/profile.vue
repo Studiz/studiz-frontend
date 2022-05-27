@@ -14,11 +14,11 @@
           <v-img :src="imageProfile" v-else />
         </v-avatar>
       </div>
-      <v-card-title primary-title class="d-block">
+      <v-card-title primary-title class="d-block space-y-3">
         <div class="d-flex flex-wrap">
           <span>Display name: {{displayName}}</span>
           <v-spacer></v-spacer>
-          <DialogCondition @confirm="editDsinplayname" colorBTN="primary" btn2="primary">
+          <!-- <DialogCondition @confirm="editDsinplayname" colorBTN="primary" btn2="primary">
             <template #namebtn>edit</template>
             <template #icon>
               <v-icon left>mdi-pencil</v-icon>
@@ -37,10 +37,10 @@
                 </v-container>
               </v-form>
             </template>
-          </DialogCondition>
+          </DialogCondition>-->
         </div>
-        <p>Name: {{name}}</p>
-        <p>Email: {{email}}</p>
+        <div>Name: {{name}}</div>
+        <div>Email: {{email}}</div>
       </v-card-title>
     </v-card>
   </div>

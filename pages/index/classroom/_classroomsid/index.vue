@@ -9,7 +9,7 @@
           <template #namebtn>leave</template>
           <template #title>Are you sure to leave classroom?</template>
         </DialogCondition>
-        <DialogCondition v-else @confirm="deleteclass" colorBTN="red" btn2="red">
+        <DialogCondition v-if="false" @confirm="deleteclass" colorBTN="red" btn2="red">
           <template #namebtn>Delete</template>
           <template #title>Are you sure to delete classroom?</template>
           <template #btn2>Delete</template>
