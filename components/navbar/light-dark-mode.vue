@@ -1,7 +1,7 @@
 <template>
   <v-menu offset-y left color="primary" transition="slide-y-transition">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary text-cap" id="theme" v-bind="attrs" rounded icon v-on="on">
+      <v-btn color="primary" id="theme" v-bind="attrs" rounded icon v-on="on">
         <v-icon>{{icon}}</v-icon>
       </v-btn>
     </template>
@@ -12,7 +12,6 @@
         @click="themeMode(mode.methods)"
         hide-details
         inset
-        class="text-cap"
       >
         <v-icon left>{{ mode.icon }}</v-icon>
         {{ mode.title }}
@@ -40,7 +39,7 @@ export default {
         {
           icon: 'mdi-desktop-tower-monitor',
           methods: 'theme',
-          title: 'System',
+          title: 'System default',
         },
       ],
     }
