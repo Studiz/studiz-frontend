@@ -47,6 +47,9 @@ const getters = {
   userId(state) {
     return state.user ? state.user.id : ''
   },
+  userRole(state) {
+    return state.user ? state.user.data.role : ''
+  },
   classRooms(state) {
     return state.user ? state.user.data.classrooms : []
   },

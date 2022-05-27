@@ -1,7 +1,20 @@
 <template>
   <div>
     <div>
-      <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
+      <div class="d-flex">
+        <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
+
+        <v-spacer></v-spacer>
+        <DialogCondition v-if="userRole" @confirm="leave" colorBTN="secondary" btn2="primary">
+          <template #namebtn>leave</template>
+          <template #title>Are you sure to leave classroom?</template>
+        </DialogCondition>
+        <DialogCondition v-else @confirm="deleteclass" colorBTN="red" btn2="red">
+          <template #namebtn>Delete classroom</template>
+          <template #title>Are you sure to delete classroom?</template>
+          <template #btn2>Delete</template>
+        </DialogCondition>
+      </div>
       <p>{{ classroom?classroom.description:'' }}</p>
       <p>
         PinCode:
@@ -36,12 +49,24 @@
 </template>
 
 <script>
+import DialogCondition from '~/components/dialog-condition.vue'
 import ClassroomService from '../../../../services/ClassroomService'
 export default {
+  components: { DialogCondition },
   data() {
     return {
       classroom: null,
     }
+  },
+  methods: {
+    leave() {
+      console.log('leave')
+    },
+  },
+  computed: {
+    userRole() {
+      return this.$store.getters.userRole == 'STUDENT' ? true : false
+    },
   },
   created() {
     ClassroomService.getClassroom(this.$route.params.classroomsid).then(
