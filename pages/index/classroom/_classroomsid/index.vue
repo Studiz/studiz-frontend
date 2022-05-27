@@ -51,6 +51,8 @@
 <script>
 import DialogCondition from '~/components/dialog-condition.vue'
 import ClassroomService from '../../../../services/ClassroomService'
+import StudentService from '../../../../services/StudentService'
+import UserService from '../../../../services/UserService'
 export default {
   components: { DialogCondition },
   data() {
@@ -60,7 +62,17 @@ export default {
   },
   methods: {
     leave() {
-      console.log('leave')
+      StudentService.leaveClassroom(
+        this.$route.params.classroomsid,
+        this.$store.getters.userId
+      ).then(() => {
+        UserService.signInGetProfile(localStorage.getItem('accessToken')).then(
+          (res) => {
+            this.$store.commit('SET_USER', res.data)
+            this.$router.push('/')
+          }
+        )
+      })
     },
     deleteclass() {
       console.log('deleteclass')

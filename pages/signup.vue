@@ -331,7 +331,7 @@ export default {
     }
   },
   destroyed() {
-    localStorage.clear('googleAccountSignUp')
+    localStorage.removeItem('googleAccountSignUp')
   },
 }
 </script>
