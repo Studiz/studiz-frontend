@@ -78,7 +78,7 @@ export default {
             let accessToken = res.user._delegate.accessToken
             userService.signInGetProfile(accessToken).then((res) => {
               this.$store.commit('SET_USER', res.data)
-              localStorage.setItem('user', JSON.stringify(res.data))
+              // localStorage.setItem('user', JSON.stringify(res.data))
               localStorage.setItem('accessToken', accessToken)
               this.loading = false
               this.$router.push('/classrooms')
@@ -91,12 +91,12 @@ export default {
       }
     },
 
-    async loginWithEmail() {
-      return await this.$fire.auth.signInWithEmailAndPassword(
-        this.email,
-        this.password
-      )
-    },
+    // async loginWithEmail() {
+    //   return await this.$fire.auth.signInWithEmailAndPassword(
+    //     this.email,
+    //     this.password
+    //   )
+    // },
   },
   computed: {
     user() {
@@ -116,12 +116,19 @@ export default {
       signInSuccessUrl: '/classrooms',
       callbacks: {
         signInSuccessWithAuthResult(res) {
+          let user = res.user
           let accessToken = res.user._delegate.accessToken
-          userService.signInGetProfile(accessToken).then((res) => {
-            localStorage.setItem('user', JSON.stringify(res.data))
-            localStorage.setItem('accessToken', accessToken)
-            window.location.href = '/classrooms'
-          })
+          userService
+            .signInGetProfile(accessToken)
+            .then((res) => {
+              // localStorage.setItem('user', JSON.stringify(res.data))
+              localStorage.setItem('accessToken', accessToken)
+              window.location.href = '/classrooms'
+            })
+            .catch(() => {
+              localStorage.setItem('googleAccountSignUp', JSON.stringify(user))
+              window.location.href = '/signup'
+            })
         },
       },
     }

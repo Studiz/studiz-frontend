@@ -213,9 +213,14 @@ export default {
           const sign = require('jwt-encode')
           const secret = 'secret'
           const dataToken = sign(data, secret)
-          userService.signUpStudentWithEmail(dataToken)
-          this.loading = false
-          this.$router.push('/')
+          userService.signUpStudentWithEmail(dataToken).then((res) => {
+            localStorage.setItem('accessToken', res.data)
+            userService.signInGetProfile(res.data).then((res) => {
+              this.$store.commit('SET_USER', res.data)
+              this.loading = false
+              this.$router.push('/')
+            })
+          })
         }
       }
     },
@@ -260,10 +265,21 @@ export default {
       const sign = require('jwt-encode')
       const secret = 'secret'
       const dataToken = sign(data, secret)
-      userService.signUpStudentWithGoogle(dataToken)
-      localStorage.clear('googleAccountSignUp')
-      this.loading = false
-      this.$router.push('/')
+      userService.signUpStudentWithGoogle(dataToken).then((res) => {
+        localStorage.setItem(
+          'accessToken',
+          JSON.parse(localStorage.getItem('googleAccountSignUp'))
+            .stsTokenManager.accessToken
+        )
+        userService
+          .signInGetProfile(localStorage.getItem('accessToken'))
+          .then((res) => {
+            this.$store.commit('SET_USER', res.data)
+            this.loading = false
+            localStorage.clear('googleAccountSignUp')
+            this.$router.push('/')
+          })
+      })
     },
     cancel() {
       if (localStorage.getItem('googleAccountSignUp')) {
