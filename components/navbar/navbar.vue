@@ -51,17 +51,18 @@
       active-class="primary--text"
       v-if="!isGuest"
     >
-      <v-btn
-        color="background"
-        height="70"
-        min-width="10"
-        v-for="b in buttonNav"
-        :key="b.icon"
-        :to="b.to"
-      >
-        {{b.title}}
-        <v-icon>{{b.icon}}</v-icon>
-      </v-btn>
+      <div v-for="(b, index) in buttonNav" :key="index">
+        <v-btn
+          color="background"
+          height="70"
+          min-width="10"
+          v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2"
+          :to="b.to"
+        >
+          {{b.title}}
+          <v-icon>{{b.icon}}</v-icon>
+        </v-btn>
+      </div>
     </v-bottom-navigation>
   </div>
 </template>
@@ -92,6 +93,11 @@ export default {
           title: 'join quiz',
           icon: '$vuetify.icons.quiz',
           to: '/quiz',
+        },
+        {
+          title: 'create quiz',
+          icon: '$vuetify.icons.quiz',
+          to: '/createquiz',
         },
         {
           title: 'notification',
@@ -126,6 +132,9 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user
+    },
+    userRole() {
+      return this.$store.getters.userRole
     },
     isGuest() {
       return this.$store.getters.user ? false : true

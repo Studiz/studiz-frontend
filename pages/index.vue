@@ -14,9 +14,14 @@
           </v-list-item>
           <v-divider class="my-2"></v-divider>
 
-          <div v-for="(page, index) in pages" :key="page.icon">
-            <v-divider class="my-2" v-if="index == 3">{{index}}</v-divider>
-            <v-list-item :to="page.to" link active-class="primary--text">
+          <div v-for="(page, index) in pages" :key="index">
+            <v-divider class="my-2" v-if="index == 4"></v-divider>
+            <v-list-item
+              v-if="userRole == 'TEACHER'?index !==1:index !==2"
+              :to="page.to"
+              link
+              active-class="primary--text"
+            >
               <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
               <v-list-item-content>
                 <v-list-item-title class="text-cap">{{ page.title }}</v-list-item-title>
@@ -69,6 +74,11 @@ export default {
           to: '/quiz',
         },
         {
+          title: 'create quiz',
+          icon: '$vuetify.icons.quiz',
+          to: '/createquiz',
+        },
+        {
           title: 'notification',
           icon: '$vuetify.icons.notification',
           to: '/notification',
@@ -89,6 +99,9 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user
+    },
+    userRole() {
+      return this.$store.getters.userRole
     },
     imageProfile() {
       return this.$store.getters.user ? this.$store.getters.user.imageUrl : ''
