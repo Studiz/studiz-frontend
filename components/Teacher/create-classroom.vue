@@ -21,17 +21,17 @@
             required
             v-model="data.name"
             :rules="rules.nameRules"
-            :counter="10"
+            :counter="20"
           ></v-text-field>
           <v-text-field
             label="Description"
             outlined
             v-model="data.description"
             :rules="rules.descriptionRules"
-            :counter="10"
+            :counter="50"
           ></v-text-field>
           <v-autocomplete
-            :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+            :items="['Reading', 'Writing', 'Coding', 'Art', 'Music', 'Chemistry','Physics','Science','Biology', 'Mmathematics', 'Health and hygeine','Other']"
             label="Choose relevant subject"
             :rules="[rules.required]"
             v-model="data.relevantSubjects"
@@ -68,14 +68,14 @@ export default {
         nameRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 10) ||
-            'Classroom name must be less than 10 characters',
+            (v && v.length <= 20) ||
+            'Classroom name must be less than 20 characters',
         ],
         descriptionRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 10) ||
-            'DescriptionRules must be less than 10 characters',
+            (v && v.length <= 50) ||
+            'Description must be less than 50 characters',
         ],
       },
     }
