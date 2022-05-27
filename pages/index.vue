@@ -28,12 +28,6 @@
               </v-list-item-content>
             </v-list-item>
           </div>
-          <!-- <v-divider class="my-2"></v-divider>
-          <v-list-item link color="grey lighten-4">
-            <v-list-item-content>
-              <v-list-item-title>...</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>-->
         </v-list>
       </v-sheet>
     </v-col>
@@ -56,7 +50,6 @@
 </template>
 
 <script>
-import userService from '../services/UserService'
 export default {
   name: 'IndexPage',
   data() {
@@ -88,18 +81,10 @@ export default {
           icon: '$vuetify.icons.setting',
           to: '/setting',
         },
-        // {
-        //   title: 'more',
-        //   icon: '$vuetify.icons.more',
-        //   to: '/more',
-        // },
       ],
     }
   },
   computed: {
-    user() {
-      return this.$store.getters.user
-    },
     userRole() {
       return this.$store.getters.userRole
     },

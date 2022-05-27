@@ -50,6 +50,9 @@ const getters = {
   userRole(state) {
     return state.user ? state.user.data.role : ''
   },
+  userEmail(state) {
+    return state.user ? state.user.data.email : ''
+  },
   classRooms(state) {
     return state.user ? state.user.data.classrooms : []
   },
