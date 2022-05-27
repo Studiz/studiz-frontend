@@ -77,7 +77,6 @@ export default {
             (v && v.length <= 10) ||
             'DescriptionRules must be less than 10 characters',
         ],
-        // relevantSubjectsRule: [(v) => v || 'This field is required'],
       },
     }
   },

@@ -5,9 +5,6 @@
         Profile
         <v-chip class="capitalize">{{userRole}}</v-chip>
       </h1>
-      <v-btn color="secondary" outlined class="align-self-center" disabled>
-        <v-icon left>mdi-pencil</v-icon>edit
-      </v-btn>
     </div>
 
     <v-card flat class="background">
@@ -18,7 +15,30 @@
         </v-avatar>
       </div>
       <v-card-title primary-title class="d-block">
-        <p>Display name: {{displayName}}</p>
+        <div class="d-flex flex-wrap">
+          <span>Display name: {{displayName}}</span>
+          <v-spacer></v-spacer>
+          <DialogCondition @confirm="editDsinplayname" colorBTN="primary" btn2="primary">
+            <template #namebtn>edit</template>
+            <template #icon>
+              <v-icon left>mdi-pencil</v-icon>
+            </template>
+            <template #title>Change Your display name</template>
+            <template #contain>
+              <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="createClassroom">
+                <v-container>
+                  <v-text-field
+                    label="Dsiplay name"
+                    outlined
+                    required
+                    :rules="rules.nameRules"
+                    :counter="10"
+                  ></v-text-field>
+                </v-container>
+              </v-form>
+            </template>
+          </DialogCondition>
+        </div>
         <p>Name: {{name}}</p>
         <p>Email: {{email}}</p>
       </v-card-title>
@@ -27,35 +47,34 @@
 </template>
 
 <script>
+import DialogCondition from '~/components/dialog-condition.vue'
+
 export default {
+  components: { DialogCondition },
+
   data() {
     return {
-      your: {
-        Uid: 'JAk2lLX5qLUBnzdUpyUA7SubrGE3',
-        ImageUrl:
-          'Https://Lh3.Googleusercontent.Com/A-/AOh14Gih0FnwhK1tydzZ4IyeRuE5amWuSJ1_nnA-3mjuNS4=S96-C',
-        FirstName: 'HerCuLes',
-        LastName: 'C',
-        DisplayName: '',
-        Email: 'Qjakkapong@Gmail.Com',
-        Classrooms: [
-          {
-            Id: 'AwHUMYLxUwwjk7bRLv5X',
-            Name: 'Uooo',
-            Description: 'Asddd',
-            Teacher: {
-              Email: 'Teacher@Mail.Kmutt.Ac.Th',
-              FirstName: 'John',
-              DisplayName: 'Teacherzz',
-              ImageUrl: 'Https://Api.Lorem.Space/Image/Face?Hash=47449',
-              LastName: 'Cena',
-            },
-            Color: '',
-          },
+      rules: {
+        required: (v) => !!v || 'Required.',
+        nameRules: [
+          (v) => !!v || 'Required.',
+          (v) =>
+            (v && v.length <= 10) ||
+            'Classroom name must be less than 10 characters',
         ],
-        Role: 'STUDENT',
+        descriptionRules: [
+          (v) => !!v || 'Required.',
+          (v) =>
+            (v && v.length <= 10) ||
+            'DescriptionRules must be less than 10 characters',
+        ],
       },
     }
+  },
+  methods: {
+    editDsinplayname() {
+      console.log('editDsinplayname')
+    },
   },
   computed: {
     displayName() {

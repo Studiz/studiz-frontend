@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="d-flex">
+      <div class="d-flex flex-wrap">
         <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
 
         <v-spacer></v-spacer>
@@ -10,7 +10,7 @@
           <template #title>Are you sure to leave classroom?</template>
         </DialogCondition>
         <DialogCondition v-else @confirm="deleteclass" colorBTN="red" btn2="red">
-          <template #namebtn>Delete classroom</template>
+          <template #namebtn>Delete</template>
           <template #title>Are you sure to delete classroom?</template>
           <template #btn2>Delete</template>
         </DialogCondition>

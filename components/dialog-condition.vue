@@ -1,7 +1,8 @@
 <template>
-  <v-dialog v-model="dialog" scrollable max-width="300px">
+  <v-dialog v-model="dialog" scrollable max-width="400px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn :color="colorBTN" text class="text-cap" v-bind="attrs" v-on="on" height="48">
+      <v-btn :color="colorBTN" outlined class="text-cap" v-bind="attrs" v-on="on" height="48">
+        <slot name="icon"></slot>
         <slot name="namebtn"></slot>
       </v-btn>
     </template>
@@ -11,6 +12,7 @@
           <slot name="title"></slot>
         </span>
       </v-card-title>
+      <slot name="contain"></slot>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn :color="btn1" text @click="click1">
