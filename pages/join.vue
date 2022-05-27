@@ -1,12 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
     <div class="d-flex justify-center my-8">
-      <v-img
-        class="self-center"
-        :src="require('../static/logo/Studiz_logo.svg')"
-        min-width="100"
-        max-width="150"
-      />
+      <v-icon size="150">$vuetify.icons.Studiz_logo</v-icon>
     </div>
     <v-card
       flat

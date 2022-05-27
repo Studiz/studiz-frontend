@@ -5,7 +5,8 @@
       <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background">
         <div class="flex justify-between items-center container">
           <v-btn height="50px" elevation="0" color="background" class @click="goHomePage">
-            <v-img :src="require('../../static/logo/Studiz_logo.svg')" max-width="80" />
+            <!-- <v-img :src="require('../../static/logo/Studiz_logo.svg')" max-width="80" /> -->
+            <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
             <!-- <v-icon x-large>$vuetify.icons.Studiz_logo</v-icon> -->
           </v-btn>
           <div class="flex items-center space-x-4">
