@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: ./docker-compose.dev.yml, ./nginx.conf, ./reverse-poxy.conf
+          source: ./docker-compose.dev.yml, ./nginx.conf, ./reverse-poxy.conf, ./backend/Dockerfile
           target: ~/studiz-frontend/dev/
 
   deploy:
