@@ -75,7 +75,7 @@ export default {
     ]
   ],
   env: {
-    baseURL: "http://20.239.140.141:9091/api",
+    baseURL: "https://www.studiz.games/studiz/api",
     // baseURL: "http://localhost:9091/api",
     FIRE_ENV: process.env.FIRE_ENV
   },
