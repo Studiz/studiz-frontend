@@ -28,7 +28,7 @@
             to="/login"
             class="text-H3 font-bold secondary--text whitespace-nowrap text-center w-full"
           >
-            <v-btn height="56" block color="primary" class="text-cap">Test</v-btn>
+            <v-btn height="56" block color="primary" class="text-cap">login</v-btn>
           </nuxt-link>
         </div>
       </div>
