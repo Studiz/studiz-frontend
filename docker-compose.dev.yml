@@ -5,6 +5,7 @@ services:
         build: .
         image: ghcr.io/studiz/studiz-frontend:dev
         restart: on-failure
+        networks: frontend
     reverse-poxy:
         image: nginx
         container_name: reverse-poxy
@@ -15,7 +16,8 @@ services:
         ports:
             - "80:80"
             - "443:443"
+        networks: frontend
 networks:
     frontend:
-        name: studiz-frontend
+        name: studiz-frontend-network
         external: true
