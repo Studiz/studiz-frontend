@@ -21,5 +21,4 @@ services:
             - frontend
 networks:
     frontend:
-        name: studiz-frontend-network
         external: true
