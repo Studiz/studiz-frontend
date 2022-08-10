@@ -93,7 +93,19 @@
       </v-toolbar>
     </template>
     <template #item.actions="{ item }">
-      <v-icon class="mr-2" @click="editItem(item)">mdi-dots-vertical</v-icon>
+      <!-- <v-icon class="mr-2" @click="editItem(item)">mdi-dots-vertical</v-icon> -->
+      <v-menu offset-y left transition="slide-y-transition">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon center color="white" v-bind="attrs" v-on="on">
+            <v-icon class="w-full">mdi-dots-vertical </v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="i in 2" :key="i" @click="editItem(item)">
+            <v-list-item-title>{{ i }} fsafwfaw sd </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <!-- <v-icon small @click="deleteItem(item)">mdi-delete</v-icon> -->
     </template>
     <template #no-data>
