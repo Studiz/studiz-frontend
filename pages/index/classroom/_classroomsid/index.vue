@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="d-flex flex-wrap">
+      <div class="flex-wrap d-flex">
         <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
 
         <v-spacer></v-spacer>
