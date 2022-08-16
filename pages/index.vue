@@ -38,7 +38,7 @@
         rounded="lg"
         elevation="1"
         color="background"
-        class="pa-2 pa-md-5 mb-16 overflow-hidden"
+        class="mb-16 overflow-hidden pa-2 pa-md-5"
       >
         <Nuxt />
         <div
@@ -64,7 +64,7 @@ export default {
         {
           title: 'join quiz',
           icon: '$vuetify.icons.quiz',
-          to: '/quiz',
+          to: '/joinquiz',
         },
         {
           title: 'create quiz',

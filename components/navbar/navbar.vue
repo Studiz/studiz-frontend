@@ -3,7 +3,7 @@
     <!-- TOP -->
     <div class="hidden md:inline-block">
       <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background">
-        <div class="flex justify-between items-center container">
+        <div class="container flex items-center justify-between">
           <v-btn height="50px" elevation="0" color="background" class @click="goHomePage">
             <!-- <v-img :src="require('../../static/logo/Studiz_logo.svg')" max-width="80" /> -->
             <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
@@ -16,7 +16,7 @@
             <v-menu offset-y left transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn v-bind="attrs" height="46" rounded v-on="on" elevation="0" class="text-cap">
-                  <v-avatar class="-m-3 mr-1" size="40px">
+                  <v-avatar class="mr-1 -m-3" size="40px">
                     <v-icon large v-if="!user">mdi-account-circle</v-icon>
                     <v-icon large v-else-if="!user.imageUrl">mdi-account-circle</v-icon>
                     <v-img v-else :src="user.imageUrl" />
