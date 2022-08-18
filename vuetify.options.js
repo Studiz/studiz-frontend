@@ -5,6 +5,8 @@ import quiz from "static/menu_icon/quiz.vue";
 import Studiz_logo from 'static/logo/Studiz_logo.vue'
 import member from 'static/menu_icon/member.vue'
 import setting from 'static/menu_icon/setting.vue'
+import full_screen from 'static/icons/fullScreen.vue'
+import normal_screen from 'static/icons/normalScreen.vue'
 
 
 export default {
@@ -63,6 +65,12 @@ export default {
       },
       setting: {
         component: setting
+      },
+      full_screen: {
+        component: full_screen
+      },
+      normal_screen: {
+        component: normal_screen
       },
     }
   }

@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .dark:root {
   color-scheme: dark;
 }
