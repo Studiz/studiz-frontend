@@ -9,31 +9,40 @@
       dense
       color="background"
     >
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-1">
-          <v-btn
-            v-if="!isFullScreen"
-            color="primary"
-            id="theme"
-            rounded
-            icon
-            @click="openFullscreen"
-          >
-            <v-icon>$vuetify.icons.full_screen</v-icon>
-          </v-btn>
-          <v-btn
-            v-else
-            color="primary"
-            id="theme"
-            rounded
-            icon
-            @click="closeFullscreen"
-          >
-            <v-icon>$vuetify.icons.normal_screen</v-icon>
-          </v-btn>
-          <light-dark-mode />
-          <v-spacer></v-spacer>
-        </div>
+      <div class="flex items-center justify-between gap-x-2">
+        <v-btn
+          v-if="!isFullScreen"
+          color="primary"
+          id="theme"
+          rounded
+          icon
+          @click="openFullscreen"
+        >
+          <v-icon>$vuetify.icons.full_screen</v-icon>
+        </v-btn>
+        <v-btn
+          v-else
+          color="primary"
+          id="theme"
+          rounded
+          icon
+          @click="closeFullscreen"
+        >
+          <v-icon>$vuetify.icons.normal_screen</v-icon>
+        </v-btn>
+        <light-dark-mode />
+        <!-- <v-spacer class="hidden sm:inline-flex"></v-spacer> -->
+        <quiz-progress-bar />
+        <!-- <v-spacer class="hidden sm:inline-flex"></v-spacer> -->
+        <span class="hidden whitespace-nowrap sm:inline-block">
+          {{
+            user
+              ? user.displayName
+                ? user.displayName
+                : user.firstName
+              : 'User Guest'
+          }}
+        </span>
       </div>
     </v-app-bar>
   </div>
@@ -41,8 +50,9 @@
 
 <script>
 import lightDarkMode from './light-dark-mode.vue'
+import QuizProgressBar from './quizProgressBar.vue'
 export default {
-  components: { lightDarkMode },
+  components: { lightDarkMode, QuizProgressBar },
   data() {
     return {
       isFullScreen: false,
