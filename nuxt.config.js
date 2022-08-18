@@ -50,12 +50,14 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/tailwindcss',
     '@nuxtjs/vuetify',
+    // '@nuxtjs/pwa',
     // '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
+    '@nuxtjs/pwa',
     '@nuxtjs/axios',
     [
       '@nuxtjs/firebase',
@@ -112,5 +114,8 @@ export default {
     port: process.env.PORT || 3000,
     host: '0.0.0.0',
     timing: false,
+  },
+  pwa: {
+    icon: false, // disables the icon module
   },
 }
