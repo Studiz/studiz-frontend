@@ -2,12 +2,24 @@
   <div>
     <!-- TOP -->
     <div class="hidden md:inline-block">
-      <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background">
+      <v-app-bar
+        fixed
+        app
+        flat
+        class="drop-shadow-md"
+        height="64"
+        dense
+        color="background"
+      >
         <div class="container flex items-center justify-between">
-          <v-btn height="50px" elevation="0" color="background" class @click="goHomePage">
-            <!-- <v-img :src="require('../../static/logo/Studiz_logo.svg')" max-width="80" /> -->
+          <v-btn
+            height="50px"
+            elevation="0"
+            color="background"
+            class="overflow-hidden"
+            @click="goHomePage"
+          >
             <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
-            <!-- <v-icon x-large>$vuetify.icons.Studiz_logo</v-icon> -->
           </v-btn>
           <div class="flex items-center space-x-4">
             <v-spacer></v-spacer>
@@ -15,18 +27,30 @@
             <LightDarkMode />
             <v-menu offset-y left transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" height="46" rounded v-on="on" elevation="0" class="text-cap">
-                  <v-avatar class="mr-1 -m-3" size="40px">
+                <v-btn
+                  v-bind="attrs"
+                  height="48"
+                  rounded
+                  v-on="on"
+                  elevation="0"
+                  class="!p-0 text-cap !min-w-[48px]"
+                >
+                  <v-avatar size="40px">
                     <v-icon large v-if="!user">mdi-account-circle</v-icon>
-                    <v-icon large v-else-if="!user.imageUrl">mdi-account-circle</v-icon>
+                    <v-icon large v-else-if="!user.imageUrl"
+                      >mdi-account-circle</v-icon
+                    >
                     <v-img v-else :src="user.imageUrl" />
                   </v-avatar>
-                  {{user?user.displayName?user.displayName:user.firstName:"User Guest"}}
-                  <v-icon right color="secondary">mdi-chevron-down</v-icon>
                 </v-btn>
               </template>
               <v-list v-if="!user">
-                <v-list-item v-for="item in route" :key="item.to" :to="item.to" class="font">
+                <v-list-item
+                  v-for="item in route"
+                  :key="item.to"
+                  :to="item.to"
+                  class="font"
+                >
                   <v-icon>{{ item.icon }}</v-icon>
                   <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item>
@@ -60,8 +84,8 @@
         v-show="userRole == 'TEACHER' ? index !== 1 : index !== 2"
         :to="b.to"
       >
-        <span class="text-xs d-none d-sm-inline">{{b.title}}</span>
-        <v-icon>{{b.icon}}</v-icon>
+        <span class="text-xs d-none d-sm-inline">{{ b.title }}</span>
+        <v-icon>{{ b.icon }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </div>
