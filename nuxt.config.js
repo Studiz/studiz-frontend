@@ -50,14 +50,14 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/tailwindcss',
     '@nuxtjs/vuetify',
-    // '@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     // '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxtjs/axios',
     [
       '@nuxtjs/firebase',
