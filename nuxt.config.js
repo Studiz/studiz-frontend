@@ -50,14 +50,14 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/tailwindcss',
     '@nuxtjs/vuetify',
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     // '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    // '@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     '@nuxtjs/axios',
     [
       '@nuxtjs/firebase',
@@ -116,6 +116,20 @@ export default {
     timing: false,
   },
   pwa: {
-    icon: false, // disables the icon module
+    icon: {
+      fileName: 'v.png',
+      sizes: [64, 120, 144, 152, 192, 384, 512],
+    }, // disables the icon module [srcDir]/[staticDir]/icon.png
+    meta: {
+      title: 'Studiz',
+      author: 'Studiz app',
+    },
+    manifest: {
+      name: 'My Awesome App',
+      short_name: 'Studiz',
+      lang: 'en',
+      description: 'apppppppppppppppppppppppppppp',
+      // useWebmanifestExtension: false
+    },
   },
 }
