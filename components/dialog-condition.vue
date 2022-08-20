@@ -1,7 +1,15 @@
 <template>
   <v-dialog v-model="dialog" scrollable max-width="400px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn :color="colorBTN" outlined class="text-cap" v-bind="attrs" v-on="on" height="48" @click="$emit('open')">
+      <v-btn
+        :color="colorBTN"
+        outlined
+        class="text-cap"
+        v-bind="attrs"
+        v-on="on"
+        height="48"
+        @click="$emit('open')"
+      >
         <slot name="icon"></slot>
         <slot name="namebtn"></slot>
       </v-btn>
@@ -18,7 +26,7 @@
         <v-btn :color="btn1" text @click="click1">
           <slot name="btn1">close</slot>
         </v-btn>
-        <v-btn :color="btn2" text @click="click2">
+        <v-btn :color="btn2" text @click="click2" type="submit">
           <slot name="btn2">confirm</slot>
         </v-btn>
       </v-card-actions>
@@ -32,11 +40,19 @@ export default {
     colorBTN: { String },
     btn1: { String },
     btn2: { String },
+    propDialog: {
+      type: Boolean,
+    },
   },
   data() {
     return {
       dialog: false,
     }
+  },
+  watch: {
+    propDialog(val) {
+      this.dialog = val
+    },
   },
   methods: {
     click1() {
@@ -44,11 +60,9 @@ export default {
     },
     click2() {
       this.$emit('confirm')
-      this.dialog = false
     },
   },
 }
 </script>
 
-<style>
-</style>
+<style></style>
