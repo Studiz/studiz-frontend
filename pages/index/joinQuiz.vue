@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.$store.getters.userRole == 'STUDENT'">
-    <h1 class="text-H1">Quiz</h1>
-    <div class="mx-auto max-w-lg mt-5">
+    <h1 class="text-H1">Join Quiz</h1>
+    <div class="max-w-lg mx-auto mt-5">
       <Input-join />
     </div>
   </div>

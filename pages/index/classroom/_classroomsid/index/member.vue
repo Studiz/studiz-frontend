@@ -96,7 +96,7 @@
       <!-- <v-icon class="mr-2" @click="editItem(item)">mdi-dots-vertical</v-icon> -->
       <v-menu offset-y left transition="slide-y-transition">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon center color="white" v-bind="attrs" v-on="on">
+          <v-btn icon center v-bind="attrs" v-on="on">
             <v-icon class="w-full">mdi-dots-vertical </v-icon>
           </v-btn>
         </template>
