@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" scrollable max-width="400px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn :color="colorBTN" outlined class="text-cap" v-bind="attrs" v-on="on" height="48">
+      <v-btn :color="colorBTN" outlined class="text-cap" v-bind="attrs" v-on="on" height="48" @click="$emit('open')">
         <slot name="icon"></slot>
         <slot name="namebtn"></slot>
       </v-btn>
