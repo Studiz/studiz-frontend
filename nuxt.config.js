@@ -117,7 +117,7 @@ export default {
   },
   pwa: {
     icon: {
-      fileName: 'v.png',
+      fileName: 'icon.png',
       sizes: [64, 120, 144, 152, 192, 384, 512],
     }, // disables the icon module [srcDir]/[staticDir]/icon.png
     meta: {
@@ -125,10 +125,14 @@ export default {
       author: 'Studiz app',
     },
     manifest: {
-      name: 'My Awesome App',
+      icon: {
+        fileName: 'icon.png',
+        sizes: [64, 120, 144, 152, 192, 384, 512],
+      },
+      name: 'Studiz app',
       short_name: 'Studiz',
       lang: 'en',
-      description: 'apppppppppppppppppppppppppppp',
+      description: 'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
       // useWebmanifestExtension: false
     },
   },
