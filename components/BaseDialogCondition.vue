@@ -1,10 +1,15 @@
 <template>
-  <v-dialog v-model="dialog" scrollable max-width="400px">
+  <v-dialog
+    v-model="dialog"
+    scrollable
+    :persistent="persistent"
+    max-width="400px"
+  >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         :color="colorBTN"
         :outlined="outlined"
-        class="rounded-lg text-cap"
+        class="rounded-lg text-cap btn-dialog-style"
         v-bind="attrs"
         v-on="on"
         height="48"
@@ -44,6 +49,10 @@ export default {
       type: Boolean,
     },
     outlined: {
+      type: Boolean,
+      default: false,
+    },
+    persistent: {
       type: Boolean,
       default: false,
     },
