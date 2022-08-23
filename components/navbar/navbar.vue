@@ -119,9 +119,9 @@ export default {
           to: '/quiz',
         },
         {
-          title: 'create quiz',
+          title: 'My library',
           icon: '$vuetify.icons.quiz',
-          to: '/createquiz',
+          to: '/library',
         },
         {
           title: 'notification',
