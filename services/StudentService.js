@@ -13,5 +13,9 @@ export default {
 
   generatePinCode(classId) {
     return studizAPI(baseURL).get(`/getPinCode/${classId}`);
+  },
+  
+  updateProfile(studentId, student) {
+    return studizAPI(baseURL).put(`/update/student/${studentId}`, student);
   }
 }
