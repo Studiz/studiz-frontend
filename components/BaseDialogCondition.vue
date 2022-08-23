@@ -3,8 +3,8 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         :color="colorBTN"
-        outlined
-        class="text-cap"
+        :outlined="outlined"
+        class="rounded-lg text-cap"
         v-bind="attrs"
         v-on="on"
         height="48"
@@ -39,9 +39,13 @@ export default {
   props: {
     colorBTN: { String },
     btn1: { String },
-    btn2: { String },
+    btn2: { type: String, default: 'primary' },
     propDialog: {
       type: Boolean,
+    },
+    outlined: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

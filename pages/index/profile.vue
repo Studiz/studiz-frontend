@@ -25,7 +25,7 @@
             <v-list-item-content class="font-normal">
               <v-list-item-title>{{ displayName }}</v-list-item-title>
             </v-list-item-content>
-            <DialogCondition
+            <base-dialog-condition
               @confirm="editDisplayName"
               colorBTN="primary"
               btn2="primary"
@@ -56,7 +56,7 @@
                   </v-container>
                 </v-form>
               </template>
-            </DialogCondition>
+            </base-dialog-condition>
           </v-list-item>
           <v-list-item class="border-b-2">
             <v-list-item-avatar class="!w-40 font-semibold text-left">
@@ -81,12 +81,11 @@
 </template>
 
 <script>
-import DialogCondition from '~/components/dialog-condition.vue'
+import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import StudentService from '../../services/StudentService.js'
 
 export default {
-  components: { DialogCondition },
-
+  components: { BaseDialogCondition },
   data() {
     return {
       rules: {
