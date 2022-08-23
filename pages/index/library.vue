@@ -6,6 +6,24 @@
         <template #namebtn>create</template>
         <template #title>Create quiz</template>
         <template #btn2>create</template>
+        <template #contain>
+          <v-form
+            ref="form"
+            class="pa-md-3"
+            lazy-validation
+            @submit.prevent="editDisplayName"
+          >
+            <v-container>
+              <v-text-field
+                label="File name"
+                outlined
+                required
+                :rules="rules.nameRules"
+                :counter="10"
+              ></v-text-field>
+            </v-container>
+          </v-form>
+        </template>
       </base-dialog-condition>
     </div>
     <v-divider class="my-5"></v-divider>
@@ -38,7 +56,23 @@ import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 export default {
   components: { BaseDialogCondition },
   data() {
-    return {}
+    return {
+      rules: {
+        required: (v) => !!v || 'Required.',
+        nameRules: [
+          (v) => !!v || 'Required.',
+          (v) =>
+            (v && v.length <= 10) ||
+            'Classroom name must be less than 10 characters',
+        ],
+        descriptionRules: [
+          (v) => !!v || 'Required.',
+          (v) =>
+            (v && v.length <= 10) ||
+            'DescriptionRules must be less than 10 characters',
+        ],
+      },
+    }
   },
 }
 </script>
