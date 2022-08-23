@@ -5,15 +5,15 @@
         <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
 
         <v-spacer></v-spacer>
-        <DialogCondition v-if="userRole" @confirm="leave" colorBTN="secondary" btn2="primary">
+        <base-dialog-condition v-if="userRole" @confirm="leave" colorBTN="secondary" btn2="primary">
           <template #namebtn>leave</template>
           <template #title>Are you sure to leave classroom?</template>
-        </DialogCondition>
-        <DialogCondition v-if="false" @confirm="deleteclass" colorBTN="red" btn2="red">
+        </base-dialog-condition>
+        <base-dialog-condition v-if="false" @confirm="deleteclass" colorBTN="red" btn2="red">
           <template #namebtn>Delete</template>
           <template #title>Are you sure to delete classroom?</template>
           <template #btn2>Delete</template>
-        </DialogCondition>
+        </base-dialog-condition>
       </div>
       <p>{{ classroom?classroom.description:'' }}</p>
       <p>
@@ -43,18 +43,17 @@
         </v-tab>
       </v-tabs>
     </div>
-
     <Nuxt />
   </div>
 </template>
 
 <script>
-import DialogCondition from '~/components/dialog-condition.vue'
+import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import ClassroomService from '../../../../services/ClassroomService'
 import StudentService from '../../../../services/StudentService'
 import UserService from '../../../../services/UserService'
 export default {
-  components: { DialogCondition },
+  components: { BaseDialogCondition },
   data() {
     return {
       classroom: null,

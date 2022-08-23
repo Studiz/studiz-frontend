@@ -1,15 +1,15 @@
 <template>
   <v-row>
     <v-col cols="0" md="1" lg="2" class="d-none d-md-block pr-xl-12">
-      <v-sheet color="transparent">
+      <v-sheet color="transparent" class="w-12 lg:w-auto">
         <v-list color="transparent" rounded class="pa-0">
-          <v-list-item to="/profile" active-class="primary--text" class="px-2">
-            <v-list-item-avatar color="primary" size="36px">
+          <v-list-item to="/profile" active-class="primary--text" class="h-12 pa-1 pa-lg-2 lg:h-12">
+            <v-list-item-avatar color="primary" size="40px">
               <v-icon large color="white" v-if="!imageProfile">mdi-account-circle</v-icon>
               <v-img v-else :src="imageProfile" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title class="text-cap">{{displayName}}</v-list-item-title>
+              <v-list-item-title>{{displayName}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider class="my-2"></v-divider>
@@ -24,7 +24,7 @@
             >
               <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
               <v-list-item-content>
-                <v-list-item-title class="text-cap">{{ page.title }}</v-list-item-title>
+                <v-list-item-title>{{ page.title }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </div>
@@ -57,27 +57,27 @@ export default {
       isAuthenticated: false,
       pages: [
         {
-          title: 'classroom',
+          title: 'Classroom',
           icon: '$vuetify.icons.classroom',
           to: '/classrooms',
         },
         {
-          title: 'join quiz',
+          title: 'Join quiz',
           icon: '$vuetify.icons.quiz',
           to: '/joinquiz',
         },
         {
-          title: 'create quiz',
+          title: 'My library',
           icon: '$vuetify.icons.quiz',
-          to: '/createquiz',
+          to: '/library',
         },
         {
-          title: 'notification',
+          title: 'Notification',
           icon: '$vuetify.icons.notification',
           to: '/notification',
         },
         {
-          title: 'setting',
+          title: 'Setting',
           icon: '$vuetify.icons.setting',
           to: '/setting',
         },

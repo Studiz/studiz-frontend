@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <div class="grid grid-cols-1 gap-2 mt-2 lg:grid-cols-3">
+  <div v-if="this.$store.getters.userRole == 'TEACHER'">
+    <div class="items-center justify-between md:flex md:space-y-0">
+      <h1 class="text-H1">My library</h1>
+      <base-dialog-condition colorBTN="primary">
+        <template #namebtn>create</template>
+        <template #title>Create quiz</template>
+        <template #btn2>create</template>
+      </base-dialog-condition>
+    </div>
+    <v-divider class="my-5"></v-divider>
+    <div class="grid grid-cols-1 gap-y-3">
       <div v-for="classroom in 10" :key="classroom.name">
         <v-card
           flat
@@ -25,7 +34,9 @@
 </template>
 
 <script>
+import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 export default {
+  components: { BaseDialogCondition },
   data() {
     return {}
   },
