@@ -1,9 +1,9 @@
 <template>
   <v-row>
     <v-col cols="0" md="1" lg="2" class="d-none d-md-block pr-xl-12">
-      <v-sheet color="transparent" class="w-12 lg:w-auto">
+      <v-sheet color="transparent" class="fixed w-12 lg:w-full max-w-[176px] xl:max-w-[256px]">
         <v-list color="transparent" rounded class="pa-0">
-          <v-list-item to="/profile" active-class="primary--text" class="h-12 pa-1 pa-lg-2 lg:h-12">
+          <v-list-item to="/profile" active-class="primary--text" class="h-12 pa-1 lg:h-12">
             <v-list-item-avatar color="primary" size="40px">
               <v-icon large color="white" v-if="!imageProfile">mdi-account-circle</v-icon>
               <v-img v-else :src="imageProfile" />
