@@ -9,7 +9,7 @@
               <v-img v-else :src="imageProfile" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title class="text-cap">{{displayName}}</v-list-item-title>
+              <v-list-item-title>{{displayName}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider class="my-2"></v-divider>
@@ -24,7 +24,7 @@
             >
               <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
               <v-list-item-content>
-                <v-list-item-title class="text-cap">{{ page.title }}</v-list-item-title>
+                <v-list-item-title>{{ page.title }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </div>
@@ -38,7 +38,7 @@
         rounded="lg"
         elevation="1"
         color="background"
-        class="pa-2 pa-md-5 mb-16 overflow-hidden"
+        class="mb-16 overflow-hidden pa-2 pa-md-5"
       >
         <Nuxt />
         <div
@@ -57,27 +57,27 @@ export default {
       isAuthenticated: false,
       pages: [
         {
-          title: 'classroom',
+          title: 'Classroom',
           icon: '$vuetify.icons.classroom',
           to: '/classrooms',
         },
         {
-          title: 'join quiz',
+          title: 'Join quiz',
           icon: '$vuetify.icons.quiz',
           to: '/quiz',
         },
         {
-          title: 'create quiz',
+          title: 'My library',
           icon: '$vuetify.icons.quiz',
-          to: '/createquiz',
+          to: '/library',
         },
         {
-          title: 'notification',
+          title: 'Notification',
           icon: '$vuetify.icons.notification',
           to: '/notification',
         },
         {
-          title: 'setting',
+          title: 'Setting',
           icon: '$vuetify.icons.setting',
           to: '/setting',
         },

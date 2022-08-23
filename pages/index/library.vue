@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.$store.getters.userRole == 'TEACHER'">
-    <h1 class="text-H1">Create Quiz</h1>
+    <h1 class="text-H1">My library</h1>
   </div>
 </template>
 

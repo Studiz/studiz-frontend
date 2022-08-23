@@ -3,17 +3,23 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         color="primary"
-        class="text-cap w-full md:w-auto rounded-lg text-"
+        class="w-full rounded-lg text-cap md:w-auto"
         height="50"
         v-bind="attrs"
         v-on="on"
-      >create classroom</v-btn>
+        >create classroom</v-btn
+      >
     </template>
     <v-card>
       <v-card-title class="px-3 px-md-5">
         <span class="break-normal text-H1">Create classroom</span>
       </v-card-title>
-      <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="createClassroom">
+      <v-form
+        ref="form"
+        class="pa-md-3"
+        lazy-validation
+        @submit.prevent="createClassroom"
+      >
         <v-container>
           <v-text-field
             label="Classroom name"
@@ -31,7 +37,20 @@
             :counter="50"
           ></v-text-field>
           <v-autocomplete
-            :items="['Reading', 'Writing', 'Coding', 'Art', 'Music', 'Chemistry','Physics','Science','Biology', 'Mmathematics', 'Health and hygeine','Other']"
+            :items="[
+              'Reading',
+              'Writing',
+              'Coding',
+              'Art',
+              'Music',
+              'Chemistry',
+              'Physics',
+              'Science',
+              'Biology',
+              'Mmathematics',
+              'Health and hygeine',
+              'Other',
+            ]"
             label="Choose relevant subject"
             :rules="[rules.required]"
             v-model="data.relevantSubjects"
@@ -109,5 +128,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
