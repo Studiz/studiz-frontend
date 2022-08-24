@@ -17,5 +17,9 @@ export default {
   
   updateProfile(studentId, student) {
     return studizAPI(baseURL).put(`/update/student/${studentId}`, student);
+  },
+
+  updateImageProfile(studentId, image) {
+    return studizAPI(baseURL).post(`/upload/student/image/${studentId}`, image);
   }
 }

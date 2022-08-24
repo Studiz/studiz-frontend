@@ -8,13 +8,38 @@
     </div>
 
     <v-card flat class="background">
-      <div class="justify-center my-5 d-flex">
-        <v-avatar size="94" color="primary">
-          <v-icon size="94" color="white" v-if="!imageProfile"
-            >mdi-account-circle</v-icon
-          >
-          <v-img :src="imageProfile" v-else />
-        </v-avatar>
+      <div class="justify-center d-flex">
+        <v-dialog v-model="isOpenImageUpload" scrollable max-width="400px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-avatar size="94" color="white" outlined class="text-cap" v-bind="attrs" v-on="on">
+              <v-icon size="94" color="primary" v-if="!imageProfile">mdi-account-circle</v-icon>
+              <v-img :src="imageProfile" v-else />
+            </v-avatar>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="break-normal !self-center">Change Your image</span>
+            </v-card-title>
+            <v-avatar size="300" class="self-center m-5 shadow-md">
+              <v-icon color="white" v-if="!imageProfile">mdi-account-circle</v-icon>
+              <v-img :src="imagePreview" v-else-if="imagePreview" />
+              <v-img :src="imageProfile" v-else />
+            </v-avatar>
+            <v-file-input
+              class="mx-5"
+              accept="image/*"
+              label="File input"
+              filled
+              prepend-icon="mdi-camera"
+              @change="previewImage"
+            ></v-file-input>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="closeImageUpload">close</v-btn>
+              <v-btn class="primary" text @click="uploadImage" type="submit">confirm</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
       <v-card-title primary-title class="space-y-3 d-block">
         <v-list two-line item>
@@ -106,6 +131,9 @@ export default {
       },
       newDisplayName: '',
       propDialog: true,
+      fileImage: null,
+      imagePreview: null,
+      isOpenImageUpload: false,
     }
   },
   methods: {
@@ -120,7 +148,6 @@ export default {
           this.$store.getters.userId,
           userUpdated.data
         ).then((res) => {
-          console.log(res)
           userUpdated.data = res.data
           this.$store.commit('SET_USER', userUpdated)
           this.propDialog = false
@@ -130,6 +157,32 @@ export default {
     openForm() {
       this.newDisplayName = this.displayName
       this.propDialog = true
+    },
+    previewImage(payload) {
+      this.fileImage = payload
+      if (this.fileImage) {
+        this.imagePreview = URL.createObjectURL(this.fileImage)
+        URL.revokeObjectURL(this.fileImage)
+      }
+    },
+    closeImageUpload() {
+      this.isOpenImageUpload = false
+      this.imagePreview = null
+    },
+    uploadImage() {
+      let userUpdated = {
+        id: this.$store.getters.userId,
+        data: Object.assign({}, this.$store.getters.user),
+      }
+      let data = new FormData()
+      data.append('studizImg', this.fileImage)
+      StudentService.updateImageProfile(this.$store.getters.userId, data).then(
+        (res) => {
+          userUpdated.data = res.data
+          this.$store.commit('SET_USER', userUpdated)
+          this.closeImageUpload()
+        }
+      )
     },
   },
   computed: {
