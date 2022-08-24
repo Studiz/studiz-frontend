@@ -9,13 +9,13 @@
         class="drop-shadow-md"
         height="64"
         dense
-        color="background"
+        color="background_card"
       >
         <div class="container flex items-center justify-between">
           <v-btn
             height="50px"
             elevation="0"
-            color="background"
+            color="transparent"
             class="overflow-hidden"
             @click="goHomePage"
           >
@@ -71,12 +71,12 @@
       grow
       fixed
       height="70"
-      class="drop-shadow-md d-md-none background"
+      class="drop-shadow-md d-md-none background_card"
       active-class="primary--text"
       v-if="!isGuest"
     >
       <v-btn
-        color="background"
+        color="background_card"
         height="70"
         v-for="(b, index) in buttonNav"
         min-width="50"

@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent
-    class="primary_shade rounded-lg grid grid-rows-2 md:grid-rows-1 grid-flow-col gap-2"
+    class="grid grid-flow-col grid-rows-2 gap-2 rounded-lg background md:grid-rows-1"
     :class="[this.$route.name == 'index-classrooms' ? 'p-2' : 'p-2 md:p-4']"
   >
     <input
@@ -9,7 +9,7 @@
       name="pincode"
       v-model="pincode"
       type="tel"
-      class="p-2 w-full h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-dark_background"
+      class="w-full p-2 rounded-lg h-60px focus:outline-none text-H3 md:text-H2 background_card"
       :class="[
         this.$route.name == 'index-classrooms'
           ? 'col-span-12 md:col-span-9'
@@ -40,7 +40,8 @@
       ]"
       :disabled="pincode.length !== 6"
       @click="join"
-    >{{this.$store.getters.user?'join':'join guest'}}</v-btn>
+      >{{ this.$store.getters.user ? 'join' : 'join guest' }}</v-btn
+    >
 
     <!-- </div> -->
   </form>

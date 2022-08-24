@@ -37,7 +37,7 @@
         min-height="70vh"
         rounded="lg"
         elevation="1"
-        color="background"
+        color="background_card"
         class="mb-16 overflow-hidden pa-2 pa-md-5"
       >
         <Nuxt />

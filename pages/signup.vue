@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
-    <v-stepper v-model="stepPage" rounded="lg" color="last_background">
-      <v-stepper-header class="background" v-if="!isGoogleAccount">
+    <v-stepper v-model="stepPage" rounded="lg">
+      <v-stepper-header class="background_card" v-if="!isGoogleAccount">
         <v-stepper-step class="text-sm" :complete="stepPage > 1" step="1">Sign up</v-stepper-step>
         <v-divider></v-divider>
         <v-stepper-step class="text-sm" :complete="stepPage > 2" step="2">Choose your role</v-stepper-step>
@@ -9,16 +9,16 @@
         <v-stepper-step class="text-sm" step="3">Create account</v-stepper-step>
       </v-stepper-header>
 
-      <v-stepper-items class="background px-2 py-8 px-md-10 pb-md-10 pt-md-5 -mt-2">
+      <v-stepper-items class="px-2 py-8 -mt-2 background_card px-md-10 pb-md-10 pt-md-5">
         <v-stepper-content step="1" class="px-0 py-0">
-          <v-card color="background" flat>
-            <p class="primary--text text-H1 text-center">Sign up</p>
+          <v-card color="background_card" flat>
+            <p class="text-center primary--text text-H1">Sign up</p>
             <div id="firebaseui-auth-container"></div>
 
-            <div class="flex justify-center items-center my-5">
-              <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
-              <span class="text-H3 font-bold bg_disable--text">or</span>
-              <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
+            <div class="flex items-center justify-center my-5">
+              <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
+              <span class="font-bold text-H3 bg_disable--text">or</span>
+              <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
             </div>
 
             <div>
@@ -38,7 +38,7 @@
                   <v-btn
                     outlined
                     color="secondary"
-                    class="text-nor-btn ml-2 text-cap"
+                    class="ml-2 text-nor-btn text-cap"
                     to="login"
                   >login</v-btn>
                 </div>
@@ -47,9 +47,9 @@
           </v-card>
         </v-stepper-content>
         <v-stepper-content step="2" class="px-0 py-0">
-          <v-card color="background" flat>
-            <p class="primary--text text-H1 text-center">I am a...</p>
-            <div class="space-y-3 px-1">
+          <v-card color="background_card" flat>
+            <p class="text-center primary--text text-H1">I am a...</p>
+            <div class="px-1 space-y-3">
               <div
                 @click="data.role = 'student'"
                 :class="[data.role== 'teacher'?'outlineselect':'']"
@@ -61,7 +61,7 @@
                     max-width="80"
                     :src="require('../static/role_icon/teacher.svg')"
                   ></v-img>
-                  <span class="text-H3 md:text-H2 text-cap ml-1 ml-md-5">teacher</span>
+                  <span class="ml-1 text-H3 md:text-H2 text-cap ml-md-5">teacher</span>
                 </v-btn>
               </div>
               <div
@@ -75,11 +75,11 @@
                     max-width="80"
                     :src="require('../static/role_icon/student.svg')"
                   ></v-img>
-                  <span class="text-H3 md:text-H2 text-cap ml-1 ml-md-5">student</span>
+                  <span class="ml-1 text-H3 md:text-H2 text-cap ml-md-5">student</span>
                 </v-btn>
               </div>
             </div>
-            <div class="mt-7 grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-3 mt-7">
               <v-btn text @click="cancel" outlined height="56" block class="text-cap">cancel</v-btn>
               <v-btn
                 color="primary"
@@ -93,11 +93,11 @@
           </v-card>
         </v-stepper-content>
         <v-stepper-content step="3" class="px-0 py-0">
-          <v-card color="background" flat>
+          <v-card color="background_card" flat>
             <v-btn text @click="stepPage = 2" class="mb-3">
               <v-icon left>mdi-arrow-left</v-icon>back
             </v-btn>
-            <p class="primary--text text-H1 text-center">Create your account</p>
+            <p class="text-center primary--text text-H1">Create your account</p>
             <div v-if="!isGoogleAccount">
               <v-form ref="form2" lazy-validation @submit.prevent="createAccount">
                 <v-text-field

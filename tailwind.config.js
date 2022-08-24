@@ -13,6 +13,7 @@ module.exports = {
 
         dark_background: '#272727',
         bg_disable: '#464646',
+        bg_disable: '#121212',
         // dark_secondary: '#192734',
         // dark_tertiary: '#22303C',
         // text_disable: '#C4CDD4'

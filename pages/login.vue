@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg mx-auto">
-    <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
-      <p class="primary--text text-H1 text-center">Login</p>
+    <v-card class="w-screen px-3 py-5 px-md-10 py-md-10" color="background_card">
+      <p class="text-center primary--text text-H1">Login</p>
 
       <div>
         <v-form ref="form" lazy-validation @submit.prevent="submit">
@@ -36,10 +36,10 @@
           </div>
         </v-form>
 
-        <div class="flex justify-center items-center my-5">
-          <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
-          <span class="text-H3 font-bold bg_disable--text">or</span>
-          <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
+        <div class="flex items-center justify-center my-5">
+          <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
+          <span class="font-bold text-H3 bg_disable--text">or</span>
+          <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
         </div>
         <div id="firebaseui-auth-container"></div>
       </div>
