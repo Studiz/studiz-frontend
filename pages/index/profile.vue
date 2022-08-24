@@ -7,7 +7,7 @@
       </h1>
     </div>
 
-    <v-card flat class="background">
+    <v-card flat color="transparent">
       <div class="justify-center my-5 d-flex">
         <v-avatar size="94" color="primary">
           <v-icon size="94" color="white" v-if="!imageProfile"
@@ -16,66 +16,61 @@
           <v-img :src="imageProfile" v-else />
         </v-avatar>
       </div>
-      <v-card-title primary-title class="space-y-3 d-block">
-        <v-list two-line item>
-          <v-list-item class="flex-wrap border-b-2 d-flex">
-            <v-list-item-avatar class="!w-40 font-semibold text-left">
-              <v-list-item-title>Display name</v-list-item-title>
-            </v-list-item-avatar>
-            <v-list-item-content class="font-normal">
-              <v-list-item-title>{{ displayName }}</v-list-item-title>
-            </v-list-item-content>
-            <base-dialog-condition
-              @confirm="editDisplayName"
-              colorBTN="primary"
-              btn2="primary"
-              @open="openForm"
-              :propDialog="propDialog"
-            >
-              <template #namebtn>edit</template>
-              <template #icon>
-                <v-icon left>mdi-pencil</v-icon>
-              </template>
-              <template #title>Change Your display name</template>
-              <template #contain>
-                <v-form
-                  ref="form"
-                  class="pa-md-3"
-                  lazy-validation
-                  @submit.prevent="editDisplayName"
-                >
-                  <v-container>
-                    <v-text-field
-                      label="Dsiplay name"
-                      outlined
-                      required
-                      :rules="rules.nameRules"
-                      :counter="10"
-                      v-model="newDisplayName"
-                    ></v-text-field>
-                  </v-container>
-                </v-form>
-              </template>
-            </base-dialog-condition>
-          </v-list-item>
-          <v-list-item class="border-b-2">
-            <v-list-item-avatar class="!w-40 font-semibold text-left">
-              <v-list-item-title>Name</v-list-item-title>
-            </v-list-item-avatar>
-            <v-list-item-content class="font-normal">
-              <v-list-item-title>{{ name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-avatar class="!w-40 font-semibold text-left">
-              <v-list-item-title>Email</v-list-item-title>
-            </v-list-item-avatar>
-            <v-list-item-content class="font-normal">
-              <v-list-item-title>{{ email }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card-title>
+      <div>
+        <div class="flex items-center h-16 px-4">
+          <div class="flex flex-wrap items-center">
+            <span class="w-40 font-semibold">Display name</span>
+            <span class="font-normal">{{ displayName }}</span>
+          </div>
+          <!-- <v-spacer></v-spacer> -->
+          <base-dialog-condition
+            @confirm="editDisplayName"
+            colorBTN="primary"
+            btn2="primary"
+            @open="openForm"
+            :propDialog="propDialog"
+          >
+            <template #namebtn>edit</template>
+            <template #icon>
+              <v-icon left>mdi-pencil</v-icon>
+            </template>
+            <template #title>Change Your display name</template>
+            <template #contain>
+              <v-form
+                ref="form"
+                class="pa-md-3"
+                lazy-validation
+                @submit.prevent="editDisplayName"
+              >
+                <v-container>
+                  <v-text-field
+                    label="Dsiplay name"
+                    outlined
+                    required
+                    :rules="rules.nameRules"
+                    :counter="10"
+                    v-model="newDisplayName"
+                  ></v-text-field>
+                </v-container>
+              </v-form>
+            </template>
+          </base-dialog-condition>
+        </div>
+        <v-divider />
+        <div class="flex items-center h-16 px-4">
+          <div class="flex flex-wrap items-center">
+            <span class="w-40 font-semibold">Name</span>
+            <span class="font-normal">{{ name }}</span>
+          </div>
+        </div>
+        <v-divider />
+        <div class="flex items-center h-16 px-4">
+          <div class="flex flex-wrap items-center">
+            <span class="w-40 font-semibold">Email</span>
+            <span class="font-normal">{{ email }}</span>
+          </div>
+        </div>
+      </div>
     </v-card>
   </div>
 </template>
