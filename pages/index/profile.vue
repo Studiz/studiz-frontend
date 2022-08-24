@@ -7,14 +7,52 @@
       </h1>
     </div>
 
-    <v-card flat class="transparent">
+    <v-card flat color="transparent">
       <div class="justify-center my-5 d-flex">
-        <v-avatar size="94" color="primary">
-          <v-icon size="94" color="white" v-if="!imageProfile"
-            >mdi-account-circle</v-icon
-          >
-          <v-img :src="imageProfile" v-else />
-        </v-avatar>
+        <v-dialog v-model="isOpenImageUpload" scrollable max-width="400px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-avatar
+              size="94"
+              color="white"
+              outlined
+              class="text-cap"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon size="94" color="primary" v-if="!imageProfile"
+                >mdi-account-circle</v-icon
+              >
+              <v-img :src="imageProfile" v-else />
+            </v-avatar>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="break-normal !self-center">Change Your image</span>
+            </v-card-title>
+            <v-avatar size="300" class="self-center m-5 shadow-md">
+              <v-icon color="white" v-if="!imageProfile"
+                >mdi-account-circle</v-icon
+              >
+              <v-img :src="imagePreview" v-else-if="imagePreview" />
+              <v-img :src="imageProfile" v-else />
+            </v-avatar>
+            <v-file-input
+              class="mx-5"
+              accept="image/*"
+              label="File input"
+              filled
+              prepend-icon="mdi-camera"
+              @change="previewImage"
+            ></v-file-input>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="closeImageUpload">close</v-btn>
+              <v-btn class="primary" text @click="uploadImage" type="submit"
+                >confirm</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
       <div>
         <div class="flex items-center h-16 px-4">
@@ -22,6 +60,7 @@
             <span class="w-40 font-semibold">Display name</span>
             <span class="font-normal">{{ displayName }}</span>
           </div>
+          <!-- <v-spacer></v-spacer> -->
           <base-dialog-condition
             @confirm="editDisplayName"
             colorBTN="primary"
@@ -73,11 +112,9 @@
     </v-card>
   </div>
 </template>
-
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import StudentService from '../../services/StudentService.js'
-
 export default {
   components: { BaseDialogCondition },
   data() {
@@ -116,6 +153,7 @@ export default {
           this.$store.getters.userId,
           userUpdated.data
         ).then((res) => {
+          console.log(res)
           userUpdated.data = res.data
           this.$store.commit('SET_USER', userUpdated)
           this.propDialog = false
@@ -180,5 +218,4 @@ export default {
   },
 }
 </script>
-
 <style></style>
