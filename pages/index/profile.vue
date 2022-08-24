@@ -7,7 +7,7 @@
       </h1>
     </div>
 
-    <v-card flat color="transparent">
+    <v-card flat class="transparent">
       <div class="justify-center my-5 d-flex">
         <v-avatar size="94" color="primary">
           <v-icon size="94" color="white" v-if="!imageProfile"
@@ -22,7 +22,6 @@
             <span class="w-40 font-semibold">Display name</span>
             <span class="font-normal">{{ displayName }}</span>
           </div>
-          <!-- <v-spacer></v-spacer> -->
           <base-dialog-condition
             @confirm="editDisplayName"
             colorBTN="primary"
@@ -100,6 +99,9 @@ export default {
       },
       newDisplayName: '',
       propDialog: true,
+      fileImage: null,
+      imagePreview: null,
+      isOpenImageUpload: false,
     }
   },
   methods: {
@@ -114,7 +116,6 @@ export default {
           this.$store.getters.userId,
           userUpdated.data
         ).then((res) => {
-          console.log(res)
           userUpdated.data = res.data
           this.$store.commit('SET_USER', userUpdated)
           this.propDialog = false
@@ -124,6 +125,32 @@ export default {
     openForm() {
       this.newDisplayName = this.displayName
       this.propDialog = true
+    },
+    previewImage(payload) {
+      this.fileImage = payload
+      if (this.fileImage) {
+        this.imagePreview = URL.createObjectURL(this.fileImage)
+        URL.revokeObjectURL(this.fileImage)
+      }
+    },
+    closeImageUpload() {
+      this.isOpenImageUpload = false
+      this.imagePreview = null
+    },
+    uploadImage() {
+      let userUpdated = {
+        id: this.$store.getters.userId,
+        data: Object.assign({}, this.$store.getters.user),
+      }
+      let data = new FormData()
+      data.append('studizImg', this.fileImage)
+      StudentService.updateImageProfile(this.$store.getters.userId, data).then(
+        (res) => {
+          userUpdated.data = res.data
+          this.$store.commit('SET_USER', userUpdated)
+          this.closeImageUpload()
+        }
+      )
     },
   },
   computed: {
