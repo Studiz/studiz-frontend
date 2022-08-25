@@ -17,7 +17,7 @@
             elevation="0"
             color="transparent"
             class="overflow-hidden"
-            @click="goHomePage"
+            to="/"
           >
             <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
           </v-btn>
@@ -137,13 +137,13 @@ export default {
     }
   },
   methods: {
-    goHomePage() {
-      if (this.user) {
-        this.$router.push('/classrooms')
-      } else {
-        this.$router.push('/join')
-      }
-    },
+    // goHomePage() {
+    //   if (this.user) {
+    //     this.$router.push('/classrooms')
+    //   } else {
+    //     this.$router.push('/join')
+    //   }
+    // },
     logout() {
       this.$fire.auth.signOut().then(() => {
         localStorage.clear('accessToken')

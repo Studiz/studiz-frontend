@@ -2,7 +2,11 @@
   <div v-if="this.$store.getters.userRole == 'TEACHER'">
     <div class="items-center justify-between space-y-2 md:flex md:space-y-0">
       <h1 class="text-H1">My library</h1>
-      <base-dialog-condition colorBTN="primary" :persistent="true">
+      <base-dialog-condition
+        colorBTN="primary"
+        :persistent="true"
+        @confirm="createQuiz"
+      >
         <template #namebtn>create</template>
         <template #title>Create quiz</template>
         <template #btn2>create</template>
@@ -100,6 +104,11 @@ export default {
         ],
       },
     }
+  },
+  methods: {
+    createQuiz() {
+      this.$router.push('/create')
+    },
   },
 }
 </script>
