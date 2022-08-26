@@ -6,6 +6,8 @@
     class="drop-shadow-md"
     height="60"
     dense
+    clipped-left
+    clipped-right
     color="background_card"
   >
     <div class="flex items-center justify-between gap-x-2">
