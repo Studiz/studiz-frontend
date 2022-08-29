@@ -14,10 +14,6 @@
 import QuizNavbar from '~/components/navbar/quizNavbar.vue'
 export default {
   components: { QuizNavbar },
-  name: 'DefaultLayout',
-  data() {
-    return {}
-  },
 }
 </script>
 

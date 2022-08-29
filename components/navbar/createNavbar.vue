@@ -16,7 +16,6 @@
         elevation="0"
         color="transparent"
         class="overflow-hidden"
-        @click="goHomePage"
         to="/"
       >
         <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
