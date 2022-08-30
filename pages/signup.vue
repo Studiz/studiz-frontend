@@ -51,10 +51,10 @@
             <p class="text-center primary--text text-H1">I am a...</p>
             <div class="px-1 space-y-3">
               <div
-                @click="data.role = 'student'"
+                @click="data.role = 'teacher'"
                 :class="[data.role== 'teacher'?'outlineselect':'']"
               >
-                <v-btn block depressed height="100" color="primary" disabled>
+                <v-btn block depressed height="100" color="primary">
                   <v-img
                     left
                     max-height="80"
@@ -213,14 +213,17 @@ export default {
           const sign = require('jwt-encode')
           const secret = 'secret'
           const dataToken = sign(data, secret)
-          userService.signUpStudentWithEmail(dataToken).then((res) => {
-            localStorage.setItem('accessToken', res.data)
-            userService.signInGetProfile(res.data).then((res) => {
-              this.$store.commit('setUser', res.data)
-              this.loading = false
-              this.$router.push('/')
+          if (data.role == 'teacher') {
+            userService.signUpTeacherWithEmail(dataToken).then((res) => {
+              localStorage.setItem('accessToken', res.data)
+              this.signInGetProfile(res.data)
             })
-          })
+          } else {
+            userService.signUpStudentWithEmail(dataToken).then((res) => {
+              localStorage.setItem('accessToken', res.data)
+              this.signInGetProfile(res.data)
+            })
+          }
         }
       }
     },
@@ -243,6 +246,13 @@ export default {
             this.loading = false
           })
       }
+    },
+    signInGetProfile(data) {
+      userService.signInGetProfile(data).then((res) => {
+        this.$store.commit('setUser', res.data)
+        this.loading = false
+        this.$router.push('/')
+      })
     },
 
     async selectRole() {
