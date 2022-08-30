@@ -17,8 +17,23 @@
     >
       <span>
         {{ renderQuestion.question }}
-        {{ quizData }}
+        <!-- {{ quizData }} -->
       </span>
+    </v-sheet>
+    <div class="h-[50vh]">
+
+    </div>
+    <v-sheet
+      rounded="lg"
+      elevation="1"
+      color="background_card"
+      class="overflow-hidden pa-2 pa-md-5"
+      ><div class="grid grid-cols-2">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+      </div>
     </v-sheet>
   </layout-create>
 </template>

@@ -6,27 +6,36 @@
     />
     <v-navigation-drawer absolute bottom permanent app clipped width="192px">
       <v-list nav>
-        <draggable v-model="newDataQuestion" @end="changeOrdering">
+        <draggable
+          v-bind="dragOptions"
+          v-model="newDataQuestion"
+          @end="changeOrdering"
+        >
           <transition-group type="transition" class="space-y-2">
+            <!-- <v-list-item-group> -->
             <div
               v-for="(item, index) in newDataQuestion"
               :key="`${index}-${item}`"
-              class="transition-all duration-300 hover:primary_shade rounded-lg p-2"
+              class="hover:primary_shade rounded-lg p-3 select-none"
               @click="activeItem(index)"
-              :class="{ primary_shade: index === currentQuesiton }"
+              :class="[
+                index === currentQuesiton ? 'primary_shade' : 'background',
+              ]"
             >
-              <div>{{ item }}</div>
+              <span>{{ item.question }}</span>
             </div>
+            <!-- </v-list-item-group> -->
           </transition-group>
         </draggable>
-        <v-list-item-group class="pt-2">
-          <v-list-item
-            class="text-center transition-all duration-300 primary white--text"
-            @click="addQuestion"
-          >
-            <v-list-item-title>Add question</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
+        <v-divider class="my-3" />
+        <v-btn
+          height="48"
+          class="text-center primary white--text rounded-lg w-full transition-all"
+          @click="addQuestion"
+        >
+          <v-icon left>mdi-plus</v-icon>
+          <span>Add question</span>
+        </v-btn>
       </v-list>
     </v-navigation-drawer>
     <v-navigation-drawer absolute bottom permanent app clipped right>
@@ -162,11 +171,18 @@ export default {
         value: 2000,
       },
       newDataQuestion: {},
+      selectItem: 0,
+      dragOptions: {
+        animation: 200,
+        disabled: false,
+        ghostClass: 'ghost',
+      },
     }
   },
   methods: {
     activeItem(index) {
       this.$emit('active-item', index)
+      this.selectItem = index
     },
     changeQuizType(event) {
       console.log(event)
@@ -174,23 +190,25 @@ export default {
     chanceTimeLimit(event) {
       console.log(event)
     },
-    test(text) {
-      console.log(text)
-    },
     addQuestion() {
       this.$emit('add-question')
     },
-    changeOrdering() {
-      console.log('changeOrdering')
+    changeOrdering(event) {
       this.$emit('change-ordering', this.newDataQuestion)
+      this.activeItem(event.newIndex)
     },
   },
   computed: {},
   mounted() {},
   created() {
     this.newDataQuestion = this.dataQuestion
+    this.selectItem = this.currentQuesiton
   },
 }
 </script>
 
-<style></style>
+<style scoped>
+.ghost {
+  opacity: 0.2;
+}
+</style>
