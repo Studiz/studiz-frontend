@@ -1,5 +1,5 @@
 <template>
-  <layout-create>
+  <layout-create :quizTitle="quizData.title" @edit-quiz-title="editquizTitle">
     <v-sheet
       rounded="lg"
       elevation="1"
@@ -27,7 +27,7 @@ export default {
       quizData: {
         id: 'xxxxxx',
         teacherId: 'xxxxxx',
-        title: 'xxxxxx',
+        title: 'xxxxxxtitle',
         image: 'xxxxxx',
         tags: ['xxxxxx', 'xxxxxx'],
         description: 'xxxxxx',
@@ -63,7 +63,8 @@ export default {
     }
   },
   methods: {
-    changeQuizTitle(name) {
+    editquizTitle(name) {
+      console.log(name)
       this.quizData.title = name
     },
   },

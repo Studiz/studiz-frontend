@@ -1,6 +1,9 @@
 <template>
   <v-app>
-    <create-navbar />
+    <create-navbar
+      :quizTitle="quizTitle"
+      @edit-quiz-title="$emit('edit-quiz-title', $event)"
+    />
     <v-navigation-drawer absolute bottom permanent app clipped width="192px">
       <v-list nav>
         <draggable v-model="numberArrary">
@@ -67,6 +70,12 @@ import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
 export default {
   components: { createNavbar, draggable },
+  props: {
+    quizTitle: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       selectedItem: 1,
@@ -97,6 +106,9 @@ export default {
     },
     chanceTimeLimit(event) {
       console.log(event)
+    },
+    test(text) {
+      console.log(text)
     },
     addQuestion() {
       this.numberArrary.push('add' + Math.floor(Math.random() * 100))

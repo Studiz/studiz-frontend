@@ -15,7 +15,7 @@
             ref="form"
             class="pa-md-3"
             lazy-validation
-            @submit.prevent="editDisplayName"
+            @submit.prevent="createQuiz"
           >
             <v-container>
               <v-text-field
@@ -107,7 +107,9 @@ export default {
   },
   methods: {
     createQuiz() {
-      this.$router.push('/create')
+      if (this.$refs.form.validate()) {
+        this.$router.push('/create')
+      }
     },
   },
 }
