@@ -14,7 +14,7 @@
               :key="i"
               class="transition-all duration-300 hover:primary_shade"
               @click="activeItem(i)"
-              :class="{ primary_shade: i === selectedItem }"
+              :class="{ primary_shade: i === courrentQuesiton }"
             >
               <v-list-item-title>{{ i }}</v-list-item-title>
             </v-list-item>
@@ -78,7 +78,7 @@ export default {
   },
   data() {
     return {
-      selectedItem: 1,
+      courrentQuesiton: 1,
       numberArrary: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       listQuizType: ['Single', 'Multiple', 'Trur/False', 'Poll', 'Sort'],
       selectQuizType: 'Single',
@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     activeItem(item) {
-      this.selectedItem = item
+      this.courrentQuesiton = item
     },
     changeQuizType(event) {
       console.log(event)

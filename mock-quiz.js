@@ -1,27 +1,6 @@
-<template>
-  <layout-create :quizTitle="quizData.title" @edit-quiz-title="editquizTitle">
-    <v-sheet
-      rounded="lg"
-      elevation="1"
-      color="background_card"
-      class="overflow-hidden pa-2 pa-md-5"
-    >
-      <span>
-        {{ quizData.questions.question }}
-      </span>
-    </v-sheet>
-  </layout-create>
-</template>
-
-<script>
-import layoutCreate from '~/components/layouts/layoutCreate.vue'
 export default {
-  components: { layoutCreate },
-  layout: 'layoutFree',
   data() {
     return {
-      drawer: true,
-      courrentQuesiton: 1,
       quizData: {
         id: 'xxxxxx',
         teacherId: 'xxxxxx',
@@ -60,13 +39,4 @@ export default {
       },
     }
   },
-  methods: {
-    editquizTitle(name) {
-      this.quizData.title = name
-    },
-  },
-  created() {},
 }
-</script>
-
-<style></style>
