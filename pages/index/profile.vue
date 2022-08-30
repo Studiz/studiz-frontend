@@ -30,11 +30,9 @@
               <span class="break-normal !self-center">Change Your image</span>
             </v-card-title>
             <v-avatar size="300" class="self-center m-5 shadow-md">
-              <v-icon color="white" v-if="!imageProfile"
-                >mdi-account-circle</v-icon
-              >
-              <v-img :src="imagePreview" v-else-if="imagePreview" />
-              <v-img :src="imageProfile" v-else />
+              <v-img :src="imagePreview" v-if="imagePreview" />
+              <v-img :src="imageProfile" v-else-if="imageProfile" />
+              <v-icon color="white" v-else>mdi-account-circle</v-icon>
             </v-avatar>
             <v-file-input
               class="mx-5"
