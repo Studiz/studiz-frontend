@@ -6,10 +6,10 @@
     />
     <v-navigation-drawer absolute bottom permanent app clipped width="192px">
       <v-list nav>
-        <draggable v-model="dataQuestion">
+        <draggable v-model="newDataQuestion" @end="changeOrdering">
           <transition-group type="transition" class="space-y-2">
             <div
-              v-for="(item, index) in dataQuestion"
+              v-for="(item, index) in newDataQuestion"
               :key="`${index}-${item}`"
               class="transition-all duration-300 hover:primary_shade rounded-lg p-2"
               @click="activeItem(index)"
@@ -161,6 +161,7 @@ export default {
         text: '20 seconds',
         value: 2000,
       },
+      newDataQuestion: {},
     }
   },
   methods: {
@@ -179,8 +180,16 @@ export default {
     addQuestion() {
       this.$emit('add-question')
     },
+    changeOrdering() {
+      console.log('changeOrdering')
+      this.$emit('change-ordering', this.newDataQuestion)
+    },
   },
-  created() {},
+  computed: {},
+  mounted() {},
+  created() {
+    this.newDataQuestion = this.dataQuestion
+  },
 }
 </script>
 

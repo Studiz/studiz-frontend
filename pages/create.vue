@@ -7,6 +7,7 @@
     @active-item="activeItem"
     @add-question="addQuestion"
     @edit-quiz-title="editquizTitle"
+    @change-ordering="changeOrdering"
   >
     <v-sheet
       rounded="lg"
@@ -16,6 +17,7 @@
     >
       <span>
         {{ renderQuestion.question }}
+        {{ quizData }}
       </span>
     </v-sheet>
   </layout-create>
@@ -102,6 +104,9 @@ export default {
     },
     activeItem(index) {
       this.currentQuesiton = index
+    },
+    changeOrdering(data) {
+      this.quizData.questions = data
     },
   },
   computed: {
