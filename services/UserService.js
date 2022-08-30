@@ -24,6 +24,20 @@ export default {
       }
     });
   },
+  signUpTeacherWithEmail(dataToken) {
+    return studizAPI(baseURL).post('/teacher/signup/withEmail', void 0, {
+      headers: {
+        'token': dataToken
+      }
+    });
+  },
+  signUpTeacherWithGoogle(dataToken) {
+    return studizAPI(baseURL).post('/teacher/signup/withEmail', void 0, {
+      headers: {
+        'token': dataToken
+      }
+    });
+  },
   checkDuplicateEmail(email) {
     return studizAPI(baseURL).post('/user/checkDuplicateEmail', {
       email
