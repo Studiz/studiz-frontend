@@ -6,19 +6,17 @@
     />
     <v-navigation-drawer absolute bottom permanent app clipped width="192px">
       <v-list nav>
-        <draggable v-model="numberArrary">
-          <transition-group type="transition">
-            <!-- <v-list-item-group> -->
-            <v-list-item
-              v-for="i in numberArrary"
-              :key="i"
-              class="transition-all duration-300 hover:primary_shade"
-              @click="activeItem(i)"
-              :class="{ primary_shade: i === courrentQuesiton }"
+        <draggable v-model="dataQuestion">
+          <transition-group type="transition" class="space-y-2">
+            <div
+              v-for="(item, index) in dataQuestion"
+              :key="`${index}-${item}`"
+              class="transition-all duration-300 hover:primary_shade rounded-lg p-2"
+              @click="activeItem(index)"
+              :class="{ primary_shade: index === currentQuesiton }"
             >
-              <v-list-item-title>{{ i }}</v-list-item-title>
-            </v-list-item>
-            <!-- </v-list-item-group> -->
+              <div>{{ item }}</div>
+            </div>
           </transition-group>
         </draggable>
         <v-list-item-group class="pt-2">
@@ -75,31 +73,99 @@ export default {
       type: String,
       default: '',
     },
+    totalQuestion: {
+      type: Number,
+      default: 0,
+    },
+    dataQuestion: {
+      type: Array,
+      default: [],
+    },
+    currentQuesiton: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
-      courrentQuesiton: 1,
-      numberArrary: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      listQuizType: ['Single', 'Multiple', 'Trur/False', 'Poll', 'Sort'],
-      selectQuizType: 'Single',
-      listTimeLimit: [
-        '5 seconds',
-        '10 seconds',
-        '15 seconds',
-        '20 seconds',
-        '30 seconds',
-        '1 miniute',
-        '2 miniutes',
-        '3 miniutes',
-        '4 miniutes',
-        '5 miniutes',
+      listQuizType: [
+        {
+          text: 'Single choice',
+          value: 'single',
+        },
+        {
+          text: 'Multiple choice',
+          value: 'multiple',
+        },
+        {
+          text: 'Trur/False',
+          value: 'true/false',
+        },
+        {
+          text: 'Poll',
+          value: 'poll',
+        },
+        {
+          text: 'Sort',
+          value: 'sort',
+        },
+        ,
       ],
-      selectTimeLimit: '20 seconds',
+      selectQuizType: {
+        text: 'Single choice',
+        value: 'single',
+      },
+      listTimeLimit: [
+        {
+          text: '5 seconds',
+          value: 500,
+        },
+        {
+          text: '10 seconds',
+          value: 1000,
+        },
+        {
+          text: '15 seconds',
+          value: 1500,
+        },
+        {
+          text: '20 seconds',
+          value: 2000,
+        },
+        {
+          text: '30 seconds',
+          value: 3000,
+        },
+        {
+          text: '1 miniute',
+          value: 1 * 60 * 1000,
+        },
+        {
+          text: '2 miniutes',
+          value: 2 * 60 * 1000,
+        },
+        {
+          text: '3 miniutes',
+          value: 3 * 60 * 1000,
+        },
+        {
+          text: '4 miniutes',
+          value: 4 * 60 * 1000,
+        },
+        {
+          text: '5 miniutes',
+          value: 5 * 60 * 1000,
+        },
+      ],
+      selectTimeLimit: {
+        text: '20 seconds',
+        value: 2000,
+      },
     }
   },
   methods: {
-    activeItem(item) {
-      this.courrentQuesiton = item
+    activeItem(index) {
+      this.$emit('active-item', index)
     },
     changeQuizType(event) {
       console.log(event)
@@ -111,9 +177,7 @@ export default {
       console.log(text)
     },
     addQuestion() {
-      this.numberArrary.push('add' + Math.floor(Math.random() * 100))
-      this.$nuxt.$emit('changeTitle', 'Emit to EventBus')
-      // this.$bus.$emit('changeTitle', 'Emit to EventBus')
+      this.$emit('add-question')
     },
   },
   created() {},
