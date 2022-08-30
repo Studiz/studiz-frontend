@@ -148,7 +148,7 @@ export default {
       this.$fire.auth.signOut().then(() => {
         localStorage.clear('accessToken')
         localStorage.clear('user')
-        this.$store.commit('SET_USER', null)
+        this.$store.commit('setUser', null)
         this.$router.push('/join')
       })
     },

@@ -1,72 +1,17 @@
-const actions = {
-  async onAuthStateChangedAction(state, {
-    authUser,
-    claims
-  }) {
-    if (!authUser) {
-      // remove state
-      state.commit('SET_USER', null)
+import Vuex from 'vuex';
+import authModule from './modules/auth';
+import themeModule from './modules/theme';
+import classroomModule from './modules/classroom';
 
-      //redirect from here
-      this.$router.push({
-        path: '/signin',
-      })
-    } else {
-      const {
-        uid,
-        email
-      } = authUser
-      state.commit('SET_USER', {
-        uid,
-        email,
-      })
+const createStore = () => {
+  return new Vuex.Store({
+    namespaced: true,
+    modules: {
+      auth: authModule,
+      theme: themeModule,
+      classroom: classroomModule
     }
-  },
-}
+  });
+};
 
-const mutations = {
-  SET_USER(state, user) {
-    state.user = user
-  },
-  SET_THEME_MODE(state, value) {
-    state.themeIcon = value.icon
-    state.themeName = value.title
-  }
-}
-
-const state = () => ({
-  user: null,
-  themeIcon: '',
-  themeName: ''
-})
-
-const getters = {
-  user(state) {
-    return state.user ? state.user.data : null
-  },
-  userId(state) {
-    return state.user ? state.user.id : ''
-  },
-  userRole(state) {
-    return state.user ? state.user.data.role : ''
-  },
-  userEmail(state) {
-    return state.user ? state.user.data.email : ''
-  },
-  classRooms(state) {
-    return state.user ? state.user.data.classrooms : []
-  },
-  themeIcon(state) {
-    return state.themeIcon
-  },
-  themeName(state) {
-    return state.themeName
-  }
-}
-
-export default {
-  state,
-  actions,
-  mutations,
-  getters,
-}
+export default createStore

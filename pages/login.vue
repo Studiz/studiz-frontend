@@ -76,7 +76,7 @@ export default {
           .then((res) => {
             let accessToken = res.user._delegate.accessToken
             userService.signInGetProfile(accessToken).then((res) => {
-              this.$store.commit('SET_USER', res.data)
+              this.$store.commit('setUser', res.data)
               // localStorage.setItem('user', JSON.stringify(res.data))
               localStorage.setItem('accessToken', accessToken)
               this.loading = false

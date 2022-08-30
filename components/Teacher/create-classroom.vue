@@ -110,7 +110,7 @@ export default {
             UserService.signInGetProfile(
               localStorage.getItem('accessToken')
             ).then((res) => {
-              this.$store.commit('SET_USER', res.data)
+              this.$store.commit('setUser', res.data)
               this.loading = false
               this.close()
             })

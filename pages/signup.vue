@@ -216,7 +216,7 @@ export default {
           userService.signUpStudentWithEmail(dataToken).then((res) => {
             localStorage.setItem('accessToken', res.data)
             userService.signInGetProfile(res.data).then((res) => {
-              this.$store.commit('SET_USER', res.data)
+              this.$store.commit('setUser', res.data)
               this.loading = false
               this.$router.push('/')
             })
@@ -274,7 +274,7 @@ export default {
         userService
           .signInGetProfile(localStorage.getItem('accessToken'))
           .then((res) => {
-            this.$store.commit('SET_USER', res.data)
+            this.$store.commit('setUser', res.data)
             this.loading = false
             localStorage.clear('googleAccountSignUp')
             this.$router.push('/')
