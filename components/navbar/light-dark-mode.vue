@@ -71,17 +71,17 @@ export default {
         localStorage.theme = 'dark'
         this.$vuetify.theme.dark = true
         this.themeIcon = 'mdi-weather-night'
-        this.$store.commit('SET_THEME_MODE', this.ThemeMode[1])
+        this.$store.commit('setThemeMode', this.ThemeMode[1])
       } else if (localStorage.theme === 'light') {
         document.documentElement.classList.remove('dark')
         localStorage.theme = 'light'
         this.$vuetify.theme.dark = false
         this.themeIcon = 'mdi-white-balance-sunny'
-        this.$store.commit('SET_THEME_MODE', this.ThemeMode[0])
+        this.$store.commit('setThemeMode', this.ThemeMode[0])
       } else {
         localStorage.theme = 'system'
         this.themeIcon = 'mdi-desktop-tower-monitor'
-        this.$store.commit('SET_THEME_MODE', this.ThemeMode[2])
+        this.$store.commit('setThemeMode', this.ThemeMode[2])
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
           this.$vuetify.theme.dark = true
           document.documentElement.classList.add('dark')

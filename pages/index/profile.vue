@@ -153,7 +153,7 @@ export default {
         ).then((res) => {
           console.log(res)
           userUpdated.data = res.data
-          this.$store.commit('SET_USER', userUpdated)
+          this.$store.commit('setUser', userUpdated)
           this.propDialog = false
         })
       }
@@ -183,7 +183,7 @@ export default {
       StudentService.updateImageProfile(this.$store.getters.userId, data).then(
         (res) => {
           userUpdated.data = res.data
-          this.$store.commit('SET_USER', userUpdated)
+          this.$store.commit('setUser', userUpdated)
           this.closeImageUpload()
         }
       )
