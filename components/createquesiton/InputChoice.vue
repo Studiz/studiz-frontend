@@ -2,12 +2,13 @@
   <div class="p-2 rounded-lg flex transition-all" :class="classColor">
     <div class="self-center cursor-pointer">
       <v-icon
-        v-if="correctChoice"
+        v-if="isCorrect"
         color="white"
         class="p-2 bg-green-400 border-4 border-white rounded-full"
         >mdi-check-bold</v-icon
       >
       <div
+        @click="changeCorrectChoice"
         v-else
         class="p-2 bg-black/20 border-4 border-white rounded-full group"
       >
@@ -20,7 +21,7 @@
     <v-form
       ref="form"
       lazy-validation
-      @submit.prevent="saveInputText"
+      @submit.prevent="saveNewText"
       class="h-[128px] w-full flex items-center overflow-auto self-center"
     >
       <v-textarea
@@ -31,10 +32,10 @@
         rows="1"
         label="Add answer"
         background-color="transparent"
-        v-model.trim="inputText"
+        v-model.trim="newText"
         :rules="rules.nameRules"
         :counter="120"
-        @blur="saveInputText"
+        @blur="saveNewText"
       ></v-textarea>
     </v-form>
   </div>
@@ -51,9 +52,22 @@ export default {
       type: String,
       default: 'blue',
     },
-    correctChoice: {
+    option: {
+      type: String,
+      default: '',
+    },
+    isCorrect: {
       type: Boolean,
       default: false,
+    },
+    currentQuesiton: {
+      type: Number,
+      // required: true,
+    },
+  },
+  watch: {
+    currentQuesiton() {
+      this.mappingCurrentText()
     },
   },
   data() {
@@ -67,17 +81,27 @@ export default {
             'Classroom name must be less than 120 characters',
         ],
       },
-      inputText: null,
+      newText: null,
     }
   },
   methods: {
-    saveInputText() {
+    saveNewText() {
       if (this.$refs.form.validate()) {
-        console.log(this.inputText)
-
-        this.$emit('save-input-text', { index: this.index, text: this.inputText })
+        this.$emit('save-input-text', {
+          index: this.index,
+          text: this.newText,
+        })
       }
     },
+    changeCorrectChoice() {
+      this.$emit('change-correct-choice', this.index)
+    },
+    mappingCurrentText() {
+      this.newText = this.option
+    },
+  },
+  created() {
+    this.mappingCurrentText()
   },
 }
 </script>

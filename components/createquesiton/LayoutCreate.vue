@@ -194,6 +194,7 @@ export default {
       this.$emit('change-quiz-type', event)
     },
     chanceTimeLimit(event) {
+      console.log(event)
       this.$emit('change-time-limit', event)
     },
     addQuestion() {

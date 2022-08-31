@@ -15,7 +15,7 @@
       rounded="lg"
       elevation="1"
       color="background_card"
-      class="overflow-hidden pa-2 pa-md-5 h-[calc(10vh-12px)]"
+      class="overflow-hidden pa-2 pa-md-5 h-[calc(15vh-12px)]"
     >
       <span>
         {{ renderQuestion.question }}
@@ -23,7 +23,7 @@
       </span>
     </v-sheet>
 
-    <div class="h-[calc(60vh-calc(12px+12px+60px))]"></div>
+    <div class="h-[calc(55vh-calc(12px+12px+60px))]"></div>
 
     <!-- <v-sheet
       rounded="lg"
@@ -32,23 +32,39 @@
       class="overflow-hidden pa-2 pa-md-5"
     > -->
     <div class="h-[30vh]">
-      <base-singlechoice v-if="renderQuestion.type === 'single'" />
+      <base-single-choice
+        v-if="renderQuestion.type === 'single'"
+        :renderQuestionAnswer="renderQuestionAnswer"
+        :currentQuesiton="currentQuesiton"
+        @change-correct-choice="changeCorrectChoice"
+        @save-input-text="saveInputText"
+      />
+      <base-multiple-choice
+        v-if="renderQuestion.type === 'multiple'"
+        :renderQuestionAnswer="renderQuestionAnswer"
+      />
     </div>
     <!-- </v-sheet> -->
   </layout-create>
 </template>
 
 <script>
-import BaseSinglechoice from '~/components/createquesiton/BaseSinglechoice.vue'
+import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
+import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
 import layoutCreate from '~/components/createquesiton/LayoutCreate.vue'
 export default {
-  components: { layoutCreate, InputChoice, BaseSinglechoice },
+  components: {
+    layoutCreate,
+    InputChoice,
+    BaseMultipleChoice,
+    BaseSingleChoice,
+  },
   layout: 'layoutFree',
   data() {
     return {
       drawer: true,
-      currentQuesiton: 1,
+      currentQuesiton: 0,
       quizData: {
         id: 'xxxxxx',
         teacherId: 'xxxxxx',
@@ -86,13 +102,13 @@ export default {
           {
             question: 'question2',
             image: 'xxxxxx',
-            time: 1000,
+            time: 120000,
             type: 'multiple',
             answer: {
               options: [
                 {
                   option: 'xxxxxx',
-                  isCorrect: true,
+                  isCorrect: false,
                 },
                 {
                   option: 'xxxxxx',
@@ -157,6 +173,18 @@ export default {
     chanceTimeLimit(time) {
       this.quizData.questions[this.currentQuesiton].time = time
     },
+    changeCorrectChoice(data) {
+      this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+        (element, index) => {
+          element.isCorrect = index === data ? true : false
+        }
+      )
+    },
+    saveInputText(data) {
+      this.quizData.questions[this.currentQuesiton].answer.options[
+        data.index
+      ].option = data.text
+    },
   },
   computed: {
     renderQuestion() {
@@ -167,6 +195,9 @@ export default {
     },
     renderAllQuestion() {
       return this.quizData.questions
+    },
+    renderQuestionAnswer() {
+      return this.quizData.questions[this.currentQuesiton].answer
     },
   },
   created() {},
