@@ -21,18 +21,17 @@
         <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
       </v-btn>
       <v-form ref="form" lazy-validation @submit.prevent="editquizTitle">
-        <v-container>
-          <v-text-field
-            v-model="newQuizTitle"
-            @blur="editquizTitle"
-            hide-details
-            dense
-            outlined
-            required
-            :rules="rules.nameRules"
-            :counter="10"
-          ></v-text-field>
-        </v-container>
+        <v-text-field
+          v-model="newQuizTitle"
+          @blur="editquizTitle"
+          hide-details
+          dense
+          flat
+          outlined
+          required
+          :rules="rules.nameRules"
+          :counter="10"
+        ></v-text-field>
       </v-form>
       <v-spacer />
       <light-dark-mode class="!h-9 !w-9" />

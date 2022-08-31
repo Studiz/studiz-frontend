@@ -12,7 +12,6 @@
           @end="changeOrdering"
         >
           <transition-group type="transition" class="space-y-2">
-            <!-- <v-list-item-group> -->
             <div
               v-for="(item, index) in newDataQuestion"
               :key="`${index}-${item}`"
@@ -24,10 +23,9 @@
             >
               <span>{{ item.question }}</span>
             </div>
-            <!-- </v-list-item-group> -->
           </transition-group>
         </draggable>
-        <v-divider class="my-3" />
+        <v-divider class="my-2" />
         <v-btn
           height="48"
           class="text-center primary white--text rounded-lg w-full transition-all"
@@ -92,7 +90,10 @@ export default {
     },
     currentQuesiton: {
       type: Number,
-      default: 0,
+      require: true,
+    },
+    questionType: {
+      type: String,
     },
   },
   data() {
@@ -179,16 +180,21 @@ export default {
       },
     }
   },
+  watch: {
+    currentQuesiton() {
+      this.mappingQuestion()
+    },
+  },
   methods: {
     activeItem(index) {
       this.$emit('active-item', index)
       this.selectItem = index
     },
     changeQuizType(event) {
-      console.log(event)
+      this.$emit('change-quiz-type', event)
     },
     chanceTimeLimit(event) {
-      console.log(event)
+      this.$emit('change-time-limit', event)
     },
     addQuestion() {
       this.$emit('add-question')
@@ -197,12 +203,21 @@ export default {
       this.$emit('change-ordering', this.newDataQuestion)
       this.activeItem(event.newIndex)
     },
+    mappingQuestion() {
+      this.selectQuizType = this.listQuizType.find(
+        (item) => item.value === this.dataQuestion[this.currentQuesiton].type
+      )
+      this.selectTimeLimit = this.listTimeLimit.find(
+        (item) => item.value === this.dataQuestion[this.currentQuesiton].time
+      )
+    },
   },
   computed: {},
   mounted() {},
   created() {
     this.newDataQuestion = this.dataQuestion
     this.selectItem = this.currentQuesiton
+    this.mappingQuestion()
   },
 }
 </script>
