@@ -1,24 +1,16 @@
 <template>
   <div class="grid grid-cols-2 gap-3">
     <input-choice
-      classColor="red"
-      :index="0"
-      @save-input-text="saveInputText"
-    />
-    <input-choice
-      classColor="yellow"
-      :index="1"
-      @save-input-text="saveInputText"
-    />
-    <input-choice
-      classColor="green"
-      :index="2"
-      @save-input-text="saveInputText"
-    />
-    <input-choice
-      classColor="blue"
-      :index="3"
-      @save-input-text="saveInputText"
+      v-for="(item, index) in renderQuestionAnswer.options"
+      :option="item.option"
+      :isCorrect="item.isCorrect"
+      :key="`${index}-${item}`"
+      :index="index"
+      :classColor="arrayChoiceColor[index]"
+      :currentQuesiton="currentQuesiton"
+      @save-input-text="$emit('save-input-text', $event)"
+      @change-correct-choice="$emit('select-correct-choice', $event)"
+      @unselect-correct-choice="$emit('unselect-correct-choice', $event)"
     />
   </div>
 </template>
@@ -27,13 +19,20 @@
 import InputChoice from './InputChoice.vue'
 export default {
   components: { InputChoice },
-  data() {
-    return {}
-  },
-  methods: {
-    saveInputText(data) {
-      console.log('saveInputText')
+  props: {
+    renderQuestionAnswer: {
+      type: Object,
+      required: true,
     },
+    currentQuesiton: {
+      type: Number,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      arrayChoiceColor: ['red', 'blue', 'green', 'yellow'],
+    }
   },
 }
 </script>

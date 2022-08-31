@@ -39,28 +39,33 @@
     <v-navigation-drawer absolute bottom permanent app clipped right>
       <v-list class="!py-4 !px-2">
         <v-list-item-group>
-          <!-- <v-list-item> -->
-          <v-list-item-title class="overflow-visible">
+          <v-list-item-title class="overflow-visible space-y-5">
             <v-select
               :items="listQuizType"
               v-model="selectQuizType"
               label="Quiz type"
               dense
               outlined
+              hide-details
               @change="changeQuizType"
             >
             </v-select>
+            <span
+              v-show="selectQuizType.value == 'multiple'"
+              class="red--text whitespace-pre-wrap"
+              >*Required more than one correct choice</span
+            >
             <v-select
               :items="listTimeLimit"
               v-model="selectTimeLimit"
               label="Time limit"
               dense
               outlined
+              hide-details
               @change="chanceTimeLimit"
             >
             </v-select>
           </v-list-item-title>
-          <!-- </v-list-item> -->
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -192,10 +197,12 @@ export default {
     },
     changeQuizType(event) {
       this.$emit('change-quiz-type', event)
+      this.mappingQuestion()
     },
     chanceTimeLimit(event) {
       console.log(event)
       this.$emit('change-time-limit', event)
+      this.mappingQuestion()
     },
     addQuestion() {
       this.$emit('add-question')

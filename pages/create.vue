@@ -41,7 +41,11 @@
       />
       <base-multiple-choice
         v-if="renderQuestion.type === 'multiple'"
+        :currentQuesiton="currentQuesiton"
         :renderQuestionAnswer="renderQuestionAnswer"
+        @save-input-text="saveInputText"
+        @select-correct-choice="selectCorrectChoice"
+        @unselect-correct-choice="selectCorrectChoice"
       />
     </div>
     <!-- </v-sheet> -->
@@ -168,7 +172,18 @@ export default {
       this.quizData.questions = data
     },
     changeQuizType(type) {
-      this.quizData.questions[this.currentQuesiton].type = type
+      if (
+        this.quizData.questions[this.currentQuesiton].type == 'multiple' &&
+        type == 'single'
+      ) {
+        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+          (item) => {
+            item.isCorrect = false
+          }
+        )
+      } else {
+        this.quizData.questions[this.currentQuesiton].type = type
+      }
     },
     chanceTimeLimit(time) {
       this.quizData.questions[this.currentQuesiton].time = time
@@ -179,6 +194,24 @@ export default {
           element.isCorrect = index === data ? true : false
         }
       )
+    },
+    selectCorrectChoice(data) {
+      const countCorrect = this.quizData.questions[
+        this.currentQuesiton
+      ].answer.options.filter((element) => element.isCorrect).length
+      if (
+        this.quizData.questions[this.currentQuesiton].answer.options[data]
+          .isCorrect === true &&
+        countCorrect > 1
+      ) {
+        this.quizData.questions[this.currentQuesiton].answer.options[
+          data
+        ].isCorrect = false
+      } else {
+        this.quizData.questions[this.currentQuesiton].answer.options[
+          data
+        ].isCorrect = true
+      }
     },
     saveInputText(data) {
       this.quizData.questions[this.currentQuesiton].answer.options[
