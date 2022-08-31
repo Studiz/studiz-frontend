@@ -2,23 +2,33 @@
   <div class="max-w-lg mx-auto">
     <v-stepper v-model="stepPage" rounded="lg">
       <v-stepper-header class="background_card" v-if="!isGoogleAccount">
-        <v-stepper-step class="text-sm" :complete="stepPage > 1" step="1">Sign up</v-stepper-step>
+        <v-stepper-step class="text-sm" :complete="stepPage > 1" step="1"
+          >Sign up</v-stepper-step
+        >
         <v-divider></v-divider>
-        <v-stepper-step class="text-sm" :complete="stepPage > 2" step="2">Choose your role</v-stepper-step>
+        <v-stepper-step class="text-sm" :complete="stepPage > 2" step="2"
+          >Choose your role</v-stepper-step
+        >
         <v-divider></v-divider>
         <v-stepper-step class="text-sm" step="3">Create account</v-stepper-step>
       </v-stepper-header>
 
-      <v-stepper-items class="px-2 py-8 -mt-2 background_card px-md-10 pb-md-10 pt-md-5">
+      <v-stepper-items
+        class="px-2 py-8 -mt-2 background_card px-md-10 pb-md-10 pt-md-5"
+      >
         <v-stepper-content step="1" class="px-0 py-0">
           <v-card color="background_card" flat>
             <p class="text-center primary--text text-H1">Sign up</p>
             <div id="firebaseui-auth-container"></div>
 
             <div class="flex items-center justify-center my-5">
-              <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
+              <span
+                class="w-full mx-4 border-b-4 dark:border-bg_disable"
+              ></span>
               <span class="font-bold text-H3 bg_disable--text">or</span>
-              <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
+              <span
+                class="w-full mx-4 border-b-4 dark:border-bg_disable"
+              ></span>
             </div>
 
             <div>
@@ -31,8 +41,18 @@
                   @keypress.enter="submitEmail"
                   :rules="[rules.required, rules.email]"
                 ></v-text-field>
-                <v-btn color="primary" height="60" block :loading="loading" type="submit" class>Next</v-btn>
-                <div class="py-2 secondary--text">{{textError === '' ? '':textError}}</div>
+                <v-btn
+                  color="primary"
+                  height="60"
+                  block
+                  :loading="loading"
+                  type="submit"
+                  class
+                  >Next</v-btn
+                >
+                <div class="py-2 secondary--text">
+                  {{ textError === '' ? '' : textError }}
+                </div>
                 <div class="flex items-center mt-7">
                   <span>Have an account?</span>
                   <v-btn
@@ -40,7 +60,8 @@
                     color="secondary"
                     class="ml-2 text-nor-btn text-cap"
                     to="login"
-                  >login</v-btn>
+                    >login</v-btn
+                  >
                 </div>
               </v-form>
             </div>
@@ -52,7 +73,7 @@
             <div class="px-1 space-y-3">
               <div
                 @click="data.role = 'student'"
-                :class="[data.role== 'teacher'?'outlineselect':'']"
+                :class="[data.role == 'teacher' ? 'outlineselect' : '']"
               >
                 <v-btn block depressed height="100" color="primary" disabled>
                   <v-img
@@ -61,12 +82,14 @@
                     max-width="80"
                     :src="require('../static/role_icon/teacher.svg')"
                   ></v-img>
-                  <span class="ml-1 text-H3 md:text-H2 text-cap ml-md-5">teacher</span>
+                  <span class="ml-1 text-H3 md:text-H2 text-cap ml-md-5"
+                    >teacher</span
+                  >
                 </v-btn>
               </div>
               <div
                 @click="data.role = 'student'"
-                :class="[data.role== 'student'?'outlineselect':'']"
+                :class="[data.role == 'student' ? 'outlineselect' : '']"
               >
                 <v-btn block depressed height="100" color="primary">
                   <v-img
@@ -75,20 +98,33 @@
                     max-width="80"
                     :src="require('../static/role_icon/student.svg')"
                   ></v-img>
-                  <span class="ml-1 text-H3 md:text-H2 text-cap ml-md-5">student</span>
+                  <span class="ml-1 text-H3 md:text-H2 text-cap ml-md-5"
+                    >student</span
+                  >
                 </v-btn>
               </div>
             </div>
             <div class="grid grid-cols-2 gap-3 mt-7">
-              <v-btn text @click="cancel" outlined height="56" block class="text-cap">cancel</v-btn>
+              <v-btn
+                text
+                @click="cancel"
+                outlined
+                height="56"
+                block
+                class="text-cap"
+                >cancel</v-btn
+              >
               <v-btn
                 color="primary"
                 height="56"
                 block
                 :loading="loading"
                 :disabled="data.role == null"
-                @click="isGoogleAccount?signUpWithGoogleAccount():selectRole()"
-              >{{isGoogleAccount?"Confirm":"Next"}}</v-btn>
+                @click="
+                  isGoogleAccount ? signUpWithGoogleAccount() : selectRole()
+                "
+                >{{ isGoogleAccount ? 'Confirm' : 'Next' }}</v-btn
+              >
             </div>
           </v-card>
         </v-stepper-content>
@@ -99,7 +135,11 @@
             </v-btn>
             <p class="text-center primary--text text-H1">Create your account</p>
             <div v-if="!isGoogleAccount">
-              <v-form ref="form2" lazy-validation @submit.prevent="createAccount">
+              <v-form
+                ref="form2"
+                lazy-validation
+                @submit.prevent="createAccount"
+              >
                 <v-text-field
                   v-model.trim="data.fname"
                   :counter="30"
@@ -137,16 +177,25 @@
                   @click:append="show_password2 = !show_password2"
                 ></v-text-field>
                 <div class="grid grid-cols-2 gap-3">
-                  <v-btn text @click="cancel" outlined height="56" block class="text-cap">cancel</v-btn>
+                  <v-btn
+                    text
+                    @click="cancel"
+                    outlined
+                    height="56"
+                    block
+                    class="text-cap"
+                    >cancel</v-btn
+                  >
                   <v-btn
                     color="primary"
                     height="56"
                     block
                     :loading="loading"
                     type="submit"
-                    :disabled="data.email==''"
+                    :disabled="data.email == ''"
                     class="text-H1"
-                  >Create account</v-btn>
+                    >Create account</v-btn
+                  >
                 </div>
               </v-form>
             </div>
@@ -338,6 +387,6 @@ export default {
 
 <style>
 .outlineselect {
-  @apply outline outline-offset-2 rounded-sm outline-ligh_tprimary dark:outline-dark_primary;
+  @apply outline outline-offset-2 rounded-sm outline-light_primary dark:outline-dark_primary;
 }
 </style>

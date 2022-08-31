@@ -3,8 +3,19 @@
 // The variables you want to modify
 // $font-size-root: 20px;
 
-
-$material-light: ('background': #F7FDFF);
+$material-light: (
+  'background': #f7fdff,
+);
 // $material-dark: ('background': rgb(83, 40, 117));
 
 // $body-font-family: 'Montserrat',sans-serif;
+
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+// @layer utilities {
+// .primary {
+//   color: red !important;
+// }
+// }

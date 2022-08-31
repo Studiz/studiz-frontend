@@ -38,9 +38,10 @@
     </v-navigation-drawer>
     <v-navigation-drawer absolute bottom permanent app clipped right>
       <v-list class="!py-4 !px-2">
-        <v-list-item-group>
+        <v-list-item-group :key="currentQuesiton">
           <v-list-item-title class="overflow-visible space-y-5">
             <v-select
+              class="class--selection"
               :items="listQuizType"
               v-model="selectQuizType"
               label="Quiz type"
@@ -97,9 +98,6 @@ export default {
       type: Number,
       require: true,
     },
-    questionType: {
-      type: String,
-    },
   },
   data() {
     return {
@@ -107,29 +105,31 @@ export default {
         {
           text: 'Single choice',
           value: 'single',
+          disabled: false,
         },
         {
           text: 'Multiple choice',
           value: 'multiple',
+          disabled: false,
         },
         {
           text: 'Trur/False',
           value: 'true/false',
+          disabled: true,
         },
         {
           text: 'Poll',
           value: 'poll',
+          disabled: true,
         },
         {
           text: 'Sort',
           value: 'sort',
+          disabled: true,
         },
         ,
       ],
-      selectQuizType: {
-        text: 'Single choice',
-        value: 'single',
-      },
+      selectQuizType: null,
       listTimeLimit: [
         {
           text: '5 seconds',
@@ -172,10 +172,7 @@ export default {
           value: 5 * 60 * 1000,
         },
       ],
-      selectTimeLimit: {
-        text: '20 seconds',
-        value: 2000,
-      },
+      selectTimeLimit: null,
       newDataQuestion: {},
       selectItem: 0,
       dragOptions: {
@@ -183,6 +180,7 @@ export default {
         disabled: false,
         ghostClass: 'ghost',
       },
+      // renderComponent: true,
     }
   },
   watch: {
@@ -233,5 +231,9 @@ export default {
 <style scoped>
 .ghost {
   opacity: 0.2;
+}
+:deep(.v-list-item--highlighted) {
+  opacity: 100 !important;
+  @apply !text-light_primary dark:!text-dark_primary;
 }
 </style>

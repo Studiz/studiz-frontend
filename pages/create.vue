@@ -1,4 +1,5 @@
 <template>
+  <!-- :key="currentQuesiton" -->
   <layout-create
     :quizTitle="quizData.title"
     :totalQuestion="renderTotalQuestion"
@@ -233,6 +234,9 @@ export default {
     renderQuestionAnswer() {
       return this.quizData.questions[this.currentQuesiton].answer
     },
+  },
+  mounted() {
+    this.$forceUpdate()
   },
   created() {},
 }
