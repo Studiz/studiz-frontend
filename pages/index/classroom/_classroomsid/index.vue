@@ -5,7 +5,7 @@
         <h1 class="text-H1">{{ classroom?classroom.name:'' }}</h1>
 
         <v-spacer></v-spacer>
-        <base-dialog-condition v-if="userRole" @confirm="leave" colorBTN="secondary" btn2="primary">
+        <base-dialog-condition v-if="isStudent" @confirm="leave" colorBTN="secondary" btn2="primary">
           <template #namebtn>leave</template>
           <template #title>Are you sure to leave classroom?</template>
         </base-dialog-condition>
@@ -18,7 +18,7 @@
       <p>{{ classroom?classroom.description:'' }}</p>
       <p>
         PinCode:
-        <span class="text-H2">{{ classroom?classroom.pinCode:'' }}</span>
+        <span class="font-medium">{{ classroom?classroom.pinCode:'' }}</span>
       </p>
     </div>
     <div class="mb-4">
@@ -78,7 +78,7 @@ export default {
     },
   },
   computed: {
-    userRole() {
+    isStudent() {
       return this.$store.getters.userRole == 'STUDENT' ? true : false
     },
   },
