@@ -282,9 +282,12 @@ export default {
             JSON.parse(localStorage.getItem('googleAccountSignUp'))
               .stsTokenManager.accessToken
           )
-          this.signInGetProfile(res.data).then(() => {
-            localStorage.clear('googleAccountSignUp')
-          })
+
+          this.signInGetProfile(localStorage.getItem('accessToken')).then(
+            () => {
+              localStorage.clear('googleAccountSignUp')
+            }
+          )
         })
       } else {
         userService.signUpStudentWithGoogle(dataToken).then((res) => {
@@ -293,9 +296,11 @@ export default {
             JSON.parse(localStorage.getItem('googleAccountSignUp'))
               .stsTokenManager.accessToken
           )
-          this.signInGetProfile(res.data).then(() => {
-            localStorage.clear('googleAccountSignUp')
-          })
+          this.signInGetProfile(localStorage.getItem('accessToken')).then(
+            () => {
+              localStorage.clear('googleAccountSignUp')
+            }
+          )
         })
       }
     },
