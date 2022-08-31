@@ -32,7 +32,7 @@ export default {
     });
   },
   signUpTeacherWithGoogle(dataToken) {
-    return studizAPI(baseURL).post('/teacher/signup/withEmail', void 0, {
+    return studizAPI(baseURL).post('/teacher/signup/withGoogle', void 0, {
       headers: {
         'token': dataToken
       }
