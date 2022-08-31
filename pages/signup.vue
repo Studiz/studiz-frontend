@@ -248,7 +248,7 @@ export default {
       }
     },
     signInGetProfile(data) {
-      userService.signInGetProfile(data).then((res) => {
+      return userService.signInGetProfile(data).then((res) => {
         this.$store.commit('setUser', res.data)
         this.loading = false
         this.$router.push('/')
@@ -275,21 +275,29 @@ export default {
       const sign = require('jwt-encode')
       const secret = 'secret'
       const dataToken = sign(data, secret)
-      userService.signUpStudentWithGoogle(dataToken).then((res) => {
-        localStorage.setItem(
-          'accessToken',
-          JSON.parse(localStorage.getItem('googleAccountSignUp'))
-            .stsTokenManager.accessToken
-        )
-        userService
-          .signInGetProfile(localStorage.getItem('accessToken'))
-          .then((res) => {
-            this.$store.commit('setUser', res.data)
-            this.loading = false
+      if (data.role == 'teacher') {
+        userService.signUpTeacherWithGoogle(dataToken).then((res) => {
+          localStorage.setItem(
+            'accessToken',
+            JSON.parse(localStorage.getItem('googleAccountSignUp'))
+              .stsTokenManager.accessToken
+          )
+          this.signInGetProfile(res.data).then(() => {
             localStorage.clear('googleAccountSignUp')
-            this.$router.push('/')
           })
-      })
+        })
+      } else {
+        userService.signUpStudentWithGoogle(dataToken).then((res) => {
+          localStorage.setItem(
+            'accessToken',
+            JSON.parse(localStorage.getItem('googleAccountSignUp'))
+              .stsTokenManager.accessToken
+          )
+          this.signInGetProfile(res.data).then(() => {
+            localStorage.clear('googleAccountSignUp')
+          })
+        })
+      }
     },
     cancel() {
       if (localStorage.getItem('googleAccountSignUp')) {
