@@ -176,6 +176,7 @@ export default {
         this.quizData.questions[this.currentQuesiton].type == 'multiple' &&
         type == 'single'
       ) {
+        this.quizData.questions[this.currentQuesiton].type = type
         this.quizData.questions[this.currentQuesiton].answer.options.forEach(
           (item) => {
             item.isCorrect = false
