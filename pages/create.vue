@@ -12,44 +12,33 @@
     @change-quiz-type="changeQuizType"
     @change-time-limit="chanceTimeLimit"
   >
-    <v-sheet
-      rounded="lg"
-      elevation="1"
-      color="background_card"
-      class="overflow-hidden pa-2 pa-md-5 h-[calc(15vh-12px)]"
-    >
-      <span>
-        {{ renderQuestion.question }}
-        <!-- {{ quizData }} -->
-      </span>
-    </v-sheet>
+    <input-question
+      :currentQuesiton="currentQuesiton"
+      :quiestion="renderQuestion.question"
+      @save-input-question="saveInputQuestion"
+    />
 
-    <div class="h-[calc(55vh-calc(12px+12px+60px))]"></div>
+    <div class=""></div>
 
-    <!-- <v-sheet
-      rounded="lg"
-      elevation="1"
-      color="background_card"
-      class="overflow-hidden pa-2 pa-md-5"
-    > -->
-    <div class="h-[30vh]">
-      <base-single-choice
-        v-if="renderQuestion.type === 'single'"
-        :renderQuestionAnswer="renderQuestionAnswer"
-        :currentQuesiton="currentQuesiton"
-        @change-correct-choice="changeCorrectChoice"
-        @save-input-text="saveInputText"
-      />
-      <base-multiple-choice
-        v-if="renderQuestion.type === 'multiple'"
-        :currentQuesiton="currentQuesiton"
-        :renderQuestionAnswer="renderQuestionAnswer"
-        @save-input-text="saveInputText"
-        @select-correct-choice="selectCorrectChoice"
-        @unselect-correct-choice="selectCorrectChoice"
-      />
-    </div>
-    <!-- </v-sheet> -->
+    <v-footer absolute color="transparent" class="!p-3">
+      <div class="w-full">
+        <base-single-choice
+          v-if="renderQuestion.type === 'single'"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          :currentQuesiton="currentQuesiton"
+          @change-correct-choice="changeCorrectChoice"
+          @save-input-text="saveInputText"
+        />
+        <base-multiple-choice
+          v-if="renderQuestion.type === 'multiple'"
+          :currentQuesiton="currentQuesiton"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          @save-input-text="saveInputText"
+          @select-correct-choice="selectCorrectChoice"
+          @unselect-correct-choice="selectCorrectChoice"
+        />
+      </div>
+    </v-footer>
   </layout-create>
 </template>
 
@@ -57,6 +46,7 @@
 import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
 import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
+import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
 import layoutCreate from '~/components/createquesiton/LayoutCreate.vue'
 export default {
   components: {
@@ -64,6 +54,7 @@ export default {
     InputChoice,
     BaseMultipleChoice,
     BaseSingleChoice,
+    InputQuestion,
   },
   layout: 'layoutFree',
   data() {
@@ -219,6 +210,9 @@ export default {
       this.quizData.questions[this.currentQuesiton].answer.options[
         data.index
       ].option = data.text
+    },
+    saveInputQuestion(data) {
+      this.quizData.questions[this.currentQuesiton].question = data
     },
   },
   computed: {

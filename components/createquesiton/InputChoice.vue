@@ -63,7 +63,7 @@ export default {
     },
     currentQuesiton: {
       type: Number,
-      // required: true,
+      required: true,
     },
   },
   watch: {
