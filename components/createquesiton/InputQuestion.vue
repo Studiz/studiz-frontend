@@ -3,13 +3,13 @@
     rounded="lg"
     elevation="1"
     color="background_card"
-    class="overflow-hidden pa-2 pa-md-3"
+    class="overflow-hidden pa-2 pa-md-3 h-28"
   >
     <v-form
       ref="form"
       lazy-validation
       @submit.prevent="saveNewQuestion"
-      class="w-full flex items-center overflow-auto self-center"
+      class="w-full flex items-center overflow-auto self-center max-h-20"
     >
       <v-textarea
         light
