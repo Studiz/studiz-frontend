@@ -22,13 +22,13 @@
 
     <v-footer absolute color="transparent" class="!p-3">
       <div class="w-full">
-        <base-single-choice
+        <!-- <base-single-choice
           v-if="renderQuestion.type === 'single'"
           :renderQuestionAnswer="renderQuestionAnswer"
           :currentQuesiton="currentQuesiton"
           @change-correct-choice="changeCorrectChoice"
           @save-input-text="saveInputText"
-        />
+        /> -->
         <base-multiple-choice
           v-if="renderQuestion.type === 'multiple'"
           :currentQuesiton="currentQuesiton"
@@ -44,7 +44,7 @@
 
 <script>
 import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
-import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
+// import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
 import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
 import layoutCreate from '~/components/createquesiton/LayoutCreate.vue'
@@ -53,7 +53,7 @@ export default {
     layoutCreate,
     InputChoice,
     BaseMultipleChoice,
-    BaseSingleChoice,
+    // BaseSingleChoice,
     InputQuestion,
   },
   layout: 'layoutFree',
