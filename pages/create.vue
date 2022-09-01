@@ -13,32 +13,37 @@
     @change-time-limit="chanceTimeLimit"
   >
     <input-question
+      class="h-[calc(15vh)]"
       :currentQuesiton="currentQuesiton"
       :quiestion="renderQuestion.question"
       @save-input-question="saveInputQuestion"
     />
 
-    <div class=""></div>
+    <input-image
+      class="h-[calc(45vh-calc(24px+60px))] py-3"
+      :currentQuesiton="currentQuesiton"
+      :image="renderQuestion.image"
+      @save-input-image="saveInputImage"
+      @delete-image="deleteImage"
+    />
 
-    <v-footer absolute color="transparent" class="!p-3">
-      <div class="w-full">
-        <base-single-choice
-          v-if="renderQuestion.type === 'single'"
-          :renderQuestionAnswer="renderQuestionAnswer"
-          :currentQuesiton="currentQuesiton"
-          @change-correct-choice="changeCorrectChoice"
-          @save-input-text="saveInputText"
-        />
-        <base-multiple-choice
-          v-if="renderQuestion.type === 'multiple'"
-          :currentQuesiton="currentQuesiton"
-          :renderQuestionAnswer="renderQuestionAnswer"
-          @save-input-text="saveInputText"
-          @select-correct-choice="selectCorrectChoice"
-          @unselect-correct-choice="selectCorrectChoice"
-        />
-      </div>
-    </v-footer>
+    <div class="h-[calc(40vh-24px)]">
+      <base-single-choice
+        v-if="renderQuestion.type === 'single'"
+        :renderQuestionAnswer="renderQuestionAnswer"
+        :currentQuesiton="currentQuesiton"
+        @change-correct-choice="changeCorrectChoice"
+        @save-input-text="saveInputText"
+      />
+      <base-multiple-choice
+        v-if="renderQuestion.type === 'multiple'"
+        :currentQuesiton="currentQuesiton"
+        :renderQuestionAnswer="renderQuestionAnswer"
+        @save-input-text="saveInputText"
+        @select-correct-choice="selectCorrectChoice"
+        @unselect-correct-choice="selectCorrectChoice"
+      />
+    </div>
   </layout-create>
 </template>
 
@@ -46,6 +51,7 @@
 import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
 import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
+import InputImage from '~/components/createquesiton/InputImage.vue'
 import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
 import layoutCreate from '~/components/createquesiton/LayoutCreate.vue'
 export default {
@@ -55,6 +61,7 @@ export default {
     BaseSingleChoice,
     BaseMultipleChoice,
     InputQuestion,
+    InputImage,
   },
   layout: 'layoutFree',
   data() {
@@ -71,7 +78,7 @@ export default {
         questions: [
           {
             question: 'question1',
-            image: 'xxxxxx',
+            image: 'https://random.responsiveimages.io/v1/docs',
             time: 1000,
             type: 'single',
             answer: {
@@ -97,7 +104,7 @@ export default {
           },
           {
             question: 'question2',
-            image: 'xxxxxx',
+            image: '',
             time: 120000,
             type: 'multiple',
             answer: {
@@ -213,6 +220,12 @@ export default {
     },
     saveInputQuestion(data) {
       this.quizData.questions[this.currentQuesiton].question = data
+    },
+    saveInputImage(data) {
+      this.quizData.questions[this.currentQuesiton].image = data
+    },
+    deleteImage() {
+      this.quizData.questions[this.currentQuesiton].image = ''
     },
   },
   computed: {

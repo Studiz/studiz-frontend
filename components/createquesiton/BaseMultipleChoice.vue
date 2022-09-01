@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-3">
+  <div class="grid grid-cols-2 gap-3 w-full h-full">
     <input-choice
       v-for="(item, index) in renderQuestionAnswer.options"
       :option="item.option"

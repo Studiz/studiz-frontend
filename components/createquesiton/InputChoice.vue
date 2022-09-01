@@ -1,5 +1,8 @@
 <template>
-  <div class="p-2 rounded-lg flex transition-all" :class="classColor">
+  <div
+    class="p-2 rounded-lg flex transition-all drop-shadow-md"
+    :class="classColor"
+  >
     <div class="self-center cursor-pointer">
       <div v-if="isCorrect" @click="unselectCorrectChoice">
         <v-icon

@@ -1,9 +1,9 @@
 <template>
   <v-sheet
     rounded="lg"
-    elevation="1"
+    elevation="0"
     color="background_card"
-    class="overflow-hidden pa-2 pa-md-3 h-28"
+    class="overflow-hidden pa-2 pa-md-3 drop-shadow-md"
   >
     <v-form
       ref="form"
@@ -70,7 +70,6 @@ export default {
   },
   created() {
     this.mappingCurrentText()
-    console.log(this.quiestion)
   },
 }
 </script>
