@@ -211,6 +211,8 @@ export default {
       this.activeItem(event.newIndex)
     },
     mappingQuestion() {
+      this.newDataQuestion = this.dataQuestion
+      this.selectItem = this.currentQuesiton
       this.selectQuizType = this.listQuizType.find(
         (item) => item.value === this.dataQuestion[this.currentQuesiton].type
       )
@@ -228,8 +230,6 @@ export default {
   computed: {},
   mounted() {},
   created() {
-    this.newDataQuestion = this.dataQuestion
-    this.selectItem = this.currentQuesiton
     this.mappingQuestion()
   },
 }

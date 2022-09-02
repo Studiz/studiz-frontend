@@ -47,8 +47,8 @@ export default {
       type: Number,
       required: true,
     },
-    image: {
-      type: String,
+    dataQuestion: {
+      type: Object,
     },
   },
   watch: {
@@ -91,9 +91,9 @@ export default {
     },
     mappingImage() {
       this.imageInfo =
-        this.image == '' || this.image == null ? [] : [this.image]
+        this.dataQuestion.image == '' || this.dataQuestion.image == null ? [] : [this.dataQuestion.image]
       this.previewImageList =
-        this.image == '' || this.image == null ? [] : [this.image]
+        this.dataQuestion.image == '' || this.dataQuestion.image == null ? [] : [this.dataQuestion.image]
     },
   },
   created() {

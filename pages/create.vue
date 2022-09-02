@@ -16,14 +16,14 @@
     <input-question
       class="h-[calc(15vh)]"
       :currentQuesiton="currentQuesiton"
-      :quiestion="renderQuestion.question"
+      :dataQuestion="renderQuestion"
       @save-input-question="saveInputQuestion"
     />
 
     <input-image
       class="h-[calc(45vh-calc(24px+60px))] py-3"
       :currentQuesiton="currentQuesiton"
-      :image="renderQuestion.image"
+      :dataQuestion="renderQuestion"
       @save-input-image="saveInputImage"
       @delete-image="deleteImage"
     />
@@ -230,11 +230,26 @@ export default {
       this.quizData.questions[this.currentQuesiton].image = ''
     },
     deleteQuestion(index) {
-      this.quizData.questions.splice(index, 1)
+      if (this.currentQuesiton === index) {
+        // this.quizData.questions.splice(index - 1, 1)
+        // this.currentQuesiton = index - 1
+        // this.quizData.questions.splice(index, 1)
+        console.log(
+          this.quizData.questions.findIndex(
+            (element, i) => element === this.quizData.questions[i]
+          )
+        )
+      } else if (this.currentQuesiton > index) {
+        console.log('broke')
+        this.activeItem(this.currentQuesiton - 1)
+        this.quizData.questions.splice(index, 1)
+      } else if (this.currentQuesiton < index) {
+        this.activeItem(this.currentQuesiton)
+        this.quizData.questions.splice(index, 1)
+      }
     },
     duplicateQuestion(index) {
       let newQuestion = Object.assign({}, this.quizData.questions[index])
-      // Object.assign(newQuestion, this.quizData.questions[index])
       this.quizData.questions.push(newQuestion)
     },
   },

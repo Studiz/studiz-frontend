@@ -31,8 +31,8 @@
 <script>
 export default {
   props: {
-    quiestion: {
-      type: String,
+    dataQuestion: {
+      type: Object,
     },
     currentQuesiton: {
       type: Number,
@@ -65,7 +65,7 @@ export default {
       }
     },
     mappingCurrentText() {
-      this.newQuestion = this.quiestion
+      this.newQuestion = this.dataQuestion.question
     },
   },
   created() {

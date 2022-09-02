@@ -51,7 +51,7 @@
     <div class="grid grid-cols-2 gap-1">
       <div
         v-for="(choice, index) in item.answer.options"
-        :key="`${index}-${choice}`"
+        :key="`${index}-${item}-${choice}`"
         class="outline outline-[0.5px] h-2 outline-black/30"
       >
         <div
@@ -85,8 +85,8 @@ export default {
       this.$emit('duplicate-question', this.index)
     },
     deleteQuestion(index) {
-      this.dialog = true
       this.$emit('delete-question', index)
+      this.dialog = false
     },
     activeItem(index) {
       this.$emit('active-item', index)
