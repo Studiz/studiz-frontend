@@ -39,6 +39,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('@tailwindcss/line-clamp'),
     // require('daisyui'),
     // require("@tailwindcss/forms")({
     //     strategy: 'class',

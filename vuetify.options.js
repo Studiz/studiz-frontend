@@ -8,6 +8,7 @@ import setting from 'static/menu_icon/setting.vue'
 import full_screen from 'static/icons/fullScreen.vue'
 import normal_screen from 'static/icons/normalScreen.vue'
 import edit from 'static/icons/edit.vue'
+import duplicate from 'static/icons/duplicate.vue'
 
 export default {
   theme: {
@@ -75,6 +76,9 @@ export default {
       },
       edit: {
         component: edit,
+      },
+      duplicate: {
+        component: duplicate,
       },
     },
   },

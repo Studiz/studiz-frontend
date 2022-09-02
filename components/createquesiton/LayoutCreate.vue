@@ -12,17 +12,18 @@
           @end="changeOrdering"
         >
           <transition-group type="transition" class="space-y-2">
-            <div
-              v-for="(item, index) in newDataQuestion"
-              :key="`${index}-${item}`"
-              class="hover:primary_shade rounded-lg p-3 select-none"
-              @click="activeItem(index)"
+            <thumbnail
               :class="[
                 index === currentQuesiton ? 'primary_shade' : 'background',
               ]"
-            >
-              <span>{{ item.question }}</span>
-            </div>
+              v-for="(item, index) in newDataQuestion"
+              :key="`${index}-${item}`"
+              :item="item"
+              :index="index"
+              @active-item="activeItem"
+              @delete-question="deleteQuestion"
+              @duplicate-question="duplicateQuestion"
+            />
           </transition-group>
         </draggable>
         <v-divider class="my-2" />
@@ -53,7 +54,7 @@
             </v-select>
             <span
               v-show="selectQuizType.value == 'multiple'"
-              class="red--text whitespace-pre-wrap"
+              class="whitespace-pre-wrap"
               >*Required more than one correct choice</span
             >
             <v-select
@@ -79,8 +80,9 @@
 <script>
 import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
+import Thumbnail from './Thumbnail.vue'
 export default {
-  components: { createNavbar, draggable },
+  components: { createNavbar, draggable, Thumbnail },
   props: {
     quizTitle: {
       type: String,
@@ -198,7 +200,6 @@ export default {
       this.mappingQuestion()
     },
     chanceTimeLimit(event) {
-      console.log(event)
       this.$emit('change-time-limit', event)
       this.mappingQuestion()
     },
@@ -216,6 +217,12 @@ export default {
       this.selectTimeLimit = this.listTimeLimit.find(
         (item) => item.value === this.dataQuestion[this.currentQuesiton].time
       )
+    },
+    deleteQuestion(index) {
+      this.$emit('delete-question', index)
+    },
+    duplicateQuestion(index) {
+      this.$emit('duplicate-question', index)
     },
   },
   computed: {},

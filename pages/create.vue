@@ -1,5 +1,4 @@
 <template>
-  <!-- :key="currentQuesiton" -->
   <layout-create
     :quizTitle="quizData.title"
     :totalQuestion="renderTotalQuestion"
@@ -11,6 +10,8 @@
     @change-ordering="changeOrdering"
     @change-quiz-type="changeQuizType"
     @change-time-limit="chanceTimeLimit"
+    @delete-question="deleteQuestion"
+    @duplicate-question="duplicateQuestion"
   >
     <input-question
       class="h-[calc(15vh)]"
@@ -68,6 +69,7 @@ export default {
     return {
       drawer: true,
       currentQuesiton: 0,
+      propDialog: false,
       quizData: {
         id: 'xxxxxx',
         teacherId: 'xxxxxx',
@@ -136,8 +138,8 @@ export default {
     addQuestion() {
       this.quizData.questions.push({
         question: 'question' + Math.floor(Math.random() * 100),
-        image: 'xxxxxx',
-        time: 10,
+        image: 'https://random.responsiveimages.io/v1/docs',
+        time: 5000,
         type: 'multiple',
         answer: {
           options: [
@@ -226,6 +228,14 @@ export default {
     },
     deleteImage() {
       this.quizData.questions[this.currentQuesiton].image = ''
+    },
+    deleteQuestion(index) {
+      this.quizData.questions.splice(index, 1)
+    },
+    duplicateQuestion(index) {
+      let newQuestion = Object.assign({}, this.quizData.questions[index])
+      // Object.assign(newQuestion, this.quizData.questions[index])
+      this.quizData.questions.push(newQuestion)
     },
   },
   computed: {

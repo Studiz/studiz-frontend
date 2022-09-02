@@ -26,10 +26,7 @@
         :key="index"
         class="relative w-fit h-full"
       >
-        <img
-          :src="item"
-          class="object-contain object-center h-full w-auto flex"
-        />
+        <img :src="item" class="object-contain object-center h-full w-auto" />
 
         <v-btn
           @click="deleteImage(index)"
