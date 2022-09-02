@@ -81,7 +81,7 @@ export default {
           {
             question: 'question1',
             image: 'https://random.responsiveimages.io/v1/docs',
-            time: 1000,
+            time: 3000,
             type: 'single',
             answer: {
               options: [
@@ -137,9 +137,9 @@ export default {
   methods: {
     addQuestion() {
       this.quizData.questions.push({
-        question: 'question',
+        question: '',
         image: '',
-        time: 5000,
+        time: 1000,
         type: 'single',
         answer: {
           options: [

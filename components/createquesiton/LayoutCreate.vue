@@ -20,6 +20,7 @@
               :key="`${index}-${item}`"
               :item="item"
               :index="index"
+              :totalQuestion="totalQuestion"
               @active-item="activeItem"
               @delete-question="deleteQuestion"
               @duplicate-question="duplicateQuestion"

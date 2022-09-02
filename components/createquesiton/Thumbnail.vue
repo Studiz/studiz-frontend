@@ -12,7 +12,14 @@
 
       <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon x-small v-bind="attrs" v-on="on" @click="dialog = true">
+          <v-btn
+            icon
+            x-small
+            v-bind="attrs"
+            v-on="on"
+            @click="dialog = true"
+            :disabled="totalQuestion == 1 && index == 0"
+          >
             <v-icon small>mdi-delete</v-icon>
           </v-btn>
         </template>
@@ -71,6 +78,10 @@ export default {
       required: true,
     },
     index: {
+      type: Number,
+      required: true,
+    },
+    totalQuestion: {
       type: Number,
       required: true,
     },
