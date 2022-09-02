@@ -43,6 +43,9 @@ export default {
     currentQuesiton() {
       this.mappingCurrentText()
     },
+    dataQuestion() {
+      this.mappingCurrentText()
+    },
   },
   data() {
     return {

@@ -55,6 +55,9 @@ export default {
     currentQuesiton() {
       this.mappingImage()
     },
+    dataQuestion() {
+      this.mappingImage()
+    },
   },
   data() {
     return {
@@ -91,9 +94,13 @@ export default {
     },
     mappingImage() {
       this.imageInfo =
-        this.dataQuestion.image == '' || this.dataQuestion.image == null ? [] : [this.dataQuestion.image]
+        this.dataQuestion.image == '' || this.dataQuestion.image == null
+          ? []
+          : [this.dataQuestion.image]
       this.previewImageList =
-        this.dataQuestion.image == '' || this.dataQuestion.image == null ? [] : [this.dataQuestion.image]
+        this.dataQuestion.image == '' || this.dataQuestion.image == null
+          ? []
+          : [this.dataQuestion.image]
     },
   },
   created() {

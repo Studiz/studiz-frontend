@@ -137,26 +137,26 @@ export default {
   methods: {
     addQuestion() {
       this.quizData.questions.push({
-        question: 'question' + Math.floor(Math.random() * 100),
-        image: 'https://random.responsiveimages.io/v1/docs',
+        question: 'question',
+        image: '',
         time: 5000,
-        type: 'multiple',
+        type: 'single',
         answer: {
           options: [
             {
-              option: 'xxxxxx',
-              isCorrect: true,
-            },
-            {
-              option: 'xxxxxx',
+              option: '',
               isCorrect: false,
             },
             {
-              option: 'xxxxxx',
+              option: '',
               isCorrect: false,
             },
             {
-              option: 'xxxxxx',
+              option: '',
+              isCorrect: false,
+            },
+            {
+              option: '',
               isCorrect: false,
             },
           ],
@@ -231,16 +231,16 @@ export default {
     },
     deleteQuestion(index) {
       if (this.currentQuesiton === index) {
-        // this.quizData.questions.splice(index - 1, 1)
-        // this.currentQuesiton = index - 1
-        // this.quizData.questions.splice(index, 1)
-        console.log(
-          this.quizData.questions.findIndex(
-            (element, i) => element === this.quizData.questions[i]
-          )
-        )
+        if (index > 0) {
+          this.activeItem(this.currentQuesiton - 1)
+          this.quizData.questions.splice(index, 1)
+        } else if (this.renderTotalQuestion > 1 && index == 0) {
+          this.quizData.questions.splice(index, 1)
+        } else {
+          this.quizData.questions.splice(index, 1)
+          this.addQuestion()
+        }
       } else if (this.currentQuesiton > index) {
-        console.log('broke')
         this.activeItem(this.currentQuesiton - 1)
         this.quizData.questions.splice(index, 1)
       } else if (this.currentQuesiton < index) {
@@ -249,7 +249,7 @@ export default {
       }
     },
     duplicateQuestion(index) {
-      let newQuestion = Object.assign({}, this.quizData.questions[index])
+      let newQuestion = structuredClone(this.quizData.questions[index])
       this.quizData.questions.push(newQuestion)
     },
   },
@@ -265,6 +265,9 @@ export default {
     },
     renderQuestionAnswer() {
       return this.quizData.questions[this.currentQuesiton].answer
+    },
+    renderQuestionType() {
+      return this.quizData.questions[this.currentQuesiton].type
     },
   },
   mounted() {
