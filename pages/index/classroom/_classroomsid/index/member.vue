@@ -164,9 +164,6 @@ export default {
 
   created() {
     this.loadData()
-    if (!this.$store.getters.classroom) {
-      this.loadData()
-    }
   },
 
   methods: {

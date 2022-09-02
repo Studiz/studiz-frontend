@@ -1,33 +1,36 @@
 <template>
-  <div>
-    <div class="grid grid-cols-1 gap-2 mt-2 lg:grid-cols-3">
-      <div v-for="classroom in 10" :key="classroom.name">
-        <v-card
-          flat
-          rounded="lg"
-          class="!border-0 bg-gradient-to-r from-cyan-500 to-blue-500 white--text w-full"
-        >
-          <v-card-title class="w-full">
-            <div class="w-10/12 truncate text-h5">
-              <span class="font-bold white--text">{{ classroom.name }}</span>
-            </div>
-          </v-card-title>
-          <v-card-subtitle class="h-24 overflow-auto scrollbar white--text">{{
-            classroom.description
-          }}</v-card-subtitle>
-          <v-card-text class="flex items-start justify-between white--text">{{
-            classroom.teachName
-          }}</v-card-text>
-        </v-card>
-      </div>
-    </div>
-  </div>
+  <v-data-table :headers="headers" :items="quizzes" :items-per-page="5" class="elevation-1"></v-data-table>
 </template>
 
 <script>
+import ClassroomService from '../../../../../services/ClassroomService'
 export default {
   data() {
-    return {}
+    return {
+      quizzes: [],
+      headers: [
+        {
+          text: 'Date',
+          align: 'start',
+          value: 'date',
+        },
+        { text: 'Title', value: 'title' },
+        { text: 'Participants', align: 'end', value: 'numberOfParticipants' },
+      ],
+    }
+  },
+  methods: {
+    loadData() {
+      ClassroomService.getClassroom(this.$route.params.classroomsid).then(
+        (res) => {
+          this.$store.commit('setClassroom', res.data)
+          this.quizzes = this.$store.getters.quizzes
+        }
+      )
+    },
+  },
+  created() {
+    this.loadData()
   },
 }
 </script>
