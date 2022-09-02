@@ -233,8 +233,7 @@ export default {
       this.quizData.questions.splice(index, 1)
     },
     duplicateQuestion(index) {
-      let newQuestion = Object.assign({}, this.quizData.questions[index])
-      // Object.assign(newQuestion, this.quizData.questions[index])
+      let newQuestion = structuredClone(this.quizData.questions[index])
       this.quizData.questions.push(newQuestion)
     },
   },
