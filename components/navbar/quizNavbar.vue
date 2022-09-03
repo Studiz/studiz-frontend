@@ -1,48 +1,18 @@
 <template>
   <div>
-    <v-app-bar
-      fixed
-      app
-      flat
-      class="drop-shadow-md"
-      height="60"
-      dense
-      color="background"
-    >
-      <div class="flex items-center justify-between gap-x-2">
-        <v-btn
-          v-if="!isFullScreen"
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="openFullscreen"
-        >
+    <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background">
+      <div class="flex items-center gap-x-2">
+        <v-btn v-if="!isFullScreen" color="primary" id="theme" rounded icon @click="openFullscreen">
           <v-icon>$vuetify.icons.full_screen</v-icon>
         </v-btn>
-        <v-btn
-          v-else
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="closeFullscreen"
-        >
+        <v-btn v-else color="primary" id="theme" rounded icon @click="closeFullscreen">
           <v-icon>$vuetify.icons.normal_screen</v-icon>
         </v-btn>
         <light-dark-mode />
-        <!-- <v-spacer class="hidden sm:inline-flex"></v-spacer> -->
-        <quiz-progress-bar />
-        <!-- <v-spacer class="hidden sm:inline-flex"></v-spacer> -->
-        <span class="hidden whitespace-nowrap sm:inline-block">
-          {{
-            user
-              ? user.displayName
-                ? user.displayName
-                : user.firstName
-              : 'User Guest'
-          }}
-        </span>
+        <v-spacer></v-spacer>
+        <quiz-progress-bar v-if="!isLobby" />
+        <v-spacer></v-spacer>
+        <span class="hidden whitespace-nowrap sm:inline-block">{{user}}</span>
       </div>
     </v-app-bar>
   </div>
@@ -56,7 +26,17 @@ export default {
   data() {
     return {
       isFullScreen: false,
+      isLobby: false,
     }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
+        ? this.$store.getters.user.displayName
+          ? this.$store.getters.user.displayName
+          : this.$store.getters.user.firstName
+        : 'User Guest'
+    },
   },
   methods: {
     openFullscreen() {
@@ -97,6 +77,9 @@ export default {
   },
   mounted() {
     document.addEventListener('fullscreenchange', this.checkFullScreen())
+    if (this.$route.path.includes('lobby')) {
+      this.isLobby = true
+    }
   },
 }
 </script>
