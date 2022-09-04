@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <!-- <Navbar /> -->
     <quiz-navbar />
     <v-main>
-      <v-container fluid>
-        <Nuxt />
+      <v-container>
+        <slot />
       </v-container>
     </v-main>
   </v-app>

@@ -1,20 +1,54 @@
 <template>
   <div>
-    <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background">
+    <v-app-bar
+      fixed
+      app
+      flat
+      class="drop-shadow-md"
+      height="60"
+      dense
+      color="background"
+    >
       <div class="flex items-center gap-x-2">
-        <v-btn v-if="!isFullScreen" color="primary" id="theme" rounded icon @click="openFullscreen">
+        <v-btn
+          v-if="!isFullScreen"
+          color="primary"
+          id="theme"
+          rounded
+          icon
+          @click="openFullscreen"
+        >
           <v-icon>$vuetify.icons.full_screen</v-icon>
         </v-btn>
-        <v-btn v-else color="primary" id="theme" rounded icon @click="closeFullscreen">
+        <v-btn
+          v-else
+          color="primary"
+          id="theme"
+          rounded
+          icon
+          @click="closeFullscreen"
+        >
           <v-icon>$vuetify.icons.normal_screen</v-icon>
         </v-btn>
         <light-dark-mode />
         <v-spacer></v-spacer>
         <quiz-progress-bar v-if="!isLobby" />
         <v-spacer></v-spacer>
-        <span class="hidden whitespace-nowrap sm:inline-block">{{user}}</span>
+        <span class="hidden whitespace-nowrap sm:inline-block">{{ user }}</span>
       </div>
     </v-app-bar>
+    <v-footer fixed color="transparent" padless>
+      <div class="primary p-3 rounded-lg w-fit mx-auto my-5">
+        <v-btn
+          color="black"
+          x-large
+          icon
+          class="rounded-lg shadow-[inset_0px_4px_0px_#374151] bg-gray-500"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </div>
+    </v-footer>
   </div>
 </template>
 
