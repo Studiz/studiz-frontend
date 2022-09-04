@@ -37,10 +37,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['vue-slick-carousel/dist/vue-slick-carousel.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: './plugins/vue-slick-carousel.js' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -132,7 +132,8 @@ export default {
       name: 'Studiz app',
       short_name: 'Studiz',
       lang: 'en',
-      description: 'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
+      description:
+        'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
       // useWebmanifestExtension: false
     },
   },
