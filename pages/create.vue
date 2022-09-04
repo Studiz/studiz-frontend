@@ -1,5 +1,4 @@
 <template>
-  <!-- :key="currentQuesiton" -->
   <layout-create
     :quizTitle="quizData.title"
     :totalQuestion="renderTotalQuestion"
@@ -11,18 +10,20 @@
     @change-ordering="changeOrdering"
     @change-quiz-type="changeQuizType"
     @change-time-limit="chanceTimeLimit"
+    @delete-question="deleteQuestion"
+    @duplicate-question="duplicateQuestion"
   >
     <input-question
       class="h-[calc(15vh)]"
       :currentQuesiton="currentQuesiton"
-      :quiestion="renderQuestion.question"
+      :dataQuestion="renderQuestion"
       @save-input-question="saveInputQuestion"
     />
 
     <input-image
       class="h-[calc(45vh-calc(24px+60px))] py-3"
       :currentQuesiton="currentQuesiton"
-      :image="renderQuestion.image"
+      :dataQuestion="renderQuestion"
       @save-input-image="saveInputImage"
       @delete-image="deleteImage"
     />
@@ -68,6 +69,7 @@ export default {
     return {
       drawer: true,
       currentQuesiton: 0,
+      propDialog: false,
       quizData: {
         id: 'xxxxxx',
         teacherId: 'xxxxxx',
@@ -79,7 +81,7 @@ export default {
           {
             question: 'question1',
             image: 'https://random.responsiveimages.io/v1/docs',
-            time: 1000,
+            time: 3000,
             type: 'single',
             answer: {
               options: [
@@ -135,26 +137,26 @@ export default {
   methods: {
     addQuestion() {
       this.quizData.questions.push({
-        question: 'question' + Math.floor(Math.random() * 100),
-        image: 'xxxxxx',
-        time: 10,
-        type: 'multiple',
+        question: '',
+        image: '',
+        time: 1000,
+        type: 'single',
         answer: {
           options: [
             {
-              option: 'xxxxxx',
-              isCorrect: true,
-            },
-            {
-              option: 'xxxxxx',
+              option: '',
               isCorrect: false,
             },
             {
-              option: 'xxxxxx',
+              option: '',
               isCorrect: false,
             },
             {
-              option: 'xxxxxx',
+              option: '',
+              isCorrect: false,
+            },
+            {
+              option: '',
               isCorrect: false,
             },
           ],
@@ -227,6 +229,29 @@ export default {
     deleteImage() {
       this.quizData.questions[this.currentQuesiton].image = ''
     },
+    deleteQuestion(index) {
+      if (this.currentQuesiton === index) {
+        if (index > 0) {
+          this.activeItem(this.currentQuesiton - 1)
+          this.quizData.questions.splice(index, 1)
+        } else if (this.renderTotalQuestion > 1 && index == 0) {
+          this.quizData.questions.splice(index, 1)
+        } else {
+          this.quizData.questions.splice(index, 1)
+          this.addQuestion()
+        }
+      } else if (this.currentQuesiton > index) {
+        this.activeItem(this.currentQuesiton - 1)
+        this.quizData.questions.splice(index, 1)
+      } else if (this.currentQuesiton < index) {
+        this.activeItem(this.currentQuesiton)
+        this.quizData.questions.splice(index, 1)
+      }
+    },
+    duplicateQuestion(index) {
+      let newQuestion = structuredClone(this.quizData.questions[index])
+      this.quizData.questions.push(newQuestion)
+    },
   },
   computed: {
     renderQuestion() {
@@ -240,6 +265,9 @@ export default {
     },
     renderQuestionAnswer() {
       return this.quizData.questions[this.currentQuesiton].answer
+    },
+    renderQuestionType() {
+      return this.quizData.questions[this.currentQuesiton].type
     },
   },
   mounted() {

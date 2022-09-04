@@ -26,10 +26,7 @@
         :key="index"
         class="relative w-fit h-full"
       >
-        <img
-          :src="item"
-          class="object-contain object-center h-full w-auto flex"
-        />
+        <img :src="item" class="object-contain object-center h-full w-auto" />
 
         <v-btn
           @click="deleteImage(index)"
@@ -50,12 +47,15 @@ export default {
       type: Number,
       required: true,
     },
-    image: {
-      type: String,
+    dataQuestion: {
+      type: Object,
     },
   },
   watch: {
     currentQuesiton() {
+      this.mappingImage()
+    },
+    dataQuestion() {
       this.mappingImage()
     },
   },
@@ -94,9 +94,13 @@ export default {
     },
     mappingImage() {
       this.imageInfo =
-        this.image == '' || this.image == null ? [] : [this.image]
+        this.dataQuestion.image == '' || this.dataQuestion.image == null
+          ? []
+          : [this.dataQuestion.image]
       this.previewImageList =
-        this.image == '' || this.image == null ? [] : [this.image]
+        this.dataQuestion.image == '' || this.dataQuestion.image == null
+          ? []
+          : [this.dataQuestion.image]
     },
   },
   created() {
