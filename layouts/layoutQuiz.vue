@@ -2,7 +2,7 @@
   <v-app>
     <quiz-navbar />
     <v-main>
-      <v-container>
+      <v-container fluid>
         <slot />
       </v-container>
     </v-main>

@@ -7,7 +7,7 @@
       class="drop-shadow-md"
       height="60"
       dense
-      color="background"
+      color="background_card"
     >
       <div class="flex items-center gap-x-2">
         <v-btn
@@ -37,7 +37,7 @@
         <span class="hidden whitespace-nowrap sm:inline-block">{{ user }}</span>
       </div>
     </v-app-bar>
-    <v-footer fixed color="transparent" padless>
+    <v-footer fixed color="transparent" padless v-if="false">
       <div class="primary p-3 rounded-lg w-fit mx-auto my-5">
         <v-btn
           color="black"

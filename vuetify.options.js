@@ -30,7 +30,7 @@ export default {
       },
       dark: {
         primary: '#22A1EE',
-        primary_shade: '#6b7e8c',
+        primary_shade: '#3c4d68',
         secondary: '#FF6B35',
         secondary_shade: '#ffe3d9',
         bg_disable: '#464646',
