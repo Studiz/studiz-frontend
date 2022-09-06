@@ -9,25 +9,25 @@
         >{{ text }}</v-sheet
       >
 
-      <div
-        class="flex-none md:flex-1 min-h-[256px] max-h-full max-w-full object-contain w-fit mx-auto"
-      >
-        <img class="object-contain object-center max-h-full" :src="image" />
-        <!-- <div class="h-full w-full bg-red-50">fafasd</div> -->
+      <div class="flex-none md:flex-1 min-h-max max-h-80 w-fit mx-auto">
+        <img
+          class="object-contain object-center max-h-full drop-shadow-md"
+          :src="image"
+        />
       </div>
-      <!-- drop-shadow-md -->
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1">
-        <div
+        <button
           v-for="(item, index) in 4"
           :key="item"
-          class="min-h-[128px] rounded-lg drop-shadow-md hover:ring p-3"
           :class="[arrayChoiceColor[index]]"
+          class="min-h-[128px] rounded-lg drop-shadow-md md:hover:ring p-4 flex items-center"
         >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias
-          officia veniam iure hic facere! Magni amet aliquam quam quo autem
-          tempore porro consectetur deserunt laborum, quidem dolorum quis nemo
-          consequatur!
-        </div>
+          <span class="h-fit text-lg md:text-2xl leading-relaxed text-left">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias
+            officia veniam iure hic facere! Magni
+          </span>
+        </button>
       </div>
     </div>
   </layout-quiz>
