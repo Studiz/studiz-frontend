@@ -34,7 +34,17 @@
         <v-spacer></v-spacer>
         <quiz-progress-bar v-if="!isLobby" />
         <v-spacer></v-spacer>
-        <span class="hidden whitespace-nowrap sm:inline-block">{{ user }}</span>
+        <div v-if="userRole == 'TEACHER'" class="space-x-2">
+          <v-btn outlined>End</v-btn>
+          <v-btn color="primary">Start</v-btn>
+        </div>
+        <div
+          v-else
+          class="whitespace-nowrap space-x-3 inline-flex items-center"
+        >
+          <span class="hidden sm:inline-flex"> {{ user }} </span>
+          <v-btn color="error">Leave</v-btn>
+        </div>
       </div>
     </v-app-bar>
     <v-footer fixed color="transparent" padless v-if="false">
@@ -70,6 +80,9 @@ export default {
           ? this.$store.getters.user.displayName
           : this.$store.getters.user.firstName
         : 'User Guest'
+    },
+    userRole() {
+      return this.$store.getters.userRole
     },
   },
   methods: {
