@@ -115,8 +115,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-:v-deep(.btn-dialog-style) {
+<style scoped>
+:deep(button.btn-dialog-style) {
   @apply w-full md:w-auto;
 }
 </style>
