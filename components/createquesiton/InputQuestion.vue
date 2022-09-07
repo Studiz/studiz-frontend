@@ -17,7 +17,7 @@
         flat
         auto-grow
         rows="1"
-        label="Add answer"
+        label="Add question"
         background-color="transparent"
         v-model.trim="newQuestion"
         :rules="rules.nameRules"

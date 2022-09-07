@@ -4,7 +4,7 @@
     @click="activeItem(index)"
   >
     <div class="text-sm font-semibold flex">
-      <span>{{ index + 1 }} Quiz</span>
+      <span>{{ index + 1 }} Question</span>
       <v-spacer />
       <v-btn icon x-small @click="duplicateQuestion">
         <v-icon small>$vuetify.icons.duplicate</v-icon>

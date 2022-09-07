@@ -9,5 +9,9 @@ export default {
 
   generatePinCode(classId) {
     return studizAPI(baseURL).get(`/getPinCode/${classId}`);
+  },
+
+  createQuizTemplate(data) {
+    return studizAPI(baseURL).post('/create/quizTemplate', data);
   }
 }
