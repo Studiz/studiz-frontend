@@ -56,6 +56,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    forceOpen: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -74,6 +77,11 @@ export default {
     click2() {
       this.$emit('confirm')
     },
+  },
+  mounted() {
+    if (this.forceOpen) {
+      this.dialog = true
+    }
   },
 }
 </script>
