@@ -9,7 +9,9 @@
         >{{ text }}</v-sheet
       >
 
-      <div class="flex-none md:flex-1 min-h-max max-h-80 w-fit mx-auto">
+      <div
+        class="flex-none md:flex-1 min-h-max max-h-56 xl:max-h-80 w-fit mx-auto"
+      >
         <img
           class="object-contain object-center max-h-full drop-shadow-md"
           :src="image"
