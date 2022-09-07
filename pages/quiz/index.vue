@@ -9,13 +9,8 @@
         >{{ text }}</v-sheet
       >
 
-      <div
-        class="flex-none md:flex-1 min-h-max max-h-56 xl:max-h-80 w-fit mx-auto"
-      >
-        <img
-          class="object-contain object-center max-h-full drop-shadow-md"
-          :src="image"
-        />
+      <div class="flex-none md:flex-1 min-h-max max-h-56 xl:max-h-96">
+        <v-img contain class="max-h-full drop-shadow-md" :src="image" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1">
@@ -23,7 +18,7 @@
           v-for="(item, index) in 4"
           :key="item"
           :class="[arrayChoiceColor[index]]"
-          class="min-h-[128px] rounded-lg drop-shadow-md md:hover:ring p-4 flex items-center"
+          class="min-h-[128px] rounded-lg drop-shadow-md md:hover:ring ring-light_primary p-4 flex items-center"
         >
           <span class="h-fit text-lg md:text-2xl leading-relaxed text-left">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias
