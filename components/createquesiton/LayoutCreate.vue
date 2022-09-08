@@ -1,16 +1,9 @@
 <template>
   <v-app>
-    <create-navbar
-      :quizTitle="quizTitle"
-      @edit-quiz-title="$emit('edit-quiz-title', $event)"
-    />
+    <create-navbar :quizTitle="quizTitle" @save-quiz-template="$emit('save-quiz-template')" />
     <v-navigation-drawer absolute bottom permanent app clipped width="192px">
       <v-list nav>
-        <draggable
-          v-bind="dragOptions"
-          v-model="newDataQuestion"
-          @end="changeOrdering"
-        >
+        <draggable v-bind="dragOptions" v-model="newDataQuestion" @end="changeOrdering">
           <transition-group type="transition" class="space-y-2">
             <thumbnail
               :class="[
@@ -51,13 +44,11 @@
               outlined
               hide-details
               @change="changeQuizType"
-            >
-            </v-select>
+            ></v-select>
             <span
               v-show="selectQuizType.value == 'multiple'"
               class="whitespace-pre-wrap"
-              >*Required more than one correct choice</span
-            >
+            >*Required more than one correct choice</span>
             <v-select
               :items="listTimeLimit"
               v-model="selectTimeLimit"
@@ -66,14 +57,15 @@
               outlined
               hide-details
               @change="chanceTimeLimit"
-            >
-            </v-select>
+            ></v-select>
           </v-list-item-title>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <v-container fluid> <slot /> </v-container>
+      <v-container fluid>
+        <slot />
+      </v-container>
     </v-main>
   </v-app>
 </template>

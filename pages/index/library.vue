@@ -2,33 +2,9 @@
   <div v-if="this.$store.getters.userRole == 'TEACHER'">
     <div class="items-center justify-between space-y-2 md:flex md:space-y-0">
       <h1 class="text-H1">My library</h1>
-      <base-dialog-condition
-        colorBTN="primary"
-        :persistent="true"
-        @confirm="createQuiz"
-      >
-        <template #namebtn>create</template>
-        <template #title>Create quiz</template>
-        <template #btn2>create</template>
-        <template #contain>
-          <v-form
-            ref="form"
-            class="pa-md-3"
-            lazy-validation
-            @submit.prevent="createQuiz"
-          >
-            <v-container>
-              <v-text-field
-                label="Quiz name"
-                outlined
-                required
-                :rules="rules.nameRules"
-                :counter="10"
-              ></v-text-field>
-            </v-container>
-          </v-form>
-        </template>
-      </base-dialog-condition>
+      <v-btn color="primary" :to="{
+          name: 'create',
+        }">Create</v-btn>
     </div>
     <v-divider class="my-5"></v-divider>
     <div class="grid grid-cols-1 gap-y-3">
@@ -44,12 +20,12 @@
           <v-spacer></v-spacer>
           <div>
             <v-btn icon center>
-              <v-icon> $vuetify.icons.edit </v-icon>
+              <v-icon>$vuetify.icons.edit</v-icon>
             </v-btn>
             <v-menu offset-y left transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon center v-bind="attrs" v-on="on">
-                  <v-icon class="w-full">mdi-dots-vertical </v-icon>
+                  <v-icon class="w-full">mdi-dots-vertical</v-icon>
                 </v-btn>
               </template>
               <v-list>
@@ -67,7 +43,7 @@
         </v-card-title>
         <!-- <v-card-subtitle class="h-24 overflow-auto scrollbar">
           quiz description
-        </v-card-subtitle> -->
+        </v-card-subtitle>-->
         <v-card-text class="flex items-center justify-between">
           <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
           <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
@@ -105,13 +81,7 @@ export default {
       },
     }
   },
-  methods: {
-    createQuiz() {
-      if (this.$refs.form.validate()) {
-        this.$router.push('/create')
-      }
-    },
-  },
+  methods: {},
 }
 </script>
 

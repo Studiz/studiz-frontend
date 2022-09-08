@@ -1,10 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    scrollable
-    :persistent="persistent"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" scrollable :persistent="persistent" :max-width="maxwidth">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         :color="colorBTN"
@@ -56,6 +51,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    maxwidth: {
+      type: String,
+      default: '400px',
+    },
     forceOpen: {
       type: Boolean,
     },
@@ -72,6 +71,7 @@ export default {
   },
   methods: {
     click1() {
+      this.$emit('close')
       this.dialog = false
     },
     click2() {
