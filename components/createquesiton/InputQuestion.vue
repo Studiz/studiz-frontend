@@ -12,7 +12,6 @@
       class="w-full flex items-center overflow-auto self-center max-h-20"
     >
       <v-textarea
-        light
         solo
         flat
         auto-grow

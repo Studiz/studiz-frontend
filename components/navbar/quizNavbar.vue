@@ -43,7 +43,7 @@
           class="whitespace-nowrap space-x-3 inline-flex items-center"
         >
           <span class="hidden sm:inline-flex"> {{ user }} </span>
-          <v-btn color="error">Leave</v-btn>
+          <v-btn v-if="isRouterLobby" color="error">Leave</v-btn>
         </div>
       </div>
     </v-app-bar>
@@ -83,6 +83,9 @@ export default {
     },
     userRole() {
       return this.$store.getters.userRole
+    },
+    isRouterLobby() {
+      return this.$route.name == 'lobby'
     },
   },
   methods: {

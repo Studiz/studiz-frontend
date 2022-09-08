@@ -110,6 +110,19 @@ export default {
       },
     }
   },
+  watch: {
+    quizData: {
+      handler(newValue, oldValue) {
+        if (newValue === oldValue) {
+          window.addEventListener('beforeunload', (e) => {
+            e.preventDefault()
+            e.returnValue = ''
+          })
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
     addQuestion() {
       let defaultData = {

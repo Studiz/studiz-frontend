@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="p-2 rounded-lg flex transition-all drop-shadow-md"
-    :class="classColor"
-  >
+  <div class="p-2 rounded-lg flex transition-all shadow-md" :class="classColor">
     <div class="self-center cursor-pointer">
       <div v-if="isCorrect" @click="unselectCorrectChoice">
         <v-icon
@@ -29,7 +26,6 @@
       class="h-[128px] w-full flex items-center overflow-auto self-center"
     >
       <v-textarea
-        light
         solo
         flat
         auto-grow
@@ -115,15 +111,15 @@ export default {
 
 <style scoped>
 .red {
-  @apply !bg-red-200;
+  @apply !bg-red-300/50;
 }
 .yellow {
-  @apply !bg-yellow-200;
+  @apply !bg-yellow-300/50;
 }
 .green {
-  @apply !bg-green-200;
+  @apply !bg-green-300/50;
 }
 .blue {
-  @apply !bg-sky-200;
+  @apply !bg-sky-300/50;
 }
 </style>

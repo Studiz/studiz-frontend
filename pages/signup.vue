@@ -17,18 +17,14 @@
         class="px-2 py-8 -mt-2 background_card px-md-10 pb-md-10 pt-md-5"
       >
         <v-stepper-content step="1" class="px-0 py-0">
-          <v-card color="background_card" flat>
-            <p class="text-center primary--text text-H1">Sign up</p>
+          <v-card color="background_card" flat class="space-y-8">
+            <div class="text-center primary--text text-H1">Sign up</div>
             <div id="firebaseui-auth-container"></div>
 
-            <div class="flex items-center justify-center my-5">
-              <span
-                class="w-full mx-4 border-b-4 dark:border-bg_disable"
-              ></span>
+            <div class="flex gap-5 items-center justify-center my-5">
+              <v-divider />
               <span class="font-bold text-H3 bg_disable--text">or</span>
-              <span
-                class="w-full mx-4 border-b-4 dark:border-bg_disable"
-              ></span>
+              <v-divider />
             </div>
 
             <div>
@@ -50,7 +46,7 @@
                   class
                   >Next</v-btn
                 >
-                <div class="py-2 secondary--text">
+                <div class="secondary--text">
                   {{ textError === '' ? '' : textError }}
                 </div>
                 <div class="flex items-center mt-7">
@@ -75,7 +71,7 @@
                 @click="data.role = 'teacher'"
                 :class="[data.role == 'teacher' ? 'outlineselect' : '']"
               >
-                <v-btn block depressed height="100" color="primary">
+                <v-btn block depressed height="100" color="primary_shade">
                   <v-img
                     left
                     max-height="80"
@@ -91,7 +87,7 @@
                 @click="data.role = 'student'"
                 :class="[data.role == 'student' ? 'outlineselect' : '']"
               >
-                <v-btn block depressed height="100" color="primary">
+                <v-btn block depressed height="100" color="primary_shade">
                   <v-img
                     left
                     max-height="80"
@@ -363,7 +359,6 @@ export default {
   },
   mounted() {
     const firebaseui = require('firebaseui')
-    require('firebaseui/dist/firebaseui.css')
     const ui =
       firebaseui.auth.AuthUI.getInstance() ||
       new firebaseui.auth.AuthUI(this.$fire.auth)
@@ -404,8 +399,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .outlineselect {
   @apply outline outline-offset-2 rounded-sm outline-light_primary dark:outline-dark_primary;
+}
+:deep(.firebaseui-idp-list) {
+  @apply w-full px-0;
+}
+:deep(.firebaseui-idp-button) {
+  @apply flex flex-wrap overflow-hidden items-center gap-x-5 gap-y-3 w-full rounded-md ring-1 ring-light_primary hover:ring-2 p-3 justify-center transition-all;
+}
+:deep(.firebaseui-idp-text-long) {
+  @apply font-medium whitespace-nowrap;
+}
+:deep(.firebaseui-idp-icon-wrapper) {
+  @apply w-6 h-6;
+}
+:deep(.firebaseui-idp-icon) {
+  @apply w-full w-full;
+}
+:deep(.firebaseui-idp-text-short) {
+  @apply hidden;
 }
 </style>
