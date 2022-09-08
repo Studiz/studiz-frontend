@@ -6,12 +6,12 @@
     :currentQuesiton="currentQuesiton"
     @active-item="activeItem"
     @add-question="addQuestion"
-    @edit-quiz-title="editquizTitle"
     @change-ordering="changeOrdering"
     @change-quiz-type="changeQuizType"
     @change-time-limit="chanceTimeLimit"
     @delete-question="deleteQuestion"
     @duplicate-question="duplicateQuestion"
+    @save-quiz-template="saveQuizTemplate"
   >
     <div
       class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] overflow-auto"
@@ -59,6 +59,8 @@ import InputChoice from '~/components/createquesiton/InputChoice.vue'
 import InputImage from '~/components/createquesiton/InputImage.vue'
 import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
 import layoutCreate from '~/components/createquesiton/LayoutCreate.vue'
+import TeacherService from '~/services/TeacherService'
+
 export default {
   components: {
     layoutCreate,
@@ -75,60 +77,34 @@ export default {
       currentQuesiton: 0,
       propDialog: false,
       quizData: {
-        id: 'xxxxxx',
-        teacherId: 'xxxxxx',
-        title: 'xxxxxxtitle',
-        image: 'xxxxxx',
-        tags: ['xxxxxx', 'xxxxxx'],
-        description: 'xxxxxx',
+        id: '',
+        teacherId: '',
+        title: '',
+        image: '',
+        tags: [],
+        description: '',
         questions: [
           {
-            question: 'question1',
-            image: 'https://random.responsiveimages.io/v1/docs',
+            question: '',
+            image: '',
             time: 3000,
             type: 'single',
             answer: {
               options: [
                 {
-                  option: 'xxxxxx',
+                  option: '',
                   isCorrect: true,
                 },
                 {
-                  option: 'xxxxxx',
+                  option: '',
                   isCorrect: false,
                 },
                 {
-                  option: 'xxxxxx',
+                  option: '',
                   isCorrect: false,
                 },
                 {
-                  option: 'xxxxxx',
-                  isCorrect: false,
-                },
-              ],
-            },
-          },
-          {
-            question: 'question2',
-            image: '',
-            time: 120000,
-            type: 'multiple',
-            answer: {
-              options: [
-                {
-                  option: 'xxxxxx',
-                  isCorrect: false,
-                },
-                {
-                  option: 'xxxxxx',
-                  isCorrect: false,
-                },
-                {
-                  option: 'xxxxxx',
-                  isCorrect: false,
-                },
-                {
-                  option: 'xxxxxx',
+                  option: '',
                   isCorrect: false,
                 },
               ],
@@ -153,7 +129,7 @@ export default {
   },
   methods: {
     addQuestion() {
-      this.quizData.questions.push({
+      let defaultData = {
         question: '',
         image: '',
         time: 1000,
@@ -178,7 +154,8 @@ export default {
             },
           ],
         },
-      })
+      }
+      this.quizData.questions.push(defaultData)
     },
     editquizTitle(name) {
       this.quizData.title = name
@@ -241,7 +218,8 @@ export default {
       this.quizData.questions[this.currentQuesiton].question = data
     },
     saveInputImage(data) {
-      this.quizData.questions[this.currentQuesiton].image = data
+      this.quizData.questions[this.currentQuesiton].image = data.previewImage
+      this.quizData.questions[this.currentQuesiton].fileImage = data.fileImage
     },
     deleteImage() {
       this.quizData.questions[this.currentQuesiton].image = ''
@@ -268,6 +246,40 @@ export default {
     duplicateQuestion(index) {
       let newQuestion = structuredClone(this.quizData.questions[index])
       this.quizData.questions.push(newQuestion)
+    },
+
+    async saveQuizTemplate() {
+      this.$store.commit('setTeacherId', this.$store.getters.userId)
+      this.$store.commit('setQuizQuestions', this.quizData.questions)
+      this.$store.commit('createImageFileList')
+
+      if (this.$store.getters.imageQuizFile) {
+        TeacherService.uploadImage(this.$store.getters.imageQuizFile).then(
+          (res) => {
+            this.$store.commit('setQuizImage', res.data.imageUrl)
+          }
+        )
+      }
+
+      let newQuestions = this.$store.getters.quizTemplate.questions
+      await newQuestions.map((question) => {
+        if (question.fileImage) {
+          TeacherService.uploadImage(question.fileImage).then((res) => {
+            question.image = res.data.imageUrl
+          })
+        } else {
+          question.image = ''
+        }
+        delete question.fileImage
+      })
+      this.$store.commit('setQuizQuestions', await newQuestions)
+      TeacherService.createQuizTemplate(this.$store.getters.quizTemplate).then(
+        (res) => {
+          if (res.status == 200) {
+            this.$router.push('/library')
+          }
+        }
+      )
     },
   },
   computed: {
