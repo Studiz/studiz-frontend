@@ -247,7 +247,8 @@ export default {
     async saveQuizTemplate() {
       this.$store.commit('setTeacherId', this.$store.getters.userId)
       this.$store.commit('setQuizQuestions', this.quizData.questions)
-      this.$store.commit('createImageFileList')
+      this.$store.commit('setLastUpdated', Date.now())
+      // this.$store.commit('createImageFileList')
 
       if (this.$store.getters.imageQuizFile) {
         TeacherService.uploadImage(this.$store.getters.imageQuizFile).then(
@@ -258,24 +259,38 @@ export default {
       }
 
       let newQuestions = this.$store.getters.quizTemplate.questions
-      await newQuestions.map((question) => {
+
+      newQuestions.forEach((question, index) => {
         if (question.fileImage) {
           TeacherService.uploadImage(question.fileImage).then((res) => {
-            question.image = res.data.imageUrl
+            newQuestions[index].image = res.data.imageUrl
+            delete question.fileImage
           })
-        } else {
-          question.image = ''
         }
-        delete question.fileImage
       })
-      this.$store.commit('setQuizQuestions', await newQuestions)
-      TeacherService.createQuizTemplate(this.$store.getters.quizTemplate).then(
-        (res) => {
-          if (res.status == 200) {
-            this.$router.push('/library')
-          }
-        }
-      )
+      setTimeout(() => {
+        this.$store.commit('setQuizQuestions', newQuestions)
+        TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
+      }, 5000)
+      this.$router.push('/library')
+      // await newQuestions.map((question) => {
+      //   if (question.fileImage) {
+      //     TeacherService.uploadImage(question.fileImage).then((res) => {
+      //       question.image = res.data.imageUrl
+      //     })
+      //   } else {
+      //     question.image = ''
+      //   }
+      //   delete question.fileImage
+      // })
+      // this.$store.commit('setQuizQuestions', await newQuestions)
+      // TeacherService.createQuizTemplate(this.$store.getters.quizTemplate).then(
+      //   (res) => {
+      //     if (res.status == 200) {
+      //       this.$router.push('/library')
+      //     }
+      //   }
+      // )
     },
   },
   computed: {

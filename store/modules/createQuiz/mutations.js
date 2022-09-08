@@ -28,6 +28,10 @@ export default {
     state.quizTemplate.questions = quizQuestions
   },
 
+  setLastUpdated(state, date) {
+    state.quizTemplate.lastUpdated = date
+  },
+
   addQuizQuestion(state, question) {
     state.quizTemplate.questions.push(question)
   },
