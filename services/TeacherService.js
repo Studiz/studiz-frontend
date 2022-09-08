@@ -13,5 +13,11 @@ export default {
 
   createQuizTemplate(data) {
     return studizAPI(baseURL).post('/create/quizTemplate', data);
+  },
+
+  uploadImage(image) {
+    let data = new FormData()
+    data.append('studizImg', image)
+    return studizAPI(baseURL).post('/upload/image', data);
   }
 }

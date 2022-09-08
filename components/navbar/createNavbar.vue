@@ -82,8 +82,8 @@
         <v-icon left>mdi-eye-outline</v-icon>preview
       </v-btn>
       <v-divider vertical class="mx-2" />
-      <v-btn outlined>exit</v-btn>
-      <v-btn color="primary" @click="saveQuizTemplate">save</v-btn>
+      <v-btn outlined to="/library">exit</v-btn>
+      <v-btn color="primary" @click="saveQuizTemplate" :disabled="canSave">save</v-btn>
     </div>
   </v-app-bar>
 </template>
@@ -94,7 +94,6 @@ import lightDarkMode from './light-dark-mode.vue'
 
 export default {
   components: { lightDarkMode, BaseDialogCondition },
-  props: {},
   data() {
     return {
       newQuizTitle: '',
@@ -118,6 +117,9 @@ export default {
   computed: {
     quizTemplate() {
       return this.$store.getters.quizTemplate
+    },
+    canSave() {
+      return this.$store.getters.quizTemplate.title ? false : true
     },
   },
   methods: {

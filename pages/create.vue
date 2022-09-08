@@ -55,6 +55,8 @@ import InputChoice from '~/components/createquesiton/InputChoice.vue'
 import InputImage from '~/components/createquesiton/InputImage.vue'
 import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
 import layoutCreate from '~/components/createquesiton/LayoutCreate.vue'
+import TeacherService from '~/services/TeacherService'
+
 export default {
   components: {
     layoutCreate,
@@ -228,13 +230,39 @@ export default {
       let newQuestion = structuredClone(this.quizData.questions[index])
       this.quizData.questions.push(newQuestion)
     },
-    saveQuizTemplate() {
+
+    async saveQuizTemplate() {
       this.$store.commit('setTeacherId', this.$store.getters.userId)
       this.$store.commit('setQuizQuestions', this.quizData.questions)
       this.$store.commit('createImageFileList')
-      console.log(this.$store.getters.quizTemplate)
-      console.log(this.$store.getters.imageQuizFile)
-      console.log(this.$store.getters.imageQuestionFiles)
+
+      if (this.$store.getters.imageQuizFile) {
+        TeacherService.uploadImage(this.$store.getters.imageQuizFile).then(
+          (res) => {
+            this.$store.commit('setQuizImage', res.data.imageUrl)
+          }
+        )
+      }
+
+      let newQuestions = this.$store.getters.quizTemplate.questions
+      await newQuestions.map((question) => {
+        if (question.fileImage) {
+          TeacherService.uploadImage(question.fileImage).then((res) => {
+            question.image = res.data.imageUrl
+          })
+        } else {
+          question.image = ''
+        }
+        delete question.fileImage
+      })
+      this.$store.commit('setQuizQuestions', await newQuestions)
+      TeacherService.createQuizTemplate(this.$store.getters.quizTemplate).then(
+        (res) => {
+          if (res.status == 200) {
+            this.$router.push('/library')
+          }
+        }
+      )
     },
   },
   computed: {
