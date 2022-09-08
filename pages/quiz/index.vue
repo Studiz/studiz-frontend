@@ -47,15 +47,15 @@ export default {
 
 <style scoped>
 .red {
-  @apply !bg-red-200;
+  @apply !bg-red-300/50;
 }
 .yellow {
-  @apply !bg-yellow-200;
+  @apply !bg-yellow-300/50;
 }
 .green {
-  @apply !bg-green-200;
+  @apply !bg-green-300/50;
 }
 .blue {
-  @apply !bg-sky-200;
+  @apply !bg-sky-300/50;
 }
 </style>

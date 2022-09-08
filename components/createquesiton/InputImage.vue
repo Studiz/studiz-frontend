@@ -31,6 +31,7 @@
         <v-btn
           @click="deleteImage(index)"
           color="secondary"
+          small
           class="!absolute text-center cursor-pointer bottom-2 right-2"
         >
           remove

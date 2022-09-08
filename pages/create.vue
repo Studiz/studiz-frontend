@@ -13,37 +13,41 @@
     @delete-question="deleteQuestion"
     @duplicate-question="duplicateQuestion"
   >
-    <input-question
-      class="h-[calc(15vh)]"
-      :currentQuesiton="currentQuesiton"
-      :dataQuestion="renderQuestion"
-      @save-input-question="saveInputQuestion"
-    />
-
-    <input-image
-      class="h-[calc(45vh-calc(24px+60px))] py-3"
-      :currentQuesiton="currentQuesiton"
-      :dataQuestion="renderQuestion"
-      @save-input-image="saveInputImage"
-      @delete-image="deleteImage"
-    />
-
-    <div class="h-[calc(40vh-24px)]">
-      <base-single-choice
-        v-if="renderQuestion.type === 'single'"
-        :renderQuestionAnswer="renderQuestionAnswer"
+    <div
+      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] overflow-auto"
+    >
+      <input-question
+        class="flex-none"
         :currentQuesiton="currentQuesiton"
-        @change-correct-choice="changeCorrectChoice"
-        @save-input-text="saveInputText"
+        :dataQuestion="renderQuestion"
+        @save-input-question="saveInputQuestion"
       />
-      <base-multiple-choice
-        v-if="renderQuestion.type === 'multiple'"
+
+      <input-image
+        class="min-h-max max-h-56 flex-none md:flex-1"
         :currentQuesiton="currentQuesiton"
-        :renderQuestionAnswer="renderQuestionAnswer"
-        @save-input-text="saveInputText"
-        @select-correct-choice="selectCorrectChoice"
-        @unselect-correct-choice="selectCorrectChoice"
+        :dataQuestion="renderQuestion"
+        @save-input-image="saveInputImage"
+        @delete-image="deleteImage"
       />
+
+      <div class="flex-none md:flex-1">
+        <base-single-choice
+          v-if="renderQuestion.type === 'single'"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          :currentQuesiton="currentQuesiton"
+          @change-correct-choice="changeCorrectChoice"
+          @save-input-text="saveInputText"
+        />
+        <base-multiple-choice
+          v-if="renderQuestion.type === 'multiple'"
+          :currentQuesiton="currentQuesiton"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          @save-input-text="saveInputText"
+          @select-correct-choice="selectCorrectChoice"
+          @unselect-correct-choice="selectCorrectChoice"
+        />
+      </div>
     </div>
   </layout-create>
 </template>
