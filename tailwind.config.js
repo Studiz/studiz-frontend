@@ -8,7 +8,7 @@ module.exports = {
         light_primary: '#0c8ce9',
         dark_primary: '#22A1EE',
         light_primary_shade: '#d7eeff',
-        dark_primary_shade: '#6b7e8c',
+        dark_primary_shade: '#3c4d68',
         secondary: '#ff6b35',
         // tertiary: '#FAE445',
         // neutral: '#f8f8f8',

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="hover:primary_shade rounded-lg p-3 select-none overflow-hidden"
+    class="primary_shade rounded-lg p-3 select-none overflow-hidden"
     @click="activeItem(index)"
   >
     <div class="text-sm font-semibold flex">
@@ -52,14 +52,14 @@
       />
       <div
         v-else
-        class="h-10 w-10 outline outline-[0.5px] outline-black/30"
+        class="h-10 w-10 outline outline-[0.5px] outline-gray-500/50"
       ></div>
     </div>
     <div class="grid grid-cols-2 gap-1">
       <div
         v-for="(choice, index) in item.answer.options"
         :key="`${index}-${item}-${choice}`"
-        class="outline outline-[0.5px] h-2 outline-black/30"
+        class="outline outline-[0.5px] h-2 outline-gray-500/50"
       >
         <div
           v-if="choice.isCorrect == true"

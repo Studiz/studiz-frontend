@@ -134,6 +134,19 @@ export default {
       },
     }
   },
+  watch: {
+    quizData: {
+      handler(newValue, oldValue) {
+        if (newValue === oldValue) {
+          window.addEventListener('beforeunload', (e) => {
+            e.preventDefault()
+            e.returnValue = ''
+          })
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
     addQuestion() {
       this.quizData.questions.push({
