@@ -50,11 +50,11 @@
         <template #contain>
           <v-form
             ref="form"
-            class="pa-md-3"
+            class="py-3 px-3 pa-md-4"
             lazy-validation
             @submit.prevent="saveQuizDetails"
           >
-            <v-container class="flex">
+            <div class="flex flex-col lg:flex-row gap-3">
               <div class="w-full">
                 <v-text-field
                   label="Title"
@@ -62,6 +62,7 @@
                   required
                   v-model="quizTitle"
                   :counter="50"
+                  :rules="rules.quizTitle"
                 ></v-text-field>
                 <v-textarea
                   label="Description"
@@ -69,6 +70,7 @@
                   required
                   v-model="quizDescription"
                   :counter="200"
+                  :rules="rules.quizDescription"
                 ></v-textarea>
                 <v-autocomplete
                   :items="[
@@ -93,23 +95,25 @@
                   chips
                 ></v-autocomplete>
               </div>
-              <div class="w-full">
-                <v-img
-                  contain
-                  :src="quizImage"
-                  max-width="400"
-                  class="mx-auto m-5"
-                />
+              <div class="w-full space-y-5">
+                <div class="background rounded-lg min-h-fit p-3">
+                  <v-img
+                    contain
+                    :src="quizImage"
+                    max-width="460"
+                    max-height="224"
+                    class="mx-auto max-h-full max-w-full"
+                  />
+                </div>
                 <v-file-input
-                  class="mx-5"
                   accept="image/*"
                   label="File input"
-                  filled
+                  outlined
                   prepend-icon="mdi-camera"
                   @change="previewImage"
                 ></v-file-input>
               </div>
-            </v-container>
+            </div>
           </v-form>
         </template>
       </base-dialog-condition>
@@ -151,11 +155,20 @@ export default {
       fileImage: null,
       rules: {
         required: (v) => !!v || 'Required.',
-        nameRules: [
+        quizTitle: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 10) ||
-            'Classroom name must be less than 10 characters',
+            (v && v.length <= 50) || 'Title must be less than 50 characters',
+        ],
+        quizDescription: [
+          (v) => {
+            if (v)
+              return (
+                v.length <= 200 ||
+                'Description must be less than 200 characters'
+              )
+            else return true
+          },
         ],
       },
     }
@@ -182,12 +195,14 @@ export default {
       this.formIsOpen = false
     },
     saveQuizDetails() {
-      this.$store.commit('setQuizTitle', this.quizTitle)
-      this.$store.commit('setQuizDescription', this.quizDescription)
-      this.$store.commit('setQuizTags', this.quizTags)
-      this.$store.commit('setQuizImage', this.quizImage)
-      this.$store.commit('setImageQuizFile', this.fileImage)
-      this.formIsOpen = false
+      if (this.$refs.form.validate()) {
+        this.$store.commit('setQuizTitle', this.quizTitle)
+        this.$store.commit('setQuizDescription', this.quizDescription)
+        this.$store.commit('setQuizTags', this.quizTags)
+        this.$store.commit('setQuizImage', this.quizImage)
+        this.$store.commit('setImageQuizFile', this.fileImage)
+        this.formIsOpen = false
+      }
     },
     previewImage(payload) {
       this.fileImage = payload

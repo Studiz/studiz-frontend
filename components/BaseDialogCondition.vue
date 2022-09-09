@@ -20,7 +20,7 @@
         <slot name="namebtn"></slot>
       </v-btn>
     </template>
-    <v-card>
+    <v-card class="h-fit">
       <v-card-title>
         <span class="break-normal">
           <slot name="title"></slot>
