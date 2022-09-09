@@ -23,7 +23,7 @@
       ref="form"
       lazy-validation
       @submit.prevent="saveNewText"
-      class="h-[128px] w-full flex items-center overflow-auto self-center"
+      class="h-32 w-full flex items-center overflow-auto self-center"
     >
       <v-textarea
         solo

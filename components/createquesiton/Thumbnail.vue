@@ -1,9 +1,13 @@
 <template>
   <div
-    class="primary_shade rounded-lg p-3 select-none overflow-hidden"
+    class="primary_shade rounded-lg p-3 select-none overflow-hidden relative min-w-[176px]"
     @click="activeItem(index)"
   >
-    <div class="text-sm font-semibold flex">
+    <v-icon
+      class="handle cursor-grabbing py-5 px-2 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2"
+      >mdi-drag</v-icon
+    >
+    <div class="text-sm font-semibold flex items-center">
       <span>{{ index + 1 }} Question</span>
       <v-spacer />
       <v-btn icon x-small @click="duplicateQuestion">

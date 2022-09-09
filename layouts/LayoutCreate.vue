@@ -1,10 +1,74 @@
 <template>
-  <v-app>
-    <create-navbar :quizTitle="quizTitle" @save-quiz-template="$emit('save-quiz-template')" />
-    <v-navigation-drawer absolute bottom permanent app clipped width="192px">
-      <v-list nav>
-        <draggable v-bind="dragOptions" v-model="newDataQuestion" @end="changeOrdering">
-          <transition-group type="transition" class="space-y-2">
+  <v-app class="overflow-hidden">
+    <create-navbar
+      :quizTitle="quizTitle"
+      @save-quiz-template="$emit('save-quiz-template')"
+      @toggle-nav-drawer="toggleNavDrawer"
+      @toggle-setting-quiz="toggleNavDrawerSettingQuiz"
+    />
+
+    <v-navigation-drawer
+      absolute
+      touchless
+      bottom
+      app
+      clipped
+      right
+      v-model="drawerSettingQuiz"
+    >
+      <v-list class="!py-4 !px-2">
+        <v-list-item-group :key="currentQuesiton" class="flex flex-col gap-6">
+          <div>
+            <v-select
+              :items="listQuizType"
+              v-model="selectQuizType"
+              label="Question type"
+              dense
+              outlined
+              hide-details
+              @change="changeQuizType"
+            ></v-select>
+            <span
+              v-show="selectQuizType.value == 'multiple'"
+              class="whitespace-pre-wrap"
+              >*Required more than one correct choice</span
+            >
+          </div>
+          <v-select
+            :items="listTimeLimit"
+            v-model="selectTimeLimit"
+            label="Time limit"
+            dense
+            outlined
+            hide-details
+            @change="chanceTimeLimit"
+          ></v-select>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-navigation-drawer
+      absolute
+      bottom
+      app
+      clipped
+      touchless
+      v-model="drawerQuizList"
+      mobile-breakpoint="1264"
+      width="208"
+      class="!h-64 lg:!h-full scrollbar"
+    >
+      <v-list nav class="py-5 py-lg-2">
+        <draggable
+          v-bind="dragOptions"
+          v-model="newDataQuestion"
+          @end="changeOrdering"
+          handle=".handle"
+        >
+          <transition-group
+            type="transition"
+            class="gap-2 flex lg:flex-col overflow-auto"
+          >
             <thumbnail
               :class="[
                 index === currentQuesiton ? 'primary_shade' : 'background',
@@ -20,7 +84,7 @@
             />
           </transition-group>
         </draggable>
-        <v-divider class="my-2" />
+        <v-divider class="my-3 md:my-2" />
         <v-btn
           height="48"
           class="text-center primary white--text rounded-lg w-full transition-all"
@@ -31,39 +95,9 @@
         </v-btn>
       </v-list>
     </v-navigation-drawer>
-    <v-navigation-drawer absolute bottom permanent app clipped right>
-      <v-list class="!py-4 !px-2">
-        <v-list-item-group :key="currentQuesiton">
-          <v-list-item-title class="overflow-visible space-y-5">
-            <v-select
-              class="class--selection"
-              :items="listQuizType"
-              v-model="selectQuizType"
-              label="Quiz type"
-              dense
-              outlined
-              hide-details
-              @change="changeQuizType"
-            ></v-select>
-            <span
-              v-show="selectQuizType.value == 'multiple'"
-              class="whitespace-pre-wrap"
-            >*Required more than one correct choice</span>
-            <v-select
-              :items="listTimeLimit"
-              v-model="selectTimeLimit"
-              label="Time limit"
-              dense
-              outlined
-              hide-details
-              @change="chanceTimeLimit"
-            ></v-select>
-          </v-list-item-title>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
+
     <v-main>
-      <v-container fluid>
+      <v-container fluid class="px-1 px-sm-3">
         <slot />
       </v-container>
     </v-main>
@@ -73,7 +107,7 @@
 <script>
 import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
-import Thumbnail from './Thumbnail.vue'
+import Thumbnail from '../components/createquesiton/Thumbnail.vue'
 export default {
   components: { createNavbar, draggable, Thumbnail },
   props: {
@@ -175,7 +209,8 @@ export default {
         disabled: false,
         ghostClass: 'ghost',
       },
-      // renderComponent: true,
+      drawerQuizList: true,
+      drawerSettingQuiz: true,
     }
   },
   watch: {
@@ -219,8 +254,18 @@ export default {
     duplicateQuestion(index) {
       this.$emit('duplicate-question', index)
     },
+    toggleNavDrawer() {
+      this.drawerQuizList = !this.drawerQuizList
+    },
+    toggleNavDrawerSettingQuiz() {
+      this.drawerSettingQuiz = !this.drawerSettingQuiz
+    },
   },
-  computed: {},
+  computed: {
+    canSave() {
+      return this.$store.getters.quizTemplate.title ? false : true
+    },
+  },
   mounted() {},
   created() {
     this.mappingQuestion()
@@ -235,5 +280,21 @@ export default {
 :deep(.v-list-item--highlighted) {
   opacity: 100 !important;
   @apply !text-light_primary dark:!text-dark_primary;
+}
+:deep(.scrollbar > .v-navigation-drawer__content::-webkit-scrollbar) {
+  width: 5px;
+}
+:deep(.scrollbar > .v-navigation-drawer__content::-webkit-scrollbar-track) {
+  background: transparent;
+  margin: 8px 8px;
+}
+:deep(.scrollbar > .v-navigation-drawer__content::-webkit-scrollbar-thumb) {
+  background: var(--v-primary_shade-base);
+  border-radius: 50px;
+}
+:deep(.scrollbar
+    > .v-navigation-drawer__content::-webkit-scrollbar-thumb:hover) {
+  background: var(--v-primary-base);
+  border-radius: 50px;
 }
 </style>

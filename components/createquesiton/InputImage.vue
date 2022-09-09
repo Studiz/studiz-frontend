@@ -1,10 +1,20 @@
 <template>
-  <div class="w-full h-full" :key="currentQuesiton">
-    <label class="label-class group h-full py-3" form="file" v-if="previewImageList.length == 0">
+  <div
+    class="w-full h-full min-h-[14rem] max-h-72 lg:max-h-80"
+    :key="currentQuesiton"
+  >
+    <label
+      class="label-class group h-full p-5 overflow-hidden"
+      form="file"
+      v-if="previewImageList.length == 0"
+    >
       <v-icon
         class="p-0.5 rounded-full border-2 border-current group-hover:text-white transition-all"
-      >mdi-plus</v-icon>
-      <span class="mt-2 text-base select-none">Select a image file</span>
+        >mdi-plus</v-icon
+      >
+      <span class="mt-2 text-center select-none whitespace-nowrap"
+        >Select a image file</span
+      >
       <input
         type="file"
         class="hidden"
@@ -15,7 +25,11 @@
       />
     </label>
     <div v-else class="w-fit h-full mx-auto">
-      <div v-for="(item, index) in previewImageList" :key="index" class="relative w-fit h-full">
+      <div
+        v-for="(item, index) in previewImageList"
+        :key="index"
+        class="relative w-fit h-full"
+      >
         <img :src="item" class="object-contain object-center h-full w-auto" />
 
         <v-btn
@@ -23,7 +37,8 @@
           color="secondary"
           small
           class="!absolute text-center cursor-pointer bottom-2 right-2"
-        >remove</v-btn>
+          >remove</v-btn
+        >
       </div>
     </div>
   </div>

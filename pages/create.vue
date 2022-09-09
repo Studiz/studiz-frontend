@@ -13,7 +13,9 @@
     @duplicate-question="duplicateQuestion"
     @save-quiz-template="saveQuizTemplate"
   >
-    <div class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] overflow-auto">
+    <div
+      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar overflow-auto md:overflow-visible px-1 px-lg-1"
+    >
       <input-question
         class="flex-none"
         :currentQuesiton="currentQuesiton"
@@ -22,7 +24,7 @@
       />
 
       <input-image
-        class="min-h-max max-h-56 flex-none md:flex-1"
+        class="flex-none md:flex-1"
         :currentQuesiton="currentQuesiton"
         :dataQuestion="renderQuestion"
         @save-input-image="saveInputImage"
@@ -56,7 +58,7 @@ import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
 import InputImage from '~/components/createquesiton/InputImage.vue'
 import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
-import layoutCreate from '~/components/createquesiton/LayoutCreate.vue'
+import layoutCreate from '~/layouts/LayoutCreate.vue'
 import TeacherService from '~/services/TeacherService'
 
 export default {
@@ -382,4 +384,26 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 8px;
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+  background: var(--v-primary_shade-base);
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--v-primary-base);
+  border-radius: 50px;
+}
+</style>

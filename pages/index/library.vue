@@ -2,9 +2,15 @@
   <div v-if="this.$store.getters.userRole == 'TEACHER'">
     <div class="items-center justify-between space-y-2 md:flex md:space-y-0">
       <h1 class="text-H1">My library</h1>
-      <v-btn color="primary" :to="{
+      <v-btn
+        height="50"
+        color="primary"
+        class="text-cap w-full md:w-auto rounded-lg"
+        :to="{
           name: 'create',
-        }">Create</v-btn>
+        }"
+        >Create</v-btn
+      >
     </div>
     <v-divider class="my-5"></v-divider>
     <div class="grid grid-cols-1 gap-y-3">
@@ -100,7 +106,7 @@ export default {
 </script>
 
 <style scoped>
-:deep(button.btn-dialog-style) {
+:deep(.btn-dialog-style) {
   @apply w-full md:w-auto;
 }
 </style>
