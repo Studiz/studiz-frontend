@@ -4,8 +4,8 @@
     @click="activeItem(index)"
   >
     <v-icon
-      class="handle cursor-grabbing py-5 px-2 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2"
-      >mdi-drag</v-icon
+      class="handle cursor-grabbing py-5 px-2 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+      >mdi-drag-vertical</v-icon
     >
     <div class="text-sm font-semibold flex items-center">
       <span>{{ index + 1 }} Question</span>
