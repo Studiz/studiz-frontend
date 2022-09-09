@@ -125,7 +125,7 @@ export default {
       author: 'Studiz app',
       appleStatusBarStyle: 'black-translucent',
       ogImage: {
-        path: '/static/logo/Studiz_logo.png',
+        path: '/logo/Studiz_logo.png',
       },
     },
     manifest: {
