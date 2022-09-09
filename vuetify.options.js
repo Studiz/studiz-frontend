@@ -9,9 +9,13 @@ import full_screen from 'static/icons/fullScreen.vue'
 import normal_screen from 'static/icons/normalScreen.vue'
 import edit from 'static/icons/edit.vue'
 import duplicate from 'static/icons/duplicate.vue'
+import questionList from 'static/icons/questionList.vue'
 
 export default {
   theme: {
+    options: {
+      customProperties: true,
+    },
     dark: false,
     themes: {
       light: {
@@ -80,6 +84,9 @@ export default {
       duplicate: {
         component: duplicate,
       },
+      questionList: {
+        component: questionList,
+      }
     },
   },
 }

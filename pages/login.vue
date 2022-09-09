@@ -148,7 +148,7 @@ export default {
   @apply w-full px-0;
 }
 :deep(.firebaseui-idp-button) {
-  @apply flex flex-wrap overflow-hidden items-center gap-x-5 gap-y-3 w-full rounded-md ring-1 ring-light_primary hover:ring-2 p-4 justify-center transition-all;
+  @apply flex flex-wrap overflow-hidden items-center gap-x-5 gap-y-3 w-full rounded-md ring-1 ring-light_primary hover:ring-2 p-4 justify-center transition-all !bg-transparent;
 }
 :deep(.firebaseui-idp-text-long) {
   @apply font-medium whitespace-nowrap;

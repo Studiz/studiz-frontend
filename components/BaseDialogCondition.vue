@@ -1,13 +1,19 @@
 <template>
-  <v-dialog v-model="dialog" scrollable :persistent="persistent" :max-width="maxwidth">
+  <v-dialog
+    v-model="dialog"
+    scrollable
+    :persistent="persistent"
+    :max-width="maxwidth"
+  >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         :color="colorBTN"
         :outlined="outlined"
-        class="rounded-lg text-cap btn-dialog-style"
+        class="btn-dialog-style"
+        :class="classBtn"
         v-bind="attrs"
         v-on="on"
-        height="48"
+        :height="height"
         @click="$emit('open')"
       >
         <slot name="icon"></slot>
@@ -37,9 +43,21 @@
 <script>
 export default {
   props: {
-    colorBTN: { String },
-    btn1: { String },
-    btn2: { type: String, default: 'primary' },
+    colorBTN: {
+      type: String,
+      default: 'primary',
+    },
+    classBtn: {
+      type: String,
+      default: 'rounded-lg !normal-case',
+    },
+    btn1: {
+      type: String,
+    },
+    btn2: {
+      type: String,
+      default: 'primary',
+    },
     propDialog: {
       type: Boolean,
     },
@@ -58,10 +76,15 @@ export default {
     forceOpen: {
       type: Boolean,
     },
+    height: {
+      type: String,
+      default: '48',
+    },
   },
   data() {
     return {
       dialog: false,
+      arrayRouteName: ['create'],
     }
   },
   watch: {
@@ -82,6 +105,11 @@ export default {
     if (this.forceOpen) {
       this.dialog = true
     }
+  },
+  computed: {
+    uniqueRouteName() {
+      return this.arrayRouteName.includes(this.$route.name)
+    },
   },
 }
 </script>
