@@ -8,7 +8,8 @@ const defaultState = {
     description: '',
     tags: [],
     image: 'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=2cce045c-f6ba-4275-a81d-656343885abc',
-    questions: []
+    questions: [],
+    lastUpdated: ''
   },
   imageQuizFile: null,
   imageQuestionFiles: [],
