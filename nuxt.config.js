@@ -116,17 +116,17 @@ export default {
     timing: false,
   },
   pwa: {
-    // icon: {
-    //   fileName: 'icon-app.png',
-    //   sizes: [64, 120, 144, 152, 192, 384, 512],
-    // },
+    icon: {
+      fileName: 'icon.png',
+      sizes: [64, 120, 144, 152, 192, 384, 512],
+    },
     meta: {
       title: 'Studiz',
       author: 'Studiz app',
     },
     manifest: {
       icon: {
-        fileName: 'icon-app.png',
+        fileName: 'icon.png',
         sizes: [64, 120, 144, 152, 192, 384, 512],
       },
       name: 'Studiz app',
@@ -134,7 +134,6 @@ export default {
       lang: 'en',
       description:
         'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
-      // useWebmanifestExtension: false
     },
   },
 }
