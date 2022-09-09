@@ -116,17 +116,17 @@ export default {
     timing: false,
   },
   pwa: {
-    icon: {
-      fileName: 'icon.png',
-      sizes: [64, 120, 144, 152, 192, 384, 512],
-    }, // disables the icon module [srcDir]/[staticDir]/icon.png
+    // icon: {
+    //   fileName: 'icon-app.png',
+    //   sizes: [64, 120, 144, 152, 192, 384, 512],
+    // },
     meta: {
       title: 'Studiz',
       author: 'Studiz app',
     },
     manifest: {
       icon: {
-        fileName: 'icon.png',
+        fileName: 'icon-app.png',
         sizes: [64, 120, 144, 152, 192, 384, 512],
       },
       name: 'Studiz app',
