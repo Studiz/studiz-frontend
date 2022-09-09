@@ -9,13 +9,14 @@
     <v-divider class="my-5"></v-divider>
     <div class="grid grid-cols-1 gap-y-3">
       <div
-        v-for="classroom in 3"
-        :key="classroom.name"
+        v-for="quizTemplate in quizTemplates"
+        :key="quizTemplate.title"
         class="w-full rounded-lg ring-1 background ring-black ring-opacity-10"
       >
         <v-card-title class="w-full">
+          <v-img :src="quizTemplate.image" max-width="100" class="mr-5" />
           <div class="text-h5">
-            <span class="font-bold">Quiz name</span>
+            <span class="font-bold">{{quizTemplate.title}}</span>
           </div>
           <v-spacer></v-spacer>
           <div>
@@ -47,7 +48,10 @@
         <v-card-text class="flex items-center justify-between">
           <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
           <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
-          <span>edit 00/00/00</span>
+          <span>
+            edit {{quizTemplate.lastUpdated
+            }}
+          </span>
           <div>
             <v-btn color="white" disabled>Assign</v-btn>
             <v-btn color="primary">Start</v-btn>
@@ -60,6 +64,8 @@
 
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
+import TeacherService from '~/services/TeacherService'
+
 export default {
   components: { BaseDialogCondition },
   data() {
@@ -79,9 +85,17 @@ export default {
             'DescriptionRules must be less than 10 characters',
         ],
       },
+      quizTemplates: [],
     }
   },
   methods: {},
+  created() {
+    TeacherService.getQuizTemplate(this.$store.getters.userId).then((res) => {
+      this.quizTemplates = res.data
+      console.log(this.quizTemplates)
+      Date.parse
+    })
+  },
 }
 </script>
 

@@ -15,9 +15,19 @@ export default {
     return studizAPI(baseURL).post('/create/quizTemplate', data);
   },
 
+  getQuizTemplate(teacherId) {
+    return studizAPI(baseURL).get(`/get/quizTemplate/teacherId/${teacherId}`);
+  },
+
   uploadImage(image) {
     let data = new FormData()
     data.append('studizImg', image)
     return studizAPI(baseURL).post('/upload/image', data);
+  },
+
+  updateImageQuestion(quizId, index, image) {
+    let data = new FormData()
+    data.append('studizImg', image)
+    return studizAPI(baseURL).put(`/update/quizTemplate/image/${quizId}/${index}`, data);
   }
 }

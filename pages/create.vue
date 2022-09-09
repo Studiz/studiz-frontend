@@ -13,9 +13,7 @@
     @duplicate-question="duplicateQuestion"
     @save-quiz-template="saveQuizTemplate"
   >
-    <div
-      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] overflow-auto"
-    >
+    <div class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] overflow-auto">
       <input-question
         class="flex-none"
         :currentQuesiton="currentQuesiton"
@@ -248,35 +246,98 @@ export default {
       this.quizData.questions.push(newQuestion)
     },
 
+    createQuizTemplateAndUploadImages() {
+      TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
+        .then((res) => {
+          if (res.status == 200) {
+            this.$router.push('/library')
+          }
+          return res.data
+        })
+        .then(async (res) => {
+          let questions = await this.$store.getters.quizTemplate.questions
+          for (let i = 0; i < questions.length; i++) {
+            const item = questions[i]
+            if (item.fileImage) {
+              await TeacherService.updateImageQuestion(
+                res.data.id,
+                i,
+                item.fileImage
+              )
+            }
+          }
+
+          this.$store.commit('setQuizTemplate', {
+            title: '',
+            description: '',
+            tags: [],
+            image:
+              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=2cce045c-f6ba-4275-a81d-656343885abc',
+            questions: [],
+            lastUpdated: '',
+          })
+        })
+    },
+
     async saveQuizTemplate() {
+      let dateCreated = new Date()
+      let dd = String(dateCreated.getDate()).padStart(2, '0')
+      let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')
+      let yyyy = dateCreated.getFullYear()
+      dateCreated = mm + '/' + dd + '/' + yyyy
       this.$store.commit('setTeacherId', this.$store.getters.userId)
       this.$store.commit('setQuizQuestions', this.quizData.questions)
-      this.$store.commit('setLastUpdated', Date.now())
-      // this.$store.commit('createImageFileList')
+      this.$store.commit('setLastUpdated', dateCreated)
 
       if (this.$store.getters.imageQuizFile) {
-        TeacherService.uploadImage(this.$store.getters.imageQuizFile).then(
-          (res) => {
+        TeacherService.uploadImage(this.$store.getters.imageQuizFile)
+          .then((res) => {
             this.$store.commit('setQuizImage', res.data.imageUrl)
-          }
-        )
+          })
+          .then(() => {
+            this.createQuizTemplateAndUploadImages()
+          })
+      } else {
+        this.createQuizTemplateAndUploadImages()
       }
 
-      let newQuestions = this.$store.getters.quizTemplate.questions
+      // let newQuestions = this.$store.getters.quizTemplate.questions
 
-      newQuestions.forEach((question, index) => {
-        if (question.fileImage) {
-          TeacherService.uploadImage(question.fileImage).then((res) => {
-            newQuestions[index].image = res.data.imageUrl
-            delete question.fileImage
-          })
-        }
-      })
-      setTimeout(() => {
-        this.$store.commit('setQuizQuestions', newQuestions)
-        TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
-      }, 5000)
-      this.$router.push('/library')
+      // TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
+      //   .then((res) => {
+      //     if (res.status == 200) {
+      //       this.$router.push('/library')
+      //     }
+      //     return res.data
+      //   })
+      //   .then((res) => {
+      //     this.$store.getters.quizTemplate.questions.forEach((question, index) => {
+      //       if (question.fileImage) {
+      //         TeacherService.updateImageQuestion(
+      //           res.data.id,
+      //           index,
+      //           question.fileImage
+      //         )
+      //       }
+      //     })
+      //   })
+
+      // Upload images before saving quiz template
+
+      // newQuestions.forEach((question, index) => {
+      //   if (question.fileImage) {
+      //     TeacherService.uploadImage(question.fileImage).then((res) => {
+      //       newQuestions[index].image = res.data.imageUrl
+      //       delete question.fileImage
+      //     })
+      //   }
+      // })
+      // setTimeout(() => {
+      //   this.$store.commit('setQuizQuestions', newQuestions)
+      //   TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
+      // }, 5000)
+      // this.$router.push('/library')
+
       // await newQuestions.map((question) => {
       //   if (question.fileImage) {
       //     TeacherService.uploadImage(question.fileImage).then((res) => {
