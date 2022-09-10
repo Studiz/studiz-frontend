@@ -20,11 +20,16 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: '',
+        content: 'Hello Studiz',
       },
       {
         name: 'format-detection',
         content: 'telephone=no',
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '~/static/logo/Studiz_logo.png',
       },
     ],
     link: [
@@ -119,13 +124,14 @@ export default {
     icon: {
       fileName: 'icon.png',
       sizes: [64, 120, 144, 152, 192, 384, 512],
+      purpose: 'any',
     },
     meta: {
-      title: 'Studiz',
+      title: 'Studiz - classroom & quiz',
       author: 'Studiz app',
       appleStatusBarStyle: 'black-translucent',
       ogImage: {
-        path: '/icon.png',
+        path: '~/static/logo/Studiz_logo.png',
         width: 512,
         height: 512,
         type: 'image/png',
@@ -136,8 +142,8 @@ export default {
         fileName: 'icon.png',
         sizes: [64, 120, 144, 152, 192, 384, 512],
       },
-      name: 'Studiz app',
-      short_name: 'Studiz',
+      name: 'Studiz',
+      short_name: 'studiz',
       lang: 'en',
       theme_color: '#0c8ce9',
       description:
