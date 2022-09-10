@@ -20,7 +20,7 @@ export default {
         {
           hid: `og:image`,
           property: 'og:image',
-          content: '/studiz_logo.png',
+          content: '/studiz-logo.png',
         },
       ],
     }
