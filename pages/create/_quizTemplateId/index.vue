@@ -248,37 +248,68 @@ export default {
       this.quizData.questions.push(newQuestion)
     },
 
-    createQuizTemplateAndUploadImages() {
-      TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
-        .then((res) => {
-          if (res.status == 200) {
-            this.$router.push('/library')
-          }
-          return res.data
-        })
-        .then(async (res) => {
-          let questions = await this.$store.getters.quizTemplate.questions
-          for (let i = 0; i < questions.length; i++) {
-            const item = questions[i]
-            if (item.fileImage) {
-              await TeacherService.updateImageQuestion(
-                res.data.id,
-                i,
-                item.fileImage
-              )
-            }
-          }
+    resetQuizTemplate() {
+      let defaultData = {
+        title: '',
+        description: '',
+        tags: [],
+        image:
+          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=2cce045c-f6ba-4275-a81d-656343885abc',
+        questions: [],
+        lastUpdated: '',
+      }
+      this.$store.commit('setQuizTemplate', defaultData)
+    },
 
-          this.$store.commit('setQuizTemplate', {
-            title: '',
-            description: '',
-            tags: [],
-            image:
-              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=2cce045c-f6ba-4275-a81d-656343885abc',
-            questions: [],
-            lastUpdated: '',
+    createQuizTemplateAndUploadImages() {
+      if (this.$store.getters.isEditMode) {
+        TeacherService.updateQuizTemplate(
+          this.$route.params.quizTemplateId,
+          this.$store.getters.quizTemplate
+        )
+          .then((res) => {
+            if (res.status == 200) {
+              this.$router.push('/library')
+            }
+            return res.data
           })
-        })
+          .then(async (res) => {
+            let questions = await this.$store.getters.quizTemplate.questions
+            for (let i = 0; i < questions.length; i++) {
+              const item = questions[i]
+              if (item.fileImage) {
+                await TeacherService.updateImageQuestion(
+                  res.data.id,
+                  i,
+                  item.fileImage
+                )
+              }
+            }
+            this.resetQuizTemplate()
+          })
+      } else {
+        TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
+          .then((res) => {
+            if (res.status == 200) {
+              this.$router.push('/library')
+            }
+            return res.data
+          })
+          .then(async (res) => {
+            let questions = await this.$store.getters.quizTemplate.questions
+            for (let i = 0; i < questions.length; i++) {
+              const item = questions[i]
+              if (item.fileImage) {
+                await TeacherService.updateImageQuestion(
+                  res.data.id,
+                  i,
+                  item.fileImage
+                )
+              }
+            }
+            this.resetQuizTemplate()
+          })
+      }
     },
 
     async saveQuizTemplate() {
@@ -302,62 +333,6 @@ export default {
       } else {
         this.createQuizTemplateAndUploadImages()
       }
-
-      // let newQuestions = this.$store.getters.quizTemplate.questions
-
-      // TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
-      //   .then((res) => {
-      //     if (res.status == 200) {
-      //       this.$router.push('/library')
-      //     }
-      //     return res.data
-      //   })
-      //   .then((res) => {
-      //     this.$store.getters.quizTemplate.questions.forEach((question, index) => {
-      //       if (question.fileImage) {
-      //         TeacherService.updateImageQuestion(
-      //           res.data.id,
-      //           index,
-      //           question.fileImage
-      //         )
-      //       }
-      //     })
-      //   })
-
-      // Upload images before saving quiz template
-
-      // newQuestions.forEach((question, index) => {
-      //   if (question.fileImage) {
-      //     TeacherService.uploadImage(question.fileImage).then((res) => {
-      //       newQuestions[index].image = res.data.imageUrl
-      //       delete question.fileImage
-      //     })
-      //   }
-      // })
-      // setTimeout(() => {
-      //   this.$store.commit('setQuizQuestions', newQuestions)
-      //   TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
-      // }, 5000)
-      // this.$router.push('/library')
-
-      // await newQuestions.map((question) => {
-      //   if (question.fileImage) {
-      //     TeacherService.uploadImage(question.fileImage).then((res) => {
-      //       question.image = res.data.imageUrl
-      //     })
-      //   } else {
-      //     question.image = ''
-      //   }
-      //   delete question.fileImage
-      // })
-      // this.$store.commit('setQuizQuestions', await newQuestions)
-      // TeacherService.createQuizTemplate(this.$store.getters.quizTemplate).then(
-      //   (res) => {
-      //     if (res.status == 200) {
-      //       this.$router.push('/library')
-      //     }
-      //   }
-      // )
     },
   },
   computed: {
@@ -380,7 +355,21 @@ export default {
   mounted() {
     this.$forceUpdate()
   },
-  created() {},
+  created() {
+    if (!(this.$route.params.quizTemplateId == 'new')) {
+      TeacherService.getQuizTemplateById(
+        this.$route.params.quizTemplateId
+      ).then((res) => {
+        this.quizData = res.data
+        this.$store.commit('setIsEditMode', true)
+        this.$store.commit('setQuizTemplate', res.data)
+      })
+    }
+  },
+  destroyed() {
+    this.resetQuizTemplate()
+    this.$store.commit('setIsEditMode', false)
+  },
 }
 </script>
 

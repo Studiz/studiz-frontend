@@ -13,6 +13,7 @@ const defaultState = {
   },
   imageQuizFile: null,
   imageQuestionFiles: [],
+  isEditMode: false,
 }
 
 const inBrowser = typeof window !== 'undefined';

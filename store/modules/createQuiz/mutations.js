@@ -48,6 +48,10 @@ export default {
     state.imageQuestionFiles = state.quizTemplate.questions.map(question => {
       return question.fileImage
     })
-  }
+  },
+
+  setIsEditMode(state, isEditMode) {
+    state.isEditMode = isEditMode
+  },
 
 };
