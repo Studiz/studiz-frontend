@@ -124,6 +124,12 @@ export default {
       title: 'Studiz',
       author: 'Studiz app',
       appleStatusBarStyle: 'black-translucent',
+      ogImage: {
+        path: '/icon.png',
+        width: 512,
+        height: 512,
+        type: 'image/png',
+      },
     },
     manifest: {
       icon: {

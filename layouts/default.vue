@@ -10,25 +10,10 @@
 </template>
 
 <script>
-import ogImage from '~/static/logo/Studiz_logo.png'
 import navbar from '~/components/navbar/navbar.vue'
 export default {
   components: { navbar },
   name: 'DefaultLayout',
-  head() {
-    return {
-      meta: [
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: this.BASE_URL + ogImage,
-        },
-      ],
-    }
-  },
-  data() {
-    return {}
-  },
 }
 </script>
 
