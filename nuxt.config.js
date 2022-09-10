@@ -29,7 +29,7 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: '~/static/logo/Studiz_logo.png',
+        content: '/logo/Studiz_logo.png',
       },
     ],
     link: [
