@@ -10,15 +10,20 @@
           name: 'create-quizTemplateId',
           params: { quizTemplateId: 'new' },
         }"
-      >Create</v-btn>
+        >Create</v-btn
+      >
     </div>
-    <v-divider class="my-5"></v-divider>
-    <quiz-template-list
-      v-for="quizTemplate in quizTemplates"
-      :quizTemplate="quizTemplate"
-      :key="quizTemplate.id"
-      @delete-quiz-template="deleteQuizTemplate"
-    />
+
+    <v-divider class="my-5" />
+
+    <div class="space-y-2">
+      <quiz-template-list
+        v-for="quizTemplate in quizTemplates"
+        :quizTemplate="quizTemplate"
+        :key="quizTemplate.id"
+        @delete-quiz-template="deleteQuizTemplate"
+      />
+    </div>
   </div>
 </template>
 

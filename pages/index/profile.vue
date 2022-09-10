@@ -66,7 +66,7 @@
             @open="openForm"
             :propDialog="propDialog"
           >
-            <template #namebtn>edit</template>
+            <template #namebtn>Edit</template>
             <template #icon>
               <v-icon left>mdi-pencil</v-icon>
             </template>

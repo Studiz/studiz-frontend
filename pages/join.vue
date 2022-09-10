@@ -12,7 +12,7 @@
       class="p-3 overflow-hidden drop-shadow-md rounded-xl md:p-5 lg:p-10"
     >
       <Input-join @join-number="joinnumber" />
-      <div class="text-center">
+      <div class="text-center" v-if="isGuest">
         <div class="flex items-center justify-center my-3">
           <v-divider></v-divider>
           <span class="px-3 font-bold text-H3 bg_disable--text">or</span>
@@ -51,6 +51,11 @@ export default {
   methods: {
     joinnumber(num) {
       console.log(num)
+    },
+  },
+  computed: {
+    isGuest() {
+      return this.$store.getters.user ? false : true
     },
   },
 }

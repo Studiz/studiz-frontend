@@ -74,10 +74,5 @@ export default {
       console.log(this.$nuxt.$route.name)
     },
   },
-  components: {
-    // isGuest() {
-    //   return this.$store.getters.user ? false : true
-    // },
-  },
 }
 </script>

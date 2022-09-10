@@ -11,7 +11,8 @@
         @click="showInput = !showInput"
         :showInput="showInput"
         v-if="userRole === 'STUDENT'"
-      >join classroom</v-btn>
+        >join classroom</v-btn
+      >
       <Create-classroom v-else />
     </div>
     <v-expand-transition>
@@ -22,7 +23,7 @@
         hide-details
         class="w-full md:w-6/12 lg:w-4/12 ml-auto mb-3 mt-2"
       >
-        <Input-join @join-number="joinPinCode" v-if="userRole == 'STUDENT' ">
+        <Input-join @join-number="joinPinCode" v-if="userRole == 'STUDENT'">
           <v-btn
             hide-details
             inset
@@ -32,45 +33,50 @@
               this.$route.name == 'index-classrooms' ? 'w-full col-span-6' : '',
             ]"
             @click="cancel()"
-          >cancel</v-btn>
+            >cancel</v-btn
+          >
         </Input-join>
       </v-card>
     </v-expand-transition>
 
-    <v-row class="mt-2" no-gutters>
-      <v-col
-        cols="12"
-        md="4"
-        xl="3"
+    <v-divider class="my-5" />
+
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
+    >
+      <nuxt-link
         v-for="classroom in classRoomList"
         :key="classroom.id"
-        class="pa-md-1 py-1"
+        :to="{
+          name: 'index-classroom-classroomsid-index-quiz',
+          params: { classroomsid: classroom.id },
+        }"
       >
-        <nuxt-link
-          :to="{ name: 'index-classroom-classroomsid-index-quiz', params: { classroomsid: classroom.id} }"
+        <v-card
+          flat
+          rounded="lg"
+          class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text"
         >
-          <v-card flat rounded="lg" class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text">
-            <v-card-title class="w-full">
-              <div class="text-h5 w-10/12 truncate">
-                <span class="font-bold white--text">{{classroom.name}}</span>
-              </div>
-            </v-card-title>
-            <v-card-subtitle
-              class="h-24 overflow-auto scrollbar white--text"
-            >{{classroom.description}}</v-card-subtitle>
-            <v-card-text
-              class="flex justify-between items-start white--text"
-              v-if="userRole == 'STUDENT'"
-            >
-              {{classroom.teacherName}}
-              <v-avatar class="-m-5 mr-1 white--text">
-                <v-icon x-large color="white">mdi-account-circle</v-icon>
-              </v-avatar>
-            </v-card-text>
-          </v-card>
-        </nuxt-link>
-      </v-col>
-    </v-row>
+          <v-card-title class="w-full">
+            <div class="text-h5 w-10/12 truncate">
+              <span class="font-bold white--text">{{ classroom.name }}</span>
+            </div>
+          </v-card-title>
+          <v-card-subtitle class="h-24 overflow-auto scrollbar white--text">{{
+            classroom.description
+          }}</v-card-subtitle>
+          <v-card-text
+            class="flex justify-between items-start white--text"
+            v-if="userRole == 'STUDENT'"
+          >
+            {{ classroom.teacherName }}
+            <v-avatar class="-m-5 mr-1 white--text">
+              <v-icon x-large color="white">mdi-account-circle</v-icon>
+            </v-avatar>
+          </v-card-text>
+        </v-card>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 

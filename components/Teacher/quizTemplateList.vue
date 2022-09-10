@@ -1,49 +1,48 @@
 <template>
-  <div class="w-full rounded-lg ring-1 background ring-black ring-opacity-10">
-    <v-card-title class="w-full">
-      <v-img :src="quizTemplate.image" max-width="100" class="mr-5" />
-      <div class="text-h5">
-        <span class="font-bold">{{quizTemplate.title}}</span>
+  <div
+    class="w-full group rounded-lg ring-1 background ring-black ring-opacity-10 p-4 flex flex-col md:flex-row gap-4 relative"
+  >
+    <v-img
+      :src="quizTemplate.image"
+      max-width="144"
+      max-height="96"
+      min-width="144"
+      min-height="96"
+      contain
+      class="self-center"
+    />
+    <div class="flex flex-col gap-4">
+      <div class="flex w-full">
+        <div class="text-h5">
+          <span class="font-bold line-clamp-1">{{ quizTemplate.title }}</span>
+        </div>
+        <v-spacer></v-spacer>
+        <div
+          class="absolute top-2 right-2 group-hover:visible group-hover:opacity-100 group-hover:w-auto group-hover:h-auto lg:opacity-0 lg:invisible transition-all"
+        >
+          <v-btn icon center @click="editQuizTemplate">
+            <v-icon>$vuetify.icons.edit</v-icon>
+          </v-btn>
+          <v-btn icon center @click="deleteQuizTemplate">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </div>
       </div>
-      <v-spacer></v-spacer>
-      <div>
-        <v-btn icon center @click="editQuizTemplate">
-          <v-icon>$vuetify.icons.edit</v-icon>
-        </v-btn>
-        <v-menu offset-y left transition="slide-y-transition">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn icon center v-bind="attrs" v-on="on">
-              <v-icon class="w-full">mdi-dots-vertical</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <!-- <v-list-item @click="editItem(item)" class="gap-x-2">
-                  <v-icon>mdi-content-duplicate</v-icon>
-                  <v-list-item-title>Duplicate</v-list-item-title>
-            </v-list-item>-->
-            <v-list-item @click="deleteQuizTemplate()" class="gap-x-2">
-              <v-icon>mdi-delete</v-icon>
-              <v-list-item-title>Delete</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
-    </v-card-title>
-    <!-- <v-card-subtitle class="h-24 overflow-auto scrollbar">
+      <!-- <v-card-subtitle class="h-24 overflow-auto scrollbar">
           quiz description
     </v-card-subtitle>-->
-    <v-card-text class="flex items-center justify-between">
-      <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
-      <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
-      <span>
-        edit {{quizTemplate.lastUpdated
-        }}
-      </span>
-      <div>
-        <v-btn color="white" disabled>Assign</v-btn>
-        <v-btn color="primary">Start</v-btn>
+      <div class="flex items-center justify-between w-full flex-wrap gap-4">
+        <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
+        <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
+        <span class="whitespace-nowrap self-end">
+          Edit: {{ quizTemplate.lastUpdated }}
+        </span>
+        <div class="inline-flex flex-wrap gap-2 w-full sm:w-auto justify-end">
+          <v-btn color="white" class="w-full sm:w-auto" disabled>Assign</v-btn>
+          <v-btn color="primary" class="w-full sm:w-auto">Start</v-btn>
+        </div>
       </div>
-    </v-card-text>
+    </div>
   </div>
 </template>
 
