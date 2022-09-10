@@ -1,15 +1,24 @@
 <template>
   <v-row>
     <v-col cols="0" md="1" lg="2" class="d-none d-md-block pr-xl-12">
-      <v-sheet color="transparent" class="fixed w-12 lg:w-full max-w-[176px] xl:max-w-[256px]">
+      <v-sheet
+        color="transparent"
+        class="fixed w-12 lg:w-full max-w-[176px] xl:max-w-[256px]"
+      >
         <v-list color="transparent" rounded class="pa-0">
-          <v-list-item to="/profile" active-class="primary--text" class="h-12 pa-1 lg:h-12">
+          <v-list-item
+            to="/profile"
+            active-class="primary--text"
+            class="h-12 pa-1 lg:h-12"
+          >
             <v-list-item-avatar color="primary" size="40px">
-              <v-icon large color="white" v-if="!imageProfile">mdi-account-circle</v-icon>
+              <v-icon large color="white" v-if="!imageProfile"
+                >mdi-account-circle</v-icon
+              >
               <v-img v-else :src="imageProfile" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{displayName}}</v-list-item-title>
+              <v-list-item-title>{{ displayName }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider class="my-2"></v-divider>
@@ -17,7 +26,7 @@
           <div v-for="(page, index) in pages" :key="index">
             <v-divider class="my-2" v-if="index == 4"></v-divider>
             <v-list-item
-              v-if="userRole == 'TEACHER'?index !==1:index !==2"
+              v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2"
               :to="page.to"
               link
               active-class="primary--text"
@@ -42,7 +51,13 @@
       >
         <Nuxt />
         <div
-          v-if="this.$route.name === 'index' ? this.$store.getters.user?this.$router.push('/classrooms'):this.$router.push('/join') : ''"
+          v-if="
+            this.$route.name === 'index'
+              ? this.$store.getters.user
+                ? this.$router.push('/classrooms')
+                : this.$router.push('/join')
+              : ''
+          "
         />
       </v-sheet>
     </v-col>

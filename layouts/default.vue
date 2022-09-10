@@ -14,8 +14,16 @@ import navbar from '~/components/navbar/navbar.vue'
 export default {
   components: { navbar },
   name: 'DefaultLayout',
-  data() {
-    return {}
+  head() {
+    return {
+      meta: [
+        {
+          hid: `og:image`,
+          property: 'og:image',
+          content: '/studiz-logo.png',
+        },
+      ],
+    }
   },
 }
 </script>

@@ -21,7 +21,6 @@
         id="file"
         accept="image/x-png, image/gif, image/jpeg"
         @change="previewMultiImage"
-        multiple
       />
     </label>
     <div v-else class="w-fit h-full mx-auto">
@@ -74,20 +73,20 @@ export default {
     previewMultiImage(event) {
       // let imgName = event.target.files[0].name
       var input = event.target
-      var count = input.files.length
-      var index = 0
+      // var count = input.files.length
+      // var index = 0
       // if (imgName.length > 30) {
       //   alert('The file name cannot exceed 30 characters.!!!')
       // } else if (input.files) {
-      while (count--) {
-        var reader = new FileReader()
-        reader.onload = (e) => {
-          this.previewImageList.push(e.target.result)
-        }
-        this.imageInfo.push(input.files[index])
-        reader.readAsDataURL(input.files[index])
-        index++
+      // while (count--) {
+      var reader = new FileReader()
+      reader.onload = (e) => {
+        this.previewImageList.push(e.target.result)
       }
+      this.imageInfo.push(input.files[0])
+      reader.readAsDataURL(input.files[0])
+      // index++
+      // }
       // }
 
       let previewImage = URL.createObjectURL(this.imageInfo[0])

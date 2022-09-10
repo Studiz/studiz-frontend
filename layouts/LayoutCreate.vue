@@ -1,3 +1,4 @@
+1
 <template>
   <v-app class="overflow-hidden">
     <create-navbar
@@ -56,7 +57,10 @@
           @end="changeOrdering"
           handle=".handle"
         >
-          <transition-group type="transition" class="gap-2 flex lg:flex-col overflow-auto">
+          <transition-group
+            type="transition"
+            class="gap-2 flex lg:flex-col overflow-auto scrollbar py-1 py-lg-0"
+          >
             <thumbnail
               :class="[
                 index === currentQuesiton ? 'primary_shade' : 'background',
@@ -95,7 +99,7 @@
 <script>
 import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
-import Thumbnail from '../components/createquesiton/Thumbnail.vue'
+import Thumbnail from '~/components/createquesiton/Thumbnail.vue'
 export default {
   components: { createNavbar, draggable, Thumbnail },
   props: {
@@ -281,6 +285,22 @@ export default {
 }
 :deep(.scrollbar
     > .v-navigation-drawer__content::-webkit-scrollbar-thumb:hover) {
+  background: var(--v-primary-base);
+  border-radius: 50px;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 8px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background: var(--v-primary_shade-base);
+  border-radius: 50px;
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--v-primary-base);
   border-radius: 50px;
 }
