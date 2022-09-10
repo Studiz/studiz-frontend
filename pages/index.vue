@@ -41,13 +41,12 @@
       </v-sheet>
     </v-col>
 
-    <v-col cols="12" md="11" lg="10" class="pa-1 pa-md-3">
+    <v-col cols="12" md="11" lg="10" class="pa-2 pa-md-3">
       <v-sheet
-        min-height="70vh"
         rounded="lg"
         elevation="1"
         color="background_card"
-        class="mb-16 overflow-hidden pa-2 pa-md-5"
+        class="overflow-hidden pa-2 pa-md-5 min-h-[calc(100vh-64px-24px)]"
       >
         <Nuxt />
         <div
