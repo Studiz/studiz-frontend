@@ -8,15 +8,7 @@
       @toggle-setting-quiz="toggleNavDrawerSettingQuiz"
     />
 
-    <v-navigation-drawer
-      absolute
-      touchless
-      bottom
-      app
-      clipped
-      right
-      v-model="drawerSettingQuiz"
-    >
+    <v-navigation-drawer absolute touchless bottom app clipped right v-model="drawerSettingQuiz">
       <v-list class="!py-4 !px-2">
         <v-list-item-group :key="currentQuesiton" class="flex flex-col gap-6">
           <div>
@@ -32,8 +24,7 @@
             <span
               v-show="selectQuizType.value == 'multiple'"
               class="whitespace-pre-wrap"
-              >*Required more than one correct choice</span
-            >
+            >*Required more than one correct choice</span>
           </div>
           <v-select
             :items="listTimeLimit"
@@ -218,6 +209,9 @@ export default {
     currentQuesiton() {
       this.mappingQuestion()
     },
+    dataQuestion() {
+      this.mappingQuestion()
+    },
   },
   methods: {
     activeItem(index) {
@@ -262,11 +256,7 @@ export default {
       this.drawerSettingQuiz = !this.drawerSettingQuiz
     },
   },
-  computed: {
-    canSave() {
-      return this.$store.getters.quizTemplate.title ? false : true
-    },
-  },
+  computed: {},
   mounted() {},
   created() {
     this.mappingQuestion()

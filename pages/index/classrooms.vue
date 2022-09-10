@@ -97,7 +97,6 @@ export default {
     joinPinCode(num) {
       StudentService.joinClassroom(num, this.$store.getters.userId)
         .then((res) => {
-          console.log(res)
           UserService.signInGetProfile(
             localStorage.getItem('accessToken')
           ).then((res) => {

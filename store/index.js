@@ -11,7 +11,7 @@ const createStore = () => {
       auth: authModule,
       theme: themeModule,
       classroom: classroomModule,
-      createQuiz: createQuizModule
+      createQuiz: createQuizModule,
     }
   });
 };

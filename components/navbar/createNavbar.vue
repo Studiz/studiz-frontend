@@ -10,12 +10,10 @@
     clipped-right
     color="background_card"
   >
-    <v-app-bar-nav-icon
-      @click="$emit('toggle-nav-drawer')"
-    ></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="$emit('toggle-nav-drawer')"></v-app-bar-nav-icon>
     <!-- <v-btn icon class="!-ml-3" @click="$emit('toggle-setting-quiz')"
       ><v-icon>mdi-questionList</v-icon></v-btn
-    > -->
+    >-->
     <div class="flex items-center justify-between gap-x-2">
       <v-btn
         height="50px"
@@ -38,12 +36,12 @@
         @confirm="saveQuizDetails"
       >
         <template #namebtn>
-          <span class="d-none d-sm-inline">{{
+          <span class="d-none d-sm-inline">
+            {{
             quizTitle ? quizTitle : 'Enter a details'
-          }}</span>
-          <span class="d-inline d-sm-none">
-            {{ quizTitle ? quizTitle : 'Details' }}
+            }}
           </span>
+          <span class="d-inline d-sm-none">{{ quizTitle ? quizTitle : 'Details' }}</span>
         </template>
         <template #title>Create quiz</template>
         <template #btn2>save</template>
@@ -124,16 +122,13 @@
       </div>
       <!-- <v-btn outlined disabled>
         <v-icon left>mdi-eye-outline</v-icon>preview
-      </v-btn> -->
+      </v-btn>-->
       <v-divider vertical class="mx-2 d-none d-md-inline-flex" />
-      <v-btn outlined class="d-none d-md-flex" to="/library">exit</v-btn>
-      <v-btn color="primary" @click="saveQuizTemplate" :disabled="canSave"
-        >save</v-btn
-      >
+      <v-btn color="primary" @click="saveQuizTemplate" :disabled="!canSave">save & exit</v-btn>
       <v-divider vertical class="mx-2 d-none d-md-inline-flex" />
-      <v-btn icon class="!-mr-3 lg:!mr-0" @click="$emit('toggle-setting-quiz')"
-        ><v-icon>mdi-cog-outline</v-icon></v-btn
-      >
+      <v-btn icon class="!-mr-3 lg:!mr-0" @click="$emit('toggle-setting-quiz')">
+        <v-icon>mdi-cog-outline</v-icon>
+      </v-btn>
     </div>
   </v-app-bar>
 </template>
@@ -146,7 +141,6 @@ export default {
   components: { lightDarkMode, BaseDialogCondition },
   data() {
     return {
-      newQuizTitle: '',
       formIsOpen: true,
       quizTitle: '',
       quizDescription: '',
@@ -178,7 +172,11 @@ export default {
       return this.$store.getters.quizTemplate
     },
     canSave() {
-      return this.$store.getters.quizTemplate.title ? false : true
+      if (this.$store.getters.isEditMode) {
+        return this.$store.getters.quizTemplate.title ? true : false
+      } else {
+        return this.$store.getters.quizTemplate.title ? true : false
+      }
     },
   },
   methods: {
@@ -217,10 +215,12 @@ export default {
     },
   },
   mounted() {
-    this.quizTitle = this.$store.getters.quizTemplate.title
-    this.quizDescription = this.$store.getters.quizTemplate.description
-    this.quizTags = this.$store.getters.quizTemplate.tags
-    this.quizImage = this.$store.getters.quizTemplate.image
+    setTimeout(() => {
+      this.quizTitle = this.$store.getters.quizTemplate.title
+      this.quizDescription = this.$store.getters.quizTemplate.description
+      this.quizTags = this.$store.getters.quizTemplate.tags
+      this.quizImage = this.$store.getters.quizTemplate.image
+    }, 1000)
   },
 }
 </script>

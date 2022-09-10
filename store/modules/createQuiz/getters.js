@@ -7,5 +7,8 @@ export default {
   },
   imageQuestionFiles(state) {
     return state.imageQuestionFiles
-  }
+  },
+  isEditMode(state) {
+    return state.isEditMode
+  },
 };
