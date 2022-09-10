@@ -18,9 +18,9 @@ export default {
     return {
       meta: [
         {
-          hid: 'og:image',
+          hid: `og:image`,
           property: 'og:image',
-          content: this.BASE_URL + '/logo/Studiz_logo.png',
+          content: '/studiz_logo.png',
         },
       ],
     }
