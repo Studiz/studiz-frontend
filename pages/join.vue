@@ -1,10 +1,10 @@
 <template>
   <div class="max-w-lg mx-auto">
     <div class="justify-center my-8 d-flex">
-      <!-- <v-icon size="150">$vuetify.icons.Studiz_logo</v-icon> -->
-      <div class="h-[150px] w-[150px] inline-flex items-center">
+      <v-icon size="150">$vuetify.icons.Studiz_logo</v-icon>
+      <!-- <div class="h-[150px] w-[150px] inline-flex items-center">
         <v-img src="/studiz-logo.png" max-width="150" max-height="150" />
-      </div>
+      </div> -->
     </div>
     <v-card
       flat
