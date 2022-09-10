@@ -2,7 +2,7 @@
   <v-data-table
     v-model="selected"
     :single-select="false"
-    show-select
+    :show-select="isTeacher"
     item-key="name"
     :headers="headers"
     :items="studentsInClass"
@@ -91,7 +91,7 @@
       </div>
     </template>
 
-    <template #item.actions="{ item }">
+    <template #item.actions="{ item }" v-if="isTeacher">
       <!-- <v-icon class="mr-2" @click="editItem(item)">mdi-dots-vertical</v-icon> -->
       <v-menu offset-y left transition="slide-y-transition">
         <template v-slot:activator="{ on, attrs }">
@@ -122,7 +122,7 @@ export default {
     dialogDelete: false,
     headers: [
       {
-        text: 'Image',
+        text: '',
         sortable: false,
         value: 'image',
         width: '50px',
@@ -132,7 +132,7 @@ export default {
         value: 'displayName',
       },
       { text: 'Name', value: 'name' },
-      { text: 'Actions', value: 'actions', sortable: false, align: 'end' },
+      { text: '', value: 'actions', sortable: false, align: 'end' },
     ],
     studentsInClass: [],
     desserts: [],
@@ -166,9 +166,6 @@ export default {
 
   created() {
     this.loadData()
-    if (!this.$store.getters.classroom) {
-      this.loadData()
-    }
   },
 
   methods: {
@@ -181,7 +178,6 @@ export default {
               image: student.imageUrl,
               displayName: student.displayName,
               name: `${student.firstName} ${student.lastName}`,
-              actions: student.id,
             }
           })
         }
@@ -237,9 +233,9 @@ export default {
     itemsPerPage() {
       return this.studentsInClass.length
     },
-    // studentsInClass() {
-    //   return this.$store.getters.students ? this.$store.getters.students : []
-    // },
+    isTeacher() {
+      return this.$store.getters.userRole == 'TEACHER' ? true : false
+    },
   },
 }
 </script>
