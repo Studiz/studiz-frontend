@@ -126,17 +126,6 @@ export default {
       sizes: [64, 120, 144, 152, 192, 384, 512],
       purpose: 'any',
     },
-    meta: {
-      title: 'Studiz - classroom & quiz',
-      author: 'Studiz app',
-      appleStatusBarStyle: 'black-translucent',
-      ogImage: {
-        path: '~/static/logo/Studiz_logo.png',
-        width: 512,
-        height: 512,
-        type: 'image/png',
-      },
-    },
     manifest: {
       icon: {
         fileName: 'icon.png',
