@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <!-- <Navbar /> -->
     <quiz-navbar />
     <v-main>
       <v-container fluid>
-        <Nuxt />
+        <slot />
       </v-container>
     </v-main>
   </v-app>
@@ -14,10 +13,6 @@
 import QuizNavbar from '~/components/navbar/quizNavbar.vue'
 export default {
   components: { QuizNavbar },
-  name: 'DefaultLayout',
-  data() {
-    return {}
-  },
 }
 </script>
 

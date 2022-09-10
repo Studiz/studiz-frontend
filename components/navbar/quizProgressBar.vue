@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center gap-x-3">
+  <div class="flex items-center justify-center gap-x-3 w-full md:w-2/6">
     <div class="w-full sm:w-1/2" @click="currentPage++">
       <div
         class="w-full overflow-hidden bg-gray-200 rounded-md dark:bg-gray-800"

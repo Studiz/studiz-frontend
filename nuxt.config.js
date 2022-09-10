@@ -20,11 +20,21 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: '',
+        content: 'Hello Studiz',
       },
       {
         name: 'format-detection',
         content: 'telephone=no',
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/studiz-logo.png',
+      },
+      {
+        hid: 'twitter:image',
+        property: 'twitter:image',
+        content: '/studiz-logo.png',
       },
     ],
     link: [
@@ -37,10 +47,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['vue-slick-carousel/dist/vue-slick-carousel.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: './plugins/vue-slick-carousel.js' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -119,21 +129,20 @@ export default {
     icon: {
       fileName: 'icon.png',
       sizes: [64, 120, 144, 152, 192, 384, 512],
-    }, // disables the icon module [srcDir]/[staticDir]/icon.png
-    meta: {
-      title: 'Studiz',
-      author: 'Studiz app',
+      purpose: 'any',
     },
     manifest: {
       icon: {
         fileName: 'icon.png',
         sizes: [64, 120, 144, 152, 192, 384, 512],
       },
-      name: 'Studiz app',
-      short_name: 'Studiz',
+      name: 'Studiz',
+      short_name: 'studiz',
       lang: 'en',
-      description: 'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
-      // useWebmanifestExtension: false
+      theme_color: '#0c8ce9',
+      description:
+        'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
+      start_url: '/join',
     },
   },
 }

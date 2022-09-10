@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent
-    class="grid grid-flow-col grid-rows-2 gap-2 rounded-lg background md:grid-rows-1"
+    class="grid grid-flow-col grid-rows-2 gap-2 rounded-lg primary_shade md:grid-rows-1"
     :class="[this.$route.name == 'index-classrooms' ? 'p-2' : 'p-2 md:p-4']"
   >
     <input

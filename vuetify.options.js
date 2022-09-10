@@ -8,9 +8,14 @@ import setting from 'static/menu_icon/setting.vue'
 import full_screen from 'static/icons/fullScreen.vue'
 import normal_screen from 'static/icons/normalScreen.vue'
 import edit from 'static/icons/edit.vue'
+import duplicate from 'static/icons/duplicate.vue'
+import questionList from 'static/icons/questionList.vue'
 
 export default {
   theme: {
+    options: {
+      customProperties: true,
+    },
     dark: false,
     themes: {
       light: {
@@ -29,7 +34,7 @@ export default {
       },
       dark: {
         primary: '#22A1EE',
-        primary_shade: '#6b7e8c',
+        primary_shade: '#3c4d68',
         secondary: '#FF6B35',
         secondary_shade: '#ffe3d9',
         bg_disable: '#464646',
@@ -76,6 +81,12 @@ export default {
       edit: {
         component: edit,
       },
+      duplicate: {
+        component: duplicate,
+      },
+      questionList: {
+        component: questionList,
+      }
     },
   },
 }

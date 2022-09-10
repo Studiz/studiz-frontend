@@ -2,86 +2,33 @@
   <div v-if="this.$store.getters.userRole == 'TEACHER'">
     <div class="items-center justify-between space-y-2 md:flex md:space-y-0">
       <h1 class="text-H1">My library</h1>
-      <base-dialog-condition colorBTN="primary" :persistent="true">
-        <template #namebtn>create</template>
-        <template #title>Create quiz</template>
-        <template #btn2>create</template>
-        <template #contain>
-          <v-form
-            ref="form"
-            class="pa-md-3"
-            lazy-validation
-            @submit.prevent="editDisplayName"
-          >
-            <v-container>
-              <v-text-field
-                label="Quiz name"
-                outlined
-                required
-                :rules="rules.nameRules"
-                :counter="10"
-              ></v-text-field>
-            </v-container>
-          </v-form>
-        </template>
-      </base-dialog-condition>
+      <v-btn
+        height="50"
+        color="primary"
+        class="text-cap w-full md:w-auto rounded-lg"
+        :to="{
+          name: 'create-quizTemplateId',
+          params: { quizTemplateId: 'new' },
+        }"
+      >Create</v-btn>
     </div>
     <v-divider class="my-5"></v-divider>
-    <div class="grid grid-cols-1 gap-y-3">
-      <div
-        v-for="classroom in 3"
-        :key="classroom.name"
-        class="w-full rounded-lg ring-1 background ring-black ring-opacity-10"
-      >
-        <v-card-title class="w-full">
-          <div class="text-h5">
-            <span class="font-bold">Quiz name</span>
-          </div>
-          <v-spacer></v-spacer>
-          <div>
-            <v-btn icon center>
-              <v-icon> $vuetify.icons.edit </v-icon>
-            </v-btn>
-            <v-menu offset-y left transition="slide-y-transition">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn icon center v-bind="attrs" v-on="on">
-                  <v-icon class="w-full">mdi-dots-vertical </v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item @click="editItem(item)" class="gap-x-2">
-                  <v-icon>mdi-content-duplicate</v-icon>
-                  <v-list-item-title>Duplicate</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="Delete(item)" class="gap-x-2">
-                  <v-icon>mdi-delete</v-icon>
-                  <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
-        </v-card-title>
-        <!-- <v-card-subtitle class="h-24 overflow-auto scrollbar">
-          quiz description
-        </v-card-subtitle> -->
-        <v-card-text class="flex items-center justify-between">
-          <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
-          <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
-          <span>edit 00/00/00</span>
-          <div>
-            <v-btn color="white" disabled>Assign</v-btn>
-            <v-btn color="primary">Start</v-btn>
-          </div>
-        </v-card-text>
-      </div>
-    </div>
+    <quiz-template-list
+      v-for="quizTemplate in quizTemplates"
+      :quizTemplate="quizTemplate"
+      :key="quizTemplate.id"
+      @delete-quiz-template="deleteQuizTemplate"
+    />
   </div>
 </template>
 
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
+import QuizTemplateList from '~/components/Teacher/quizTemplateList.vue'
+import TeacherService from '~/services/TeacherService'
+
 export default {
-  components: { BaseDialogCondition },
+  components: { BaseDialogCondition, QuizTemplateList },
   data() {
     return {
       rules: {
@@ -99,13 +46,28 @@ export default {
             'DescriptionRules must be less than 10 characters',
         ],
       },
+      quizTemplates: [],
     }
+  },
+  methods: {
+    deleteQuizTemplate(id) {
+      this.quizTemplates = this.quizTemplates.filter(
+        (quizTemplate) => quizTemplate.id !== id
+      )
+    },
+  },
+  created() {
+    TeacherService.getQuizTemplate(localStorage.getItem('userId')).then(
+      (res) => {
+        this.quizTemplates = res.data
+      }
+    )
   },
 }
 </script>
 
-<style lang="scss" scoped>
-:v-deep(.btn-dialog-style) {
+<style scoped>
+:deep(.btn-dialog-style) {
   @apply w-full md:w-auto;
 }
 </style>

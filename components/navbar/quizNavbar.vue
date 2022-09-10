@@ -7,9 +7,9 @@
       class="drop-shadow-md"
       height="60"
       dense
-      color="background"
+      color="background_card"
     >
-      <div class="flex items-center justify-between gap-x-2">
+      <div class="flex items-center gap-x-2">
         <v-btn
           v-if="!isFullScreen"
           color="primary"
@@ -31,20 +31,34 @@
           <v-icon>$vuetify.icons.normal_screen</v-icon>
         </v-btn>
         <light-dark-mode />
-        <!-- <v-spacer class="hidden sm:inline-flex"></v-spacer> -->
-        <quiz-progress-bar />
-        <!-- <v-spacer class="hidden sm:inline-flex"></v-spacer> -->
-        <span class="hidden whitespace-nowrap sm:inline-block">
-          {{
-            user
-              ? user.displayName
-                ? user.displayName
-                : user.firstName
-              : 'User Guest'
-          }}
-        </span>
+        <v-spacer></v-spacer>
+        <quiz-progress-bar v-if="!isLobby" />
+        <v-spacer></v-spacer>
+        <div v-if="userRole == 'TEACHER'" class="space-x-2">
+          <v-btn outlined>End</v-btn>
+          <v-btn color="primary">Start</v-btn>
+        </div>
+        <div
+          v-else
+          class="whitespace-nowrap space-x-3 inline-flex items-center"
+        >
+          <span class="hidden sm:inline-flex"> {{ user }} </span>
+          <v-btn v-if="isRouterLobby" color="error">Leave</v-btn>
+        </div>
       </div>
     </v-app-bar>
+    <v-footer fixed color="transparent" padless v-if="false">
+      <div class="primary p-3 rounded-lg w-fit mx-auto my-5">
+        <v-btn
+          color="black"
+          x-large
+          icon
+          class="rounded-lg shadow-[inset_0px_4px_0px_#374151] bg-gray-500"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </div>
+    </v-footer>
   </div>
 </template>
 
@@ -56,7 +70,23 @@ export default {
   data() {
     return {
       isFullScreen: false,
+      isLobby: false,
     }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
+        ? this.$store.getters.user.displayName
+          ? this.$store.getters.user.displayName
+          : this.$store.getters.user.firstName
+        : 'User Guest'
+    },
+    userRole() {
+      return this.$store.getters.userRole
+    },
+    isRouterLobby() {
+      return this.$route.name == 'lobby'
+    },
   },
   methods: {
     openFullscreen() {
@@ -97,6 +127,9 @@ export default {
   },
   mounted() {
     document.addEventListener('fullscreenchange', this.checkFullScreen())
+    if (this.$route.path.includes('lobby')) {
+      this.isLobby = true
+    }
   },
 }
 </script>
