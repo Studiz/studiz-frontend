@@ -2,9 +2,23 @@
   <div>
     <!-- TOP -->
     <div class="hidden md:inline-block">
-      <v-app-bar fixed app flat class="drop-shadow-md" height="64" dense color="background_card">
+      <v-app-bar
+        fixed
+        app
+        flat
+        class="drop-shadow-md"
+        height="64"
+        dense
+        color="background_card"
+      >
         <div class="container flex items-center justify-between">
-          <v-btn height="50px" elevation="0" color="transparent" class="overflow-hidden" to="/">
+          <v-btn
+            height="50px"
+            elevation="0"
+            color="transparent"
+            class="overflow-hidden"
+            to="/"
+          >
             <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
           </v-btn>
           <div class="flex items-center space-x-4">
@@ -23,13 +37,20 @@
                 >
                   <v-avatar size="40px">
                     <v-icon large v-if="!user">mdi-account-circle</v-icon>
-                    <v-icon large v-else-if="!user.imageUrl">mdi-account-circle</v-icon>
+                    <v-icon large v-else-if="!user.imageUrl"
+                      >mdi-account-circle</v-icon
+                    >
                     <v-img v-else :src="user.imageUrl" />
                   </v-avatar>
                 </v-btn>
               </template>
               <v-list v-if="!user">
-                <v-list-item v-for="item in route" :key="item.to" :to="item.to" class="font">
+                <v-list-item
+                  v-for="item in route"
+                  :key="item.to"
+                  :to="item.to"
+                  class="font"
+                >
                   <v-icon>{{ item.icon }}</v-icon>
                   <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item>
@@ -49,14 +70,14 @@
     <v-bottom-navigation
       grow
       fixed
-      height="70"
+      height="64"
       class="drop-shadow-md d-md-none background_card"
       active-class="primary--text"
       v-if="!isGuest"
     >
       <v-btn
         color="background_card"
-        height="70"
+        height="64"
         v-for="(b, index) in buttonNav"
         min-width="50"
         :key="index"

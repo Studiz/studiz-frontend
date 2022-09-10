@@ -41,7 +41,7 @@
       </v-sheet>
     </v-col>
 
-    <v-col cols="12" md="11" lg="10" class="pa-2 pa-md-3">
+    <v-col cols="12" md="11" lg="10" class="pa-2 pa-md-3 mb-16 mb-md-0">
       <v-sheet
         rounded="lg"
         elevation="1"
