@@ -292,6 +292,7 @@ export default {
         TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
           .then((res) => {
             if (res.status == 200) {
+              this.$store.commit('TOGGLE_LOADING', false)
               this.$router.push('/library')
             }
             return res.data
