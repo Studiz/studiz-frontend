@@ -30,16 +30,21 @@
       </div>
       <!-- <v-card-subtitle class="h-24 overflow-auto scrollbar">
           quiz description
-    </v-card-subtitle>-->
+      </v-card-subtitle>-->
       <div class="flex items-center justify-between w-full flex-wrap gap-4">
         <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
         <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
-        <span class="whitespace-nowrap self-end">
-          Edit: {{ quizTemplate.lastUpdated }}
-        </span>
+        <span class="whitespace-nowrap self-end">Edit: {{ quizTemplate.lastUpdated }}</span>
         <div class="inline-flex flex-wrap gap-2 w-full sm:w-auto justify-end">
           <v-btn color="white" class="w-full sm:w-auto" disabled>Assign</v-btn>
-          <v-btn color="primary" class="w-full sm:w-auto">Start</v-btn>
+          <v-btn
+            color="primary"
+            class="w-full sm:w-auto"
+            :to="{
+          name: 'lobby-quizId',
+          params: { quizId: quizTemplate.id },
+        }"
+          >Start</v-btn>
         </div>
       </div>
     </div>
