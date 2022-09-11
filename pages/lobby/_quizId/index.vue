@@ -19,18 +19,18 @@
           <div class="inline-flex flex-wrap p-3 gap-3">
             <v-img
               class="rounded-lg primary w-full h-auto"
-              src="https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/58a86ea4d03753509afe13a6.png?alt=media&token=83dd9af3-5163-4695-81fd-c1d105ea184e"
+              :src="quizData.image"
               max-height="60px"
               max-width="60px"
             />
             <div class="font-semibold">
-              <div class="text-H2">Test title of quiz</div>
-              <div>Questions (20)</div>
+              <div class="text-H2">{{quizData.title}}</div>
+              <div>Questions ({{totalQuestion}})</div>
             </div>
           </div>
           <div class="flex-wrap inline-flex gap-x-3 p-3 self-end h-fit">
             <!-- <span class="h-1 w-1 bg-gray-500 rounded-xl self-center" /> -->
-            <div>Update: 09-05-2020</div>
+            <div>Update: {{quizData.lastUpdated}}</div>
           </div>
         </div>
       </v-card>
@@ -43,26 +43,19 @@
         <div class="md:flex">
           <v-img
             class="rounded-lg primary w-full h-auto mx-auto"
-            src="https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/58a86ea4d03753509afe13a6.png?alt=media&token=83dd9af3-5163-4695-81fd-c1d105ea184e"
+            :src="quizData.image"
             max-height="150px"
             max-width="150px"
           ></v-img>
           <div>
-            <v-card-title>Test title of quiz</v-card-title>
-            <v-card-text
-              >Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
-              maxime recusandae libero magnam maiores ratione est voluptatem
-              dicta aliquid? Consequuntur asperiores illo voluptas eos? Corporis
-              facere maiores alias! Amet, quibusdam?</v-card-text
-            >
+            <v-card-title>{{quizData.title}}</v-card-title>
+            <v-card-text>{{quizData.description}}</v-card-text>
           </div>
           <div class="flex md:flex-col items-end flex-wrap justify-between">
-            <v-card-subtitle class="whitespace-nowrap text-end !font-semibold"
-              >Questions (20)
-            </v-card-subtitle>
-            <div
-              class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end"
-            >
+            <v-card-subtitle
+              class="whitespace-nowrap text-end !font-semibold"
+            >Questions ({{totalQuestion}})</v-card-subtitle>
+            <div class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end">
               <v-img
                 class="rounded-full primary"
                 src="https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1661479781086_d8d9c4f9-859b-4afd-8837-2ebd237a35df.png?alt=media&token=4f5d8d8c-ab1f-4f40-b42e-2375f4a91661"
@@ -70,8 +63,8 @@
                 max-width="48px"
               ></v-img>
               <div>
-                <div>Teacherzzzzz</div>
-                <div>09-05-2020</div>
+                <div>Teacher</div>
+                <div>{{quizData.lastUpdated}}</div>
               </div>
             </div>
           </div>
@@ -94,9 +87,7 @@
             text
             small
             class="group-hover:visible group-hover:w-auto group-hover:h-auto invisible w-0 h-0"
-          >
-            leave
-          </v-btn>
+          >leave</v-btn>
         </div>
       </div>
     </div>
@@ -105,12 +96,31 @@
 
 <script>
 import LayoutQuiz from '~/layouts/layoutQuiz.vue'
+import TeacherService from '~/services/TeacherService'
+
 export default {
   layout: 'layoutFree',
   components: { LayoutQuiz },
   data() {
     return {
-      mockUser: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      mockUser: [
+        'Student 1',
+        'Student 2',
+        'Student 3',
+        'Student 4',
+        'Student 5',
+        'Student 6',
+        'Student 7',
+        'Student 8',
+        'Student 9',
+        'Student 10',
+        'Student 11',
+        'Student 12',
+        'Student 13',
+        'Student 14',
+        'Student 15',
+      ],
+      quizData: {},
     }
   },
   methods: {},
@@ -118,6 +128,16 @@ export default {
     userRole() {
       return this.$store.getters.userRole
     },
+    totalQuestion() {
+      return this.quizData.questions ? this.quizData.questions.length : 0
+    },
+  },
+  created() {
+    TeacherService.getQuizTemplateById(this.$route.params.quizId).then(
+      (res) => {
+        this.quizData = res.data
+      }
+    )
   },
 }
 </script>
