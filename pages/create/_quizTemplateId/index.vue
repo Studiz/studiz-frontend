@@ -269,6 +269,7 @@ export default {
         )
           .then((res) => {
             if (res.status == 200) {
+              this.$store.commit('TOGGLE_LOADING', false)
               this.$router.push('/library')
             }
             return res.data
@@ -313,6 +314,7 @@ export default {
     },
 
     async saveQuizTemplate() {
+      this.$store.commit('TOGGLE_LOADING', true)
       let dateCreated = new Date()
       let dd = String(dateCreated.getDate()).padStart(2, '0')
       let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')

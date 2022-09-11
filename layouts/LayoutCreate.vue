@@ -1,107 +1,120 @@
 1
 <template>
-  <v-app class="overflow-hidden">
-    <create-navbar
-      :quizTitle="quizTitle"
-      @save-quiz-template="$emit('save-quiz-template')"
-      @toggle-nav-drawer="toggleNavDrawer"
-      @toggle-setting-quiz="toggleNavDrawerSettingQuiz"
-    />
+  <div>
+    <loaging-page />
+    <v-app class="overflow-hidden">
+      <create-navbar
+        :quizTitle="quizTitle"
+        @save-quiz-template="$emit('save-quiz-template')"
+        @toggle-nav-drawer="toggleNavDrawer"
+        @toggle-setting-quiz="toggleNavDrawerSettingQuiz"
+      />
 
-    <v-navigation-drawer absolute touchless bottom app clipped right v-model="drawerSettingQuiz">
-      <v-list class="!py-4 !px-2">
-        <v-list-item-group :key="currentQuesiton" class="flex flex-col gap-6">
-          <div>
+      <v-navigation-drawer
+        absolute
+        touchless
+        bottom
+        app
+        clipped
+        right
+        v-model="drawerSettingQuiz"
+      >
+        <v-list class="!py-4 !px-2">
+          <v-list-item-group :key="currentQuesiton" class="flex flex-col gap-6">
+            <div>
+              <v-select
+                :items="listQuizType"
+                v-model="selectQuizType"
+                label="Question type"
+                dense
+                outlined
+                hide-details
+                @change="changeQuizType"
+              ></v-select>
+              <span
+                v-show="selectQuizType.value == 'multiple'"
+                class="whitespace-pre-wrap"
+                >*Required more than one correct choice</span
+              >
+            </div>
             <v-select
-              :items="listQuizType"
-              v-model="selectQuizType"
-              label="Question type"
+              :items="listTimeLimit"
+              v-model="selectTimeLimit"
+              label="Time limit"
               dense
               outlined
               hide-details
-              @change="changeQuizType"
+              @change="chanceTimeLimit"
             ></v-select>
-            <span
-              v-show="selectQuizType.value == 'multiple'"
-              class="whitespace-pre-wrap"
-            >*Required more than one correct choice</span>
-          </div>
-          <v-select
-            :items="listTimeLimit"
-            v-model="selectTimeLimit"
-            label="Time limit"
-            dense
-            outlined
-            hide-details
-            @change="chanceTimeLimit"
-          ></v-select>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
 
-    <v-navigation-drawer
-      absolute
-      bottom
-      app
-      clipped
-      touchless
-      v-model="drawerQuizList"
-      mobile-breakpoint="1264"
-      width="208"
-      class="!h-64 lg:!h-full scrollbar"
-    >
-      <v-list nav class="py-5 py-lg-2">
-        <draggable
-          v-bind="dragOptions"
-          v-model="newDataQuestion"
-          @end="changeOrdering"
-          handle=".handle"
-        >
-          <transition-group
-            type="transition"
-            class="gap-2 flex lg:flex-col overflow-auto scrollbar py-1 py-lg-0"
+      <v-navigation-drawer
+        absolute
+        bottom
+        app
+        clipped
+        touchless
+        v-model="drawerQuizList"
+        mobile-breakpoint="1264"
+        width="208"
+        class="!h-64 lg:!h-full scrollbar"
+      >
+        <v-list nav class="py-5 py-lg-2">
+          <draggable
+            v-bind="dragOptions"
+            v-model="newDataQuestion"
+            @end="changeOrdering"
+            handle=".handle"
           >
-            <thumbnail
-              :class="[
-                index === currentQuesiton ? 'primary_shade' : 'background',
-              ]"
-              v-for="(item, index) in newDataQuestion"
-              :key="`${index}-${item}`"
-              :item="item"
-              :index="index"
-              :totalQuestion="totalQuestion"
-              @active-item="activeItem"
-              @delete-question="deleteQuestion"
-              @duplicate-question="duplicateQuestion"
-            />
-          </transition-group>
-        </draggable>
-        <v-divider class="my-3 md:my-2" />
-        <v-btn
-          height="48"
-          class="text-center primary white--text rounded-lg w-full transition-all"
-          @click="addQuestion"
-        >
-          <v-icon left>mdi-plus</v-icon>
-          <span>Add question</span>
-        </v-btn>
-      </v-list>
-    </v-navigation-drawer>
+            <transition-group
+              type="transition"
+              class="gap-2 flex lg:flex-col overflow-auto scrollbar py-1 py-lg-0"
+            >
+              <thumbnail
+                :class="[
+                  index === currentQuesiton ? 'primary_shade' : 'background',
+                ]"
+                v-for="(item, index) in newDataQuestion"
+                :key="`${index}-${item}`"
+                :item="item"
+                :index="index"
+                :totalQuestion="totalQuestion"
+                @active-item="activeItem"
+                @delete-question="deleteQuestion"
+                @duplicate-question="duplicateQuestion"
+              />
+            </transition-group>
+          </draggable>
+          <v-divider class="my-3 md:my-2" />
+          <v-btn
+            height="48"
+            class="text-center primary white--text rounded-lg w-full transition-all"
+            @click="addQuestion"
+          >
+            <v-icon left>mdi-plus</v-icon>
+            <span>Add question</span>
+          </v-btn>
+        </v-list>
+      </v-navigation-drawer>
 
-    <v-main>
-      <v-container fluid class="px-1 px-sm-3">
-        <slot />
-      </v-container>
-    </v-main>
-  </v-app>
+      <v-main>
+        <v-container fluid class="px-1 px-sm-3">
+          <slot />
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
 import Thumbnail from '~/components/createquesiton/Thumbnail.vue'
+import LoagingPage from '~/components/LoagingPage.vue'
 export default {
-  components: { createNavbar, draggable, Thumbnail },
+  components: { createNavbar, draggable, Thumbnail, LoagingPage },
   props: {
     quizTitle: {
       type: String,
