@@ -66,10 +66,13 @@
             classroom.description
           }}</v-card-subtitle>
           <v-card-text
-            class="flex justify-between items-start white--text"
+            class="flex justify-between items-start white--text pt-4"
             v-if="userRole == 'STUDENT'"
           >
-            {{ classroom.teacherName }}
+            <span class="whitespace-nowrap">
+              {{ classroom.teacher.firstName }}
+              {{ classroom.teacher.lastName }}</span
+            >
             <v-avatar class="-m-5 mr-1 white--text">
               <v-icon x-large color="white">mdi-account-circle</v-icon>
             </v-avatar>
