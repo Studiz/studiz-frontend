@@ -23,7 +23,7 @@
       ref="form"
       lazy-validation
       @submit.prevent="saveNewText"
-      class="h-32 w-full flex items-center overflow-auto self-center"
+      class="min-h-[96px] max-h-40 h-fit w-full overflow-auto my-auto scrollbar"
     >
       <v-textarea
         solo
@@ -121,5 +121,27 @@ export default {
 }
 .blue {
   @apply !bg-sky-300/50;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 8px;
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+  background: var(--v-primary-base);
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--v-primary_shade-base);
+  border-radius: 50px;
 }
 </style>

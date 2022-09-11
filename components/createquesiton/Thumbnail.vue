@@ -1,6 +1,6 @@
 <template>
   <div
-    class="primary_shade rounded-lg p-3 select-none overflow-hidden relative min-w-[176px]"
+    class="primary_shade rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full"
     @click="activeItem(index)"
   >
     <v-icon

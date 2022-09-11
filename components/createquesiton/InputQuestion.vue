@@ -3,19 +3,20 @@
     rounded="lg"
     elevation="0"
     color="background_card"
-    class="overflow-hidden pa-2 pa-md-3 drop-shadow-md min-h-max max-h-28"
+    class="overflow-hidden pa-2 pa-md-3 drop-shadow-md min-h-[112px] max-h-32"
   >
     <v-form
       ref="form"
       lazy-validation
       @submit.prevent="saveNewQuestion"
-      class="w-full flex items-center overflow-auto self-center min-h-max max-h-20"
+      class="w-full min-h-[80px] max-h-20 overflow-auto scrollbar"
     >
       <v-textarea
         solo
         flat
         auto-grow
         rows="1"
+        max-height="80px"
         label="Add question"
         background-color="transparent"
         v-model.trim="newQuestion"
@@ -76,4 +77,26 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 8px;
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+  background: var(--v-primary-base);
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--v-primary_shade-base);
+  border-radius: 50px;
+}
+</style>

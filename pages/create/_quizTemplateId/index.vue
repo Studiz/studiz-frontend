@@ -388,13 +388,13 @@ export default {
 
 /* Handle */
 .scrollbar::-webkit-scrollbar-thumb {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 
 /* Handle on hover */
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary-base);
+  background: var(--v-primary_shade-base);
   border-radius: 50px;
 }
 </style>
