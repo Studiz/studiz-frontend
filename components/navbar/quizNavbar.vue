@@ -71,6 +71,7 @@ export default {
     return {
       isFullScreen: false,
       isLobby: false,
+      eventFullscreen: null,
     }
   },
   computed: {
@@ -111,25 +112,15 @@ export default {
       }
       this.isFullScreen = false
     },
-    checkFullScreen() {
-      const elem = document.documentElement
-      if (
-        elem.requestFullscreen ||
-        elem.webkitRequestFullscreen ||
-        elem.msRequestFullscreen
-      ) {
-        this.isFullScreen = false
-      } else {
-        this.isFullScreen = true
-      }
-      console.log('isFullScreen', this.isFullScreen)
-    },
   },
   mounted() {
-    document.addEventListener('fullscreenchange', this.checkFullScreen())
-    if (this.$route.path.includes('lobby')) {
-      this.isLobby = true
-    }
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement) {
+        this.isFullScreen = true
+      } else {
+        this.isFullScreen = false
+      }
+    })
   },
 }
 </script>
