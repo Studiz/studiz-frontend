@@ -29,7 +29,6 @@
     "webpack": "^4.46.0"
   },
   "devDependencies": {
-    "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/tailwindcss": "^5.0.4",
     "@nuxtjs/vuetify": "^1.12.3",
     "@tailwindcss/line-clamp": "^0.4.1",

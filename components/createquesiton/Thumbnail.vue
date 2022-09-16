@@ -1,10 +1,14 @@
 <template>
   <div
-    class="hover:primary_shade rounded-lg p-3 select-none overflow-hidden"
+    class="primary_shade rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full"
     @click="activeItem(index)"
   >
-    <div class="text-sm font-semibold flex">
-      <span>{{ index + 1 }} Quiz</span>
+    <v-icon
+      class="handle cursor-grabbing py-5 px-2 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+      >mdi-drag-vertical</v-icon
+    >
+    <div class="text-sm font-semibold flex items-center">
+      <span>{{ index + 1 }} Question</span>
       <v-spacer />
       <v-btn icon x-small @click="duplicateQuestion">
         <v-icon small>$vuetify.icons.duplicate</v-icon>
@@ -52,14 +56,14 @@
       />
       <div
         v-else
-        class="h-10 w-10 outline outline-[0.5px] outline-black/30"
+        class="h-10 w-10 outline outline-[0.5px] outline-gray-500/50"
       ></div>
     </div>
     <div class="grid grid-cols-2 gap-1">
       <div
         v-for="(choice, index) in item.answer.options"
         :key="`${index}-${item}-${choice}`"
-        class="outline outline-[0.5px] h-2 outline-black/30"
+        class="outline outline-[0.5px] h-2 outline-gray-500/50"
       >
         <div
           v-if="choice.isCorrect == true"

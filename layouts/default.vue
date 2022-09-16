@@ -1,21 +1,33 @@
 <template>
-  <v-app>
-    <Navbar />
-    <v-main class="-mt-14 md:-mt-6">
-      <v-container>
-        <Nuxt />
-      </v-container>
-    </v-main>
-  </v-app>
+  <div>
+    <loaging-page />
+    <v-app>
+      <Navbar />
+      <v-main class="-mt-16 md:-mt-6">
+        <v-container>
+          <Nuxt />
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
 </template>
 
 <script>
+import LoagingPage from '~/components/LoagingPage.vue'
 import navbar from '~/components/navbar/navbar.vue'
 export default {
-  components: { navbar },
+  components: { navbar, LoagingPage },
   name: 'DefaultLayout',
-  data() {
-    return {}
+  head() {
+    return {
+      meta: [
+        {
+          hid: `og:image`,
+          property: 'og:image',
+          content: '/studiz-logo.png',
+        },
+      ],
+    }
   },
 }
 </script>

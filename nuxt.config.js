@@ -20,11 +20,21 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: '',
+        content: 'Hello Studiz',
       },
       {
         name: 'format-detection',
         content: 'telephone=no',
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/studiz-logo.png',
+      },
+      {
+        hid: 'twitter:image',
+        property: 'twitter:image',
+        content: '/studiz-logo.png',
       },
     ],
     link: [
@@ -50,14 +60,13 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/tailwindcss',
     '@nuxtjs/vuetify',
-    // '@nuxtjs/pwa',
     // '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxtjs/axios',
     [
       '@nuxtjs/firebase',
@@ -115,26 +124,24 @@ export default {
     host: '0.0.0.0',
     timing: false,
   },
-  pwa: {
-    icon: {
-      fileName: 'icon.png',
-      sizes: [64, 120, 144, 152, 192, 384, 512],
-    }, // disables the icon module [srcDir]/[staticDir]/icon.png
-    meta: {
-      title: 'Studiz',
-      author: 'Studiz app',
-    },
-    manifest: {
-      icon: {
-        fileName: 'icon.png',
-        sizes: [64, 120, 144, 152, 192, 384, 512],
-      },
-      name: 'Studiz app',
-      short_name: 'Studiz',
-      lang: 'en',
-      description:
-        'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
-      // useWebmanifestExtension: false
-    },
-  },
+  // pwa: {
+  //   icon: {
+  //     fileName: 'icon.png',
+  //     sizes: [64, 120, 144, 152, 192, 384, 512],
+  //     purpose: 'any',
+  //   },
+  //   manifest: {
+  //     icon: {
+  //       fileName: 'icon.png',
+  //       sizes: [64, 120, 144, 152, 192, 384, 512],
+  //     },
+  //     name: 'Studiz',
+  //     short_name: 'studiz',
+  //     lang: 'en',
+  //     theme_color: '#0c8ce9',
+  //     description:
+  //       'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
+  //     start_url: '/join',
+  //   },
+  // },
 }

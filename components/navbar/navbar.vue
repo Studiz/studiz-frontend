@@ -70,14 +70,14 @@
     <v-bottom-navigation
       grow
       fixed
-      height="70"
+      height="64"
       class="drop-shadow-md d-md-none background_card"
       active-class="primary--text"
       v-if="!isGuest"
     >
       <v-btn
         color="background_card"
-        height="70"
+        height="64"
         v-for="(b, index) in buttonNav"
         min-width="50"
         :key="index"
@@ -148,6 +148,7 @@ export default {
       this.$fire.auth.signOut().then(() => {
         localStorage.clear('accessToken')
         localStorage.clear('user')
+        localStorage.clear('userId')
         this.$store.commit('setUser', null)
         this.$router.push('/join')
       })

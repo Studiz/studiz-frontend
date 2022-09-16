@@ -1,7 +1,15 @@
 <template>
   <div class="max-w-lg mx-auto">
-    <v-card class="w-screen px-3 py-5 px-md-10 py-md-10" color="background_card">
-      <p class="text-center primary--text text-H1">Login</p>
+    <v-card class="w-screen px-3 py-5 px-md-10 py-md-10 space-y-8" color="background_card">
+      <div class="text-center primary--text text-H1">Login</div>
+
+      <div id="firebaseui-auth-container"></div>
+
+      <div class="flex gap-5 items-center justify-center my-5">
+        <v-divider />
+        <span class="font-bold text-H3 bg_disable--text">or</span>
+        <v-divider />
+      </div>
 
       <div>
         <v-form ref="form" lazy-validation @submit.prevent="submit">
@@ -35,13 +43,6 @@
             <v-btn outlined color="secondary" class="ml-2 text-cap" to="signup">Sign up</v-btn>
           </div>
         </v-form>
-
-        <div class="flex items-center justify-center my-5">
-          <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
-          <span class="font-bold text-H3 bg_disable--text">or</span>
-          <span class="w-full mx-4 border-b-4 dark:border-bg_disable"></span>
-        </div>
-        <div id="firebaseui-auth-container"></div>
       </div>
     </v-card>
   </div>
@@ -77,7 +78,7 @@ export default {
             let accessToken = res.user._delegate.accessToken
             userService.signInGetProfile(accessToken).then((res) => {
               this.$store.commit('setUser', res.data)
-              // localStorage.setItem('user', JSON.stringify(res.data))
+              localStorage.setItem('userId', res.data.id)
               localStorage.setItem('accessToken', accessToken)
               this.loading = false
               this.$router.push('/classrooms')
@@ -104,7 +105,6 @@ export default {
   },
   mounted() {
     const firebaseui = require('firebaseui')
-    require('firebaseui/dist/firebaseui.css')
 
     const ui =
       firebaseui.auth.AuthUI.getInstance() ||
@@ -122,6 +122,7 @@ export default {
             .then((res) => {
               // localStorage.setItem('user', JSON.stringify(res.data))
               localStorage.setItem('accessToken', accessToken)
+              localStorage.setItem('userId', res.data.id)
               window.location.href = '/classrooms'
             })
             .catch(() => {
@@ -137,4 +138,23 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+:deep(.firebaseui-idp-list) {
+  @apply w-full px-0;
+}
+:deep(.firebaseui-idp-button) {
+  @apply flex flex-wrap overflow-hidden items-center gap-x-5 gap-y-3 w-full rounded-md ring-1 ring-light_primary hover:ring-2 p-4 justify-center transition-all !bg-transparent;
+}
+:deep(.firebaseui-idp-text-long) {
+  @apply font-medium whitespace-nowrap;
+}
+:deep(.firebaseui-idp-icon-wrapper) {
+  @apply w-6 h-6;
+}
+:deep(.firebaseui-idp-icon) {
+  @apply w-full w-full;
+}
+:deep(.firebaseui-idp-text-short) {
+  @apply hidden;
+}
+</style>

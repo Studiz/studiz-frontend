@@ -7,9 +7,11 @@ export default function ({
   if (localStorage.getItem('accessToken') && !store.state.user) {
     userService.signInGetProfile(localStorage.getItem('accessToken')).then(res => {
       store.commit('setUser', res.data)
+
       // localStorage.setItem('user', JSON.stringify(res.data))
     }).catch(err => {
       localStorage.removeItem('accessToken')
+      localStorage.removeItem('userId')
       redirect('/login')
     })
   }

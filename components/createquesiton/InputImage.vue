@@ -1,23 +1,26 @@
 <template>
-  <div class="w-full h-full" :key="currentQuesiton">
+  <div
+    class="w-full h-full min-h-[14rem] max-h-72 lg:max-h-80"
+    :key="currentQuesiton"
+  >
     <label
-      class="label-class group h-full py-3"
+      class="label-class group h-full p-5 overflow-hidden"
       form="file"
       v-if="previewImageList.length == 0"
     >
       <v-icon
         class="p-0.5 rounded-full border-2 border-current group-hover:text-white transition-all"
+        >mdi-plus</v-icon
       >
-        mdi-plus
-      </v-icon>
-      <span class="mt-2 text-base select-none">Select a image file</span>
+      <span class="mt-2 text-center select-none whitespace-nowrap"
+        >Select a image file</span
+      >
       <input
         type="file"
         class="hidden"
         id="file"
-        accept="image/x-png,image/gif,image/jpeg"
+        accept="image/x-png, image/gif, image/jpeg"
         @change="previewMultiImage"
-        multiple
       />
     </label>
     <div v-else class="w-fit h-full mx-auto">
@@ -31,10 +34,10 @@
         <v-btn
           @click="deleteImage(index)"
           color="secondary"
+          small
           class="!absolute text-center cursor-pointer bottom-2 right-2"
+          >remove</v-btn
         >
-          remove
-        </v-btn>
       </div>
     </div>
   </div>
@@ -70,22 +73,29 @@ export default {
     previewMultiImage(event) {
       // let imgName = event.target.files[0].name
       var input = event.target
-      var count = input.files.length
-      var index = 0
+      // var count = input.files.length
+      // var index = 0
       // if (imgName.length > 30) {
       //   alert('The file name cannot exceed 30 characters.!!!')
       // } else if (input.files) {
-      while (count--) {
-        var reader = new FileReader()
-        reader.onload = (e) => {
-          this.previewImageList.push(e.target.result)
-        }
-        this.imageInfo.push(input.files[index])
-        reader.readAsDataURL(input.files[index])
-        index++
+      // while (count--) {
+      var reader = new FileReader()
+      reader.onload = (e) => {
+        this.previewImageList.push(e.target.result)
       }
+      this.imageInfo.push(input.files[0])
+      reader.readAsDataURL(input.files[0])
+      // index++
       // }
-      this.$emit('save-input-image', this.imageInfo[0].name)
+      // }
+
+      let previewImage = URL.createObjectURL(this.imageInfo[0])
+      URL.revokeObjectURL(this.imageInfo[0])
+
+      this.$emit('save-input-image', {
+        previewImage: previewImage,
+        fileImage: this.imageInfo[0],
+      })
     },
     deleteImage(index) {
       this.imageInfo.splice(index, 1)
