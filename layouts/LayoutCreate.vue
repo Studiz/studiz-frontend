@@ -1,4 +1,3 @@
-1
 <template>
   <div>
     <loaging-page />
@@ -290,7 +289,7 @@ export default {
 }
 :deep(.v-list-item--highlighted) {
   opacity: 100 !important;
-  @apply !text-light_primary dark:!text-dark_primary;
+  color: var(--v-primary-base) !important;
 }
 :deep(.scrollbar > .v-navigation-drawer__content::-webkit-scrollbar) {
   width: 5px;
