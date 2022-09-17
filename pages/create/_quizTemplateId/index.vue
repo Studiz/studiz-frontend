@@ -73,12 +73,12 @@ export default {
   layout: 'layoutFree',
   head() {
     return {
-      title: this.title,
+      title: this.quizData.title,
+      titleTemplate: '%s - Create Quiz',
     }
   },
   data() {
     return {
-      title: 'Create Quiz',
       drawer: true,
       currentQuesiton: 0,
       propDialog: false,
@@ -235,8 +235,6 @@ export default {
       this.quizData.questions[this.currentQuesiton].answer.options[
         data.index
       ].option = data.text
-
-      // this.quizData.questions[this.currentQuesiton].answer.options[data.index].option = data.text
     },
     saveInputQuestion(data) {
       this.quizData.questions[this.currentQuesiton].question = data
