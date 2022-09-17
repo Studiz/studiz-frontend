@@ -21,11 +21,12 @@
       >
         <v-list class="!py-4 !px-2">
           <v-list-item-group :key="currentQuesiton" class="flex flex-col gap-6">
-            <div>
+            <div class="pl-2">
               <v-select
                 :items="listQuizType"
                 v-model="selectQuizType"
                 label="Question type"
+                prepend-icon="$vuetify.icons.quiz"
                 dense
                 outlined
                 hide-details
@@ -33,14 +34,16 @@
               ></v-select>
               <span
                 v-show="selectQuizType.value == 'multiple'"
-                class="whitespace-pre-wrap"
+                class="whitespace-pre-wrap mt-1"
                 >*Required more than one correct choice</span
               >
             </div>
             <v-select
+              class="pl-2"
               :items="listTimeLimit"
               v-model="selectTimeLimit"
               label="Time limit"
+              prepend-icon="mdi-clock-time-twelve-outline"
               dense
               outlined
               hide-details
@@ -74,13 +77,17 @@
             >
               <thumbnail
                 :class="[
-                  index === currentQuesiton ? 'primary_shade' : 'background',
+                  index === currentQuesiton
+                    ? 'primary_shade'
+                    : 'background group',
                 ]"
                 v-for="(item, index) in newDataQuestion"
+                :itemActive="selectItem"
                 :key="`${index}-${item}`"
                 :item="item"
                 :index="index"
                 :totalQuestion="totalQuestion"
+                :listQuizType="listQuizType"
                 @active-item="activeItem"
                 @delete-question="deleteQuestion"
                 @duplicate-question="duplicateQuestion"
@@ -147,7 +154,7 @@ export default {
           disabled: false,
         },
         {
-          text: 'Trur/False',
+          text: 'Trur or False',
           value: 'true/false',
           disabled: true,
         },

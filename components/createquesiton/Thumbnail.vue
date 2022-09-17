@@ -1,55 +1,65 @@
 <template>
   <div
-    class="primary_shade rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full"
+    class="primary_shade rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full space-y-2"
     @click="activeItem(index)"
   >
-    <v-icon
-      class="handle cursor-grabbing py-5 px-2 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
-      >mdi-drag-vertical</v-icon
-    >
-    <div class="text-sm font-semibold flex items-center">
-      <span>{{ index + 1 }} Question</span>
+    <div class="text-xs font-semibold flex items-center gap-x-2">
+      <span>{{ index + 1 }}</span>
+      <span class="line-clamp-1">{{ mappingType }}</span>
       <v-spacer />
-      <v-btn icon x-small @click="duplicateQuestion">
-        <v-icon small>$vuetify.icons.duplicate</v-icon>
-      </v-btn>
+      <div
+        class="flex absolute top-2 right-2 mt-[2px] rounded-full gap-x-1 transition-all"
+        :class="
+          isItemEqualIndex
+            ? 'opacity-100'
+            : 'group-hover:lg:opacity-100 lg:opacity-0'
+        "
+      >
+        <v-btn icon x-small @click="duplicateQuestion" class="">
+          <v-icon small>$vuetify.icons.duplicate</v-icon>
+        </v-btn>
 
-      <v-dialog v-model="dialog" width="500">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            icon
-            x-small
-            v-bind="attrs"
-            v-on="on"
-            @click="dialog = true"
-            :disabled="totalQuestion == 1 && index == 0"
-          >
-            <v-icon small>mdi-delete</v-icon>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title>
-            <span class="break-normal">Delete quiz question</span>
-          </v-card-title>
-          <v-card-text
-            >Are you sure you want to delete this question?
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn outlined @click="cancel">cancel</v-btn>
-            <v-btn type="submit" color="error" @click="deleteQuestion(index)"
-              >delete
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              x-small
+              v-bind="attrs"
+              v-on="on"
+              @click="dialog = true"
+              :disabled="totalQuestion == 1 && index == 0"
+            >
+              <v-icon small>mdi-delete</v-icon>
             </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="break-normal">Delete quiz question</span>
+            </v-card-title>
+            <v-card-text
+              >Are you sure you want to delete this question?
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn outlined @click="cancel">cancel</v-btn>
+              <v-btn type="submit" color="error" @click="deleteQuestion(index)"
+                >delete
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </div>
+      <v-icon
+        class="handle cursor-grabbing py-3 px-1 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+        >mdi-drag-vertical</v-icon
+      >
     </div>
-    <div class="overflow-hidden line-clamp-1 text-xs">
-      {{ item.question }}
+    <div class="overflow-hidden line-clamp-1 text-xs h-4">
+      {{ textQuestion }}
     </div>
-    <div class="h-10 mx-auto my-2 w-fit">
+    <div class="h-10 mx-auto w-fit">
       <img
-        v-if="item.image !== ''"
+        v-if="haveImage"
         :src="item.image"
         :alt="item.image"
         class="object-contain object-center h-full w-auto"
@@ -89,6 +99,14 @@ export default {
       type: Number,
       required: true,
     },
+    listQuizType: {
+      type: Array,
+      required: true,
+    },
+    itemActive: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
@@ -108,6 +126,23 @@ export default {
     },
     cancel() {
       this.dialog = false
+    },
+  },
+  computed: {
+    textQuestion() {
+      return this.item.question === '' ? 'Question' : this.item.question
+    },
+    mappingType() {
+      const type = this.listQuizType.find(
+        (item) => item.value === this.item.type
+      )
+      return type.text
+    },
+    haveImage() {
+      return this.item.image !== '' ? true : false
+    },
+    isItemEqualIndex() {
+      return this.itemActive === this.index ? true : false
     },
   },
 }

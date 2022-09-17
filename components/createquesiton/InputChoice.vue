@@ -1,22 +1,28 @@
 <template>
-  <div class="p-2 rounded-lg flex transition-all shadow-md" :class="classColor">
+  <div
+    class="p-2 rounded-lg flex transition-all shadow-md"
+    :class="[renderCheckOptional ? classColor : 'bg-white dark:bg-opacity-40']"
+  >
     <div class="self-center cursor-pointer">
-      <div v-if="isCorrect" @click="unselectCorrectChoice">
-        <v-icon
-          color="white"
-          class="p-2 bg-green-400 border-4 border-white rounded-full"
-          >mdi-check-bold</v-icon
+      <div v-if="renderCheckOptional">
+        <div v-if="isCorrect" @click="unselectCorrectChoice">
+          <v-icon
+            color="white"
+            class="p-2 bg-green-500/90 border-4 border-white rounded-full"
+            >mdi-check-bold</v-icon
+          >
+        </div>
+        <div
+          v-else
+          @click="changeCorrectChoice"
+          class="p-2 bg-black/20 border-4 border-white rounded-full group"
         >
-      </div>
-      <div
-        v-else
-        @click="changeCorrectChoice"
-        class="p-2 bg-black/20 border-4 border-white rounded-full group"
-      >
-        <div class="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all">
-          <v-icon color="white">mdi-check-bold</v-icon>
+          <div class="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all">
+            <v-icon color="white">mdi-check-bold</v-icon>
+          </div>
         </div>
       </div>
+      <div v-else class="w-12 h-12" />
     </div>
 
     <v-form
@@ -30,12 +36,14 @@
         flat
         auto-grow
         rows="1"
-        label="Add answer"
+        class="!text-lg"
         background-color="transparent"
         v-model.trim="newText"
-        :rules="rules.nameRules"
+        :label="renderLableChoice"
+        :rules="renderRules"
         :counter="120"
-        @blur="saveNewText"
+        @change="saveNewText"
+        @input="saveNewText"
       ></v-textarea>
     </v-form>
   </div>
@@ -50,11 +58,11 @@ export default {
     },
     classColor: {
       type: String,
-      default: 'blue',
+      required: true,
     },
     option: {
       type: String,
-      default: '',
+      required: true,
     },
     isCorrect: {
       type: Boolean,
@@ -64,9 +72,18 @@ export default {
       type: Number,
       required: true,
     },
+    indexOfOptional: {
+      type: Array,
+      default: () => {
+        return [2, 3]
+      },
+    },
   },
   watch: {
     currentQuesiton() {
+      this.mappingCurrentText()
+    },
+    option() {
       this.mappingCurrentText()
     },
   },
@@ -74,18 +91,28 @@ export default {
     return {
       rules: {
         required: (v) => !!v || 'Required.',
-        nameRules: [
+        choiceRules: [
           (v) => !!v || 'Required.',
           (v) =>
             (v && v.length <= 120) ||
             'Classroom name must be less than 120 characters',
+        ],
+        ruleOptional: [
+          (v) => {
+            if (v)
+              return (
+                v.length <= 200 ||
+                'Classroom name must be less than 120 characters'
+              )
+            else return true
+          },
         ],
       },
       newText: null,
     }
   },
   methods: {
-    saveNewText() {
+    saveNewText(event) {
       if (this.$refs.form.validate()) {
         this.$emit('save-input-text', {
           index: this.index,
@@ -102,6 +129,29 @@ export default {
     mappingCurrentText() {
       this.newText = this.option
     },
+    checkTyping(event) {
+      console.log(event)
+    },
+  },
+  computed: {
+    renderLableChoice() {
+      const isOptional = this.indexOfOptional.includes(this.index)
+      if (isOptional) {
+        return `Add answer (Optional)`
+      } else return `Add answer `
+    },
+    renderRules() {
+      const isOptional = this.indexOfOptional.includes(this.index)
+      if (isOptional) {
+        return this.rules.ruleOptional
+      } else return this.rules.choiceRules
+    },
+    renderCheckOptional() {
+      const isOptional = this.indexOfOptional.includes(this.index)
+      if (!isOptional || this.option !== '') {
+        return true
+      } else return false
+    },
   },
   created() {
     this.mappingCurrentText()
@@ -111,18 +161,24 @@ export default {
 
 <style scoped>
 .red {
-  @apply !bg-red-300/50;
+  @apply !bg-red-300/50 dark:!bg-red-300/30;
 }
 .yellow {
-  @apply !bg-yellow-300/50;
+  @apply !bg-yellow-300/50 dark:!bg-yellow-300/30;
 }
 .green {
-  @apply !bg-green-300/50;
+  @apply !bg-green-300/50 dark:!bg-green-300/30;
 }
 .blue {
-  @apply !bg-sky-300/50;
+  @apply !bg-sky-300/50 dark:!bg-sky-300/30;
 }
-
+:deep(.v-messages__message),
+:deep(.v-counter) {
+  @apply !text-sm;
+}
+:deep(.v-label) {
+  @apply !text-base;
+}
 .scrollbar::-webkit-scrollbar {
   width: 5px;
 }

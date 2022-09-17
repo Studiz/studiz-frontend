@@ -71,8 +71,14 @@ export default {
     InputImage,
   },
   layout: 'layoutFree',
+  head() {
+    return {
+      title: this.title,
+    }
+  },
   data() {
     return {
+      title: 'Create Quiz',
       drawer: true,
       currentQuesiton: 0,
       propDialog: false,
@@ -112,6 +118,7 @@ export default {
           },
         ],
       },
+      indexOfOptional: [2, 3],
     }
   },
   watch: {
@@ -191,7 +198,19 @@ export default {
         }
       )
     },
+    changeCorrectChoiceOption(data) {
+      this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+        (element, index) => {
+          if (index == data) {
+            element.isCorrect = false
+          }
+        }
+      )
+    },
     selectCorrectChoice(data) {
+      if (this.indexOfOptional.includes(data.index) && data.text === '') {
+        this.changeCorrectChoiceOption(data.index)
+      }
       const countCorrect = this.quizData.questions[
         this.currentQuesiton
       ].answer.options.filter((element) => element.isCorrect).length
@@ -210,9 +229,14 @@ export default {
       }
     },
     saveInputText(data) {
+      if (this.indexOfOptional.includes(data.index) && data.text === '') {
+        this.changeCorrectChoiceOption(data.index)
+      }
       this.quizData.questions[this.currentQuesiton].answer.options[
         data.index
       ].option = data.text
+
+      // this.quizData.questions[this.currentQuesiton].answer.options[data.index].option = data.text
     },
     saveInputQuestion(data) {
       this.quizData.questions[this.currentQuesiton].question = data

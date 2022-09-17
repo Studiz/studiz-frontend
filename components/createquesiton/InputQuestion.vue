@@ -1,15 +1,12 @@
 <template>
-  <v-sheet
-    rounded="lg"
-    elevation="0"
-    color="background_card"
-    class="overflow-hidden pa-2 pa-md-3 drop-shadow-md min-h-[112px] max-h-32"
+  <div
+    class="overflow-hidden pa-2 pa-md-3 !shadow-md min-h-[112px] max-h-32 rounded-lg background_card"
   >
     <v-form
       ref="form"
       lazy-validation
       @submit.prevent="saveNewQuestion"
-      class="w-full min-h-[80px] max-h-20 overflow-auto scrollbar"
+      class="w-full min-h-[88px] max-h-20 h-fit overflow-auto scrollbar"
     >
       <v-textarea
         solo
@@ -22,10 +19,11 @@
         v-model.trim="newQuestion"
         :rules="rules.nameRules"
         :counter="120"
-        @blur="saveNewQuestion"
+        @change="saveNewQuestion"
+        @keydown="checkKeyEnter"
       ></v-textarea>
     </v-form>
-  </v-sheet>
+  </div>
 </template>
 
 <script>
@@ -56,6 +54,11 @@ export default {
           (v) =>
             (v && v.length <= 120) ||
             'Question must be less than 120 characters',
+          (v) => {
+            if (/\r?\n|\r/g.test(v)) {
+              return false || 'Enter key is not allowed'
+            } else return true
+          },
         ],
       },
       newQuestion: null,
@@ -69,6 +72,12 @@ export default {
     },
     mappingCurrentText() {
       this.newQuestion = this.dataQuestion.question
+    },
+    checkKeyEnter(e) {
+      var key = e.keyCode || e.charCode
+      if (key == 13) {
+        e.preventDefault()
+      }
     },
   },
   created() {
@@ -98,5 +107,10 @@ export default {
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--v-primary_shade-base);
   border-radius: 50px;
+}
+
+:deep(.v-messages__message),
+:deep(.v-counter) {
+  @apply !text-sm  !text-opacity-0;
 }
 </style>

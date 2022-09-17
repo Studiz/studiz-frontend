@@ -10,6 +10,8 @@ import normal_screen from 'static/icons/normalScreen.vue'
 import edit from 'static/icons/edit.vue'
 import duplicate from 'static/icons/duplicate.vue'
 import questionList from 'static/icons/questionList.vue'
+import save from 'static/icons/save.vue'
+import save_and_close from 'static/icons/saveAndClose.vue'
 
 export default {
   theme: {
@@ -86,7 +88,13 @@ export default {
       },
       questionList: {
         component: questionList,
-      }
+      },
+      save: {
+        component: save,
+      },
+      save_and_close: {
+        component: save_and_close,
+      },
     },
   },
 }
