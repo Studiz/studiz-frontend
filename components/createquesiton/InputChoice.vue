@@ -30,7 +30,7 @@
 
     <div
       v-if="quesitonType === 'true/false'"
-      class="w-full h-fit text-center my-auto text-3xl"
+      class="w-full h-fit text-center my-auto text-3xl min-h-[96px] max-h-40 flex items-center justify-center"
     >
       <span>{{ newText }}</span>
     </div>
