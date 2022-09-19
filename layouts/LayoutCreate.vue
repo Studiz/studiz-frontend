@@ -19,8 +19,11 @@
         v-model="drawerSettingQuiz"
       >
         <v-list class="!py-4 !px-2">
-          <v-list-item-group :key="currentQuesiton" class="flex flex-col gap-6">
-            <div class="pl-2">
+          <v-list-item-group
+            :key="currentQuesiton"
+            class="flex flex-col gap-6 pl-1"
+          >
+            <div class="space-y-2">
               <v-select
                 :items="listQuizType"
                 v-model="selectQuizType"
@@ -31,14 +34,11 @@
                 hide-details
                 @change="changeQuizType"
               ></v-select>
-              <span
-                v-show="selectQuizType.value == 'multiple'"
-                class="whitespace-pre-wrap mt-1"
-                >*Required more than one correct choice</span
-              >
+              <div v-show="selectQuizType.value == 'multiple'">
+                *Required more than one correct choice
+              </div>
             </div>
             <v-select
-              class="pl-2"
               :items="listTimeLimit"
               v-model="selectTimeLimit"
               label="Time limit"
@@ -94,14 +94,42 @@
             </transition-group>
           </draggable>
           <v-divider class="my-3 md:my-2" />
-          <v-btn
-            height="48"
-            class="text-center primary white--text rounded-lg w-full transition-all"
-            @click="addQuestion"
-          >
-            <v-icon left>mdi-plus</v-icon>
-            <span>Add question</span>
-          </v-btn>
+
+          <v-dialog v-model="dialog" width="400">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                height="48"
+                class="text-center primary white--text rounded-lg w-full transition-all"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <!-- @click="addQuestion" -->
+                <v-icon left>mdi-plus</v-icon>
+                <span>Add question</span>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="text-h5"> Add question type </v-card-title>
+
+              <v-card-text class="space-y-2">
+                <div
+                  v-for="(itemType, index) in listQuizType"
+                  :key="`${itemType}-type-${index}`"
+                >
+                  <base-btn-question-type :questionType="itemType" />
+                </div>
+              </v-card-text>
+
+              <!-- <v-divider></v-divider> -->
+
+              <!-- <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" text @click="dialog = false">
+                  I accept
+                </v-btn>
+              </v-card-actions> -->
+            </v-card>
+          </v-dialog>
         </v-list>
       </v-navigation-drawer>
 
@@ -119,8 +147,15 @@ import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
 import Thumbnail from '~/components/createquesiton/Thumbnail.vue'
 import LoagingPage from '~/components/LoagingPage.vue'
+import BaseBtnQuestionType from '~/components/createquesiton/BaseBtnQuestionType.vue'
 export default {
-  components: { createNavbar, draggable, Thumbnail, LoagingPage },
+  components: {
+    createNavbar,
+    draggable,
+    Thumbnail,
+    LoagingPage,
+    BaseBtnQuestionType,
+  },
   props: {
     quizTitle: {
       type: String,
@@ -155,7 +190,7 @@ export default {
         {
           text: 'Trur or False',
           value: 'true/false',
-          disabled: true,
+          disabled: false,
         },
         {
           text: 'Poll',
@@ -167,7 +202,6 @@ export default {
           value: 'sort',
           disabled: true,
         },
-        ,
       ],
       selectQuizType: null,
       listTimeLimit: [
@@ -222,6 +256,7 @@ export default {
       },
       drawerQuizList: true,
       drawerSettingQuiz: true,
+      dialog: false,
     }
   },
   watch: {

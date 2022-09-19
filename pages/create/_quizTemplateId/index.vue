@@ -47,6 +47,12 @@
           @select-correct-choice="selectCorrectChoice"
           @unselect-correct-choice="selectCorrectChoice"
         />
+        <base-true-or-false
+          v-if="renderQuestion.type === 'true/false'"
+          :currentQuesiton="currentQuesiton"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          @change-correct-choice="changeCorrectChoiceTrueFalse"
+        />
       </div>
     </div>
   </layout-create>
@@ -55,6 +61,7 @@
 <script>
 import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
 import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
+import BaseTrueOrFalse from '~/components/createquesiton/BaseTrueOrFalse.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
 import InputImage from '~/components/createquesiton/InputImage.vue'
 import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
@@ -69,6 +76,7 @@ export default {
     BaseMultipleChoice,
     InputQuestion,
     InputImage,
+    BaseTrueOrFalse,
   },
   layout: 'layoutFree',
   head() {
@@ -174,6 +182,16 @@ export default {
       this.quizData.questions = data
     },
     changeQuizType(type) {
+      this.quizData.questions[this.currentQuesiton].type = type
+      this.quizData.questions[this.currentQuesiton].answer = {
+        options: [
+          {
+            option: '',
+            isCorrect: false,
+          },
+        ],
+      }
+
       if (
         this.quizData.questions[this.currentQuesiton].type == 'multiple' &&
         type == 'single'
@@ -184,8 +202,11 @@ export default {
             item.isCorrect = false
           }
         )
-      } else {
-        this.quizData.questions[this.currentQuesiton].type = type
+      }
+
+      if (type == 'true/false') {
+        console.log('true/false')
+        this.quizData.questions[this.currentQuesiton].answer = null
       }
     },
     chanceTimeLimit(time) {
@@ -198,7 +219,7 @@ export default {
         }
       )
     },
-    changeCorrectChoiceOption(data) {
+    changeCorrectChoiceOptional(data) {
       this.quizData.questions[this.currentQuesiton].answer.options.forEach(
         (element, index) => {
           if (index == data) {
@@ -209,7 +230,7 @@ export default {
     },
     selectCorrectChoice(data) {
       if (this.indexOfOptional.includes(data.index) && data.text === '') {
-        this.changeCorrectChoiceOption(data.index)
+        this.changeCorrectChoiceOptional(data.index)
       }
       const countCorrect = this.quizData.questions[
         this.currentQuesiton
@@ -228,9 +249,12 @@ export default {
         ].isCorrect = true
       }
     },
+    changeCorrectChoiceTrueFalse(data) {
+      this.quizData.questions[this.currentQuesiton].answer = data
+    },
     saveInputText(data) {
       if (this.indexOfOptional.includes(data.index) && data.text === '') {
-        this.changeCorrectChoiceOption(data.index)
+        this.changeCorrectChoiceOptional(data.index)
       }
       this.quizData.questions[this.currentQuesiton].answer.options[
         data.index

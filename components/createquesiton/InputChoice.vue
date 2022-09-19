@@ -25,7 +25,14 @@
       <div v-else class="w-12 h-12" />
     </div>
 
+    <div
+      v-if="quesitonType === 'true/false'"
+      class="w-full h-fit text-center my-auto text-3xl"
+    >
+      <span>{{ newText }}</span>
+    </div>
     <v-form
+      v-else
       ref="form"
       lazy-validation
       @submit.prevent="saveNewText"
@@ -78,6 +85,9 @@ export default {
         return [2, 3]
       },
     },
+    quesitonType: {
+      type: String,
+    },
   },
   watch: {
     currentQuesiton() {
@@ -128,9 +138,6 @@ export default {
     },
     mappingCurrentText() {
       this.newText = this.option
-    },
-    checkTyping(event) {
-      console.log(event)
     },
   },
   computed: {

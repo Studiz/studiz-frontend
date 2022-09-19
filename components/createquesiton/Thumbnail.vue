@@ -69,7 +69,22 @@
         class="h-10 w-10 outline outline-[0.5px] outline-gray-500/50"
       ></div>
     </div>
-    <div class="grid grid-cols-2 gap-1">
+    <div v-if="item.type === 'true/false'" class="grid grid-cols-2 gap-1">
+      <div
+        v-for="(i, index) in 2"
+        :key="i"
+        class="outline outline-[0.5px] h-5 outline-gray-500/50 flex"
+      >
+        <div
+          v-if="
+            (item.answer == true && index == '0') ||
+            (item.answer == false && index == '1')
+          "
+          class="h-2 w-2 rounded-full bg-green-500 my-auto"
+        />
+      </div>
+    </div>
+    <div v-else class="grid grid-cols-2 gap-1">
       <div
         v-for="(choice, index) in item.answer.options"
         :key="`${index}-${item}-${choice}`"
@@ -78,7 +93,7 @@
         <div
           v-if="choice.isCorrect == true"
           class="h-2 w-2 rounded-full bg-green-500"
-        ></div>
+        />
       </div>
     </div>
   </div>
