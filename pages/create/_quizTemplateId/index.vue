@@ -127,6 +127,7 @@ export default {
         ],
       },
       indexOfOptional: [2, 3],
+      listType: ['single', 'multiple', 'true/false', 'poll', 'sort'],
     }
   },
   watch: {
@@ -182,14 +183,21 @@ export default {
       this.quizData.questions = data
     },
     changeQuizType(type) {
-      this.quizData.questions[this.currentQuesiton].type = type
-      this.quizData.questions[this.currentQuesiton].answer = {
-        options: [
-          {
-            option: '',
-            isCorrect: false,
-          },
-        ],
+      if (
+        this.renderQuestionType == 'true/false' &&
+        (type == 'multiple' || type == 'single')
+      ) {
+        let options = []
+        let itemOption = {
+          option: '',
+          isCorrect: false,
+        }
+        while (options.length < 4) {
+          options.push(structuredClone(itemOption))
+        }
+        this.quizData.questions[this.currentQuesiton].answer = {
+          options: options,
+        }
       }
 
       if (
@@ -205,9 +213,11 @@ export default {
       }
 
       if (type == 'true/false') {
-        console.log('true/false')
         this.quizData.questions[this.currentQuesiton].answer = null
       }
+
+      // change type question
+      this.quizData.questions[this.currentQuesiton].type = type
     },
     chanceTimeLimit(time) {
       this.quizData.questions[this.currentQuesiton].time = time
