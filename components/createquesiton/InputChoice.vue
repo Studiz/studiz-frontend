@@ -1,7 +1,10 @@
 <template>
   <div
     class="p-2 rounded-lg flex transition-all shadow-md"
-    :class="[renderCheckOptional ? classColor : 'bg-white dark:bg-opacity-40']"
+    :class="[
+      renderCheckOptional ? classColor : 'bg-white dark:bg-opacity-40',
+      quesitonType === 'true/false' ? 'h-full' : '',
+    ]"
   >
     <div class="self-center cursor-pointer">
       <div v-if="renderCheckOptional">
@@ -168,16 +171,16 @@ export default {
 
 <style scoped>
 .red {
-  @apply !bg-red-300/50 dark:!bg-red-300/30;
+  @apply !bg-red-300/50 dark:!bg-red-300/40;
 }
 .yellow {
-  @apply !bg-yellow-300/50 dark:!bg-yellow-300/30;
+  @apply !bg-yellow-300/50 dark:!bg-yellow-300/40;
 }
 .green {
-  @apply !bg-green-300/50 dark:!bg-green-300/30;
+  @apply !bg-green-300/50 dark:!bg-green-300/40;
 }
 .blue {
-  @apply !bg-sky-300/50 dark:!bg-sky-300/30;
+  @apply !bg-sky-300/50 dark:!bg-sky-300/40;
 }
 :deep(.v-messages__message),
 :deep(.v-counter) {

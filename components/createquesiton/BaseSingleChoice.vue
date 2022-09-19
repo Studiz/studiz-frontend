@@ -11,6 +11,7 @@
         :index="index"
         :classColor="arrayChoiceColor[index]"
         :currentQuesiton="currentQuesiton"
+        :indexOfOptional="indexOfOptional"
         @save-input-text="$emit('save-input-text', $event)"
         @change-correct-choice="$emit('change-correct-choice', $event)"
       />
@@ -33,6 +34,9 @@ export default {
     currentQuesiton: {
       type: Number,
       required: true,
+    },
+    indexOfOptional: {
+      type: Array,
     },
   },
   data() {

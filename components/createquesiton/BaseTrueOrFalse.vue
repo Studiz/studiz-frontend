@@ -1,6 +1,7 @@
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-2 grid-rows-1 gap-3 w-full h-full">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 w-full h-full auto-rows-fr">
     <input-choice
+      class="h-full"
       v-for="(item, index) in MappingAnswerWithOption"
       quesitonType="true/false"
       :key="`${index}-${item}`"

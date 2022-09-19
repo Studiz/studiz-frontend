@@ -14,7 +14,7 @@
     @save-quiz-template="saveQuizTemplate"
   >
     <div
-      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar overflow-auto md:overflow-visible px-1 px-lg-1"
+      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1"
     >
       <input-question
         class="flex-none"
@@ -31,24 +31,29 @@
         @delete-image="deleteImage"
       />
 
-      <div class="flex-none md:flex-1">
+      <div
+        class="md:flex-1"
+        :class="[renderQuestionType === 'true/false' ? 'flex-1' : 'flex-none']"
+      >
         <base-single-choice
-          v-if="renderQuestion.type === 'single'"
-          :renderQuestionAnswer="renderQuestionAnswer"
+          v-if="renderQuestionType === 'single'"
           :currentQuesiton="currentQuesiton"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          :indexOfOptional="indexOfOptional"
           @change-correct-choice="changeCorrectChoice"
           @save-input-text="saveInputText"
         />
         <base-multiple-choice
-          v-if="renderQuestion.type === 'multiple'"
+          v-if="renderQuestionType === 'multiple'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
+          :indexOfOptional="indexOfOptional"
           @save-input-text="saveInputText"
           @select-correct-choice="selectCorrectChoice"
           @unselect-correct-choice="selectCorrectChoice"
         />
         <base-true-or-false
-          v-if="renderQuestion.type === 'true/false'"
+          v-if="renderQuestionType === 'true/false'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
           @change-correct-choice="changeCorrectChoiceTrueFalse"
@@ -433,6 +438,9 @@ export default {
 </script>
 
 <style scoped>
+.scrollbar {
+  @apply overflow-auto lg:!overflow-visible pb-2 lg:pb-0;
+}
 .scrollbar::-webkit-scrollbar {
   width: 5px;
 }
