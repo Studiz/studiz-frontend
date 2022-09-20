@@ -13,16 +13,24 @@
         :currentQuesiton="currentQuesiton"
         :indexOfOptional="indexOfOptional"
         :questionType="questionType"
+        :disableDelete="renderQuestionAnswer.options.length <= 2"
         @save-input-text="$emit('save-input-text', $event)"
         @change-correct-choice="$emit('select-correct-choice', $event)"
         @unselect-correct-choice="$emit('unselect-correct-choice', $event)"
+        @delete-option="$emit('delete-option', $event)"
       />
     </div>
     <div
       v-if="renderQuestionAnswer.options.length < 6"
       class="text-center h-fit flex-none"
     >
-      <v-btn height="24" text class="normal-case" @click="addOption">
+      <v-btn
+        height="24"
+        elevation="0"
+        color="primary"
+        class="normal-case shadow-md"
+        @click="addOption"
+      >
         <v-icon left>mdi-plus</v-icon>
         <span class="normal-case">Add choice</span>
       </v-btn>
@@ -53,8 +61,13 @@ export default {
   },
   data() {
     return {
-      arrayChoiceColor: ['red', 'blue', 'green', 'yellow'],
+      arrayChoiceColor: ['red', 'blue', 'yellow', 'green', 'cyan', 'purple'],
     }
+  },
+  methods: {
+    addOption() {
+      this.$emit('add-option')
+    },
   },
 }
 </script>

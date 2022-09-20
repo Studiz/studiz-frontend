@@ -59,7 +59,7 @@
     </v-form>
 
     <div
-      v-if="questionType !== 'true/false'"
+      v-if="questionType !== 'true/false' && !disableDelete"
       class="absolute top-1 right-1 bg-white/50 dark:bg-white/30 rounded-md"
     >
       <v-btn icon @click="deleteOption" class="!rounded-md">
@@ -100,6 +100,10 @@ export default {
     },
     questionType: {
       type: String,
+    },
+    disableDelete: {
+      type: Boolean,
+      default: false,
     },
   },
   watch: {

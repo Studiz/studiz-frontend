@@ -55,6 +55,8 @@
           @save-input-text="saveInputText"
           @select-correct-choice="selectCorrectChoice"
           @unselect-correct-choice="selectCorrectChoice"
+          @add-option="addOption"
+          @delete-option="deleteOption"
         />
         <base-true-or-false
           v-if="renderQuestionType === 'true/false'"
