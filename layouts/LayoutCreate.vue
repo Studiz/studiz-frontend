@@ -75,11 +75,6 @@
               class="gap-2 flex lg:flex-col overflow-auto scrollbar py-1 py-lg-0"
             >
               <thumbnail
-                :class="[
-                  index === currentQuesiton
-                    ? 'primary_shade'
-                    : 'background group',
-                ]"
                 v-for="(item, index) in newDataQuestion"
                 :itemActive="selectItem"
                 :key="`${index}-${item}`"
@@ -116,18 +111,13 @@
                   v-for="(itemType, index) in listQuizType"
                   :key="`${itemType}-type-${index}`"
                 >
-                  <base-btn-question-type :questionType="itemType" />
+                  <base-btn-question-type
+                    :index="index"
+                    :questionType="itemType"
+                    @add-question="addQuestion"
+                  />
                 </div>
               </v-card-text>
-
-              <!-- <v-divider></v-divider> -->
-
-              <!-- <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" text @click="dialog = false">
-                  I accept
-                </v-btn>
-              </v-card-actions> -->
             </v-card>
           </v-dialog>
         </v-list>
@@ -280,8 +270,9 @@ export default {
       this.$emit('change-time-limit', event)
       this.mappingQuestion()
     },
-    addQuestion() {
-      this.$emit('add-question')
+    addQuestion(type) {
+      this.$emit('add-question', type)
+      this.dialog = false
     },
     changeOrdering(event) {
       this.$emit('change-ordering', this.newDataQuestion)

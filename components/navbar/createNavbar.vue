@@ -40,9 +40,9 @@
       >
         <template #namebtn>
           <span
-            class="hidden sm:inline w-fit max-w-[60px] sm:max-w-[176px] truncate overflow-hidden text-black dark:text-white"
+            class="hidden sm:inline w-fit max-w-[60px] sm:max-w-[176px] truncate normal-case overflow-hidden text-black dark:text-white"
           >
-            {{ quizTitle ? quizTitle : 'Details' }}
+            {{ quizTitle ? quizTitle : 'Quiz details' }}
           </span>
           <span
             class="d-inline d-sm-none !capitalize !font-semibold text-black dark:text-white"

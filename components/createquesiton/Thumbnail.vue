@@ -1,6 +1,7 @@
 <template>
   <div
-    class="primary_shade rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full space-y-2"
+    class="card-thumbnail rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full space-y-2"
+    :class="[itemActive === index && 'card-thumbnail--active']"
     @click="activeItem(index)"
   >
     <div class="text-xs font-semibold flex items-center gap-x-2">
@@ -163,4 +164,13 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.card-thumbnail {
+  background-color: var(--v-background-base);
+  @apply border-2 dark:border-gray-500/50;
+}
+.card-thumbnail--active {
+  background-color: var(--v-primary_shade-base);
+  border-color: var(--v-primary-base) !important;
+}
+</style>

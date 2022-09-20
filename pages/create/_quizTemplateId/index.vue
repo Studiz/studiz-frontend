@@ -149,13 +149,16 @@ export default {
     },
   },
   methods: {
-    addQuestion() {
+    addQuestion(type) {
       let defaultData = {
         question: '',
         image: '',
         time: 1000,
-        type: 'single',
-        answer: {
+        type: type,
+        answer: null,
+      }
+      if (type === 'single' || type === 'multiple') {
+        defaultData.answer = {
           options: [
             {
               option: '',
@@ -174,9 +177,12 @@ export default {
               isCorrect: false,
             },
           ],
-        },
+        }
+      } else if (type === 'true/false') {
+        defaultData.answer = null
       }
       this.quizData.questions.push(defaultData)
+      this.activeItem(this.quizData.questions.length - 1)
     },
     editquizTitle(name) {
       this.quizData.title = name
