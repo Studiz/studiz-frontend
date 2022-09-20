@@ -14,7 +14,7 @@
     @save-quiz-template="saveQuizTemplate"
   >
     <div
-      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1"
+      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1 pb-2"
     >
       <input-question
         class="flex-none"
@@ -40,14 +40,18 @@
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
           :indexOfOptional="indexOfOptional"
+          :questionType="renderQuestionType"
           @change-correct-choice="changeCorrectChoice"
           @save-input-text="saveInputText"
+          @add-option="addOption"
+          @delete-option="deleteOption"
         />
         <base-multiple-choice
           v-if="renderQuestionType === 'multiple'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
           :indexOfOptional="indexOfOptional"
+          :questionType="renderQuestionType"
           @save-input-text="saveInputText"
           @select-correct-choice="selectCorrectChoice"
           @unselect-correct-choice="selectCorrectChoice"
@@ -56,6 +60,7 @@
           v-if="renderQuestionType === 'true/false'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
+          :questionType="renderQuestionType"
           @change-correct-choice="changeCorrectChoiceTrueFalse"
         />
       </div>
@@ -131,7 +136,7 @@ export default {
           },
         ],
       },
-      indexOfOptional: [2, 3],
+      indexOfOptional: [],
       listType: ['single', 'multiple', 'true/false', 'poll', 'sort'],
     }
   },
@@ -287,6 +292,21 @@ export default {
     saveInputImage(data) {
       this.quizData.questions[this.currentQuesiton].image = data.previewImage
       this.quizData.questions[this.currentQuesiton].fileImage = data.fileImage
+    },
+    addOption() {
+      let itemOption = {
+        option: '',
+        isCorrect: false,
+      }
+      this.quizData.questions[this.currentQuesiton].answer.options.push(
+        structuredClone(itemOption)
+      )
+    },
+    deleteOption(index) {
+      this.quizData.questions[this.currentQuesiton].answer.options.splice(
+        index,
+        1
+      )
     },
     deleteImage() {
       this.quizData.questions[this.currentQuesiton].image = ''
@@ -445,7 +465,7 @@ export default {
 
 <style scoped>
 .scrollbar {
-  @apply overflow-auto lg:!overflow-visible pb-2 lg:pb-0;
+  @apply overflow-auto;
 }
 .scrollbar::-webkit-scrollbar {
   width: 5px;
@@ -465,7 +485,7 @@ export default {
 
 /* Handle on hover */
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 </style>

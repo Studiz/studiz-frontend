@@ -3,7 +3,7 @@
     :class="[
       renderIsLoading ? 'visible opacity-100' : 'invisible w-0 h-0 opacity-0',
     ]"
-    class="cover-loading bg-white/50 dark:bg-black/50 backdrop-blur-sm block"
+    class="cover-loading bg-white/50 dark:bg-black/50 backdrop-blur-sm block z-[99]"
   >
     <div class="w-full h-full lds-ring">
       <span class="dot" v-for="i in 4" :key="i" />

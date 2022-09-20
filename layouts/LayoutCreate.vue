@@ -94,7 +94,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 height="48"
-                class="text-center primary white--text rounded-lg w-full transition-all"
+                class="text-center primary white--text rounded-lg w-full transition-all mb-3"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -105,7 +105,6 @@
             </template>
             <v-card>
               <v-card-title class="text-h5"> Add question type </v-card-title>
-
               <v-card-text class="space-y-2">
                 <div
                   v-for="(itemType, index) in listQuizType"
@@ -346,7 +345,7 @@ export default {
   border-radius: 50px;
 }
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 </style>

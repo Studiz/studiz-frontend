@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-thumbnail rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full space-y-2"
+    class="card-thumbnail group rounded-lg p-3 select-none overflow-hidden relative min-w-[184px] max-w-[192px] w-full space-y-2"
     :class="[itemActive === index && 'card-thumbnail--active']"
     @click="activeItem(index)"
   >
