@@ -65,6 +65,15 @@
           :questionType="renderQuestionType"
           @change-correct-choice="changeCorrectChoiceTrueFalse"
         />
+        <base-poll
+          v-if="renderQuestionType === 'poll'"
+          :currentQuesiton="currentQuesiton"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          :questionType="renderQuestionType"
+          :indexOfOptional="indexOfOptional"
+          @add-option="addOption"
+          @delete-option="deleteOption"
+        />
       </div>
     </div>
   </layout-create>
@@ -72,6 +81,7 @@
 
 <script>
 import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
+import BasePoll from '~/components/createquesiton/BasePoll.vue'
 import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
 import BaseTrueOrFalse from '~/components/createquesiton/BaseTrueOrFalse.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
@@ -89,6 +99,7 @@ export default {
     InputQuestion,
     InputImage,
     BaseTrueOrFalse,
+    BasePoll,
   },
   layout: 'layoutFree',
   head() {
@@ -140,6 +151,38 @@ export default {
       },
       indexOfOptional: [],
       listType: ['single', 'multiple', 'true/false', 'poll', 'sort'],
+      optionTypePoll: {
+        options: [
+          {
+            option: '',
+            selected: 0,
+          },
+          {
+            option: '',
+            selected: 0,
+          },
+        ],
+      },
+      optionTypeSingleAndMulit: {
+        options: [
+          {
+            option: '',
+            isCorrect: false,
+          },
+          {
+            option: '',
+            isCorrect: false,
+          },
+          {
+            option: '',
+            isCorrect: false,
+          },
+          {
+            option: '',
+            isCorrect: false,
+          },
+        ],
+      },
     }
   },
   watch: {
@@ -165,28 +208,11 @@ export default {
         answer: null,
       }
       if (type === 'single' || type === 'multiple') {
-        defaultData.answer = {
-          options: [
-            {
-              option: '',
-              isCorrect: false,
-            },
-            {
-              option: '',
-              isCorrect: false,
-            },
-            {
-              option: '',
-              isCorrect: false,
-            },
-            {
-              option: '',
-              isCorrect: false,
-            },
-          ],
-        }
+        defaultData.answer = structuredClone(this.structuredClone)
       } else if (type === 'true/false') {
         defaultData.answer = null
+      } else if (type === 'poll') {
+        defaultData.answer = structuredClone(this.optionTypePoll)
       }
       this.quizData.questions.push(defaultData)
       this.activeItem(this.quizData.questions.length - 1)
@@ -205,17 +231,40 @@ export default {
         this.renderQuestionType == 'true/false' &&
         (type == 'multiple' || type == 'single')
       ) {
-        let options = []
-        let itemOption = {
-          option: '',
-          isCorrect: false,
-        }
-        while (options.length < 4) {
-          options.push(structuredClone(itemOption))
-        }
-        this.quizData.questions[this.currentQuesiton].answer = {
-          options: options,
-        }
+        this.quizData.questions[this.currentQuesiton].answer = structuredClone(
+          this.structuredClone
+        )
+      }
+
+      if (
+        (this.renderQuestionType == 'multiple' ||
+          this.renderQuestionType == 'single') &&
+        type == 'poll'
+      ) {
+        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+          (item) => {
+            item['selected'] = 0
+            delete item.isCorrect
+          }
+        )
+      }
+
+      if (
+        this.renderQuestionType == 'poll' &&
+        (type == 'multiple' || type == 'single')
+      ) {
+        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+          (item) => {
+            item['isCorrect'] = false
+            delete item.selected
+          }
+        )
+      }
+
+      if (this.renderQuestionType == 'true/false' && type == 'poll') {
+        this.quizData.questions[this.currentQuesiton].answer = structuredClone(
+          this.optionTypePoll
+        )
       }
 
       if (

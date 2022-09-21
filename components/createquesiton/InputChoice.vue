@@ -6,7 +6,7 @@
       questionType === 'true/false' ? 'h-full' : '',
     ]"
   >
-    <div class="self-center cursor-pointer">
+    <div v-if="!renderCheckTypePoll" class="self-center cursor-pointer">
       <div v-if="renderCheckOptional">
         <div v-if="isCorrect" @click="unselectCorrectChoice">
           <v-icon
@@ -29,7 +29,7 @@
     </div>
 
     <div
-      v-if="questionType === 'true/false'"
+      v-if="renderCheckTypeTrueFalse"
       class="w-full h-fit text-center my-auto text-3xl min-h-[96px] max-h-40 flex items-center justify-center"
     >
       <span>{{ newText }}</span>
@@ -59,7 +59,7 @@
     </v-form>
 
     <div
-      v-if="questionType !== 'true/false' && !disableDelete"
+      v-if="!renderCheckTypeTrueFalse && !disableDelete"
       class="absolute top-1 right-1 bg-white/50 dark:bg-white/30 rounded-md"
     >
       <v-btn icon @click="deleteOption" class="!rounded-md">
@@ -192,6 +192,16 @@ export default {
     renderCheckOptional() {
       const isOptional = this.indexOfOptional.includes(this.index)
       if (!isOptional || this.option !== '') {
+        return true
+      } else return false
+    },
+    renderCheckTypePoll() {
+      if (this.questionType === 'poll') {
+        return true
+      } else return false
+    },
+    renderCheckTypeTrueFalse() {
+      if (this.questionType === 'true/false') {
         return true
       } else return false
     },

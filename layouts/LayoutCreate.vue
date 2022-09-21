@@ -184,7 +184,7 @@ export default {
         {
           text: 'Poll',
           value: 'poll',
-          disabled: true,
+          disabled: false,
         },
         {
           text: 'Sort',
