@@ -13,6 +13,7 @@
         :indexOfOptional="indexOfOptional"
         :questionType="questionType"
         :disableDelete="renderQuestionAnswer.options.length <= 2"
+        @save-input-text="$emit('save-input-text', $event)"
         @delete-option="$emit('delete-option', $event)"
       />
     </div>

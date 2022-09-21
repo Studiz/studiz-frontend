@@ -71,6 +71,7 @@
           :renderQuestionAnswer="renderQuestionAnswer"
           :questionType="renderQuestionType"
           :indexOfOptional="indexOfOptional"
+          @save-input-text="saveInputText"
           @add-option="addOption"
           @delete-option="deleteOption"
         />
