@@ -63,7 +63,7 @@
         width="208"
         class="!h-64 lg:!h-full scrollbar"
       >
-        <v-list nav class="py-5 py-lg-2">
+        <v-list nav class="py-3 py-lg-2">
           <draggable
             v-bind="dragOptions"
             v-model="newDataQuestion"
@@ -94,7 +94,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 height="48"
-                class="text-center primary white--text rounded-lg w-full transition-all mb-3"
+                class="text-center primary white--text rounded-lg w-full transition-all lg:mb-3"
                 v-bind="attrs"
                 v-on="on"
               >

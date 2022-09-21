@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-thumbnail group rounded-lg p-3 select-none overflow-hidden relative min-w-[184px] max-w-[192px] w-full space-y-2 transition-all"
+    class="card-thumbnail group rounded-lg p-3 select-none overflow-hidden relative min-w-[184px] max-w-[192px] w-full space-y-2"
     :class="[itemActive === index && 'card-thumbnail--active']"
     @click="activeItem(index)"
   >
@@ -172,5 +172,6 @@ export default {
 .card-thumbnail--active {
   background-color: var(--v-primary_shade-base);
   border-color: var(--v-primary-base) !important;
+  @apply transition-all;
 }
 </style>
