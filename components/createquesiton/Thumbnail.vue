@@ -58,7 +58,7 @@
     <div class="overflow-hidden line-clamp-1 text-xs h-4">
       {{ textQuestion }}
     </div>
-    <div class="h-10 mx-auto w-fit">
+    <div class="h-8 mx-auto w-fit">
       <img
         v-if="haveImage"
         :src="item.image"
@@ -67,7 +67,7 @@
       />
       <div
         v-else
-        class="h-10 w-10 outline outline-[0.5px] outline-gray-500/50"
+        class="h-8 w-8 outline outline-[0.5px] outline-gray-500/50"
       ></div>
     </div>
     <div v-if="item.type === 'true/false'" class="grid grid-cols-2 gap-1">

@@ -329,7 +329,7 @@ export default {
 }
 :deep(.scrollbar
     > .v-navigation-drawer__content::-webkit-scrollbar-thumb:hover) {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 .scrollbar::-webkit-scrollbar {

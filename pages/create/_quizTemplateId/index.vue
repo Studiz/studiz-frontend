@@ -118,7 +118,7 @@ export default {
   layout: 'layoutFree',
   head() {
     return {
-      title: this.quizData.title,
+      title: this.quizData.title === '' ? 'Question' : this.quizData.title,
       titleTemplate: '%s - Create Quiz',
     }
   },
@@ -213,16 +213,18 @@ export default {
           },
         ],
       },
+      leavePageHandler: null,
     }
   },
   watch: {
     quizData: {
       handler(newValue, oldValue) {
         if (newValue === oldValue) {
-          window.addEventListener('beforeunload', (e) => {
+          this.leavePageHandler = (e) => {
             e.preventDefault()
             e.returnValue = ''
-          })
+          }
+          window.addEventListener('beforeunload', this.leavePageHandler)
         }
       },
       deep: true,
@@ -438,7 +440,7 @@ export default {
     },
     duplicateQuestion(index) {
       let newQuestion = structuredClone(this.quizData.questions[index])
-      this.quizData.questions.push(newQuestion)
+      this.quizData.questions.splice(index, 0, newQuestion)
     },
 
     resetQuizTemplate() {
@@ -463,6 +465,7 @@ export default {
           .then((res) => {
             if (res.status == 200) {
               this.$store.commit('TOGGLE_LOADING', false)
+              window.removeEventListener('beforeunload', this.leavePageHandler)
               this.$router.push('/library')
             }
             return res.data
@@ -486,6 +489,7 @@ export default {
           .then((res) => {
             if (res.status == 200) {
               this.$store.commit('TOGGLE_LOADING', false)
+              window.removeEventListener('beforeunload', this.leavePageHandler)
               this.$router.push('/library')
             }
             return res.data
