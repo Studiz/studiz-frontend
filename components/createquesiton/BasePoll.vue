@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     addOption() {
-      this.$emit('add-option')
+      this.$emit('add-option', this.questionType)
     },
   },
 }

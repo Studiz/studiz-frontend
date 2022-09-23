@@ -397,6 +397,12 @@ export default {
             this.quizData.questions[this.currentQuesiton].answer.options.length,
         }
       }
+      if (type === 'poll') {
+        itemOption = {
+          option: '',
+          selected: 0,
+        }
+      }
 
       this.quizData.questions[this.currentQuesiton].answer.options.push(
         structuredClone(itemOption)
