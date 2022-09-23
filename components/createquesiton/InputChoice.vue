@@ -1,12 +1,15 @@
 <template>
   <div
-    class="p-2 rounded-lg flex transition-all shadow-md group relative gap-x-2"
+    class="p-2 rounded-lg flex shadow-md group relative gap-x-2"
     :class="[
       renderCheckOptional ? classColor : 'bg-white dark:bg-opacity-40',
       questionType === 'true/false' ? 'h-full' : '',
     ]"
   >
-    <div v-if="!renderCheckTypePoll" class="self-center cursor-pointer">
+    <div
+      v-if="!renderCheckTypePoll && !renderCheckTypeSort"
+      class="self-center cursor-pointer"
+    >
       <div v-if="renderCheckOptional">
         <div v-if="isCorrect" @click="unselectCorrectChoice">
           <v-icon
@@ -66,6 +69,11 @@
         <v-icon>mdi-trash-can-outline</v-icon>
       </v-btn>
     </div>
+    <v-icon
+      v-if="renderCheckTypeSort"
+      class="handle cursor-grabbing py-3 px-1 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+      >mdi-drag-vertical</v-icon
+    >
   </div>
 </template>
 
@@ -202,6 +210,11 @@ export default {
     },
     renderCheckTypeTrueFalse() {
       if (this.questionType === 'true/false') {
+        return true
+      } else return false
+    },
+    renderCheckTypeSort() {
+      if (this.questionType === 'sort') {
         return true
       } else return false
     },

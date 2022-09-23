@@ -15,8 +15,8 @@
         :questionType="questionType"
         :disableDelete="renderQuestionAnswer.options.length <= 2"
         @save-input-text="$emit('save-input-text', $event)"
-        @change-correct-choice="$emit('select-correct-choice', $event)"
-        @unselect-correct-choice="$emit('unselect-correct-choice', $event)"
+        @change-correct-choice="changeCorrectChoice"
+        @unselect-correct-choice="unSelectCorrectChoice"
         @delete-option="$emit('delete-option', $event)"
       />
     </div>
@@ -67,6 +67,16 @@ export default {
   methods: {
     addOption() {
       this.$emit('add-option')
+    },
+    changeCorrectChoice(event) {
+      this.$forceUpdate()
+      this.$nuxt.$emit('force-update-thumbnail')
+      this.$emit('select-correct-choice', event)
+    },
+    unSelectCorrectChoice(event) {
+      this.$forceUpdate()
+      this.$nuxt.$emit('force-update-thumbnail')
+      this.$emit('unselect-correct-choice', event)
     },
   },
 }

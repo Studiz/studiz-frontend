@@ -74,7 +74,7 @@
       <div
         v-for="(i, index) in 2"
         :key="i"
-        class="outline outline-[0.5px] h-5 outline-gray-500/50 flex"
+        class="outline outline-[0.5px] h-8 outline-gray-500/50 flex"
       >
         <div
           v-if="
@@ -87,9 +87,10 @@
     </div>
     <div v-else class="grid grid-cols-2 gap-1">
       <div
-        v-for="(choice, index) in item.answer.options"
+        v-for="(choice, index) in renderAnswerOptions"
         :key="`${index}-${item}-${choice}`"
-        class="outline outline-[0.5px] h-2 outline-gray-500/50"
+        :class="[renderClassGrid]"
+        class="outline outline-[0.5px] outline-gray-500/50 flex items-center"
       >
         <div
           v-if="choice.isCorrect == true"
@@ -160,6 +161,26 @@ export default {
     isItemEqualIndex() {
       return this.itemActive === this.index ? true : false
     },
+    renderAnswerOptions() {
+      return this.item.answer.options
+    },
+    renderClassGrid() {
+      if (this.renderAnswerOptions.length <= 2) {
+        return 'h-8'
+      } else if (this.renderAnswerOptions.length <= 4) {
+        return 'h-[14px]'
+      } else if (this.renderAnswerOptions.length <= 6) {
+        return 'h-2'
+      }
+    },
+  },
+  created() {
+    this.$nuxt.$on('force-update-thumbnail', () => {
+      this.$forceUpdate()
+    })
+  },
+  destroyed() {
+    this.$nuxt.$off('force-update-thumbnail')
   },
 }
 </script>

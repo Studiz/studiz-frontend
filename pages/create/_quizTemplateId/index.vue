@@ -75,6 +75,17 @@
           @add-option="addOption"
           @delete-option="deleteOption"
         />
+        <base-sort
+          v-if="renderQuestionType === 'sort'"
+          :currentQuesiton="currentQuesiton"
+          :renderQuestionAnswer="renderQuestionAnswer"
+          :questionType="renderQuestionType"
+          :indexOfOptional="indexOfOptional"
+          @save-input-text="saveInputText"
+          @add-option="addOption"
+          @delete-option="deleteOption"
+          @change-option-ordering="changeOptionOrdering"
+        />
       </div>
     </div>
   </layout-create>
@@ -84,6 +95,7 @@
 import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
 import BasePoll from '~/components/createquesiton/BasePoll.vue'
 import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
+import BaseSort from '~/components/createquesiton/BaseSort.vue'
 import BaseTrueOrFalse from '~/components/createquesiton/BaseTrueOrFalse.vue'
 import InputChoice from '~/components/createquesiton/InputChoice.vue'
 import InputImage from '~/components/createquesiton/InputImage.vue'
@@ -101,6 +113,7 @@ export default {
     InputImage,
     BaseTrueOrFalse,
     BasePoll,
+    BaseSort,
   },
   layout: 'layoutFree',
   head() {
@@ -125,7 +138,7 @@ export default {
           {
             question: '',
             image: '',
-            time: 3000,
+            time: 0,
             type: 'single',
             answer: {
               options: [
@@ -184,6 +197,22 @@ export default {
           },
         ],
       },
+      optionTypeSort: {
+        options: [
+          {
+            option: '',
+            index: 0,
+          },
+          {
+            option: '',
+            index: 1,
+          },
+          {
+            option: '',
+            index: 2,
+          },
+        ],
+      },
     }
   },
   watch: {
@@ -209,11 +238,13 @@ export default {
         answer: null,
       }
       if (type === 'single' || type === 'multiple') {
-        defaultData.answer = structuredClone(this.structuredClone)
+        defaultData.answer = structuredClone(this.optionTypeSingleAndMulit)
       } else if (type === 'true/false') {
         defaultData.answer = null
       } else if (type === 'poll') {
         defaultData.answer = structuredClone(this.optionTypePoll)
+      } else if (type === 'sort') {
+        defaultData.answer = structuredClone(this.optionTypeSort)
       }
       this.quizData.questions.push(defaultData)
       this.activeItem(this.quizData.questions.length - 1)
@@ -228,51 +259,25 @@ export default {
       this.quizData.questions = data
     },
     changeQuizType(type) {
-      if (
-        this.renderQuestionType == 'true/false' &&
-        (type == 'multiple' || type == 'single')
-      ) {
+      if (this.renderQuestionType === 'true/false') {
         this.quizData.questions[this.currentQuesiton].answer = structuredClone(
-          this.structuredClone
+          this.optionTypeSingleAndMulit
         )
+        if (type === 'multiple' || type === 'single') {
+          this.quizData.questions[this.currentQuesiton].answer =
+            structuredClone(this.optionTypeSingleAndMulit)
+        }
+        if (type === 'poll') {
+          this.quizData.questions[this.currentQuesiton].answer =
+            structuredClone(this.optionTypePoll)
+        }
+        if (type === 'sort') {
+          this.quizData.questions[this.currentQuesiton].answer =
+            structuredClone(this.optionTypeSort)
+        }
       }
 
-      if (
-        (this.renderQuestionType == 'multiple' ||
-          this.renderQuestionType == 'single') &&
-        type == 'poll'
-      ) {
-        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
-          (item) => {
-            item['selected'] = 0
-            delete item.isCorrect
-          }
-        )
-      }
-
-      if (
-        this.renderQuestionType == 'poll' &&
-        (type == 'multiple' || type == 'single')
-      ) {
-        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
-          (item) => {
-            item['isCorrect'] = false
-            delete item.selected
-          }
-        )
-      }
-
-      if (this.renderQuestionType == 'true/false' && type == 'poll') {
-        this.quizData.questions[this.currentQuesiton].answer = structuredClone(
-          this.optionTypePoll
-        )
-      }
-
-      if (
-        this.quizData.questions[this.currentQuesiton].type == 'multiple' &&
-        type == 'single'
-      ) {
-        this.quizData.questions[this.currentQuesiton].type = type
+      if (this.renderQuestionType === 'multiple' && type === 'single') {
         this.quizData.questions[this.currentQuesiton].answer.options.forEach(
           (item) => {
             item.isCorrect = false
@@ -280,8 +285,39 @@ export default {
         )
       }
 
-      if (type == 'true/false') {
+      if (this.renderQuestionType === 'single' && type === 'multiple') {
+      } else if (type === 'multiple' || type === 'single') {
+        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+          (item) => {
+            item['isCorrect'] = false
+            delete item.selected
+            delete item.index
+          }
+        )
+      }
+
+      if (type === 'true/false') {
         this.quizData.questions[this.currentQuesiton].answer = null
+      }
+
+      if (type === 'sort') {
+        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+          (item, index) => {
+            item['index'] = index
+            delete item.isCorrect
+            delete item.selected
+          }
+        )
+      }
+
+      if (type === 'poll') {
+        this.quizData.questions[this.currentQuesiton].answer.options.forEach(
+          (item) => {
+            item['selected'] = 0
+            delete item.isCorrect
+            delete item.index
+          }
+        )
       }
 
       // change type question
@@ -330,6 +366,9 @@ export default {
     changeCorrectChoiceTrueFalse(data) {
       this.quizData.questions[this.currentQuesiton].answer = data
     },
+    changeOptionOrdering(data) {
+      this.quizData.questions[this.currentQuesiton].answer.options = data
+    },
     saveInputText(data) {
       if (this.indexOfOptional.includes(data.index) && data.text === '') {
         this.changeCorrectChoiceOptional(data.index)
@@ -345,11 +384,20 @@ export default {
       this.quizData.questions[this.currentQuesiton].image = data.previewImage
       this.quizData.questions[this.currentQuesiton].fileImage = data.fileImage
     },
-    addOption() {
+    addOption(type) {
       let itemOption = {
         option: '',
         isCorrect: false,
       }
+
+      if (type === 'sort') {
+        itemOption = {
+          option: '',
+          index:
+            this.quizData.questions[this.currentQuesiton].answer.options.length,
+        }
+      }
+
       this.quizData.questions[this.currentQuesiton].answer.options.push(
         structuredClone(itemOption)
       )
@@ -498,6 +546,7 @@ export default {
     this.$forceUpdate()
   },
   created() {
+    this.$store.commit('TOGGLE_LOADING', true)
     if (!(this.$route.params.quizTemplateId == 'new')) {
       TeacherService.getQuizTemplateById(
         this.$route.params.quizTemplateId
@@ -505,6 +554,7 @@ export default {
         this.quizData = res.data
         this.$store.commit('setIsEditMode', true)
         this.$store.commit('setQuizTemplate', res.data)
+        this.$store.commit('TOGGLE_LOADING', false)
       })
     }
   },
