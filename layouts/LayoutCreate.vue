@@ -18,12 +18,12 @@
         right
         v-model="drawerSettingQuiz"
       >
-        <v-list class="!py-4 !px-2">
+        <v-list class="!py-4 !px-2 h-full">
           <v-list-item-group
             :key="currentQuesiton"
-            class="flex flex-col gap-6 pl-1"
+            class="inline-flex flex-col gap-6 justify-between h-full"
           >
-            <div class="space-y-2">
+            <div class="space-y-2 pl-1">
               <v-select
                 :items="listQuizType"
                 v-model="selectQuizType"
@@ -39,6 +39,7 @@
               </div>
             </div>
             <v-select
+              class="pl-1"
               :items="listTimeLimit"
               v-model="selectTimeLimit"
               label="Time limit"
@@ -48,6 +49,27 @@
               hide-details
               @change="chanceTimeLimit"
             ></v-select>
+
+            <div class="space-y-3">
+              <v-divider />
+              <div class="flex gap-3 justify-between">
+                <v-btn
+                  text
+                  color="error"
+                  width="108"
+                  @click="deleteQuestion(selectItem)"
+                >
+                  <span class="normal-case">Delete</span>
+                </v-btn>
+                <v-btn
+                  outlined
+                  color="primary"
+                  @click="duplicateQuestion(selectItem)"
+                >
+                  <span class="normal-case">Duplicate</span>
+                </v-btn>
+              </div>
+            </div>
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
