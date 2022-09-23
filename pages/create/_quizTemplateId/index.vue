@@ -566,7 +566,7 @@ export default {
         this.$store.commit('setQuizTemplate', res.data)
         this.$store.commit('TOGGLE_LOADING', false)
       })
-    }
+    } else this.$store.commit('TOGGLE_LOADING', false)
   },
   destroyed() {
     this.resetQuizTemplate()
