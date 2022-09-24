@@ -441,6 +441,7 @@ export default {
     duplicateQuestion(index) {
       let newQuestion = structuredClone(this.quizData.questions[index])
       this.quizData.questions.splice(index, 0, newQuestion)
+      this.activeItem(index + 1)
     },
 
     resetQuizTemplate() {

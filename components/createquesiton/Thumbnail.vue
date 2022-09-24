@@ -16,7 +16,7 @@
             : 'group-hover:lg:opacity-100 lg:opacity-0'
         "
       >
-        <v-btn icon x-small @click="duplicateQuestion" class="">
+        <v-btn icon x-small @click.stop="duplicateQuestion" class="">
           <v-icon small>$vuetify.icons.duplicate</v-icon>
         </v-btn>
 

@@ -53,14 +53,41 @@
             <div class="space-y-3">
               <v-divider />
               <div class="flex gap-3 justify-between">
-                <v-btn
-                  text
-                  color="error"
-                  width="108"
-                  @click="deleteQuestion(selectItem)"
-                >
-                  <span class="normal-case">Delete</span>
-                </v-btn>
+                <v-dialog v-model="dialogDelete" width="500">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      text
+                      color="error"
+                      width="108"
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="dialogDelete = true"
+                    >
+                      <span class="normal-case">Delete</span>
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="break-normal">Delete quiz question</span>
+                    </v-card-title>
+                    <v-card-text
+                      >Are you sure you want to delete this question?
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn outlined @click="dialogDelete = false"
+                        >cancel</v-btn
+                      >
+                      <v-btn
+                        type="submit"
+                        color="error"
+                        @click="deleteQuestion(selectItem)"
+                        >delete
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
                 <v-btn
                   outlined
                   color="primary"
@@ -112,7 +139,7 @@
           </draggable>
           <v-divider class="my-3 md:my-2" />
 
-          <v-dialog v-model="dialog" width="400">
+          <v-dialog v-model="dialogAddQuestion" width="400">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 height="48"
@@ -267,7 +294,8 @@ export default {
       },
       drawerQuizList: true,
       drawerSettingQuiz: true,
-      dialog: false,
+      dialogAddQuestion: false,
+      dialogDelete: false,
     }
   },
   watch: {
@@ -293,7 +321,7 @@ export default {
     },
     addQuestion(type) {
       this.$emit('add-question', type)
-      this.dialog = false
+      this.dialogAddQuestion = false
     },
     changeOrdering(event) {
       this.$emit('change-ordering', this.newDataQuestion)
@@ -310,6 +338,7 @@ export default {
       )
     },
     deleteQuestion(index) {
+      this.dialogDelete = false
       this.$emit('delete-question', index)
     },
     duplicateQuestion(index) {
