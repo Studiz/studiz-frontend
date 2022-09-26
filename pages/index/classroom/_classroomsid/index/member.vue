@@ -10,6 +10,9 @@
     class="elevation-0"
     :page.sync="page"
     hide-default-footer
+    mobile-breakpoint="0"
+    loading="isloading"
+    loading-text="Loading... Please wait"
     :items-per-page="itemsPerPage"
   >
     <template #top>
@@ -153,6 +156,7 @@ export default {
       carbs: 0,
       protein: 0,
     },
+    isloading: false,
   }),
 
   watch: {
@@ -170,10 +174,12 @@ export default {
 
   methods: {
     loadData() {
+      this.isloading = true
       ClassroomService.getClassroom(this.$route.params.classroomsid).then(
         (res) => {
           this.$store.commit('setClassroom', res.data)
           this.studentsInClass = this.$store.getters.students.map((student) => {
+            this.isloading = false
             return {
               image: student.imageUrl,
               displayName: student.displayName,
@@ -243,5 +249,17 @@ export default {
 <style scoped>
 :deep(.v-data-table__mobile-row) {
   @apply first:justify-start;
+}
+
+:deep(table > thead > tr > th:nth-child(4)) {
+  @apply hidden sm:table-cell;
+}
+:deep(tr > .text-start:nth-child(4)) {
+  @apply hidden sm:table-cell;
+}
+
+:deep(td),
+:deep(th) {
+  @apply !px-1;
 }
 </style>
