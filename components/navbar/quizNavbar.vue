@@ -1,33 +1,11 @@
 <template>
   <div>
-    <v-app-bar
-      fixed
-      app
-      flat
-      class="drop-shadow-md"
-      height="60"
-      dense
-      color="background_card"
-    >
+    <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background_card">
       <div class="flex items-center gap-x-2">
-        <v-btn
-          v-if="!isFullScreen"
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="openFullscreen"
-        >
+        <v-btn v-if="!isFullScreen" color="primary" id="theme" rounded icon @click="openFullscreen">
           <v-icon>$vuetify.icons.full_screen</v-icon>
         </v-btn>
-        <v-btn
-          v-else
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="closeFullscreen"
-        >
+        <v-btn v-else color="primary" id="theme" rounded icon @click="closeFullscreen">
           <v-icon>$vuetify.icons.normal_screen</v-icon>
         </v-btn>
         <light-dark-mode />
@@ -38,11 +16,8 @@
           <v-btn outlined>End</v-btn>
           <v-btn color="primary">Start</v-btn>
         </div>
-        <div
-          v-else
-          class="whitespace-nowrap space-x-3 inline-flex items-center"
-        >
-          <span class="hidden sm:inline-flex"> {{ user }} </span>
+        <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center">
+          <span class="hidden sm:inline-flex">{{ user }}</span>
           <v-btn v-if="isRouterLobby" color="error">Leave</v-btn>
         </div>
       </div>
@@ -80,7 +55,7 @@ export default {
         ? this.$store.getters.user.displayName
           ? this.$store.getters.user.displayName
           : this.$store.getters.user.firstName
-        : 'User Guest'
+        : localStorage.getItem('displayName')
     },
     userRole() {
       return this.$store.getters.userRole

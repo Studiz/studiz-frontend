@@ -41,5 +41,14 @@ export default {
 
   updateQuizTemplate(quizId, data) {
     return studizAPI(baseURL).put(`/update/quizTemplate/${quizId}`, data);
+  },
+
+  createQuiz(data) {
+    return studizAPI(baseURL).post('/create/quiz', data);
+  },
+
+  getQuizById(quizId) {
+    return studizAPI(baseURL).get(`/get/quiz/${quizId}`);
   }
+
 }

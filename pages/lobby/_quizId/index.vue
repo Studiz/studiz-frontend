@@ -9,7 +9,7 @@
         <div class="flex items-start justify-center gap-3">
           <div class="inline-flex flex-col">
             <span>GAME PIN:</span>
-            <span class="!text-6xl !font-bold select-all">123456</span>
+            <span class="!text-6xl !font-bold select-all">{{pinCode}}</span>
           </div>
           <v-btn icon class="self-center" disabled>
             <v-icon>mdi-content-copy</v-icon>
@@ -73,14 +73,15 @@
 
       <div class="flex flex-wrap gap-3 justify-center items-center">
         <div
-          v-for="item in mockUser"
-          :key="item"
+          v-for="member in members"
+          :key="member.memberId"
           class="group background_card drop-shadow-md h-16 w-full sm:w-80 rounded-lg items-center p-2 gap-x-2 inline-flex transition-all"
         >
           <v-avatar size="46">
-            <v-icon x-large v-if="!user">mdi-account-circle</v-icon>
+            <v-img :src="member.imageUrl" v-if="member?.imageUrl" />
+            <v-icon x-large v-else>mdi-account-circle</v-icon>
           </v-avatar>
-          <div class="line-clamp-2 w-full">{{ item }}</div>
+          <div class="line-clamp-2 w-full" v-if="member">{{ member.displayName }}</div>
           <v-btn
             v-if="userRole == 'TEACHER'"
             color="erroraaa"
@@ -97,33 +98,51 @@
 <script>
 import LayoutQuiz from '~/layouts/layoutQuiz.vue'
 import TeacherService from '~/services/TeacherService'
+import StudentService from '~/services/StudentService'
+import { v4 as uuidv4 } from 'uuid'
+import socket from '~/plugins/socket.io'
 
 export default {
   layout: 'layoutFree',
   components: { LayoutQuiz },
   data() {
     return {
-      mockUser: [
-        'Student 1',
-        'Student 2',
-        'Student 3',
-        'Student 4',
-        'Student 5',
-        'Student 6',
-        'Student 7',
-        'Student 8',
-        'Student 9',
-        'Student 10',
-        'Student 11',
-        'Student 12',
-        'Student 13',
-        'Student 14',
-        'Student 15',
-      ],
+      members: [],
       quizData: {},
+      pinCode: '',
     }
   },
-  methods: {},
+  methods: {
+    joinRoom() {
+      if (!localStorage.getItem('memberId')) {
+        let memberId = uuidv4()
+        localStorage.setItem('memberId', memberId)
+      }
+      if (this.userRole === 'STUDENT') {
+        socket.emit('join-lobby', {
+          quizId: this.$route.params.quizId,
+          user: this.$store.getters.user,
+          memberId: localStorage.getItem('memberId'),
+        })
+      } else {
+        socket.emit('join-lobby', {
+          quizId: this.$route.params.quizId,
+          user: {
+            displayName: this.$route.params.displayName,
+            role: 'Guest',
+          },
+          memberId: localStorage.getItem('memberId'),
+        })
+      }
+    },
+    leaveRoom() {
+      socket.emit('leave-lobby', {
+        quizId: this.$route.params.quizId,
+        memberId: localStorage.getItem('memberId'),
+      })
+      localStorage.removeItem('memberId')
+    },
+  },
   computed: {
     userRole() {
       return this.$store.getters.userRole
@@ -132,12 +151,46 @@ export default {
       return this.quizData.questions ? this.quizData.questions.length : 0
     },
   },
+  // beforeDestroy() {
+  //   alert('You will leave the room')
+  //   this.leaveRoom()
+  // },
+  mounted() {
+    if (this.userRole === 'TEACHER') {
+      // socket.emit('init-game', {
+      //   quizId: this.$route.params.quizId,
+      //   user: user.user,
+      // })
+    } else {
+      this.joinRoom()
+    }
+
+    // window.addEventListener('beforeunload', (e) => {
+    //   socket.emit('leave-lobby', {
+    //     quizId: this.$route.params.quizId,
+    //     memberId: localStorage.getItem('memberId'),
+    //   })
+    //   localStorage.removeItem('memberId')
+    //   e.preventDefault()
+    //   e.returnValue = 'You will leave the room'
+    // })
+
+    socket.on('joined', (data) => {
+      this.members = data.map((member) => member.user)
+    })
+  },
   created() {
-    TeacherService.getQuizTemplateById(this.$route.params.quizId).then(
-      (res) => {
-        this.quizData = res.data
-      }
-    )
+    if (this.userRole === 'TEACHER') {
+      TeacherService.getQuizById(this.$route.params.quizId).then((res) => {
+        this.pinCode = res.data.pinCode
+        this.quizData = res.data.quizTemplate
+      })
+    } else {
+      StudentService.getQuizById(this.$route.params.quizId).then((res) => {
+        this.pinCode = res.data.pinCode
+        this.quizData = res.data.quizTemplate
+      })
+    }
   },
 }
 </script>
