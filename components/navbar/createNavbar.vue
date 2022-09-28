@@ -27,6 +27,8 @@
         <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
       </v-btn>
       <base-dialog-condition
+        :key="isforceOpenDialog"
+        :forceOpen="isforceOpenDialog"
         :persistent="true"
         :propDialog="formIsOpen"
         :outlined="true"
@@ -179,6 +181,7 @@ export default {
   data() {
     return {
       formIsOpen: true,
+      isforceOpenDialog: false,
       quizTitle: '',
       quizDescription: '',
       quizTags: [],
@@ -250,6 +253,9 @@ export default {
     saveQuizTemplate() {
       this.$emit('save-quiz-template')
     },
+    forceOpenDialog() {
+      this.isforceOpenDialog = this.quizTitle == '' ? true : false
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -257,6 +263,7 @@ export default {
       this.quizDescription = this.$store.getters.quizTemplate.description
       this.quizTags = this.$store.getters.quizTemplate.tags
       this.quizImage = this.$store.getters.quizTemplate.image
+      this.forceOpenDialog()
     }, 1000)
   },
 }
