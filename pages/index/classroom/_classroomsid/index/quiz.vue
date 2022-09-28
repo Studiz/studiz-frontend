@@ -1,15 +1,22 @@
 <template>
   <v-data-table
+    class="elevation-0 drop-shadow-sm !rounded-lg"
+    mobile-breakpoint="0"
     :headers="headers"
     :items="quizzes"
-    :items-per-page="5"
-    mobile-breakpoint="0"
-    class="elevation-1"
-  ></v-data-table>
+    :items-per-page="10"
+  >
+    <template #top>
+      <v-toolbar-title class="font-semibold p-3 flex items-center h-9">
+        <span>Quiz list</span>
+        <v-spacer />
+      </v-toolbar-title>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
-import ClassroomService from '../../../../../services/ClassroomService'
+import ClassroomService from '~/services/ClassroomService'
 export default {
   data() {
     return {
@@ -41,4 +48,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.v-data-table {
+  background-color: var(--v-background-base) !important;
+  @apply p-2;
+}
+</style>
