@@ -22,7 +22,7 @@
         elevation="0"
         color="transparent"
         class="overflow-hidden d-none d-md-inline-flex flex-none"
-        to="/"
+        to="/classrooms"
       >
         <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
       </v-btn>

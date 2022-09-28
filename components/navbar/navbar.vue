@@ -17,11 +17,11 @@
             elevation="0"
             color="transparent"
             class="overflow-hidden"
-            to="/"
+            to="/classrooms"
           >
             <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
           </v-btn>
-          <div class="flex items-center space-x-4">
+          <div class="flex items-center gap-x-4">
             <v-spacer></v-spacer>
             <!-- right  -->
             <LightDarkMode />
@@ -167,3 +167,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.v-btn--active::before {
+  opacity: 0;
+}
+</style>
