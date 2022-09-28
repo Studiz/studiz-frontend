@@ -17,7 +17,8 @@
             elevation="0"
             color="transparent"
             class="overflow-hidden"
-            to="/classrooms"
+            :to="routerPath"
+            :disabled="isRouterJoin"
           >
             <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
           </v-btn>
@@ -137,13 +138,6 @@ export default {
     }
   },
   methods: {
-    // goHomePage() {
-    //   if (this.user) {
-    //     this.$router.push('/classrooms')
-    //   } else {
-    //     this.$router.push('/join')
-    //   }
-    // },
     logout() {
       this.$fire.auth.signOut().then(() => {
         localStorage.clear('accessToken')
@@ -164,6 +158,12 @@ export default {
     isGuest() {
       return this.$store.getters.user ? false : true
     },
+    isRouterJoin() {
+      return this.$route.path == '/join' ? true : false
+    },
+    routerPath() {
+      return !this.isGuest ? '/classrooms' : '/join'
+    },
   },
 }
 </script>
@@ -171,5 +171,8 @@ export default {
 <style scoped>
 .v-btn--active::before {
   opacity: 0;
+}
+:deep(.v-btn.v-btn--disabled.v-btn--has-bg) {
+  background-color: transparent !important;
 }
 </style>
