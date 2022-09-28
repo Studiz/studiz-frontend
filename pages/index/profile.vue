@@ -15,7 +15,7 @@
               size="94"
               color="white"
               outlined
-              class="text-cap"
+              class="text-cap relative"
               v-bind="attrs"
               v-on="on"
             >
@@ -23,6 +23,11 @@
                 >mdi-account-circle</v-icon
               >
               <v-img :src="imageProfile" v-else />
+              <div
+                class="absolute bottom-0 left-0 bg-black/50 w-full text-sm h-6"
+              >
+                <v-icon dark>mdi-camera</v-icon>
+              </div>
             </v-avatar>
           </template>
           <v-card>
@@ -60,6 +65,7 @@
           </div>
           <!-- <v-spacer></v-spacer> -->
           <base-dialog-condition
+            v-if="isStudnet"
             @confirm="editDisplayName"
             colorBTN="primary"
             btn2="primary"
@@ -211,6 +217,9 @@ export default {
     },
     email() {
       return this.$store.getters.userEmail
+    },
+    isStudnet() {
+      return this.$store.getters.userRole === 'student'
     },
   },
 }

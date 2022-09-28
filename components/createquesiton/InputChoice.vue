@@ -1,12 +1,15 @@
 <template>
   <div
-    class="p-2 rounded-lg flex transition-all shadow-md"
+    class="p-2 rounded-lg flex shadow-md group relative gap-x-2"
     :class="[
       renderCheckOptional ? classColor : 'bg-white dark:bg-opacity-40',
-      quesitonType === 'true/false' ? 'h-full' : '',
+      questionType === 'true/false' ? 'h-full' : '',
     ]"
   >
-    <div class="self-center cursor-pointer">
+    <div
+      v-if="!renderCheckTypePoll && !renderCheckTypeSort"
+      class="self-center cursor-pointer"
+    >
       <div v-if="renderCheckOptional">
         <div v-if="isCorrect" @click="unselectCorrectChoice">
           <v-icon
@@ -29,7 +32,7 @@
     </div>
 
     <div
-      v-if="quesitonType === 'true/false'"
+      v-if="renderCheckTypeTrueFalse"
       class="w-full h-fit text-center my-auto text-3xl min-h-[96px] max-h-40 flex items-center justify-center"
     >
       <span>{{ newText }}</span>
@@ -39,7 +42,7 @@
       ref="form"
       lazy-validation
       @submit.prevent="saveNewText"
-      class="min-h-[96px] max-h-40 h-fit w-full overflow-auto my-auto scrollbar"
+      class="min-h-[84px] max-h-40 h-fit my-auto w-full overflow-auto scrollbar"
     >
       <v-textarea
         solo
@@ -54,8 +57,23 @@
         :counter="120"
         @change="saveNewText"
         @input="saveNewText"
+        @keydown="checkKeyEnter"
       ></v-textarea>
     </v-form>
+
+    <div
+      v-if="!renderCheckTypeTrueFalse && !disableDelete"
+      class="absolute top-1 right-1 bg-white/50 dark:bg-white/30 rounded-md"
+    >
+      <v-btn icon @click="deleteOption" class="!rounded-md">
+        <v-icon>mdi-trash-can-outline</v-icon>
+      </v-btn>
+    </div>
+    <v-icon
+      v-if="renderCheckTypeSort"
+      class="handle cursor-grabbing py-3 px-1 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+      >mdi-drag-vertical</v-icon
+    >
   </div>
 </template>
 
@@ -88,8 +106,12 @@ export default {
         return [2, 3]
       },
     },
-    quesitonType: {
+    questionType: {
       type: String,
+    },
+    disableDelete: {
+      type: Boolean,
+      default: false,
     },
   },
   watch: {
@@ -109,6 +131,11 @@ export default {
           (v) =>
             (v && v.length <= 120) ||
             'Classroom name must be less than 120 characters',
+          (v) => {
+            if (/\r?\n|\r/g.test(v)) {
+              return false || 'Enter key is not allowed'
+            } else return true
+          },
         ],
         ruleOptional: [
           (v) => {
@@ -118,6 +145,11 @@ export default {
                 'Classroom name must be less than 120 characters'
               )
             else return true
+          },
+          (v) => {
+            if (/\r?\n|\r/g.test(v)) {
+              return false || 'Enter key is not allowed'
+            } else return true
           },
         ],
       },
@@ -142,6 +174,15 @@ export default {
     mappingCurrentText() {
       this.newText = this.option
     },
+    checkKeyEnter(e) {
+      var key = e.keyCode || e.charCode
+      if (key == 13) {
+        e.preventDefault()
+      }
+    },
+    deleteOption() {
+      this.$emit('delete-option', this.index)
+    },
   },
   computed: {
     renderLableChoice() {
@@ -159,6 +200,21 @@ export default {
     renderCheckOptional() {
       const isOptional = this.indexOfOptional.includes(this.index)
       if (!isOptional || this.option !== '') {
+        return true
+      } else return false
+    },
+    renderCheckTypePoll() {
+      if (this.questionType === 'poll') {
+        return true
+      } else return false
+    },
+    renderCheckTypeTrueFalse() {
+      if (this.questionType === 'true/false') {
+        return true
+      } else return false
+    },
+    renderCheckTypeSort() {
+      if (this.questionType === 'sort') {
         return true
       } else return false
     },
@@ -181,6 +237,12 @@ export default {
 }
 .blue {
   @apply !bg-sky-300/50 dark:!bg-sky-300/40;
+}
+.cyan {
+  @apply !bg-cyan-300/50 dark:!bg-cyan-300/40;
+}
+.purple {
+  @apply !bg-purple-300/50 dark:!bg-purple-300/40;
 }
 :deep(.v-messages__message),
 :deep(.v-counter) {
@@ -207,7 +269,7 @@ export default {
 
 /* Handle on hover */
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 </style>

@@ -22,11 +22,13 @@
         elevation="0"
         color="transparent"
         class="overflow-hidden d-none d-md-inline-flex flex-none"
-        to="/"
+        to="/classrooms"
       >
         <v-icon size="80">$vuetify.icons.Studiz_logo</v-icon>
       </v-btn>
       <base-dialog-condition
+        :key="isforceOpenDialog"
+        :forceOpen="isforceOpenDialog"
         :persistent="true"
         :propDialog="formIsOpen"
         :outlined="true"
@@ -40,9 +42,9 @@
       >
         <template #namebtn>
           <span
-            class="hidden sm:inline w-fit max-w-[60px] sm:max-w-[176px] truncate normal-case overflow-hidden text-black dark:text-white"
+            class="hidden sm:inline w-fit max-w-[60px] sm:min-w-[176px] sm:max-w-[176px] truncate normal-case overflow-hidden text-black dark:text-white text-left"
           >
-            {{ quizTitle ? quizTitle : 'Quiz details' }}
+            {{ quizTitle ? quizTitle : 'Quiz name' }}
           </span>
           <span
             class="d-inline d-sm-none !capitalize !font-semibold text-black dark:text-white"
@@ -179,6 +181,7 @@ export default {
   data() {
     return {
       formIsOpen: true,
+      isforceOpenDialog: false,
       quizTitle: '',
       quizDescription: '',
       quizTags: [],
@@ -250,6 +253,9 @@ export default {
     saveQuizTemplate() {
       this.$emit('save-quiz-template')
     },
+    forceOpenDialog() {
+      this.isforceOpenDialog = this.quizTitle == '' ? true : false
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -257,6 +263,7 @@ export default {
       this.quizDescription = this.$store.getters.quizTemplate.description
       this.quizTags = this.$store.getters.quizTemplate.tags
       this.quizImage = this.$store.getters.quizTemplate.image
+      this.forceOpenDialog()
     }, 1000)
   },
 }

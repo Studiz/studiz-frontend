@@ -3,11 +3,11 @@
     <input-choice
       class="h-full"
       v-for="(item, index) in MappingAnswerWithOption"
-      quesitonType="true/false"
       :key="`${index}-${item}`"
       :option="item.option"
       :isCorrect="item.isCorrect"
       :index="index"
+      :questionType="questionType"
       :classColor="arrayChoiceColor[index]"
       :currentQuesiton="currentQuesiton"
       @change-correct-choice="changeCorrectChoiceTrueFalse"
@@ -26,6 +26,10 @@ export default {
     },
     currentQuesiton: {
       type: Number,
+      required: true,
+    },
+    questionType: {
+      type: String,
       required: true,
     },
   },

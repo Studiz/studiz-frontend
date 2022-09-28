@@ -6,7 +6,6 @@
       <input-choice
         v-for="(item, index) in renderQuestionAnswer.options"
         :option="item.option"
-        :isCorrect="item.isCorrect"
         :key="`${index}-${item}`"
         :index="index"
         :classColor="arrayChoiceColor[index]"
@@ -15,7 +14,6 @@
         :questionType="questionType"
         :disableDelete="renderQuestionAnswer.options.length <= 2"
         @save-input-text="$emit('save-input-text', $event)"
-        @change-correct-choice="checkCorrectChoice"
         @delete-option="$emit('delete-option', $event)"
       />
     </div>
@@ -65,12 +63,7 @@ export default {
   },
   methods: {
     addOption() {
-      this.$emit('add-option')
-    },
-    checkCorrectChoice(event) {
-      this.$forceUpdate()
-      this.$nuxt.$emit('force-update-thumbnail')
-      this.$emit('change-correct-choice', event)
+      this.$emit('add-option', this.questionType)
     },
   },
 }

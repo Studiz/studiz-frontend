@@ -48,16 +48,32 @@
         color="background_card"
         class="overflow-hidden pa-2 pa-md-5 min-h-[calc(100vh-64px-24px)]"
       >
-        <Nuxt />
-        <div
-          v-if="
-            this.$route.name === 'index'
-              ? this.$store.getters.user
-                ? this.$router.push('/classrooms')
-                : this.$router.push('/join')
-              : ''
-          "
-        />
+        <Nuxt v-if="!isRouterIndex" />
+
+        <div v-else class="max-w-xl mx-auto">
+          <div class="flex flex-col gap-y-4">
+            <v-btn
+              height="150"
+              elevation="0"
+              color="transparent"
+              class="overflow-hidden w-fit mx-auto"
+              to="/classrooms"
+            >
+              <v-icon size="200">$vuetify.icons.Studiz_logo</v-icon>
+            </v-btn>
+            <h1 class="text-4xl font-semibold text-center">
+              Welcome to Studiz
+            </h1>
+            <v-divider class="mx-14" />
+            <p class="text-center">Online Classroom and Quiz game</p>
+            <br />
+            <p class="text-center">
+              This web application will help students interact with friends and
+              teachers to create an active learning process and make students
+              feel more interested in learning and having fun.
+            </p>
+          </div>
+        </div>
       </v-sheet>
     </v-col>
   </v-row>
@@ -111,6 +127,12 @@ export default {
           ? this.$store.getters.user.displayName
           : `${this.$store.getters.user.firstName} ${this.$store.getters.user.lastName}`
         : ''
+    },
+    isRouterIndex() {
+      return this.$route.name === 'index'
+    },
+    renderRouterName() {
+      return this.$route.name
     },
   },
   created() {

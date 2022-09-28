@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-thumbnail rounded-lg p-3 select-none overflow-hidden relative min-w-[176px] max-w-[192px] w-full space-y-2"
+    class="card-thumbnail group rounded-lg p-3 select-none overflow-hidden relative min-w-[184px] max-w-[192px] w-full space-y-2"
     :class="[itemActive === index && 'card-thumbnail--active']"
     @click="activeItem(index)"
   >
@@ -16,7 +16,7 @@
             : 'group-hover:lg:opacity-100 lg:opacity-0'
         "
       >
-        <v-btn icon x-small @click="duplicateQuestion" class="">
+        <v-btn icon x-small @click.stop="duplicateQuestion" class="">
           <v-icon small>$vuetify.icons.duplicate</v-icon>
         </v-btn>
 
@@ -58,7 +58,7 @@
     <div class="overflow-hidden line-clamp-1 text-xs h-4">
       {{ textQuestion }}
     </div>
-    <div class="h-10 mx-auto w-fit">
+    <div class="h-8 mx-auto w-fit">
       <img
         v-if="haveImage"
         :src="item.image"
@@ -67,14 +67,14 @@
       />
       <div
         v-else
-        class="h-10 w-10 outline outline-[0.5px] outline-gray-500/50"
+        class="h-8 w-8 outline outline-[0.5px] outline-gray-500/50"
       ></div>
     </div>
     <div v-if="item.type === 'true/false'" class="grid grid-cols-2 gap-1">
       <div
         v-for="(i, index) in 2"
         :key="i"
-        class="outline outline-[0.5px] h-5 outline-gray-500/50 flex"
+        class="outline outline-[0.5px] h-8 outline-gray-500/50 flex"
       >
         <div
           v-if="
@@ -87,9 +87,10 @@
     </div>
     <div v-else class="grid grid-cols-2 gap-1">
       <div
-        v-for="(choice, index) in item.answer.options"
+        v-for="(choice, index) in renderAnswerOptions"
         :key="`${index}-${item}-${choice}`"
-        class="outline outline-[0.5px] h-2 outline-gray-500/50"
+        :class="[renderClassGrid]"
+        class="outline outline-[0.5px] outline-gray-500/50 flex items-center"
       >
         <div
           v-if="choice.isCorrect == true"
@@ -160,6 +161,26 @@ export default {
     isItemEqualIndex() {
       return this.itemActive === this.index ? true : false
     },
+    renderAnswerOptions() {
+      return this.item.answer.options
+    },
+    renderClassGrid() {
+      if (this.renderAnswerOptions.length <= 2) {
+        return 'h-8'
+      } else if (this.renderAnswerOptions.length <= 4) {
+        return 'h-[14px]'
+      } else if (this.renderAnswerOptions.length <= 6) {
+        return 'h-2'
+      }
+    },
+  },
+  created() {
+    this.$nuxt.$on('force-update-thumbnail', () => {
+      this.$forceUpdate()
+    })
+  },
+  destroyed() {
+    this.$nuxt.$off('force-update-thumbnail')
   },
 }
 </script>
@@ -172,5 +193,6 @@ export default {
 .card-thumbnail--active {
   background-color: var(--v-primary_shade-base);
   border-color: var(--v-primary-base) !important;
+  @apply transition-all;
 }
 </style>

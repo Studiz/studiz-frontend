@@ -1,82 +1,60 @@
 <template>
   <v-data-table
+    class="elevation-0 drop-shadow-sm !rounded-lg"
+    mobile-breakpoint="0"
+    item-key="name"
+    hide-default-footer
+    loading="isloading"
+    loading-text="Loading... Please wait"
+    sort-by="displayName"
     v-model="selected"
     :single-select="false"
     :show-select="isTeacher"
-    item-key="name"
     :headers="headers"
     :items="studentsInClass"
-    sort-by="displayName"
-    class="elevation-0"
     :page.sync="page"
-    hide-default-footer
     :items-per-page="itemsPerPage"
   >
     <template #top>
-      <v-toolbar-title class="font-semibold p-3"
-        >Students member</v-toolbar-title
+      <v-toolbar-title
+        class="font-semibold p-3 flex items-center gap-x-5 flex-wrap"
       >
-      <!-- <v-divider class="mx-4" inset vertical></v-divider>
-      <v-spacer></v-spacer> -->
+        <span class="h-9">Students member</span>
+        <v-spacer />
 
-      <!-- สำหรับแก้ไข -->
-      <!-- <v-dialog v-model="dialog" max-width="500px">
-        <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              New Item
-            </v-btn>
-        </template>
-        <v-card>
-          <v-card-title>
-            <span class="text-h5">{{ formTitle }}</span>
-          </v-card-title>
-
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>-->
-
-      <!-- สำหรับลบ -->
-      <!-- <v-dialog v-model="dialogDelete" max-width="500px">
-        <v-card>
-          <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-            <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-            <v-spacer></v-spacer>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>-->
-
-      <!-- <v-toolbar flat>
-        <v-btn color="primary">action</v-btn>
-      </v-toolbar>-->
+        <base-dialog-condition
+          maxwidth="500px"
+          height="36px"
+          colorBTN="secondary"
+          :classBtn="classBtnDialog"
+          :propDialog="propRemoveStudent"
+          btn2="error"
+          @open="openDialog"
+          @close-dialog="closeDialog"
+          @confirm="removeStudent"
+        >
+          <template #namebtn>
+            <span>remove</span>
+          </template>
+          <template #title>
+            <span>Remove student</span>
+          </template>
+          <template #contain>
+            <div class="px-6 py-2 font-light">
+              <span
+                >Are you sure you want to remove
+                {{ renderRemoveStudentName }}
+              </span>
+            </div>
+          </template>
+          <template #btn1>
+            <span>Cancel</span>
+          </template>
+          <template #btn2>
+            <span>Remove</span>
+          </template>
+        </base-dialog-condition>
+      </v-toolbar-title>
     </template>
 
     <template v-slot:item.image="{ item }">
@@ -93,18 +71,19 @@
 
     <template #item.actions="{ item }" v-if="isTeacher">
       <!-- <v-icon class="mr-2" @click="editItem(item)">mdi-dots-vertical</v-icon> -->
-      <v-menu offset-y left transition="slide-y-transition">
+      <v-menu v-if="!hasSelected" offset-y left transition="slide-y-transition">
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon center v-bind="attrs" v-on="on">
             <v-icon class="w-full">mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
         <v-list>
-          <v-list-item v-for="i in 2" :key="i" @click="editItem(item)">
-            <v-list-item-title>{{ i }}</v-list-item-title>
+          <v-list-item @click="removeOne(item)">
+            <v-list-item-title>remove</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
+      <div v-else class="w-9" />
       <!-- <v-icon small @click="deleteItem(item)">mdi-delete</v-icon> -->
     </template>
     <template #no-data>
@@ -114,8 +93,10 @@
 </template>
 
 <script>
-import ClassroomService from '../../../../../services/ClassroomService'
+import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
+import ClassroomService from '~/services/ClassroomService'
 export default {
+  components: { BaseDialogCondition },
   data: () => ({
     page: 1,
     dialog: false,
@@ -135,24 +116,12 @@ export default {
       { text: '', value: 'actions', sortable: false, align: 'end' },
     ],
     studentsInClass: [],
-    desserts: [],
     selected: [],
+    chooseOne: null,
 
     editedIndex: -1,
-    editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-    defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
+    isloading: false,
+    propRemoveStudent: false,
   }),
 
   watch: {
@@ -170,10 +139,12 @@ export default {
 
   methods: {
     loadData() {
+      this.isloading = true
       ClassroomService.getClassroom(this.$route.params.classroomsid).then(
         (res) => {
           this.$store.commit('setClassroom', res.data)
           this.studentsInClass = this.$store.getters.students.map((student) => {
+            this.isloading = false
             return {
               image: student.imageUrl,
               displayName: student.displayName,
@@ -183,65 +154,74 @@ export default {
         }
       )
     },
-
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+    removeOne(item) {
+      this.propRemoveStudent = true
+      this.chooseOne = item
     },
-
-    deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
+    closeDialog() {
+      this.chooseOne = null
+      this.propRemoveStudent = false
     },
-
-    deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
-      this.closeDelete()
+    openDialog() {
+      this.chooseOne = null
+      this.propRemoveStudent = true
     },
-
-    close() {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    closeDelete() {
-      this.dialogDelete = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
-      }
-      this.close()
+    removeStudent() {
+      console.log('choose one: ', this.chooseOne)
+      console.log('selected: ', this.selected)
+      this.propRemoveStudent = false
     },
   },
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    },
     itemsPerPage() {
       return this.studentsInClass.length
     },
     isTeacher() {
       return this.$store.getters.userRole == 'TEACHER' ? true : false
     },
+    hasSelected() {
+      return this.selected.length > 0
+    },
+    classBtnDialog() {
+      return this.hasSelected
+        ? 'opacity-100 transition-all ml-auto'
+        : '!w-0 !h-0 opacity-0 '
+    },
+    renderRemoveStudentName() {
+      return this.chooseOne == null
+        ? 'this student?'
+        : `student "${this.chooseOne.displayName}"?`
+    },
   },
 }
 </script>
 
 <style scoped>
+.v-data-table {
+  background-color: var(--v-background-base) !important;
+  @apply p-2;
+}
+
 :deep(.v-data-table__mobile-row) {
   @apply first:justify-start;
+}
+
+:deep(table > thead > tr > th:nth-child(4)) {
+  /* @apply hidden sm:table-cell; */
+  @apply whitespace-nowrap;
+}
+:deep(tr > .text-end) {
+  @apply hidden sm:table-cell;
+}
+
+:deep(td),
+:deep(th) {
+  @apply !px-3;
+}
+:deep(thead) {
+  @apply overflow-scroll;
+}
+:deep(tr > .text-start) {
+  @apply whitespace-nowrap;
 }
 </style>

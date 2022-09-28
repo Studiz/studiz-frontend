@@ -23,7 +23,7 @@
         @change="previewMultiImage"
       />
     </label>
-    <div v-else class="w-fit h-full mx-auto">
+    <div v-else class="w-fit h-full mx-auto background_card rounded-lg">
       <div
         v-for="(item, index) in previewImageList"
         :key="index"

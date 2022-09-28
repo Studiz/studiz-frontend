@@ -18,12 +18,12 @@
         right
         v-model="drawerSettingQuiz"
       >
-        <v-list class="!py-4 !px-2">
+        <v-list class="!py-4 !px-2 h-full">
           <v-list-item-group
             :key="currentQuesiton"
-            class="flex flex-col gap-6 pl-1"
+            class="inline-flex flex-col gap-6 justify-between h-full"
           >
-            <div class="space-y-2">
+            <div class="space-y-2 pl-1">
               <v-select
                 :items="listQuizType"
                 v-model="selectQuizType"
@@ -39,6 +39,7 @@
               </div>
             </div>
             <v-select
+              class="pl-1"
               :items="listTimeLimit"
               v-model="selectTimeLimit"
               label="Time limit"
@@ -48,6 +49,54 @@
               hide-details
               @change="chanceTimeLimit"
             ></v-select>
+
+            <div class="space-y-3">
+              <v-divider />
+              <div class="flex gap-3 justify-between">
+                <v-dialog v-model="dialogDelete" width="500">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      text
+                      color="error"
+                      width="108"
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="dialogDelete = true"
+                    >
+                      <span class="normal-case">Delete</span>
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="break-normal">Delete quiz question</span>
+                    </v-card-title>
+                    <v-card-text
+                      >Are you sure you want to delete this question?
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn outlined @click="dialogDelete = false"
+                        >cancel</v-btn
+                      >
+                      <v-btn
+                        type="submit"
+                        color="error"
+                        @click="deleteQuestion(selectItem)"
+                        >delete
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
+                <v-btn
+                  outlined
+                  color="primary"
+                  @click="duplicateQuestion(selectItem)"
+                >
+                  <span class="normal-case">Duplicate</span>
+                </v-btn>
+              </div>
+            </div>
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
@@ -63,7 +112,7 @@
         width="208"
         class="!h-64 lg:!h-full scrollbar"
       >
-        <v-list nav class="py-5 py-lg-2">
+        <v-list nav class="py-3 py-lg-2">
           <draggable
             v-bind="dragOptions"
             v-model="newDataQuestion"
@@ -90,11 +139,11 @@
           </draggable>
           <v-divider class="my-3 md:my-2" />
 
-          <v-dialog v-model="dialog" width="400">
+          <v-dialog v-model="dialogAddQuestion" width="400">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 height="48"
-                class="text-center primary white--text rounded-lg w-full transition-all"
+                class="text-center primary white--text rounded-lg w-full transition-all lg:mb-3"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -105,7 +154,6 @@
             </template>
             <v-card>
               <v-card-title class="text-h5"> Add question type </v-card-title>
-
               <v-card-text class="space-y-2">
                 <div
                   v-for="(itemType, index) in listQuizType"
@@ -185,12 +233,12 @@ export default {
         {
           text: 'Poll',
           value: 'poll',
-          disabled: true,
+          disabled: false,
         },
         {
           text: 'Sort',
           value: 'sort',
-          disabled: true,
+          disabled: false,
         },
       ],
       selectQuizType: null,
@@ -246,7 +294,8 @@ export default {
       },
       drawerQuizList: true,
       drawerSettingQuiz: true,
-      dialog: false,
+      dialogAddQuestion: false,
+      dialogDelete: false,
     }
   },
   watch: {
@@ -272,7 +321,7 @@ export default {
     },
     addQuestion(type) {
       this.$emit('add-question', type)
-      this.dialog = false
+      this.dialogAddQuestion = false
     },
     changeOrdering(event) {
       this.$emit('change-ordering', this.newDataQuestion)
@@ -289,6 +338,7 @@ export default {
       )
     },
     deleteQuestion(index) {
+      this.dialogDelete = false
       this.$emit('delete-question', index)
     },
     duplicateQuestion(index) {
@@ -330,7 +380,7 @@ export default {
 }
 :deep(.scrollbar
     > .v-navigation-drawer__content::-webkit-scrollbar-thumb:hover) {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 .scrollbar::-webkit-scrollbar {
@@ -346,7 +396,7 @@ export default {
   border-radius: 50px;
 }
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 </style>

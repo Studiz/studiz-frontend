@@ -1,12 +1,12 @@
 <template>
   <div
-    class="overflow-hidden pa-2 pa-md-3 !shadow-md min-h-[112px] max-h-32 rounded-lg background_card"
+    class="overflow-hidden pa-2 pa-md-3 !shadow-md min-h-[126px] max-h-32 rounded-lg background_card"
   >
     <v-form
       ref="form"
       lazy-validation
       @submit.prevent="saveNewQuestion"
-      class="w-full min-h-[88px] max-h-20 h-fit overflow-auto scrollbar"
+      class="w-full min-h-[102px] max-h-20 h-fit overflow-auto scrollbar"
     >
       <v-textarea
         solo
@@ -105,7 +105,7 @@ export default {
 
 /* Handle on hover */
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary_shade-base);
+  background: var(--v-primary-base);
   border-radius: 50px;
 }
 
