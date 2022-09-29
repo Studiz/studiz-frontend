@@ -4,10 +4,10 @@
     mobile-breakpoint="0"
     item-key="name"
     hide-default-footer
-    loading="isloading"
     loading-text="Loading... Please wait"
     sort-by="displayName"
     v-model="selected"
+    :loading="isloading"
     :single-select="false"
     :show-select="isTeacher"
     :headers="headers"
@@ -86,9 +86,6 @@
       <div v-else class="w-9" />
       <!-- <v-icon small @click="deleteItem(item)">mdi-delete</v-icon> -->
     </template>
-    <template #no-data>
-      <v-btn color="primary" @click="loadData">Reset</v-btn>
-    </template>
   </v-data-table>
 </template>
 
@@ -135,16 +132,16 @@ export default {
 
   created() {
     this.loadData()
+    this.isloading = true
   },
 
   methods: {
     loadData() {
-      this.isloading = true
       ClassroomService.getClassroom(this.$route.params.classroomsid).then(
         (res) => {
           this.$store.commit('setClassroom', res.data)
+          this.isloading = false
           this.studentsInClass = this.$store.getters.students.map((student) => {
-            this.isloading = false
             return {
               image: student.imageUrl,
               displayName: student.displayName,
