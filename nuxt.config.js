@@ -92,6 +92,7 @@ export default {
   env: {
     baseURL: 'https://www.studiz.games/studiz/api',
     // baseURL: "http://localhost:9091/api",
+    webSocket: "https://www.studiz.games/studiz",
     FIRE_ENV: process.env.FIRE_ENV,
   },
 

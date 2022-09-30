@@ -1,49 +1,57 @@
 <template>
   <div>
-    <v-app-bar
-      fixed
-      app
-      flat
-      class="drop-shadow-md"
-      height="60"
-      dense
-      color="background_card"
-    >
+    <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background_card">
       <div class="flex items-center gap-x-2">
-        <v-btn
-          v-if="!isFullScreen"
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="openFullscreen"
-        >
-          <v-icon>$vuetify.icons.full_screen</v-icon>
-        </v-btn>
-        <v-btn
-          v-else
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="closeFullscreen"
-        >
-          <v-icon>$vuetify.icons.normal_screen</v-icon>
-        </v-btn>
+        <v-tooltip bottom v-if="!isFullScreen">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              color="primary"
+              id="theme"
+              rounded
+              icon
+              @click="openFullscreen"
+            >
+              <v-icon>$vuetify.icons.full_screen</v-icon>
+            </v-btn>
+          </template>
+          <span>Full screen</span>
+        </v-tooltip>
+        <v-tooltip bottom v-else>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              color="primary"
+              id="theme"
+              rounded
+              icon
+              @click="closeFullscreen"
+            >
+              <v-icon>$vuetify.icons.normal_screen</v-icon>
+            </v-btn>
+          </template>
+          <span>Exit full screen</span>
+        </v-tooltip>
         <light-dark-mode />
         <v-spacer></v-spacer>
         <quiz-progress-bar v-if="!isLobby" />
         <v-spacer></v-spacer>
         <div v-if="userRole == 'TEACHER'" class="space-x-2">
-          <v-btn outlined>End</v-btn>
-          <v-btn color="primary">Start</v-btn>
+          <v-btn outlined @click="endGame">End</v-btn>
+          <v-btn color="primary" @click="startGame">Start</v-btn>
         </div>
-        <div
-          v-else
-          class="whitespace-nowrap space-x-3 inline-flex items-center"
-        >
-          <span class="hidden sm:inline-flex"> {{ user }} </span>
-          <v-btn v-if="isRouterLobby" color="error">Leave</v-btn>
+        <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center" @click="leaveRoom">
+          <span class="hidden sm:inline-flex">{{ user }}</span>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon color="secondary" v-bind="attrs" v-on="on">
+                <v-icon>mdi-exit-to-app</v-icon>
+              </v-btn>
+            </template>
+            <span>Leave</span>
+          </v-tooltip>
         </div>
       </div>
     </v-app-bar>
@@ -80,13 +88,10 @@ export default {
         ? this.$store.getters.user.displayName
           ? this.$store.getters.user.displayName
           : this.$store.getters.user.firstName
-        : 'User Guest'
+        : localStorage.getItem('displayName')
     },
     userRole() {
       return this.$store.getters.userRole
-    },
-    isRouterLobby() {
-      return this.$route.name == 'lobby'
     },
   },
   methods: {
@@ -111,6 +116,16 @@ export default {
         document.msExitFullscreen()
       }
       this.isFullScreen = false
+    },
+
+    leaveRoom() {
+      this.$emit('leave-room')
+    },
+    startGame() {
+      this.$emit('start-game')
+    },
+    endGame() {
+      this.$emit('end-game')
     },
   },
   mounted() {

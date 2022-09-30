@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <quiz-navbar />
+    <quiz-navbar
+      @leave-room="$emit('leave-room', $event)"
+      @start-game="$emit('start-game', $event)"
+      @end-game="$emit('end-game', $event)"
+    />
     <v-main>
       <v-container fluid>
         <slot />
