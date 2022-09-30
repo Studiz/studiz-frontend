@@ -4,39 +4,43 @@
       fixed
       app
       flat
-      class="drop-shadow-md"
+      class="drop-shadow-md relative"
       height="60"
       dense
       color="background_card"
     >
       <div class="flex items-center gap-x-2">
-        <v-btn
-          v-if="!isFullScreen"
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="openFullscreen"
-        >
-          <v-icon>$vuetify.icons.full_screen</v-icon>
-        </v-btn>
-        <v-btn
-          v-else
-          color="primary"
-          id="theme"
-          rounded
-          icon
-          @click="closeFullscreen"
-        >
-          <v-icon>$vuetify.icons.normal_screen</v-icon>
-        </v-btn>
-        <light-dark-mode />
+        <div class="d-none d-md-inline-flex">
+          <v-btn
+            v-if="!isFullScreen"
+            color="primary"
+            id="theme"
+            rounded
+            icon
+            @click="openFullscreen"
+          >
+            <v-icon>$vuetify.icons.full_screen</v-icon>
+          </v-btn>
+          <v-btn
+            v-else
+            color="primary"
+            id="theme"
+            rounded
+            icon
+            @click="closeFullscreen"
+          >
+            <v-icon>$vuetify.icons.normal_screen</v-icon>
+          </v-btn>
+        </div>
+        <div class="d-none d-md-inline-flex">
+          <light-dark-mode />
+        </div>
         <v-spacer></v-spacer>
         <quiz-progress-bar v-if="!isLobby" />
         <v-spacer></v-spacer>
-        <div v-if="userRole == 'TEACHER'" class="space-x-2">
-          <v-btn outlined>End</v-btn>
-          <v-btn color="primary">Start</v-btn>
+        <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
+          <!-- <v-btn outlined>End</v-btn> -->
+          <v-btn color="primary" class="px-3">Start</v-btn>
         </div>
         <div
           v-else
@@ -46,6 +50,10 @@
           <v-btn v-if="isRouterLobby" color="error">Leave</v-btn>
         </div>
       </div>
+      <div
+        class="absolute bottom-0 left-0 w-full h-1 secondary timer transition-all ease-linear rounded-r-full opacity-100"
+        :style="{ 'transition-duration': timer / 1000 + 's' }"
+      ></div>
     </v-app-bar>
     <v-footer fixed color="transparent" padless v-if="false">
       <div class="primary p-3 rounded-lg w-fit mx-auto my-5">
@@ -72,6 +80,7 @@ export default {
       isFullScreen: false,
       isLobby: false,
       eventFullscreen: null,
+      timer: 3 * 60 * 1000,
     }
   },
   computed: {
@@ -101,6 +110,26 @@ export default {
       }
       this.isFullScreen = true
     },
+    timerProgress() {
+      let x = setInterval(() => {
+        this.timer = this.timer - 1000
+        var minutes = Math.floor((this.timer % (1000 * 60 * 60)) / (1000 * 60))
+        var seconds = Math.floor((this.timer % (1000 * 60)) / 1000)
+
+        document.getElementById('text-timer').innerHTML =
+          (minutes ? minutes + 'm ' : '') + seconds + 's'
+        if (this.timer < 0) {
+          clearInterval(x)
+          document.getElementById('text-timer').innerHTML = 'Expired'
+        }
+      }, 1000)
+
+      const elem = document.querySelector('.timer')
+      elem.style.width = '100%'
+      setTimeout(() => {
+        elem.style.width = '0%'
+      }, 0)
+    },
 
     closeFullscreen() {
       if (document.exitFullscreen) {
@@ -114,6 +143,12 @@ export default {
     },
   },
   mounted() {
+    var minutes = Math.floor((this.timer % (1000 * 60 * 60)) / (1000 * 60))
+    var seconds = Math.floor((this.timer % (1000 * 60)) / 1000)
+    document.getElementById('text-timer').innerHTML =
+      (minutes ? minutes + 'm ' : '') + seconds + 's'
+
+    this.timerProgress()
     document.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement) {
         this.isFullScreen = true
@@ -122,6 +157,7 @@ export default {
       }
     })
   },
+  created() {},
 }
 </script>
 
