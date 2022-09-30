@@ -1,6 +1,8 @@
 <template>
   <layout-quiz>
-    <div class="h-[calc(100vh-calc(24px+60px))] flex flex-col gap-y-3">
+    <div
+      class="h-full md:h-[calc(100vh-calc(24px+60px))] flex flex-col gap-y-3"
+    >
       <v-sheet
         rounded="lg"
         elevation="0"
@@ -9,18 +11,24 @@
         >{{ text }}</v-sheet
       >
 
-      <div class="flex-none md:flex-1 min-h-[14rem] max-h-72 xl:max-h-96">
-        <v-img contain class="max-h-full drop-shadow-md" :src="image" />
+      <div class="flex-none md:flex-1 min-h-0 h-56 lg:max-h-72 items-center">
+        <v-img
+          contain
+          class="max-h-full drop-shadow-md self-center"
+          :src="image"
+        />
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full"
+      >
         <button
-          v-for="(item, index) in 5"
+          v-for="(item, index) in 6"
           :key="item"
           :class="[arrayChoiceColor[index]]"
-          class="min-h-[84px] max-h-40 rounded-lg drop-shadow-md p-4 flex items-center"
+          class="rounded-lg drop-shadow-md p-3 flex items-center focus:no-underline"
         >
-          <span class="h-fit text-lg md:text-xl leading-relaxed text-left">
+          <span class="text-lg leading-relaxed text-left">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias
             officia veniam iure hic facere! Magni
           </span>
