@@ -1,14 +1,6 @@
 <template>
   <div>
-    <v-app-bar
-      fixed
-      app
-      flat
-      class="drop-shadow-md"
-      height="60"
-      dense
-      color="background_card"
-    >
+    <v-app-bar fixed app flat class="drop-shadow-md" height="60" dense color="background_card">
       <div class="flex items-center gap-x-2">
         <v-tooltip bottom v-if="!isFullScreen">
           <template v-slot:activator="{ on, attrs }">
@@ -47,13 +39,10 @@
         <quiz-progress-bar v-if="!isLobby" />
         <v-spacer></v-spacer>
         <div v-if="userRole == 'TEACHER'" class="space-x-2">
-          <v-btn outlined>End</v-btn>
-          <v-btn color="primary">Start</v-btn>
+          <v-btn outlined @click="endGame">End</v-btn>
+          <v-btn color="primary" @click="startGame">Start</v-btn>
         </div>
-        <div
-          v-else
-          class="whitespace-nowrap space-x-3 inline-flex items-center"
-        >
+        <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center" @click="leaveRoom">
           <span class="hidden sm:inline-flex">{{ user }}</span>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -127,6 +116,16 @@ export default {
         document.msExitFullscreen()
       }
       this.isFullScreen = false
+    },
+
+    leaveRoom() {
+      this.$emit('leave-room')
+    },
+    startGame() {
+      this.$emit('start-game')
+    },
+    endGame() {
+      this.$emit('end-game')
     },
   },
   mounted() {

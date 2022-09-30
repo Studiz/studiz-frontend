@@ -1,5 +1,5 @@
 <template>
-  <layout-quiz>
+  <layout-quiz @leave-room="leaveRoom" @start-game="startGame" @end-game="endGame">
     <div class="space-y-3 xl:space-y-5">
       <v-card
         v-if="userRole == 'TEACHER'"
@@ -113,6 +113,12 @@ export default {
     }
   },
   methods: {
+    initGame() {
+      socket.emit('init-game', {
+        quizId: this.$route.params.quizId,
+        quizData: this.quizData,
+      })
+    },
     joinRoom() {
       if (!localStorage.getItem('memberId')) {
         let memberId = uuidv4()
@@ -123,6 +129,7 @@ export default {
           quizId: this.$route.params.quizId,
           user: this.$store.getters.user,
           memberId: localStorage.getItem('memberId'),
+          socketId: socket.id,
         })
       } else {
         socket.emit('join-lobby', {
@@ -132,15 +139,29 @@ export default {
             role: 'Guest',
           },
           memberId: localStorage.getItem('memberId'),
+          socketId: socket.id,
         })
       }
     },
     leaveRoom() {
-      socket.emit('leave-lobby', {
+      if (confirm('Do you want to leave the room?')) {
+        socket.emit('leave-lobby', {
+          quizId: this.$route.params.quizId,
+          memberId: localStorage.getItem('memberId'),
+        })
+        localStorage.removeItem('memberId')
+        this.$router.push('/')
+      }
+    },
+    startGame() {
+      socket.emit('start-game', {
         quizId: this.$route.params.quizId,
-        memberId: localStorage.getItem('memberId'),
       })
-      localStorage.removeItem('memberId')
+    },
+    endGame() {
+      socket.emit('end-game', {
+        quizId: this.$route.params.quizId,
+      })
     },
   },
   computed: {
@@ -151,32 +172,20 @@ export default {
       return this.quizData.questions ? this.quizData.questions.length : 0
     },
   },
-  // beforeDestroy() {
-  //   alert('You will leave the room')
-  //   this.leaveRoom()
-  // },
-  mounted() {
-    if (this.userRole === 'TEACHER') {
-      // socket.emit('init-game', {
-      //   quizId: this.$route.params.quizId,
-      //   user: user.user,
-      // })
-    } else {
-      this.joinRoom()
+  destroyed() {
+    if (confirm('Do you want to leave the room?')) {
+      socket.disconnect()
     }
-
-    // window.addEventListener('beforeunload', (e) => {
-    //   socket.emit('leave-lobby', {
-    //     quizId: this.$route.params.quizId,
-    //     memberId: localStorage.getItem('memberId'),
-    //   })
-    //   localStorage.removeItem('memberId')
-    //   e.preventDefault()
-    //   e.returnValue = 'You will leave the room'
-    // })
-
+  },
+  mounted() {
     socket.on('joined', (data) => {
       this.members = data.map((member) => member.user)
+    })
+
+    socket.on('move-to-home', () => {
+      alert('The quiz has been ended by the teacher')
+      this.$router.push('/')
+      localStorage.removeItem('memberId')
     })
   },
   created() {
@@ -184,11 +193,13 @@ export default {
       TeacherService.getQuizById(this.$route.params.quizId).then((res) => {
         this.pinCode = res.data.pinCode
         this.quizData = res.data.quizTemplate
+        this.initGame()
       })
     } else {
       StudentService.getQuizById(this.$route.params.quizId).then((res) => {
         this.pinCode = res.data.pinCode
         this.quizData = res.data.quizTemplate
+        this.joinRoom()
       })
     }
   },
