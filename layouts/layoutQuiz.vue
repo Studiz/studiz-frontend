@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <quiz-navbar />
+    <quiz-navbar :currentStatus="currentStatus" />
     <v-main>
       <v-container fluid>
         <slot />
@@ -13,6 +13,11 @@
 import QuizNavbar from '~/components/navbar/quizNavbar.vue'
 export default {
   components: { QuizNavbar },
+  props: {
+    currentStatus: {
+      type: String,
+    },
+  },
 }
 </script>
 

@@ -36,7 +36,7 @@
           <light-dark-mode />
         </div>
         <v-spacer></v-spacer>
-        <quiz-progress-bar v-if="!isLobby" />
+        <quiz-progress-bar v-show="isQuestionStatus" />
         <v-spacer></v-spacer>
         <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
           <!-- <v-btn outlined>End</v-btn> -->
@@ -47,12 +47,12 @@
           class="whitespace-nowrap space-x-3 inline-flex items-center"
         >
           <span class="hidden sm:inline-flex"> {{ user }} </span>
-          <v-btn v-if="isRouterLobby" color="error">Leave</v-btn>
+          <v-btn v-if="!isRouterQuiz" color="error">Leave</v-btn>
         </div>
       </div>
       <div
         class="absolute bottom-0 left-0 w-full h-1 secondary timer transition-all ease-linear rounded-r-full opacity-100"
-        :style="{ 'transition-duration': timer / 1000 + 's' }"
+        :style="{ 'transition-duration': timeLimit / 1000 + 's' }"
       ></div>
     </v-app-bar>
     <v-footer fixed color="transparent" padless v-if="false">
@@ -75,12 +75,29 @@ import lightDarkMode from './light-dark-mode.vue'
 import QuizProgressBar from './quizProgressBar.vue'
 export default {
   components: { lightDarkMode, QuizProgressBar },
+  props: {
+    time: {
+      type: Number,
+      default: 3000,
+    },
+    currentStatus: {
+      type: String,
+      required: true,
+    },
+  },
+  watch: {
+    currentStatus(newVal) {
+      if (newVal == 'question') {
+        this.timerProgress()
+      }
+    },
+  },
   data() {
     return {
       isFullScreen: false,
       isLobby: false,
       eventFullscreen: null,
-      timer: 3 * 60 * 1000,
+      timeLimit: 0,
     }
   },
   computed: {
@@ -94,8 +111,11 @@ export default {
     userRole() {
       return this.$store.getters.userRole
     },
-    isRouterLobby() {
-      return this.$route.name == 'lobby'
+    isRouterQuiz() {
+      return this.$route.name === 'quiz-quizId'
+    },
+    isQuestionStatus() {
+      return this.currentStatus === 'question'
     },
   },
   methods: {
@@ -111,14 +131,19 @@ export default {
       this.isFullScreen = true
     },
     timerProgress() {
-      let x = setInterval(() => {
-        this.timer = this.timer - 1000
-        var minutes = Math.floor((this.timer % (1000 * 60 * 60)) / (1000 * 60))
-        var seconds = Math.floor((this.timer % (1000 * 60)) / 1000)
-
+      this.timeLimit = this.time
+      let setTextTime = () => {
+        var m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
+        var s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
         document.getElementById('text-timer').innerHTML =
-          (minutes ? minutes + 'm ' : '') + seconds + 's'
-        if (this.timer < 0) {
+          (m ? m + 'm ' : '') + s + 's'
+      }
+      setTextTime()
+
+      let x = setInterval(() => {
+        this.timeLimit = this.timeLimit - 1000
+        setTextTime()
+        if (this.timeLimit < 0) {
           clearInterval(x)
           document.getElementById('text-timer').innerHTML = 'Expired'
         }
@@ -142,13 +167,8 @@ export default {
       this.isFullScreen = false
     },
   },
-  mounted() {
-    var minutes = Math.floor((this.timer % (1000 * 60 * 60)) / (1000 * 60))
-    var seconds = Math.floor((this.timer % (1000 * 60)) / 1000)
-    document.getElementById('text-timer').innerHTML =
-      (minutes ? minutes + 'm ' : '') + seconds + 's'
 
-    this.timerProgress()
+  mounted() {
     document.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement) {
         this.isFullScreen = true
