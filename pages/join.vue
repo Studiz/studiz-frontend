@@ -100,12 +100,17 @@ export default {
     },
     enterDisplayName() {
       localStorage.setItem('displayName', this.displayName)
-      StudentService.joinQuiz(this.pinCode).then((res) => {
-        this.$router.push({
-          name: 'lobby-quizId',
-          params: { quizId: res.data.quizId, displayName: this.displayName },
+      StudentService.joinQuiz(this.pinCode)
+        .then((res) => {
+          this.$router.push({
+            name: 'lobby-quizId',
+            params: { quizId: res.data.quizId, displayName: this.displayName },
+          })
         })
-      })
+        .catch((err) => {
+          alert(err.response.data)
+          this.$router.push('/')
+        })
     },
   },
   computed: {

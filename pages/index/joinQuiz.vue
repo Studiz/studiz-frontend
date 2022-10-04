@@ -18,13 +18,18 @@ export default {
     joinQuiz(pinCode) {
       StudentService.joinQuiz(pinCode, {
         studentId: localStorage.getItem('userId'),
-      }).then((res) => {
-        console.log(res)
-        this.$router.push({
-          name: 'lobby-quizId',
-          params: { quizId: res.data.quizId },
-        })
       })
+        .then((res) => {
+          console.log(res)
+          this.$router.push({
+            name: 'lobby-quizId',
+            params: { quizId: res.data.quizId },
+          })
+        })
+        .catch((err) => {
+          alert(err.response.data)
+          this.$router.push('/joinquiz')
+        })
     },
   },
 }

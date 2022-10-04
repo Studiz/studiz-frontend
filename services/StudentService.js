@@ -21,7 +21,7 @@ export default {
 
   joinQuiz(pinCode, studentId) {
     // return studizAPI(baseURL).patch(`/joinQuiz/${pinCode}`, studentId);
-    return studizAPI(baseURL).patch(`/joinQuiz/${pinCode}`);
+    return studizAPI(baseURL).post(`/joinQuiz/${pinCode}`);
   },
 
   getQuizById(quizId) {
