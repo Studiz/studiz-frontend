@@ -37,14 +37,7 @@
         <span class="whitespace-nowrap self-end">Edit: {{ quizTemplate.lastUpdated }}</span>
         <div class="inline-flex flex-wrap gap-2 w-full sm:w-auto justify-end">
           <v-btn color="white" class="w-full sm:w-auto" disabled>Assign</v-btn>
-          <v-btn
-            color="primary"
-            class="w-full sm:w-auto"
-            :to="{
-          name: 'lobby-quizId',
-          params: { quizId: quizTemplate.id },
-        }"
-          >Start</v-btn>
+          <v-btn color="primary" class="w-full sm:w-auto" @click="startQuiz">Start</v-btn>
         </div>
       </div>
     </div>
@@ -78,6 +71,19 @@ export default {
       this.$router.push({
         name: 'create-quizTemplateId',
         params: { quizTemplateId: this.quizTemplate.id },
+      })
+    },
+    startQuiz() {
+      TeacherService.createQuiz({
+        teacherId: localStorage.getItem('userId'),
+        quizTemplateId: this.quizTemplate.id,
+        studentList: [],
+      }).then((res) => {
+        console.log(res.data);
+        this.$router.push({
+          name: 'lobby-quizId',
+          params: { quizId: res.data.id }, 
+        })
       })
     },
   },

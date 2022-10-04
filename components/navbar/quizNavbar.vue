@@ -21,14 +21,7 @@
           >
             <v-icon>$vuetify.icons.full_screen</v-icon>
           </v-btn>
-          <v-btn
-            v-else
-            color="primary"
-            id="theme"
-            rounded
-            icon
-            @click="closeFullscreen"
-          >
+          <v-btn v-else color="primary" id="theme" rounded icon @click="closeFullscreen">
             <v-icon>$vuetify.icons.normal_screen</v-icon>
           </v-btn>
         </div>
@@ -39,15 +32,12 @@
         <quiz-progress-bar v-show="isQuestionStatus" />
         <v-spacer></v-spacer>
         <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
-          <!-- <v-btn outlined>End</v-btn> -->
-          <v-btn color="primary" class="px-3">Start</v-btn>
+          <!-- <v-btn outlined @click="endGame">End</v-btn> -->
+          <v-btn color="primary" class="px-3" @click="startGame">Start</v-btn>
         </div>
-        <div
-          v-else
-          class="whitespace-nowrap space-x-3 inline-flex items-center"
-        >
-          <span class="hidden sm:inline-flex"> {{ user }} </span>
-          <v-btn v-if="!isRouterQuiz" color="error">Leave</v-btn>
+        <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center">
+          <span class="hidden sm:inline-flex">{{ user }}</span>
+          <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom">Leave</v-btn>
         </div>
       </div>
       <div
@@ -106,7 +96,7 @@ export default {
         ? this.$store.getters.user.displayName
           ? this.$store.getters.user.displayName
           : this.$store.getters.user.firstName
-        : 'User Guest'
+        : localStorage.getItem('displayName')
     },
     userRole() {
       return this.$store.getters.userRole
@@ -165,6 +155,16 @@ export default {
         document.msExitFullscreen()
       }
       this.isFullScreen = false
+    },
+
+    leaveRoom() {
+      this.$emit('leave-room')
+    },
+    startGame() {
+      this.$emit('start-game')
+    },
+    endGame() {
+      this.$emit('end-game')
     },
   },
 

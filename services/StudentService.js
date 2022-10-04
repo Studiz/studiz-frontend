@@ -11,15 +11,21 @@ export default {
     return studizAPI(baseURL).delete(`/leftClassroom/${classroomId}/${studentId}`);
   },
 
-  generatePinCode(classId) {
-    return studizAPI(baseURL).get(`/getPinCode/${classId}`);
-  },
-  
   updateProfile(studentId, student) {
     return studizAPI(baseURL).put(`/update/student/${studentId}`, student);
   },
 
   updateImageProfile(studentId, image) {
     return studizAPI(baseURL).post(`/upload/student/image/${studentId}`, image);
+  },
+
+  joinQuiz(pinCode, studentId) {
+    // return studizAPI(baseURL).patch(`/joinQuiz/${pinCode}`, studentId);
+    return studizAPI(baseURL).post(`/joinQuiz/${pinCode}`);
+  },
+
+  getQuizById(quizId) {
+    return studizAPI(baseURL).get(`/get/quizForStudent/${quizId}`);
   }
+
 }
