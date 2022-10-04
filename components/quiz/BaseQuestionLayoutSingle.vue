@@ -39,21 +39,27 @@ export default {
 
 <style scoped>
 .red {
-  @apply !bg-red-300/50 dark:!bg-red-300/40 md:hover:ring ring-red-300;
+  @apply !bg-red-300/50 dark:!bg-red-300/40;
+  /* @apply md:hover:ring ring-red-300; */
 }
 .yellow {
-  @apply !bg-yellow-300/50 dark:!bg-yellow-300/40 md:hover:ring ring-yellow-300;
+  @apply !bg-yellow-300/50 dark:!bg-yellow-300/40;
+  /* @apply md:hover:ring ring-yellow-300; */
 }
 .green {
-  @apply !bg-green-300/50 dark:!bg-green-300/40 md:hover:ring ring-green-300;
+  @apply !bg-green-300/50 dark:!bg-green-300/40;
+  /* @apply md:hover:ring ring-green-300; */
 }
 .blue {
-  @apply !bg-sky-300/50 dark:!bg-sky-300/40 md:hover:ring ring-sky-300;
+  @apply !bg-sky-300/50 dark:!bg-sky-300/40;
+  /* @apply md:hover:ring ring-sky-300; */
 }
 .cyan {
-  @apply !bg-cyan-300/50 dark:!bg-cyan-300/40 md:hover:ring ring-cyan-300;
+  @apply !bg-cyan-300/50 dark:!bg-cyan-300/40;
+  /* @apply md:hover:ring ring-cyan-300; */
 }
 .purple {
-  @apply !bg-purple-300/50 dark:!bg-purple-300/40 md:hover:ring ring-purple-300;
+  @apply !bg-purple-300/50 dark:!bg-purple-300/40;
+  /* @apply md:hover:ring ring-purple-300; */
 }
 </style>

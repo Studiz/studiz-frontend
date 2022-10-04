@@ -78,6 +78,39 @@ export default {
         type: 'sort',
         fileImage: {},
       },
+      backendQuestion: {
+        index: 0,
+        time: 1000,
+        image:
+          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662913566784_L2FwcGhvc3RpbmdfcHJvZC9ibG9icy9BRW5CMlVwQnlmSUJxY05lOVlIM3R0eWFlMW5IaXJxS18xZzg4QllqTUw4TzNvcEstVEVlOUhVc2dOdmZ6REd3X0NVV2d5dE1Va0Jpd0w2LUw5RF9rQ2Q0ZHdHUE55TlJnUS5HWnVBa1pPSHVoX0FodTVy_900_900.png?alt=media&token=2c877977-766a-4152-84ff-d936c22b7d60',
+        answer: {
+          options: [
+            {
+              index: 0,
+              option: '555555',
+            },
+            {
+              index: 1,
+              option: '11111111111',
+            },
+            {
+              option: '3333333333333',
+              index: 2,
+            },
+            {
+              index: 3,
+              option: '22222222222',
+            },
+            {
+              index: 4,
+              option: '44444444',
+            },
+          ],
+        },
+        question: 'Look at the shaded model.  Which number sentence is true?',
+        type: 'sort',
+        fileImage: {},
+      },
       question: {
         time: null,
       },
