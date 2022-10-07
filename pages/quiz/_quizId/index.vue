@@ -1,5 +1,9 @@
 <template>
-  <layout-quiz :currentStatus="currentStatus">
+  <layout-quiz
+    :currentStatus="currentStatus"
+    :renderQuestionTime="time"
+    @time-expired="checkAnswer"
+  >
     <div v-if="currentStatus == 'countdown'">
       <the-count-down />
     </div>
@@ -14,7 +18,15 @@
           {{ text }}
         </div>
 
-        <base-question-layout-single />
+        <base-question-layout-single
+          v-if="renderQuestionType == 'single'"
+          :question="renderQuestion"
+          :backendAnswer="backendAnswer"
+          @select-choice="selectChoice"
+        />
+        <base-question-layout-multiple
+          v-if="renderQuestionType == 'multiple'"
+        />
       </div>
     </div>
 
@@ -32,11 +44,17 @@
 </template>
 
 <script>
+import BaseQuestionLayoutMultiple from '~/components/quiz/BaseQuestionLayoutMultiple.vue'
 import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
 import layoutQuiz from '~/layouts/layoutQuiz.vue'
 export default {
-  components: { layoutQuiz, BaseQuestionLayoutSingle, TheCountDown },
+  components: {
+    layoutQuiz,
+    BaseQuestionLayoutSingle,
+    TheCountDown,
+    BaseQuestionLayoutMultiple,
+  },
   layout: 'layoutFree',
   data() {
     return {
@@ -75,45 +93,15 @@ export default {
           ],
         },
         question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'sort',
+        type: 'single',
         fileImage: {},
       },
-      backendQuestion: {
-        index: 0,
-        time: 1000,
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662913566784_L2FwcGhvc3RpbmdfcHJvZC9ibG9icy9BRW5CMlVwQnlmSUJxY05lOVlIM3R0eWFlMW5IaXJxS18xZzg4QllqTUw4TzNvcEstVEVlOUhVc2dOdmZ6REd3X0NVV2d5dE1Va0Jpd0w2LUw5RF9rQ2Q0ZHdHUE55TlJnUS5HWnVBa1pPSHVoX0FodTVy_900_900.png?alt=media&token=2c877977-766a-4152-84ff-d936c22b7d60',
-        answer: {
-          options: [
-            {
-              index: 0,
-              option: '555555',
-            },
-            {
-              index: 1,
-              option: '11111111111',
-            },
-            {
-              option: '3333333333333',
-              index: 2,
-            },
-            {
-              index: 3,
-              option: '22222222222',
-            },
-            {
-              index: 4,
-              option: '44444444',
-            },
-          ],
-        },
-        question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'sort',
-        fileImage: {},
-      },
-      question: {
-        time: null,
-      },
+
+      question: {},
+
+      userSelected: null,
+      backendAnswer: null,
+      time: 0,
     }
   },
   methods: {
@@ -129,15 +117,28 @@ export default {
           this.changeStatus('question')
           this.questionReady()
         }
-      }, 1300)
+      }, 1200)
     },
     questionReady() {
       this.question = this.prepareQuestion
+      this.time = this.question.time
+    },
+    selectChoice(data) {
+      this.userSelected = data
+    },
+    checkAnswer() {
+      this.backendAnswer = 0
     },
   },
   computed: {
     renderCurrentQuestion() {
       return this.question.index + 1
+    },
+    renderQuestionType() {
+      return this.question.type
+    },
+    renderQuestion() {
+      return this.question
     },
   },
   created() {

@@ -12,15 +12,35 @@
       class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full"
     >
       <button
-        v-for="(item, index) in 6"
-        :key="item"
-        :class="[arrayChoiceColor[index]]"
-        class="rounded-lg drop-shadow-md p-3 flex items-center focus:no-underline"
+        v-for="(item, i) in renderQuestion"
+        class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline"
+        :key="`${i}-${item}`"
+        :class="[
+          arrayChoiceColor[i],
+          item.status,
+          selectedChoice.index == i
+            ? 'ring ring-light_primary ring-offset-2 dark:ring-offset-dark_background '
+            : '',
+          Object.keys(selectedChoice).length === 0 && isStepShowAnswer
+            ? 'opacity-100'
+            : selectedChoice.index !== i && isStepShowAnswer
+            ? 'opacity-50'
+            : 'opacity-100',
+          ,
+        ]"
+        @click="selectAnswer(item, i)"
       >
         <span class="text-lg leading-relaxed text-left">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias
-          officia veniam iure hic facere! Magni
+          {{ item.option }}
         </span>
+        <div class="h-10">
+          <v-icon x-large v-if="item.status === 'incorrect'"
+            >mdi-close-thick</v-icon
+          >
+          <v-icon x-large v-if="item.status === 'correct'"
+            >mdi-check-bold</v-icon
+          >
+        </div>
       </button>
     </div>
   </div>
@@ -28,11 +48,79 @@
 
 <script>
 export default {
+  props: {
+    question: {
+      type: Object,
+      required: true,
+    },
+    backendAnswer: {
+      type: Number,
+      default: false,
+    },
+  },
+  watch: {
+    backendAnswer() {
+      this.renderBackendAnswer()
+    },
+  },
   data() {
     return {
       arrayChoiceColor: ['red', 'blue', 'yellow', 'green', 'cyan', 'purple'],
       image: 'https://random.responsiveimages.io/v1/docs',
+      isTimeExpired: false,
+      isStepShowAnswer: false,
+      selectedChoice: {},
+      choice: [],
     }
+  },
+  methods: {
+    selectAnswer(item, index) {
+      if (
+        !this.isTimeExpired &&
+        Object.keys(this.selectedChoice).length === 0
+      ) {
+        this.selectedChoice = { item, index }
+        this.$emit('select-choice', this.selectedChoice)
+        console.log(this.selectedChoice)
+      }
+    },
+    renderBackendAnswer() {
+      this.isStepShowAnswer = true
+      if (Object.keys(this.selectedChoice).length === 0) {
+        this.choice.forEach((item, index) => {
+          if (index === this.backendAnswer) {
+            item.status = 'correct'
+          } else {
+            item.status = 'incorrect'
+          }
+        })
+      } else {
+        if (this.selectedChoice.index === this.backendAnswer) {
+          this.selectedChoice.item.status = 'correct'
+        } else {
+          this.selectedChoice.item.status = 'incorrect'
+        }
+      }
+    },
+  },
+  computed: {
+    renderQuestion() {
+      return this.choice
+    },
+    addStatusForEachChoice() {
+      return this.question.answer.options.map((item) => {
+        return { ...item, status: null }
+      })
+    },
+  },
+  created() {
+    this.$nuxt.$on('time-expired', (prop) => {
+      this.isTimeExpired = prop
+    })
+    this.choice = this.addStatusForEachChoice
+  },
+  destroyed() {
+    this.$nuxt.$off('time-expired')
   },
 }
 </script>
@@ -61,5 +149,14 @@ export default {
 .purple {
   @apply !bg-purple-300/50 dark:!bg-purple-300/40;
   /* @apply md:hover:ring ring-purple-300; */
+}
+.correct {
+  @apply !bg-green-500/50 dark:!bg-green-500/40;
+}
+.incorrect {
+  @apply !bg-red-500/50 dark:!bg-red-500/40;
+}
+.selected {
+  @apply ring ring-blue-500;
 }
 </style>

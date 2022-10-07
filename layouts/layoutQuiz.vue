@@ -2,9 +2,11 @@
   <v-app>
     <quiz-navbar
       :currentStatus="currentStatus"
+      :time="renderQuestionTime"
       @leave-room="$emit('leave-room', $event)"
       @start-game="$emit('start-game', $event)"
       @end-game="$emit('end-game', $event)"
+      @time-expired="$emit('time-expired')"
     />
     <v-main>
       <v-container fluid>
@@ -21,6 +23,11 @@ export default {
   props: {
     currentStatus: {
       type: String,
+      required: true,
+    },
+    renderQuestionTime: {
+      type: Number,
+      required: true,
     },
   },
 }

@@ -14,14 +14,13 @@
           <v-btn
             v-if="!isFullScreen"
             color="primary"
-            id="theme"
             rounded
             icon
             @click="openFullscreen"
           >
             <v-icon>$vuetify.icons.full_screen</v-icon>
           </v-btn>
-          <v-btn v-else color="primary" id="theme" rounded icon @click="closeFullscreen">
+          <v-btn v-else color="primary" rounded icon @click="closeFullscreen">
             <v-icon>$vuetify.icons.normal_screen</v-icon>
           </v-btn>
         </div>
@@ -35,12 +34,18 @@
           <!-- <v-btn outlined @click="endGame">End</v-btn> -->
           <v-btn color="primary" class="px-3" @click="startGame">Start</v-btn>
         </div>
-        <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center">
+        <div
+          v-else
+          class="whitespace-nowrap space-x-3 inline-flex items-center"
+        >
           <span class="hidden sm:inline-flex">{{ user }}</span>
-          <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom">Leave</v-btn>
+          <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom"
+            >Leave</v-btn
+          >
         </div>
       </div>
       <div
+        v-show="isQuestionStatus"
         class="absolute bottom-0 left-0 w-full h-1 secondary timer transition-all ease-linear rounded-r-full opacity-100"
         :style="{ 'transition-duration': timeLimit / 1000 + 's' }"
       ></div>
@@ -68,7 +73,7 @@ export default {
   props: {
     time: {
       type: Number,
-      default: 3000,
+      required: true,
     },
     currentStatus: {
       type: String,
@@ -136,6 +141,8 @@ export default {
         if (this.timeLimit < 0) {
           clearInterval(x)
           document.getElementById('text-timer').innerHTML = 'Expired'
+          this.$emit('time-expired')
+          this.$nuxt.$emit('time-expired', true)
         }
       }, 1000)
 
