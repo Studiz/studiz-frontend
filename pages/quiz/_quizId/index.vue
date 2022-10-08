@@ -7,27 +7,20 @@
     <div v-if="currentStatus == 'countdown'">
       <the-count-down />
     </div>
+
     <div
       v-if="currentStatus == 'question'"
-      class="md:h-[calc(100vh-calc(24px+60px))]"
+      class="md:h-[calc(100vh-calc(24px+60px))] flex flex-col gap-y-3"
     >
-      <div class="flex flex-col gap-y-3 h-full">
-        <div
-          class="background_card overflow-hidden p-3 drop-shadow-md text-lg md:text-2xl lg:text-3xl xl:text-4xl leading-relaxed flex-none rounded-lg"
-        >
-          {{ text }}
-        </div>
+      <base-question-text :question="renderQuestion.question" />
 
-        <base-question-layout-single
-          v-if="renderQuestionType == 'single'"
-          :question="renderQuestion"
-          :backendAnswer="backendAnswer"
-          @select-choice="selectChoice"
-        />
-        <base-question-layout-multiple
-          v-if="renderQuestionType == 'multiple'"
-        />
-      </div>
+      <base-question-layout-single
+        v-if="renderQuestionType == 'single'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-choice="selectChoice"
+      />
+      <base-question-layout-multiple v-if="renderQuestionType == 'multiple'" />
     </div>
 
     <div
@@ -40,12 +33,15 @@
         Waiting Host
       </div>
     </div>
+
+    <div v-if="currentStatus == 'leaderBoard'"></div>
   </layout-quiz>
 </template>
 
 <script>
 import BaseQuestionLayoutMultiple from '~/components/quiz/BaseQuestionLayoutMultiple.vue'
 import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle.vue'
+import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
 import layoutQuiz from '~/layouts/layoutQuiz.vue'
 export default {
@@ -54,11 +50,11 @@ export default {
     BaseQuestionLayoutSingle,
     TheCountDown,
     BaseQuestionLayoutMultiple,
+    BaseQuestionText,
   },
   layout: 'layoutFree',
   data() {
     return {
-      text: 'So I started to walk into the water. I wont lie to you boys, I was terrified. But I pressed on, and as I made my way past',
       currentQuestion: 0,
       totalQuestions: 5,
       currentStatus: 'countdown',

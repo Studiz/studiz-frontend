@@ -5,6 +5,7 @@
         <div class="demo__colored-block"></div>
         <div class="demo__colored-block"></div>
         <div class="demo__colored-block"></div>
+        <div class="demo__colored-block"></div>
       </div>
       <div class="demo__colored-blocks-inner"></div>
       <div class="demo__text">Ready</div>
@@ -53,9 +54,10 @@ export default {}
   padding: 0;
 }
 
-$bgColor: #32386d;
+$testColor: var(--v-primary-base);
+$bgColor: var(--v-background-base);
 
-$numOfColBlocks: 3; // must be higher than 2
+$numOfColBlocks: 4; // must be higher than 2
 $deg: 360deg / $numOfColBlocks;
 
 $red: var(--v-error-base);
@@ -63,9 +65,10 @@ $yellow: var(--v-secondary-base);
 $blue: var(--v-primary-base);
 
 $blocksColors: (
-  1: $red,
+  1: $yellow,
   2: $yellow,
   3: $blue,
+  4: $blue,
 );
 
 $size: 140px;
@@ -172,13 +175,14 @@ body {
     &-path {
       fill: none;
       stroke-width: 10px;
-      stroke: #fff;
+      // stroke: $testColor;
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-dasharray: 0, $totalLen;
       stroke-dashoffset: 0;
       animation: numAnim $totalAT ease-in-out infinite;
       opacity: 0;
+      @apply stroke-gray-700 dark:stroke-gray-200;
     }
   }
 
@@ -192,7 +196,7 @@ body {
     text-align: center;
     line-height: $size;
     font-size: 100px;
-    color: #fff;
+    // color: $testColor;
     text-transform: uppercase;
     letter-spacing: 15px;
     transform: translateX(10px);

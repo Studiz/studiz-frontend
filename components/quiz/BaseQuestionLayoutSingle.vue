@@ -1,10 +1,13 @@
 <template>
   <div class="flex flex-col min-h-0 gap-3 flex-none md:flex-1">
-    <div class="flex-none md:flex-1 min-h-0 h-56 lg:max-h-72 items-center">
+    <div
+      v-if="renderQuestionImage !== ''"
+      class="flex-none md:flex-1 min-h-0 h-56 lg:max-h-72 items-center"
+    >
       <v-img
         contain
         class="max-h-full drop-shadow-md self-center"
-        :src="image"
+        :src="renderQuestionImage"
       />
     </div>
 
@@ -111,6 +114,9 @@ export default {
       return this.question.answer.options.map((item) => {
         return { ...item, status: null }
       })
+    },
+    renderQuestionImage() {
+      return this.question.image
     },
   },
   created() {
