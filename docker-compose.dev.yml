@@ -11,7 +11,7 @@ services:
         image: nginx
         container_name: reverse-poxy
         volumes: 
-            - ./reverse-poxy.conf:/etc/nginx/nginx.conf
+            - ./studiz.conf:/etc/nginx/conf.d/studiz.conf
             - ../../certificateFiles:/etc/nginx/certificateFiles
         restart: on-failure
         ports:
