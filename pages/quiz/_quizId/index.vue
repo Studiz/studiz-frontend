@@ -130,11 +130,8 @@ export default {
       return this.question
     },
   },
-  mounted() {
-    this.currentStatus = 'leaderBoard'
-  },
   created() {
-    // this.countDownTree()
+    this.countDownTree()
   },
 }
 </script>
