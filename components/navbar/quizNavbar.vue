@@ -50,7 +50,8 @@
         :style="{ 'transition-duration': timeLimit / 1000 + 's' }"
       ></div>
     </v-app-bar>
-    <v-footer fixed color="transparent" padless v-if="false">
+
+    <v-footer fixed color="transparent" padless v-if="isLeaderBoardStatus">
       <div class="primary p-3 rounded-lg w-fit mx-auto my-5">
         <v-btn
           color="black"
@@ -109,6 +110,9 @@ export default {
     },
     isQuestionStatus() {
       return this.currentStatus === 'question'
+    },
+    isLeaderBoardStatus() {
+      return this.currentStatus === 'leaderBoard'
     },
   },
   methods: {
