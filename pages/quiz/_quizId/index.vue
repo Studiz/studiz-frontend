@@ -2,6 +2,7 @@
   <layout-quiz
     :currentStatus="currentStatus"
     :renderQuestionTime="time"
+    @next-question="nextQuestion"
     @time-expired="checkAnswer"
   >
     <div v-if="currentStatus == 'countdown'">
@@ -27,11 +28,7 @@
       v-if="currentStatus == 'wating'"
       class="h-[calc(100vh-calc(24px+60px))] flex items-center justify-center"
     >
-      <div
-        class="inline-flex text-4xl font-bold items-end loading dark:loading"
-      >
-        Waiting Host
-      </div>
+      <div class="inline-flex text-4xl font-bold items-end loading dark:loading">Waiting Host</div>
     </div>
 
     <div v-if="currentStatus == 'leaderBoard'"></div>
@@ -44,6 +41,8 @@ import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle
 import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
 import layoutQuiz from '~/layouts/layoutQuiz.vue'
+import socket from '~/plugins/socket.io'
+
 export default {
   components: {
     layoutQuiz,
@@ -92,10 +91,9 @@ export default {
         type: 'single',
         fileImage: {},
       },
-
       question: {},
-
       userSelected: null,
+      prepareBackendAnswer: null,
       backendAnswer: null,
       time: 0,
     }
@@ -120,10 +118,19 @@ export default {
       this.time = this.question.time
     },
     selectChoice(data) {
+      data.quizId = this.$route.params.quizId
+      data.time = 3000
+      data.memberId = localStorage.getItem('memberId')
+      socket.emit('select-choice', data)
       this.userSelected = data
     },
     checkAnswer() {
-      this.backendAnswer = 0
+      this.backendAnswer = this.prepareBackendAnswer
+    },
+    nextQuestion() {
+      socket.emit('press-next-question', {
+        quizId: this.$route.params.quizId,
+      })
     },
   },
   computed: {
@@ -137,7 +144,14 @@ export default {
       return this.question
     },
   },
+  mounted() {
+    socket.on('check-answer', (data) => {
+      this.prepareBackendAnswer = data
+    })
+  },
   created() {
+    this.prepareQuestion = this.$route.params.questionData
+    console.log(this.$route.params.questionData)
     this.countDownTree()
   },
 }

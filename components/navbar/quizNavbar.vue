@@ -11,13 +11,7 @@
     >
       <div class="flex items-center gap-x-2">
         <div class="d-none d-md-inline-flex">
-          <v-btn
-            v-if="!isFullScreen"
-            color="primary"
-            rounded
-            icon
-            @click="openFullscreen"
-          >
+          <v-btn v-if="!isFullScreen" color="primary" rounded icon @click="openFullscreen">
             <v-icon>$vuetify.icons.full_screen</v-icon>
           </v-btn>
           <v-btn v-else color="primary" rounded icon @click="closeFullscreen">
@@ -32,16 +26,12 @@
         <v-spacer></v-spacer>
         <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
           <!-- <v-btn outlined @click="endGame">End</v-btn> -->
-          <v-btn color="primary" class="px-3" @click="startGame">Start</v-btn>
+          <v-btn color="primary" class="px-3" v-if="!isQuestionStatus" @click="startGame">Start</v-btn>
+          <v-btn color="primary" class="px-3" v-if="isQuestionStatus" @click="nextQuestion">Next</v-btn>
         </div>
-        <div
-          v-else
-          class="whitespace-nowrap space-x-3 inline-flex items-center"
-        >
+        <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center">
           <span class="hidden sm:inline-flex">{{ user }}</span>
-          <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom"
-            >Leave</v-btn
-          >
+          <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom">Leave</v-btn>
         </div>
       </div>
       <div
@@ -73,11 +63,9 @@ export default {
   props: {
     time: {
       type: Number,
-      required: true,
     },
     currentStatus: {
       type: String,
-      required: true,
     },
   },
   watch: {
@@ -169,6 +157,9 @@ export default {
     },
     startGame() {
       this.$emit('start-game')
+    },
+    nextQuestion() {
+      this.$emit('next-question')
     },
     endGame() {
       this.$emit('end-game')

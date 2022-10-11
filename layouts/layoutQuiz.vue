@@ -5,8 +5,9 @@
       :time="renderQuestionTime"
       @leave-room="$emit('leave-room', $event)"
       @start-game="$emit('start-game', $event)"
+      @next-question="$emit('next-question', $event)"
       @end-game="$emit('end-game', $event)"
-      @time-expired="$emit('time-expired')"
+      @time-expired="$emit('time-expired', $event)"
     />
     <v-main>
       <v-container fluid>
@@ -23,11 +24,9 @@ export default {
   props: {
     currentStatus: {
       type: String,
-      required: true,
     },
     renderQuestionTime: {
       type: Number,
-      required: true,
     },
   },
 }

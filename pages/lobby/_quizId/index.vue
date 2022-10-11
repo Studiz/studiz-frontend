@@ -1,5 +1,9 @@
 <template>
-  <layout-quiz @leave-room="leaveRoom" @start-game="startGame" @end-game="endGame">
+  <layout-quiz
+    @leave-room="leaveRoom"
+    @start-game="startGame"
+    @end-game="endGame"
+  >
     <div class="space-y-3 xl:space-y-5">
       <v-card
         v-if="userRole == 'TEACHER'"
@@ -11,12 +15,7 @@
             <span>GAME PIN:</span>
             <span class="!text-6xl !font-bold select-all">{{ pinCode }}</span>
           </div>
-          <v-btn
-            icon
-            class="self-center"
-            disabled
-            @click="copyToClipboard(data)"
-          >
+          <v-btn icon class="self-center" disabled @click="copyToClipboard(data)">
             <v-icon>mdi-content-copy</v-icon>
           </v-btn>
         </div>
@@ -57,12 +56,10 @@
             <v-card-text>{{ quizData.description }}</v-card-text>
           </div>
           <div class="flex md:flex-col items-end flex-wrap justify-between">
-            <v-card-subtitle class="whitespace-nowrap text-end !font-semibold"
-              >Questions ({{ totalQuestion }})</v-card-subtitle
-            >
-            <div
-              class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end"
-            >
+            <v-card-subtitle
+              class="whitespace-nowrap text-end !font-semibold"
+            >Questions ({{ totalQuestion }})</v-card-subtitle>
+            <div class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end">
               <v-img
                 class="rounded-full primary"
                 src="https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1661479781086_d8d9c4f9-859b-4afd-8837-2ebd237a35df.png?alt=media&token=4f5d8d8c-ab1f-4f40-b42e-2375f4a91661"
@@ -88,17 +85,14 @@
             <v-img :src="member.imageUrl" v-if="member?.imageUrl" />
             <v-icon x-large v-else>mdi-account-circle</v-icon>
           </v-avatar>
-          <div class="line-clamp-2 w-full" v-if="member">
-            {{ member.displayName }}
-          </div>
+          <div class="line-clamp-2 w-full" v-if="member">{{ member.displayName }}</div>
           <v-btn
             v-if="userRole == 'TEACHER'"
             color="erroraaa"
             text
             small
             class="group-hover:visible group-hover:w-auto group-hover:h-auto invisible w-0 h-0"
-            >leave</v-btn
-          >
+          >leave</v-btn>
         </div>
       </div>
     </div>
@@ -140,6 +134,7 @@ export default {
           user: this.$store.getters.user,
           memberId: localStorage.getItem('memberId'),
           socketId: socket.id,
+          quizData: [],
         })
       } else {
         socket.emit('join-lobby', {
@@ -150,6 +145,7 @@ export default {
           },
           memberId: localStorage.getItem('memberId'),
           socketId: socket.id,
+          quizData: [],
         })
       }
     },
@@ -186,13 +182,23 @@ export default {
     },
   },
   destroyed() {
-    if (confirm('Do you want to leave the room?')) {
-      socket.disconnect()
-    }
+    // if (confirm('Do you want to leave the room?')) {
+    //   socket.disconnect()
+    // }
   },
   mounted() {
     socket.on('joined', (data) => {
       this.members = data.map((member) => member.user)
+    })
+
+    socket.on('move-to-quiz', (data) => {
+      this.$router.push({
+        name: 'quiz-quizId',
+        params: {
+          quizId: this.$route.params.quizId,
+          questionData: data,
+        },
+      })
     })
 
     socket.on('move-to-home', () => {
