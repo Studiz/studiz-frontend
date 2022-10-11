@@ -147,9 +147,12 @@ export default {
     })
   },
   created() {
-    this.prepareQuestion = this.$route.params.questionData
-    console.log(this.$route.params.questionData)
+    if (this.$route.params.quizId !== 'quiztest') {
+      this.prepareQuestion = this.$route.params.questionData
+      console.log(this.$route.params.questionData)
+    }
     this.countDownTree()
+    // this.currentStatus = 'leaderBoard'
   },
 }
 </script>
