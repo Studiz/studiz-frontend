@@ -26,8 +26,18 @@
         <v-spacer></v-spacer>
         <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
           <!-- <v-btn outlined @click="endGame">End</v-btn> -->
-          <v-btn color="primary" class="px-3" v-if="!isQuestionStatus" @click="startGame">Start</v-btn>
-          <v-btn color="primary" class="px-3" v-if="isQuestionStatus" @click="nextQuestion">Next</v-btn>
+          <v-btn
+            color="primary"
+            class="px-3"
+            v-if="!(isQuestionStatus ||  currentStatus === 'leaderBoard')"
+            @click="startGame"
+          >Start</v-btn>
+          <v-btn
+            color="primary"
+            class="px-3"
+            v-if="isQuestionStatus ||  currentStatus === 'leaderBoard'"
+            @click="nextQuestion"
+          >Next</v-btn>
         </div>
         <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center">
           <span class="hidden sm:inline-flex">{{ user }}</span>

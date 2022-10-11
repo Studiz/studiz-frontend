@@ -93,11 +93,29 @@ export default {
       prepareBackendAnswer: null,
       backendAnswer: null,
       time: 0,
+      timeInterval: null,
+      timeAnswer: 0,
     }
+  },
+  watch: {
+    currentStatus(newVal) {
+      if (newVal == 'question') {
+        this.timerProgress()
+      }
+    },
   },
   methods: {
     changeStatus(stutus) {
       this.currentStatus = stutus
+    },
+    timerProgress() {
+      this.timeInterval = setInterval(() => {
+        if (this.timeAnswer < this.prepareQuestion.time) {
+          this.timeAnswer += 10
+        } else {
+          clearInterval(this.timeInterval)
+        }
+      }, 10)
     },
     countDownTree() {
       this.countDown = 3
@@ -115,8 +133,9 @@ export default {
       this.time = this.question.time
     },
     selectChoice(data) {
+      clearInterval(this.timeInterval)
       data.quizId = this.$route.params.quizId
-      data.time = 3000
+      data.timeAnswer = this.timeAnswer
       data.memberId = localStorage.getItem('memberId')
       socket.emit('select-choice', data)
       this.userSelected = data
@@ -125,9 +144,33 @@ export default {
       this.backendAnswer = this.prepareBackendAnswer
     },
     nextQuestion() {
-      socket.emit('press-next-question', {
-        quizId: this.$route.params.quizId,
-      })
+      if (this.currentStatus === 'question') {
+        socket.emit('send-leader-board', {
+          quizId: this.$route.params.quizId,
+        })
+      }
+      if (this.currentStatus === 'leaderBoard') {
+        this.currentStatus = 'countdown'
+        this.time = null
+        socket.emit('send-next-question', {
+          quizId: this.$route.params.quizId,
+        })
+      }
+      // if (this.currentStatus === 'leaderBoard') {
+      //   this.currentQuestion++
+      //   if (this.currentQuestion === this.totalQuestions) {
+      //     this.$router.push({
+      //       name: 'quiz-result',
+      //       params: {
+      //         quizId: this.$route.params.quizId,
+      //       },
+      //     })
+      //   } else {
+      //     this.changeStatus('countdown')
+      //     this.countDownTree()
+      //   }
+      // }
+      // this.currentStatus = 'leaderBoard'
     },
   },
   computed: {
@@ -145,10 +188,19 @@ export default {
     socket.on('check-answer', (data) => {
       this.prepareBackendAnswer = data
     })
+
+    socket.on('show-leader-board', (data) => {
+      this.changeStatus('leaderBoard')
+    })
+
+    socket.on('show-next-question', (data) => {
+      this.prepareQuestion = data
+      console.log(this.prepareQuestion)
+      this.countDownTree()
+    })
   },
   created() {
     this.prepareQuestion = this.$route.params.questionData
-    console.log(this.$route.params.questionData)
     this.countDownTree()
   },
 }
