@@ -4,37 +4,26 @@
     :renderQuestionTime="time"
     @time-expired="checkAnswer"
   >
-    <div v-if="currentStatus == 'countdown'">
-      <the-count-down />
-    </div>
+    <the-count-down v-if="currentStatus === 'countdown'" />
 
     <div
-      v-if="currentStatus == 'question'"
+      v-if="currentStatus === 'question'"
       class="md:h-[calc(100vh-calc(24px+60px))] flex flex-col gap-y-3"
     >
       <base-question-text :question="renderQuestion.question" />
 
       <base-question-layout-single
-        v-if="renderQuestionType == 'single'"
+        v-if="renderQuestionType === 'single'"
         :question="renderQuestion"
         :backendAnswer="backendAnswer"
         @select-choice="selectChoice"
       />
-      <base-question-layout-multiple v-if="renderQuestionType == 'multiple'" />
+      <base-question-layout-multiple v-if="renderQuestionType === 'multiple'" />
     </div>
 
-    <div
-      v-if="currentStatus == 'wating'"
-      class="h-[calc(100vh-calc(24px+60px))] flex items-center justify-center"
-    >
-      <div
-        class="inline-flex text-4xl font-bold items-end loading dark:loading"
-      >
-        Waiting Host
-      </div>
-    </div>
+    <the-waiting v-if="currentStatus === 'wating'" />
 
-    <div v-if="currentStatus == 'leaderBoard'"></div>
+    <the-leader-board v-if="currentStatus === 'leaderBoard'" />
   </layout-quiz>
 </template>
 
@@ -43,6 +32,8 @@ import BaseQuestionLayoutMultiple from '~/components/quiz/BaseQuestionLayoutMult
 import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle.vue'
 import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
+import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
+import TheWaiting from '~/components/quiz/TheWaiting.vue'
 import layoutQuiz from '~/layouts/layoutQuiz.vue'
 export default {
   components: {
@@ -51,6 +42,8 @@ export default {
     TheCountDown,
     BaseQuestionLayoutMultiple,
     BaseQuestionText,
+    TheWaiting,
+    TheLeaderBoard,
   },
   layout: 'layoutFree',
   data() {
@@ -137,8 +130,11 @@ export default {
       return this.question
     },
   },
+  mounted() {
+    this.currentStatus = 'leaderBoard'
+  },
   created() {
-    this.countDownTree()
+    // this.countDownTree()
   },
 }
 </script>
@@ -161,53 +157,5 @@ export default {
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--v-primary-base);
   border-radius: 50px;
-}
-
-.loading:after {
-  content: ' .';
-  animation: dotsLight 1s steps(5, end) infinite;
-}
-
-.dark .dark\:loading:after {
-  content: ' .';
-  animation: dotsDark 1s steps(5, end) infinite;
-}
-
-@keyframes dotsLight {
-  0%,
-  20% {
-    color: rgba(0, 0, 0, 0);
-    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
-  }
-  40% {
-    color: black;
-    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
-  }
-  60% {
-    text-shadow: 0.25em 0 0 black, 0.5em 0 0 rgba(0, 0, 0, 0);
-  }
-  80%,
-  100% {
-    text-shadow: 0.25em 0 0 black, 0.5em 0 0 black;
-  }
-}
-
-@keyframes dotsDark {
-  0%,
-  20% {
-    color: rgba(0, 0, 0, 0);
-    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
-  }
-  40% {
-    color: white;
-    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
-  }
-  60% {
-    text-shadow: 0.25em 0 0 white, 0.5em 0 0 rgba(0, 0, 0, 0);
-  }
-  80%,
-  100% {
-    text-shadow: 0.25em 0 0 white, 0.5em 0 0 white;
-  }
 }
 </style>
