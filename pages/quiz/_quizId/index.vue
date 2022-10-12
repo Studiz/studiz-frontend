@@ -19,7 +19,12 @@
         :backendAnswer="backendAnswer"
         @select-choice="selectChoice"
       />
-      <base-question-layout-multiple v-if="renderQuestionType === 'multiple'" />
+      <base-question-layout-multiple
+        v-if="renderQuestionType === 'multiple'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-multi-choice="selectChoice"
+      />
     </div>
 
     <the-waiting v-if="currentStatus === 'wating'" />
@@ -85,7 +90,7 @@ export default {
           ],
         },
         question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'single',
+        type: 'multiple',
         fileImage: {},
       },
       question: {},
