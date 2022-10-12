@@ -1,19 +1,10 @@
 <template>
   <div class="flex flex-col min-h-0 gap-3 flex-none md:flex-1">
-    <div
-      v-if="renderQuestionImage !== ''"
-      class="flex-none md:flex-1 min-h-0 h-56 lg:max-h-72 items-center"
-    >
-      <v-img
-        contain
-        class="max-h-full drop-shadow-md self-center"
-        :src="renderQuestionImage"
-      >
-        <div class="absolute top-1/2 left-2 transform -translate-y-1/2">
-          {{ remainingSelectedAnswer }}
-        </div>
-      </v-img>
-    </div>
+    <base-question-image :questionImage="renderQuestionImage">
+      <div class="absolute top-1/2 left-2 transform -translate-y-1/2">
+        {{ remainingSelectedAnswer }}
+      </div>
+    </base-question-image>
 
     <div
       class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full"
@@ -51,7 +42,7 @@
         </div>
       </button>
     </div>
-    <div class="inline-flex">
+    <!-- <div class="inline-flex">
       <v-spacer />
       <v-btn
         color="primary"
@@ -62,23 +53,25 @@
       >
         <span class="normal-case text-lg font-semibold">Summit</span>
       </v-btn>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import BaseQuestionImage from './BaseQuestionImage.vue'
 export default {
+  components: { BaseQuestionImage },
   props: {
     question: {
       type: Object,
       required: true,
     },
-    backendAnswer: {
-      type: Number,
-      default: () => {
-        return [0, 4, 1]
-      },
-    },
+    // backendAnswer: {
+    //   type: Number,
+    //   default: () => {
+    //     return [0, 4, 1]
+    //   },
+    // },
     numberOfSelectedAnswer: {
       type: Number,
       default: 3,
@@ -99,6 +92,8 @@ export default {
       selectedChoice: [],
       choice: [],
       remainingSelectedAnswer: this.numberOfSelectedAnswer,
+
+      backendAnswer: [0, 4, 1],
     }
   },
   methods: {
@@ -111,6 +106,7 @@ export default {
         ) {
           item.status = 'selected'
           this.selectedChoice.push(select)
+          this.remainingSelectedAnswer--
           if (this.numberOfSelectedAnswer === this.selectedChoice.length) {
             this.summitAnswer()
           }
@@ -126,8 +122,12 @@ export default {
       console.log(this.backendAnswer)
       this.isStepShowAnswer = true
       if (this.selectedChoice.length === 0) {
-        this.backendAnswer.forEach((item) => {
-          this.choice[item].status = 'correct'
+        this.choice.forEach((item) => {
+          if (this.backendAnswer.includes(item.index)) {
+            item.status = 'correct'
+          } else {
+            item.status = 'incorrect'
+          }
         })
       } else {
         this.selectedChoice.forEach((item) => {
@@ -181,6 +181,9 @@ export default {
       this.isTimeExpired = prop
     })
     this.choice = this.addStatusForEachChoice
+    setTimeout(() => {
+      this.renderBackendAnswer()
+    }, 4000)
   },
   destroyed() {
     this.$nuxt.$off('time-expired')

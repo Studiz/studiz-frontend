@@ -90,7 +90,7 @@ export default {
           ],
         },
         question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'single',
+        type: 'multiple',
         fileImage: {},
       },
       question: {},
