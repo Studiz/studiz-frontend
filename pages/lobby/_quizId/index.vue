@@ -1,9 +1,5 @@
 <template>
-  <layout-quiz
-    @leave-room="leaveRoom"
-    @start-game="startGame"
-    @end-game="endGame"
-  >
+  <layout-quiz @leave-room="leaveRoom" @start-game="startGame" @end-game="endGame">
     <div class="space-y-3 xl:space-y-5">
       <v-card
         v-if="userRole == 'TEACHER'"
@@ -135,17 +131,21 @@ export default {
           memberId: localStorage.getItem('memberId'),
           socketId: socket.id,
           quizData: [],
+          totalScore: 0,
         })
       } else {
         socket.emit('join-lobby', {
           quizId: this.$route.params.quizId,
           user: {
             displayName: this.$route.params.displayName,
+            imageUrl:
+              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=556fa651-57d6-4877-a211-51ded3b82dcb',
             role: 'Guest',
           },
           memberId: localStorage.getItem('memberId'),
           socketId: socket.id,
           quizData: [],
+          totalScore: 0,
         })
       }
     },

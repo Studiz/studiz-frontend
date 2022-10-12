@@ -24,7 +24,7 @@
 
     <the-waiting v-if="currentStatus === 'wating'" />
 
-    <the-leader-board v-if="currentStatus === 'leaderBoard'" />
+    <the-leader-board v-if="currentStatus === 'leaderBoard'" :membersInClass="membersInClass" />
   </layout-quiz>
 </template>
 
@@ -95,6 +95,7 @@ export default {
       time: 0,
       timeInterval: null,
       timeAnswer: 0,
+      membersInClass: [],
     }
   },
   watch: {
@@ -145,13 +146,11 @@ export default {
     },
     nextQuestion() {
       if (this.currentStatus === 'question') {
-        socket.emit('send-leader-board', {
+        socket.emit('send-leaderboard', {
           quizId: this.$route.params.quizId,
         })
       }
       if (this.currentStatus === 'leaderBoard') {
-        this.currentStatus = 'countdown'
-        this.time = null
         socket.emit('send-next-question', {
           quizId: this.$route.params.quizId,
         })
@@ -172,6 +171,15 @@ export default {
       // }
       // this.currentStatus = 'leaderBoard'
     },
+    resetDataQuiz() {
+      this.userSelected = null
+      this.prepareBackendAnswer = null
+      this.backendAnswer = null
+      this.time = 0
+      this.timeInterval = null
+      this.timeAnswer = 0
+      this.membersInClass = []
+    },
   },
   computed: {
     renderCurrentQuestion() {
@@ -189,14 +197,21 @@ export default {
       this.prepareBackendAnswer = data
     })
 
-    socket.on('show-leader-board', (data) => {
+    socket.on('show-leaderboard', (data) => {
       this.changeStatus('leaderBoard')
+      this.membersInClass = data
     })
 
     socket.on('show-next-question', (data) => {
-      this.prepareQuestion = data
-      console.log(this.prepareQuestion)
+      this.currentStatus = 'countdown'
       this.countDownTree()
+      this.prepareQuestion = data
+      this.resetDataQuiz()
+    })
+
+    socket.on('show-leaderboard-summary', (data) => {
+      this.currentStatus = 'leaderBoard'
+      this.membersInClass = data
     })
   },
   created() {

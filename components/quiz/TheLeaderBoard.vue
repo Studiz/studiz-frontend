@@ -10,15 +10,13 @@
       :sort-desc="true"
       :loading="isloading"
       :headers="headers"
-      :items="studentsInClass"
+      :items="membersInClass"
       :page.sync="page"
       :items-per-page="itemsPerPage"
     >
       <template #top>
-        <v-toolbar-title
-          class="font-semibold p-3 flex items-center gap-x-5 flex-wrap"
-        >
-          <span class="">Leader board 👑</span>
+        <v-toolbar-title class="font-semibold p-3 flex items-center gap-x-5 flex-wrap">
+          <span class>Leader board 👑</span>
           <v-spacer />
         </v-toolbar-title>
       </template>
@@ -35,9 +33,7 @@
         </div>
       </template>
       <template v-slot:item.index="{ index }">
-        <div class="p-2">
-          {{ index + 1 }}
-        </div>
+        <div class="p-2">{{ index + 1 }}</div>
       </template>
     </v-data-table>
   </div>
@@ -48,6 +44,11 @@ import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import ClassroomService from '~/services/ClassroomService'
 export default {
   components: { BaseDialogCondition },
+  props: {
+    membersInClass: {
+      type: Array,
+    },
+  },
   data: () => ({
     page: 1,
 
@@ -73,14 +74,14 @@ export default {
       // { text: 'Name', value: 'name', sortable: false },
       { text: 'Score', value: 'score', sortable: false, align: 'end' },
     ],
-    studentsInClass: [],
 
     isloading: false,
   }),
 
   created() {
-    this.loadData()
-    this.isloading = true
+    // this.loadData()
+    console.log(this.membersInClass)
+    // this.isloading = true
   },
 
   methods: {
@@ -88,7 +89,7 @@ export default {
       ClassroomService.getClassroom('mAA7cF92ibcyaaysUlik').then((res) => {
         this.$store.commit('setClassroom', res.data)
         this.isloading = false
-        this.studentsInClass = this.$store.getters.students.map(
+        this.membersInClass = this.$store.getters.students.map(
           (student, index) => {
             return {
               image: student.imageUrl,
@@ -98,16 +99,12 @@ export default {
             }
           }
         )
-        this.studentsInClass.push(structuredClone(this.studentsInClass[0]))
-        this.studentsInClass.push(structuredClone(this.studentsInClass[1]))
-        this.studentsInClass.push(structuredClone(this.studentsInClass[1]))
-        this.studentsInClass.push(structuredClone(this.studentsInClass[1]))
       })
     },
   },
   computed: {
     itemsPerPage() {
-      return this.studentsInClass.length
+      return this.membersInClass.length
     },
   },
 }
