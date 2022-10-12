@@ -58,7 +58,6 @@ export default {
     },
     backendAnswer: {
       type: Number,
-      default: false,
     },
   },
   watch: {

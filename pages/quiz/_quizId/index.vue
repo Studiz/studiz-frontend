@@ -19,7 +19,12 @@
         :backendAnswer="backendAnswer"
         @select-choice="selectChoice"
       />
-      <base-question-layout-multiple v-if="renderQuestionType === 'multiple'" />
+      <base-question-layout-multiple
+        v-if="renderQuestionType === 'multiple'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-multi-choice="selectChoice"
+      />
     </div>
 
     <the-waiting v-if="currentStatus === 'wating'" />
