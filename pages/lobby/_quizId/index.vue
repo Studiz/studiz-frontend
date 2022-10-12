@@ -15,7 +15,7 @@
             <span>GAME PIN:</span>
             <span class="!text-6xl !font-bold select-all">{{ pinCode }}</span>
           </div>
-          <v-btn icon class="self-center" disabled @click="copyToClipboard(data)">
+          <v-btn icon class="self-center" disabled @click="copyToClipboard(pinCode)">
             <v-icon>mdi-content-copy</v-icon>
           </v-btn>
         </div>
