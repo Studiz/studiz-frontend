@@ -25,6 +25,12 @@
         :backendAnswer="backendAnswer"
         @select-multi-choice="selectChoice"
       />
+      <base-question-layout-true-false
+        v-if="renderQuestionType === 'true/false'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-multi-choice="selectChoice"
+      />
     </div>
 
     <the-waiting v-if="currentStatus === 'wating'" />
@@ -36,6 +42,7 @@
 <script>
 import BaseQuestionLayoutMultiple from '~/components/quiz/BaseQuestionLayoutMultiple.vue'
 import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle.vue'
+import BaseQuestionLayoutTrueFalse from '~/components/quiz/BaseQuestionLayoutTrueFalse.vue'
 import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
@@ -52,6 +59,7 @@ export default {
     BaseQuestionText,
     TheWaiting,
     TheLeaderBoard,
+    BaseQuestionLayoutTrueFalse,
   },
   layout: 'layoutFree',
   data() {
@@ -90,7 +98,7 @@ export default {
           ],
         },
         question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'multiple',
+        type: 'true/false',
         fileImage: {},
       },
       question: {},
