@@ -1,15 +1,9 @@
 <template>
   <div class="flex flex-col min-h-0 gap-3 flex-none md:flex-1">
-    <div
-      v-if="renderQuestionImage !== ''"
-      class="flex-none md:flex-1 min-h-0 h-56 lg:max-h-72 items-center"
-    >
-      <v-img
-        contain
-        class="max-h-full drop-shadow-md self-center"
-        :src="renderQuestionImage"
-      />
-    </div>
+    <base-question-image
+      :questionImage="renderQuestionImage"
+      :numberOfAnswer="numberOfAnswer"
+    />
 
     <div
       class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full"
@@ -50,7 +44,9 @@
 </template>
 
 <script>
+import BaseQuestionImage from './BaseQuestionImage.vue'
 export default {
+  components: { BaseQuestionImage },
   props: {
     question: {
       type: Object,
@@ -58,6 +54,10 @@ export default {
     },
     backendAnswer: {
       type: Number,
+    },
+    numberOfAnswer: {
+      type: Number,
+      default: 0,
     },
   },
   watch: {
@@ -68,7 +68,6 @@ export default {
   data() {
     return {
       arrayChoiceColor: ['red', 'blue', 'yellow', 'green', 'cyan', 'purple'],
-      image: 'https://random.responsiveimages.io/v1/docs',
       isTimeExpired: false,
       isStepShowAnswer: false,
       selectedChoice: {},
