@@ -32,16 +32,7 @@
         :class="[
           arrayChoiceColor[i],
           item.status,
-          selectedChoice.index == i
-            ? 'ring ring-light_primary ring-offset-2 dark:ring-offset-dark_background '
-            : '',
-          selectedChoice.length === 0 && isStepShowAnswer
-            ? 'opacity-100'
-            : !selectedChoice.map((item) => item.index).includes(i) &&
-              isStepShowAnswer
-            ? 'opacity-50'
-            : 'opacity-100',
-          ,
+          isStepShowAnswer && item.status === null ? 'opacity-30' : '',
         ]"
         @click="selectAnswer(item, i)"
       >
@@ -245,6 +236,6 @@ export default {
   @apply !bg-red-500/50 dark:!bg-red-500/40;
 }
 .selected {
-  @apply ring ring-blue-500;
+  @apply ring ring-light_primary ring-offset-2 dark:ring-offset-dark_background;
 }
 </style>
