@@ -42,7 +42,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn outlined @click="cancel">cancel</v-btn>
+              <v-btn text @click="cancel">cancel</v-btn>
               <v-btn type="submit" color="error" @click="deleteQuestion(index)"
                 >delete
               </v-btn>
