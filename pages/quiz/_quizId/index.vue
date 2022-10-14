@@ -208,6 +208,7 @@ export default {
     })
 
     socket.on('show-next-question', (data) => {
+      this.$store.commit('setCurrentPage', data.currentQuestion)
       this.currentStatus = 'countdown'
       this.countDownTree()
       this.prepareQuestion = data
@@ -215,8 +216,15 @@ export default {
     })
 
     socket.on('show-leaderboard-summary', (data) => {
-      this.currentStatus = 'leaderBoard'
-      this.membersInClass = data
+      // this.currentStatus = 'leaderBoard'
+      // this.membersInClass = data
+      this.$router.push({
+        name: 'summary-quizId',
+        params: {
+          quizId: this.$route.params.quizId,
+          membersInClass: data,
+        },
+      })
     })
   },
   created() {

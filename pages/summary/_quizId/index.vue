@@ -1,10 +1,5 @@
 <template>
-  <layout-quiz
-    :currentStatus="'lobby'"
-    @leave-room="leaveRoom"
-    @start-game="startGame"
-    @end-game="endGame"
-  >
+  <layout-quiz @leave-room="leaveRoom" @start-game="startGame" @end-game="endGame">
     <div class="space-y-3 xl:space-y-5">
       <v-card
         v-if="userRole == 'TEACHER'"
@@ -24,18 +19,18 @@
           <div class="inline-flex flex-wrap p-3 gap-3">
             <v-img
               class="rounded-lg primary w-full h-auto"
-              :src="quizData?.image"
+              :src="quizData.image"
               max-height="60px"
               max-width="60px"
             />
             <div class="font-semibold">
-              <div class="text-H2">{{ quizData?.title }}</div>
+              <div class="text-H2">{{ quizData.title }}</div>
               <div>Questions ({{ totalQuestion }})</div>
             </div>
           </div>
           <div class="flex-wrap inline-flex gap-x-3 p-3 self-end h-fit">
             <!-- <span class="h-1 w-1 bg-gray-500 rounded-xl self-center" /> -->
-            <div>Update: {{ quizData?.lastUpdated }}</div>
+            <div>Update: {{ quizData.lastUpdated }}</div>
           </div>
         </div>
       </v-card>
@@ -48,13 +43,13 @@
         <div class="md:flex">
           <v-img
             class="rounded-lg primary w-full h-auto mx-auto"
-            :src="quizData?.image"
+            :src="quizData.image"
             max-height="150px"
             max-width="150px"
           ></v-img>
           <div>
-            <v-card-title>{{ quizData?.title }}</v-card-title>
-            <v-card-text>{{ quizData?.description }}</v-card-text>
+            <v-card-title>{{ quizData.title }}</v-card-title>
+            <v-card-text>{{ quizData.description }}</v-card-text>
           </div>
           <div class="flex md:flex-col items-end flex-wrap justify-between">
             <v-card-subtitle
@@ -69,39 +64,21 @@
               ></v-img>
               <div>
                 <div>Teacher</div>
-                <div>{{ quizData?.lastUpdated }}</div>
+                <div>{{ quizData.lastUpdated }}</div>
               </div>
             </div>
           </div>
         </div>
       </v-card>
 
-      <div class="flex flex-wrap gap-3 justify-center items-center">
-        <div
-          v-for="member in members"
-          :key="member.memberId"
-          class="group background_card drop-shadow-md h-16 w-full sm:w-80 rounded-lg items-center p-2 gap-x-2 inline-flex transition-all"
-        >
-          <v-avatar size="46">
-            <v-img :src="member.imageUrl" v-if="member?.imageUrl" />
-            <v-icon x-large v-else>mdi-account-circle</v-icon>
-          </v-avatar>
-          <div class="line-clamp-2 w-full" v-if="member">{{ member.displayName }}</div>
-          <v-btn
-            v-if="userRole == 'TEACHER'"
-            color="erroraaa"
-            text
-            small
-            class="group-hover:visible group-hover:w-auto group-hover:h-auto invisible w-0 h-0"
-          >leave</v-btn>
-        </div>
-      </div>
+      <the-leader-board :membersInClass="membersInClass" :currentStatus="'summary'"/>
     </div>
   </layout-quiz>
 </template>
 
 <script>
 import LayoutQuiz from '~/layouts/layoutQuiz.vue'
+import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
 import TeacherService from '~/services/TeacherService'
 import StudentService from '~/services/StudentService'
 import { v4 as uuidv4 } from 'uuid'
@@ -109,12 +86,13 @@ import socket from '~/plugins/socket.io'
 
 export default {
   layout: 'layoutFree',
-  components: { LayoutQuiz },
+  components: { LayoutQuiz, TheLeaderBoard },
   data() {
     return {
       members: [],
-      // quizData: {},
-      // pinCode: '',
+      quizData: {},
+      pinCode: '',
+      membersInClass: [],
     }
   },
   methods: {
@@ -185,12 +163,6 @@ export default {
     totalQuestion() {
       return this.quizData?.totalQuestion
     },
-    quizData() {
-      return this.$store.getters.quizData
-    },
-    pinCode() {
-      return this.$store.getters.pinCode
-    },
   },
   destroyed() {
     // if (confirm('Do you want to leave the room?')) {
@@ -198,6 +170,7 @@ export default {
     // }
   },
   mounted() {
+    this.membersInClass = this.$route.params.membersInClass
     socket.on('joined', (data) => {
       this.members = data.map((member) => member.user)
     })
@@ -221,14 +194,14 @@ export default {
   created() {
     if (this.userRole === 'TEACHER') {
       TeacherService.getQuizById(this.$route.params.quizId).then((res) => {
-        this.$store.commit('setPinCode', res.data.pinCode)
-        this.$store.commit('setQuizData', res.data.quizTemplate)
+        this.pinCode = res.data.pinCode
+        this.quizData = res.data.quizTemplate
         this.initGame()
       })
     } else {
       StudentService.getQuizById(this.$route.params.quizId).then((res) => {
-        this.$store.commit('setPinCode', res.data.pinCode)
-        this.$store.commit('setQuizData', res.data.quizTemplate)
+        this.pinCode = res.data.pinCode
+        this.quizData = res.data.quizTemplate
         this.joinRoom()
       })
     }

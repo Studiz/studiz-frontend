@@ -3,6 +3,7 @@ import authModule from './modules/auth'
 import themeModule from './modules/theme'
 import classroomModule from './modules/classroom'
 import createQuizModule from './modules/createQuiz'
+import quizModule from './modules/quiz'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -12,6 +13,7 @@ const createStore = () => {
       theme: themeModule,
       classroom: classroomModule,
       createQuiz: createQuizModule,
+      quiz: quizModule
     },
 
     state: {

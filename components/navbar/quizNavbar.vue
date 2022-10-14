@@ -25,17 +25,12 @@
         <quiz-progress-bar v-show="isQuestionStatus" />
         <v-spacer></v-spacer>
         <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
-          <!-- <v-btn outlined @click="endGame">End</v-btn> -->
+          <v-btn outlined @click="endGame">End</v-btn>
+          <v-btn color="primary" class="px-3" v-if="isLobbyStatus" @click="startGame">Start</v-btn>
           <v-btn
             color="primary"
             class="px-3"
-            v-if="!(isQuestionStatus ||  currentStatus === 'leaderBoard')"
-            @click="startGame"
-          >Start</v-btn>
-          <v-btn
-            color="primary"
-            class="px-3"
-            v-if="isQuestionStatus ||  currentStatus === 'leaderBoard'"
+            v-if="isQuestionStatus ||  isLeaderBoardStatus"
             @click="nextQuestion"
           >Next</v-btn>
         </div>
@@ -108,11 +103,17 @@ export default {
     isRouterQuiz() {
       return this.$route.name === 'quiz-quizId'
     },
+    isLobbyStatus() {
+      return this.currentStatus === 'lobby'
+    },
     isQuestionStatus() {
       return this.currentStatus === 'question'
     },
     isLeaderBoardStatus() {
       return this.currentStatus === 'leaderBoard'
+    },
+    isSummaryStatus() {
+      return this.currentStatus === 'summary'
     },
   },
   methods: {
