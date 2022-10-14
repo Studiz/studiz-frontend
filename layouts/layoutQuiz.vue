@@ -1,9 +1,13 @@
 <template>
   <v-app>
     <quiz-navbar
+      :currentStatus="currentStatus"
+      :time="renderQuestionTime"
       @leave-room="$emit('leave-room', $event)"
       @start-game="$emit('start-game', $event)"
+      @next-question="$emit('next-question', $event)"
       @end-game="$emit('end-game', $event)"
+      @time-expired="$emit('time-expired', $event)"
     />
     <v-main>
       <v-container fluid>
@@ -17,6 +21,14 @@
 import QuizNavbar from '~/components/navbar/quizNavbar.vue'
 export default {
   components: { QuizNavbar },
+  props: {
+    currentStatus: {
+      type: String,
+    },
+    renderQuestionTime: {
+      type: Number,
+    },
+  },
 }
 </script>
 
