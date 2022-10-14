@@ -143,8 +143,7 @@ export default {
           quizId: this.$route.params.quizId,
           user: {
             displayName: this.$route.params.displayName,
-            imageUrl:
-              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=556fa651-57d6-4877-a211-51ded3b82dcb',
+            imageUrl: '',
             role: 'Guest',
           },
           memberId: localStorage.getItem('memberId'),
