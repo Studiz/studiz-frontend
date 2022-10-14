@@ -9,9 +9,9 @@
       class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1 h-full w-full auto-rows-fr"
     >
       <base-question-choice
-        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         v-for="(item, i) in choices"
         :key="`${i}-${item}`"
+        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         :item="item"
         :index="i"
         :arrayChoiceColor="arrayChoiceColor"
@@ -109,21 +109,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.red {
-  @apply !bg-red-300/50 dark:!bg-red-300/40;
-}
-.blue {
-  @apply !bg-sky-300/50 dark:!bg-sky-300/40;
-}
-.correct {
-  @apply !bg-green-500/50 dark:!bg-green-500/40;
-}
-.incorrect {
-  @apply !bg-red-500/50 dark:!bg-red-500/40;
-}
-.selected {
-  @apply ring ring-light_primary ring-offset-2 dark:ring-offset-dark_background;
-}
-</style>

@@ -4,7 +4,7 @@
     :class="
       questionImage === ''
         ? 'p-1 flex-initial h-[100px] hidden md:block'
-        : 'min-h-0 md:flex-1 sm:h-56 lg:max-h-72'
+        : 'min-h-0 md:flex-1 sm:h-56 lg:h-72'
     "
   >
     <v-img contain class="max-h-full drop-shadow-md" :src="renderImage">

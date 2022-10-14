@@ -36,6 +36,12 @@
         :backendAnswer="backendAnswer"
         @select-multi-choice="selectChoice"
       />
+      <base-question-layout-poll
+        v-if="renderQuestionType === 'poll'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-multi-choice="selectChoice"
+      />
     </div>
 
     <the-waiting v-if="currentStatus === 'wating'" />
@@ -46,6 +52,7 @@
 
 <script>
 import BaseQuestionLayoutMultiple from '~/components/quiz/BaseQuestionLayoutMultiple.vue'
+import BaseQuestionLayoutPoll from '~/components/quiz/BaseQuestionLayoutPoll.vue'
 import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle.vue'
 import BaseQuestionLayoutTrueFalse from '~/components/quiz/BaseQuestionLayoutTrueFalse.vue'
 import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
@@ -65,6 +72,7 @@ export default {
     TheWaiting,
     TheLeaderBoard,
     BaseQuestionLayoutTrueFalse,
+    BaseQuestionLayoutPoll,
   },
   layout: 'layoutFree',
   data() {
@@ -94,6 +102,11 @@ export default {
               index: 2,
             },
             {
+              option:
+                'Look at the shaded model. Which number sentence is true Which number sentence is true Which number sentence is true',
+              index: 2,
+            },
+            {
               index: 3,
               option: '22222222222',
             },
@@ -104,7 +117,7 @@ export default {
           ],
         },
         question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'true/false',
+        type: 'poll',
         fileImage: {},
       },
       question: {},

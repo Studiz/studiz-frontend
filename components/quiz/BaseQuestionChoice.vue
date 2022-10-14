@@ -1,14 +1,19 @@
 <template>
   <button
-    class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline"
+    class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline gap-x-3"
     :class="[arrayChoiceColor[index], item.status]"
     @click="selectAnswer(item, index)"
   >
-    <div class="absolute top-0 left-0">{{ item.option.length }}</div>
     <span class="text-lg leading-relaxed" :class="[renderFontSize, text_class]">
       {{ item.option }}
     </span>
-    <div class="h-10">
+    <div
+      v-if="typeQuestions === 'poll'"
+      class="h-full w-14 inline-flex items-center p-2 bg-white/30 dark:bg-black/30 rounded-md"
+    >
+      <span class="font-semibold">100%</span>
+    </div>
+    <div v-else class="h-10">
       <v-icon x-large v-if="item.status === 'incorrect'"
         >mdi-close-thick</v-icon
       >
@@ -35,6 +40,9 @@ export default {
     arrayChoiceColor: {
       type: Array,
       default: () => ['red', 'blue', 'yellow', 'green', 'cyan', 'purple'],
+    },
+    typeQuestions: {
+      type: String,
     },
   },
   methods: {

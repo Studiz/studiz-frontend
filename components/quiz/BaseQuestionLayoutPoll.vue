@@ -10,6 +10,7 @@
     >
       <base-question-choice
         v-for="(item, i) in renderQuestion"
+        typeQuestions="poll"
         :key="`${i}-${item}`"
         :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         :index="i"
@@ -66,21 +67,21 @@ export default {
     },
     renderBackendAnswer() {
       this.isStepShowAnswer = true
-      if (Object.keys(this.selectedChoice).length === 0) {
-        this.choice.forEach((item, index) => {
-          if (index === this.backendAnswer) {
-            item.status = 'correct'
-          } else {
-            item.status = 'incorrect'
-          }
-        })
-      } else {
-        if (this.selectedChoice.index === this.backendAnswer) {
-          this.selectedChoice.item.status = 'correct'
-        } else {
-          this.selectedChoice.item.status = 'incorrect'
-        }
-      }
+      // if (Object.keys(this.selectedChoice).length === 0) {
+      //   this.choice.forEach((item, index) => {
+      //     if (index === this.backendAnswer) {
+      //       item.status = 'correct'
+      //     } else {
+      //       item.status = 'incorrect'
+      //     }
+      //   })
+      // } else {
+      //   if (this.selectedChoice.index === this.backendAnswer) {
+      //     this.selectedChoice.item.status = 'correct'
+      //   } else {
+      //     this.selectedChoice.item.status = 'incorrect'
+      //   }
+      // }
     },
   },
   computed: {
