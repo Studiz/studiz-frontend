@@ -6,40 +6,27 @@
     />
 
     <div
-      class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full"
+      class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1 h-full w-full auto-rows-fr"
     >
-      <button
-        v-for="(item, i) in choice"
-        class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline"
+      <base-question-choice
+        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
+        v-for="(item, i) in choices"
         :key="`${i}-${item}`"
-        :class="[
-          arrayChoiceColor[i],
-          item.status,
-          isStepShowAnswer && item.status === null ? 'opacity-30' : '',
-          ,
-        ]"
-        @click="selectAnswer(item, i)"
-      >
-        <span class="text-lg leading-relaxed text-left">
-          {{ item.option }}
-        </span>
-        <div class="h-10">
-          <v-icon x-large v-if="item.status === 'incorrect'"
-            >mdi-close-thick</v-icon
-          >
-          <v-icon x-large v-if="item.status === 'correct'"
-            >mdi-check-bold</v-icon
-          >
-        </div>
-      </button>
+        :item="item"
+        :index="i"
+        :arrayChoiceColor="arrayChoiceColor"
+        text_class="text-center w-full"
+        @selectAnswer="selectAnswer"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import BaseQuestionChoice from './BaseQuestionChoice.vue'
 import BaseQuestionImage from './BaseQuestionImage.vue'
 export default {
-  components: { BaseQuestionImage },
+  components: { BaseQuestionImage, BaseQuestionChoice },
   props: {
     question: {
       type: Object,
@@ -64,7 +51,7 @@ export default {
       isTimeExpired: false,
       isStepShowAnswer: false,
       selectedChoice: {},
-      choice: [
+      choices: [
         {
           option: 'True',
           status: null,
@@ -91,7 +78,7 @@ export default {
     renderBackendAnswer() {
       this.isStepShowAnswer = true
       if (Object.keys(this.selectedChoice).length === 0) {
-        this.choice.forEach((item, index) => {
+        this.choices.forEach((item, index) => {
           if (index === this.backendAnswer) {
             item.status = 'correct'
           } else {

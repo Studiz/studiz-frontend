@@ -14,60 +14,36 @@
     </base-question-image>
 
     <div
-      class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full"
+      class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full auto-rows-fr"
     >
       <div
         class="md:hidden text-center p-4 rounded-full background_card drop-shadow-md col-span-full"
       >
         <span>Choose</span>
-        <span class="font-semibold text-lg">{{
-          remainingAnswersToChoose
-        }}</span>
+        <span class="font-semibold text-lg">
+          {{ remainingAnswersToChoose }}
+        </span>
         <span>{{ remainingAnswersToChoose >= 2 ? 'answers' : 'answer' }}</span>
       </div>
-      <button
+
+      <base-question-choice
         v-for="(item, i) in renderQuestion"
-        class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline"
+        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         :key="`${i}-${item}`"
-        :class="[
-          arrayChoiceColor[i],
-          item.status,
-          isStepShowAnswer && item.status === null ? 'opacity-30' : '',
-        ]"
-        @click="selectAnswer(item, i)"
-      >
-        <span class="text-lg leading-relaxed text-left">
-          {{ item.option }}
-        </span>
-        <div class="h-10">
-          <v-icon x-large v-if="item.status === 'incorrect'"
-            >mdi-close-thick</v-icon
-          >
-          <v-icon x-large v-if="item.status === 'correct'"
-            >mdi-check-bold</v-icon
-          >
-        </div>
-      </button>
+        :index="i"
+        :item="item"
+        :arrayChoiceColor="arrayChoiceColor"
+        @selectAnswer="selectAnswer"
+      />
     </div>
-    <!-- <div class="inline-flex">
-      <v-spacer />
-      <v-btn
-        color="primary"
-        elevation="0"
-        height="48"
-        :disabled="renderDisabledSummitButton"
-        @click.once="summitAnswer"
-      >
-        <span class="normal-case text-lg font-semibold">Summit</span>
-      </v-btn>
-    </div> -->
   </div>
 </template>
 
 <script>
+import BaseQuestionChoice from './BaseQuestionChoice.vue'
 import BaseQuestionImage from './BaseQuestionImage.vue'
 export default {
-  components: { BaseQuestionImage },
+  components: { BaseQuestionImage, BaseQuestionChoice },
   props: {
     question: {
       type: Object,

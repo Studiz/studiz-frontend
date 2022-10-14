@@ -10,6 +10,11 @@
     <div
       v-if="currentStatus === 'question'"
       class="md:h-[calc(100vh-calc(24px+60px))] flex flex-col gap-y-3"
+      :class="
+        renderQuestionType === 'true/false'
+          ? 'h-[calc(100vh-calc(24px+60px))]'
+          : ''
+      "
     >
       <base-question-text :question="renderQuestion.question" />
 
@@ -77,14 +82,15 @@ export default {
           options: [
             {
               index: 0,
-              option: '555555',
+              option: '5555',
             },
             {
               index: 1,
               option: '11111111111',
             },
             {
-              option: '3333333333333',
+              option:
+                'Look at the shaded model. Which number sentence is true Which number sentence is true Which number sentence is true',
               index: 2,
             },
             {

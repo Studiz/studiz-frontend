@@ -8,7 +8,6 @@
     "
   >
     <v-img contain class="max-h-full drop-shadow-md" :src="renderImage">
-      <slot></slot>
     </v-img>
     <div
       class="absolute top-1/2 right-2 transform -translate-y-1/2 text-center p-4 rounded-full background_card drop-shadow-md -space-y-1 w-[100px] h-[100px] hidden md:inline-flex flex-col justify-center items-center"
@@ -16,6 +15,7 @@
       <div class="font-semibold text-lg">{{ numberOfAnswer }}</div>
       <div>Answers</div>
     </div>
+    <slot></slot>
   </div>
 </template>
 
