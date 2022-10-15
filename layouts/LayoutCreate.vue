@@ -9,15 +9,7 @@
         @toggle-setting-quiz="toggleNavDrawerSettingQuiz"
       />
 
-      <v-navigation-drawer
-        absolute
-        touchless
-        bottom
-        app
-        clipped
-        right
-        v-model="drawerSettingQuiz"
-      >
+      <v-navigation-drawer absolute touchless bottom app clipped right v-model="drawerSettingQuiz">
         <v-list class="!py-4 !px-2 h-full">
           <v-list-item-group
             :key="currentQuesiton"
@@ -34,9 +26,9 @@
                 hide-details
                 @change="changeQuizType"
               ></v-select>
-              <div v-show="selectQuizType.value == 'multiple'">
-                *Required more than one correct choice
-              </div>
+              <div
+                v-show="selectQuizType.value == 'multiple'"
+              >*Required more than one correct choice</div>
             </div>
             <v-select
               class="pl-1"
@@ -70,29 +62,16 @@
                     <v-card-title>
                       <span class="break-normal">Delete quiz question</span>
                     </v-card-title>
-                    <v-card-text
-                      >Are you sure you want to delete this question?
-                    </v-card-text>
+                    <v-card-text>Are you sure you want to delete this question?</v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn outlined @click="dialogDelete = false"
-                        >cancel</v-btn
-                      >
-                      <v-btn
-                        type="submit"
-                        color="error"
-                        @click="deleteQuestion(selectItem)"
-                        >delete
-                      </v-btn>
+                      <v-btn outlined @click="dialogDelete = false">cancel</v-btn>
+                      <v-btn type="submit" color="error" @click="deleteQuestion(selectItem)">delete</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
 
-                <v-btn
-                  outlined
-                  color="primary"
-                  @click="duplicateQuestion(selectItem)"
-                >
+                <v-btn outlined color="primary" @click="duplicateQuestion(selectItem)">
                   <span class="normal-case">Duplicate</span>
                 </v-btn>
               </div>
@@ -153,12 +132,9 @@
               </v-btn>
             </template>
             <v-card>
-              <v-card-title class="text-h5"> Add question type </v-card-title>
+              <v-card-title class="text-h5">Add question type</v-card-title>
               <v-card-text class="space-y-2">
-                <div
-                  v-for="(itemType, index) in listQuizType"
-                  :key="`${itemType}-type-${index}`"
-                >
+                <div v-for="(itemType, index) in listQuizType" :key="`${itemType}-type-${index}`">
                   <base-btn-question-type
                     :index="index"
                     :questionType="itemType"
@@ -245,23 +221,23 @@ export default {
       listTimeLimit: [
         {
           text: '5 seconds',
-          value: 500,
+          value: 5000,
         },
         {
           text: '10 seconds',
-          value: 1000,
+          value: 10000,
         },
         {
           text: '15 seconds',
-          value: 1500,
+          value: 15000,
         },
         {
           text: '20 seconds',
-          value: 2000,
+          value: 20000,
         },
         {
           text: '30 seconds',
-          value: 3000,
+          value: 30000,
         },
         {
           text: '1 miniute',
