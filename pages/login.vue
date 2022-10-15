@@ -111,6 +111,7 @@ export default {
       new firebaseui.auth.AuthUI(this.$fire.auth)
 
     let config = {
+      signInFlow: 'popup',
       signInOptions: [this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID],
       signInSuccessUrl: '/classrooms',
       callbacks: {
