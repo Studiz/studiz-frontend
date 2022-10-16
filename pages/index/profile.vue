@@ -19,13 +19,9 @@
               v-bind="attrs"
               v-on="on"
             >
-              <v-icon size="94" color="primary" v-if="!imageProfile"
-                >mdi-account-circle</v-icon
-              >
+              <v-icon size="94" color="primary" v-if="!imageProfile">mdi-account-circle</v-icon>
               <v-img :src="imageProfile" v-else />
-              <div
-                class="absolute bottom-0 left-0 bg-black/50 w-full text-sm h-6"
-              >
+              <div class="absolute bottom-0 left-0 bg-black/50 w-full text-sm h-6">
                 <v-icon dark>mdi-camera</v-icon>
               </div>
             </v-avatar>
@@ -50,9 +46,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn text @click="closeImageUpload">close</v-btn>
-              <v-btn class="primary" text @click="uploadImage" type="submit"
-                >confirm</v-btn
-              >
+              <v-btn class="primary" text @click="uploadImage" type="submit">confirm</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -65,8 +59,7 @@
           </div>
           <!-- <v-spacer></v-spacer> -->
           <base-dialog-condition
-            v-if="isStudnet"
-            @confirm="editDisplayName"
+            @confirm="editInformation"
             colorBTN="primary"
             btn2="primary"
             @open="openForm"
@@ -76,21 +69,16 @@
             <template #icon>
               <v-icon left>mdi-pencil</v-icon>
             </template>
-            <template #title>Change Your display name</template>
+            <template #title>Change Your information</template>
             <template #contain>
-              <v-form
-                ref="form"
-                class="pa-md-3"
-                lazy-validation
-                @submit.prevent="editDisplayName"
-              >
+              <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="editInformation">
                 <v-container>
                   <v-text-field
                     label="Dsiplay name"
                     outlined
                     required
                     :rules="rules.nameRules"
-                    :counter="10"
+                    :counter="50"
                     v-model="newDisplayName"
                   ></v-text-field>
                 </v-container>
@@ -104,6 +92,41 @@
             <span class="w-40 font-semibold">Name</span>
             <span class="font-normal">{{ name }}</span>
           </div>
+          <base-dialog-condition
+            @confirm="editInformation"
+            colorBTN="primary"
+            btn2="primary"
+            @open="openForm"
+            :propDialog="propDialog"
+          >
+            <template #namebtn>Edit</template>
+            <template #icon>
+              <v-icon left>mdi-pencil</v-icon>
+            </template>
+            <template #title>Change Your information</template>
+            <template #contain>
+              <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="editInformation">
+                <v-container>
+                  <v-text-field
+                    label="First name"
+                    outlined
+                    required
+                    :rules="rules.nameRules"
+                    :counter="50"
+                    v-model="newFirstName"
+                  ></v-text-field>
+                  <v-text-field
+                    label="Last name"
+                    outlined
+                    required
+                    :rules="rules.nameRules"
+                    :counter="50"
+                    v-model="newLastName"
+                  ></v-text-field>
+                </v-container>
+              </v-form>
+            </template>
+          </base-dialog-condition>
         </div>
         <v-divider />
         <div class="flex items-center h-16 px-4">
@@ -119,6 +142,8 @@
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import StudentService from '../../services/StudentService.js'
+import TeacherService from '../../services/TeacherService.js'
+
 export default {
   components: { BaseDialogCondition },
   data() {
@@ -128,44 +153,60 @@ export default {
         nameRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 10) ||
-            'Classroom name must be less than 10 characters',
-        ],
-        descriptionRules: [
-          (v) => !!v || 'Required.',
-          (v) =>
-            (v && v.length <= 10) ||
-            'DescriptionRules must be less than 10 characters',
+            (v && v.length <= 50) ||
+            'Classroom name must be less than 50 characters',
         ],
       },
       newDisplayName: '',
+      newFirstName: '',
+      newLastName: '',
       propDialog: true,
       fileImage: null,
       imagePreview: null,
       isOpenImageUpload: false,
+      isloading: false,
     }
   },
   methods: {
-    editDisplayName() {
+    editInformation() {
       if (this.$refs.form.validate()) {
+        this.$store.commit('TOGGLE_LOADING', true)
         let userUpdated = {
           id: this.$store.getters.userId,
           data: Object.assign({}, this.$store.getters.user),
         }
         userUpdated.data.displayName = this.newDisplayName
-        StudentService.updateProfile(
-          this.$store.getters.userId,
-          userUpdated.data
-        ).then((res) => {
-          userUpdated.data = res.data
-          this.$store.commit('setUser', userUpdated)
-          this.propDialog = false
-        })
+        userUpdated.data.firstName = this.newFirstName
+        userUpdated.data.lastName = this.newLastName
+
+        if (this.$store.getters.userRole === 'TEACHER') {
+          TeacherService.updateProfile(
+            this.$store.getters.userId,
+            userUpdated.data
+          ).then((res) => {
+            userUpdated.data = res.data
+            this.$store.commit('setUser', userUpdated)
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.propDialog = false
+          })
+        } else {
+          StudentService.updateProfile(
+            this.$store.getters.userId,
+            userUpdated.data
+          ).then((res) => {
+            userUpdated.data = res.data
+            this.$store.commit('setUser', userUpdated)
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.propDialog = false
+          })
+        }
       }
     },
     openForm() {
       this.newDisplayName = this.displayName
-      this.propDialog = true
+      this.newFirstName = this.$store.getters.user.firstName
+      this.newLastName = this.$store.getters.user.lastName
+      // this.propDialog = true
     },
     previewImage(payload) {
       this.fileImage = payload

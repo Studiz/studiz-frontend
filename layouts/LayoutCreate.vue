@@ -184,14 +184,14 @@
 import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
 import Thumbnail from '~/components/createquesiton/Thumbnail.vue'
-import LoagingPage from '~/components/LoagingPage.vue'
+import LoadingPage from '~/components/LoadingPage.vue'
 import BaseBtnQuestionType from '~/components/createquesiton/BaseBtnQuestionType.vue'
 export default {
   components: {
     createNavbar,
     draggable,
     Thumbnail,
-    LoagingPage,
+    LoadingPage,
     BaseBtnQuestionType,
   },
   props: {
