@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import LoagingPage from '~/components/LoagingPage.vue'
+import LoadingPage from '~/components/LoadingPage.vue'
 import navbar from '~/components/navbar/navbar.vue'
 export default {
-  components: { navbar, LoagingPage },
+  components: { navbar, LoadingPage },
   name: 'DefaultLayout',
   head() {
     return {

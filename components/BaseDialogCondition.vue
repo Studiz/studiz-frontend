@@ -100,6 +100,8 @@ export default {
     },
     click2() {
       this.$emit('confirm')
+      //กระทบหน้าอื่นก็เอาออก
+      this.dialog = false
     },
   },
   mounted() {
