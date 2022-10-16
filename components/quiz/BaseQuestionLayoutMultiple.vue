@@ -28,7 +28,6 @@
 
       <base-question-choice
         v-for="(item, i) in renderQuestion"
-        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         :key="`${i}-${item}`"
         :index="i"
         :item="item"
@@ -49,14 +48,11 @@ export default {
       type: Object,
       required: true,
     },
-    // ถ้าต่อ api ให้เอา comment ออก
-    // backendAnswer: {
-    //   type: Number,
-    //   default: () => {
-    //     return [0, 4, 1]
-    //   },
-    // },
-    numberOfSelectedAnswer: {
+    backendAnswer: {
+      type: Number | null | Array,
+      required: true,
+    },
+    numberCanSelectedAnswer: {
       type: Number,
       default: 3,
     },
@@ -78,26 +74,30 @@ export default {
       isSummitAnswer: false,
       selectedChoice: [],
       choice: [],
-      remainingAnswersToChoose: this.numberOfSelectedAnswer,
-      backendAnswer: [0, 4, 1], // ถ้าต่อ api ให้เอาออก
+      remainingAnswersToChoose: this.numberCanSelectedAnswer,
     }
   },
   methods: {
     selectAnswer(item, index) {
-      const select = { item, index }
+      const selected = { item, index }
       if (!this.isTimeExpired && this.remainingAnswersToChoose > 0) {
         if (
-          item.status !== 'selected' &&
-          this.numberOfSelectedAnswer > this.selectedChoice.length
+          item.isSelect === false &&
+          this.numberCanSelectedAnswer > this.selectedChoice.length
         ) {
-          item.status = 'selected'
-          this.selectedChoice.push(select)
-          if (this.numberOfSelectedAnswer === this.selectedChoice.length) {
+          item.isSelect = true
+          this.selectedChoice.push(selected)
+          if (this.numberCanSelectedAnswer === this.selectedChoice.length) {
             this.summitAnswer()
+            this.choice.forEach((item) => {
+              if (item.isSelect == false) {
+                item.status = 'choice-blur'
+              }
+            })
           }
           this.remainingAnswersToChoose--
         } else {
-          item.status = null
+          item.isSelect = false
           this.selectedChoice = this.selectedChoice.filter(
             (item) => item.index !== index
           )
@@ -108,23 +108,31 @@ export default {
     renderBackendAnswer() {
       this.isStepShowAnswer = true
       if (this.selectedChoice.length === 0) {
-        this.choice.forEach((item) => {
-          if (this.backendAnswer.includes(item.index)) {
-            item.status = 'correct'
+        this.choice.forEach((item, index) => {
+          if (this.backendAnswer.includes(index)) {
+            item.isCorrect = 'correct'
           } else {
-            item.status = 'incorrect'
+            item.isCorrect = 'incorrect'
           }
         })
       } else {
         this.selectedChoice.forEach((item) => {
           if (this.backendAnswer.includes(item.index)) {
-            item.item.status = 'correct'
+            item.item.isCorrect = 'correct'
           } else {
-            item.item.status = 'incorrect'
+            item.item.isCorrect = 'incorrect'
           }
         })
+        setTimeout(() => {
+          this.choice.forEach((item, index) => {
+            if (this.backendAnswer.includes(index)) {
+              item.isCorrect = 'correct'
+            } else item.status = 'choice-blur'
+          })
+        }, 500)
       }
     },
+
     summitAnswer() {
       this.isSummitAnswer = true
       if (
@@ -142,7 +150,12 @@ export default {
     },
     addStatusForEachChoice() {
       return this.question.answer.options.map((item) => {
-        return { ...item, status: null }
+        return {
+          ...item,
+          status: 'choice-blank', // choice-[blank / blur]
+          isSelect: false, // [true / false]
+          isCorrect: '', // [ '' / 'correct' / 'incorrect']
+        }
       })
     },
     renderQuestionImage() {
@@ -167,51 +180,9 @@ export default {
       this.isTimeExpired = prop
     })
     this.choice = this.addStatusForEachChoice
-
-    // ถ้าต่อ api ให้เอาออก {
-    setTimeout(() => {
-      this.renderBackendAnswer()
-    }, 4000)
-    // }
   },
   destroyed() {
     this.$nuxt.$off('time-expired')
   },
 }
 </script>
-
-<style scoped>
-.red {
-  @apply !bg-red-300/50 dark:!bg-red-300/40;
-  /* @apply md:hover:ring ring-red-300; */
-}
-.yellow {
-  @apply !bg-yellow-300/50 dark:!bg-yellow-300/40;
-  /* @apply md:hover:ring ring-yellow-300; */
-}
-.green {
-  @apply !bg-green-300/50 dark:!bg-green-300/40;
-  /* @apply md:hover:ring ring-green-300; */
-}
-.blue {
-  @apply !bg-sky-300/50 dark:!bg-sky-300/40;
-  /* @apply md:hover:ring ring-sky-300; */
-}
-.cyan {
-  @apply !bg-cyan-300/50 dark:!bg-cyan-300/40;
-  /* @apply md:hover:ring ring-cyan-300; */
-}
-.purple {
-  @apply !bg-purple-300/50 dark:!bg-purple-300/40;
-  /* @apply md:hover:ring ring-purple-300; */
-}
-.correct {
-  @apply !bg-green-500/50 dark:!bg-green-500/40;
-}
-.incorrect {
-  @apply !bg-red-500/50 dark:!bg-red-500/40;
-}
-.selected {
-  @apply ring ring-light_primary ring-offset-2 dark:ring-offset-dark_background;
-}
-</style>

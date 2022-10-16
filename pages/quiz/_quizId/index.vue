@@ -82,47 +82,38 @@ export default {
       currentStatus: 'countdown',
 
       prepareQuestion: {
-        index: 0,
-        time: 1000,
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662913566784_L2FwcGhvc3RpbmdfcHJvZC9ibG9icy9BRW5CMlVwQnlmSUJxY05lOVlIM3R0eWFlMW5IaXJxS18xZzg4QllqTUw4TzNvcEstVEVlOUhVc2dOdmZ6REd3X0NVV2d5dE1Va0Jpd0w2LUw5RF9rQ2Q0ZHdHUE55TlJnUS5HWnVBa1pPSHVoX0FodTVy_900_900.png?alt=media&token=2c877977-766a-4152-84ff-d936c22b7d60',
+        image: '',
+        type: 'poll',
         answer: {
           options: [
             {
-              index: 0,
-              option: '5555',
+              selected: 0,
+              option: 'sadd',
             },
             {
-              index: 1,
-              option: '11111111111',
+              option: 'asd',
+              selected: 0,
             },
             {
-              option:
-                'Look at the shaded model. Which number sentence is true Which number sentence is true Which number sentence is true',
-              index: 2,
+              selected: 0,
+              option: 'sadsad',
             },
             {
-              option:
-                'Look at the shaded model. Which number sentence is true Which number sentence is true Which number sentence is true',
-              index: 2,
+              option: 'ffasd',
+              selected: 0,
             },
             {
-              index: 3,
-              option: '22222222222',
-            },
-            {
-              index: 4,
-              option: '44444444',
+              option: 'ffasd',
+              selected: 0,
             },
           ],
         },
-        question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'poll',
-        fileImage: {},
+        question: 'Look at the shaded model. Which number sentence is true?',
+        time: 1000,
       },
       question: {},
       userSelected: null,
-      prepareBackendAnswer: null,
+      prepareBackendAnswer: 1,
       backendAnswer: null,
       time: 0,
       timeInterval: null,
@@ -188,21 +179,6 @@ export default {
           quizId: this.$route.params.quizId,
         })
       }
-      // if (this.currentStatus === 'leaderBoard') {
-      //   this.currentQuestion++
-      //   if (this.currentQuestion === this.totalQuestions) {
-      //     this.$router.push({
-      //       name: 'quiz-result',
-      //       params: {
-      //         quizId: this.$route.params.quizId,
-      //       },
-      //     })
-      //   } else {
-      //     this.changeStatus('countdown')
-      //     this.countDownTree()
-      //   }
-      // }
-      // this.currentStatus = 'leaderBoard'
     },
   },
   computed: {

@@ -12,7 +12,6 @@
         v-for="(item, i) in renderQuestion"
         typeQuestions="poll"
         :key="`${i}-${item}`"
-        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         :index="i"
         :item="item"
         :arrayChoiceColor="arrayChoiceColor"
@@ -51,7 +50,7 @@ export default {
       isTimeExpired: false,
       isStepShowAnswer: false,
       selectedChoice: {},
-      choice: [],
+      choices: [],
     }
   },
   methods: {
@@ -60,37 +59,75 @@ export default {
         !this.isTimeExpired &&
         Object.keys(this.selectedChoice).length === 0
       ) {
-        item.status = 'selected'
+        item.isSelect = true
         this.selectedChoice = { item, index }
         this.$emit('select-choice', this.selectedChoice)
+        this.choices.forEach((item) => {
+          if (item.isSelect == false) {
+            item.status = 'choice-blur'
+          }
+        })
       }
     },
     renderBackendAnswer() {
       this.isStepShowAnswer = true
-      // if (Object.keys(this.selectedChoice).length === 0) {
-      //   this.choice.forEach((item, index) => {
-      //     if (index === this.backendAnswer) {
-      //       item.status = 'correct'
-      //     } else {
-      //       item.status = 'incorrect'
-      //     }
-      //   })
-      // } else {
-      //   if (this.selectedChoice.index === this.backendAnswer) {
-      //     this.selectedChoice.item.status = 'correct'
-      //   } else {
-      //     this.selectedChoice.item.status = 'incorrect'
-      //   }
-      // }
+      let mockBackendAnswer = [90, 30, 50, 40, 10, 20]
+
+      this.choices.forEach((item, index) => {
+        if (item.isSelect == false) {
+          item.status = 'choice-blank'
+        }
+        item.selected = mockBackendAnswer[index]
+        this.counter(index, item.selected, 3000)
+      })
+
+      setTimeout(() => {
+        this.choices.forEach((item, index) => {
+          if (index === this.findMostSelected()) {
+            item.status = 'choice-winner'
+          } else {
+            item.status = 'choice-blur'
+          }
+        })
+      }, 4000)
+    },
+    counter(index, end, duration) {
+      let obj = document.getElementById('percentage-' + index),
+        current = 0,
+        range = end - 0,
+        increment = end > 0 ? 1 : -1,
+        step = Math.abs(Math.floor(duration / range)),
+        timer = setInterval(() => {
+          current += increment
+          obj.textContent = current + '%'
+          if (current == end) {
+            clearInterval(timer)
+          }
+        }, step)
+    },
+    findMostSelected() {
+      let max = 0
+      let index = 0
+      this.choices.forEach((item, i) => {
+        if (item.selected > max) {
+          max = item.selected
+          index = i
+        }
+      })
+      return index
     },
   },
   computed: {
     renderQuestion() {
-      return this.choice
+      return this.choices
     },
     addStatusForEachChoice() {
       return this.question.answer.options.map((item) => {
-        return { ...item, status: null }
+        return {
+          ...item,
+          status: 'choice-blank', // choice-[blank / blur]
+          isSelect: false, // [true / false]
+        }
       })
     },
     renderQuestionImage() {
@@ -101,7 +138,7 @@ export default {
     this.$nuxt.$on('time-expired', (prop) => {
       this.isTimeExpired = prop
     })
-    this.choice = this.addStatusForEachChoice
+    this.choices = this.addStatusForEachChoice
   },
   destroyed() {
     this.$nuxt.$off('time-expired')

@@ -11,7 +11,6 @@
       <base-question-choice
         v-for="(item, i) in choices"
         :key="`${i}-${item}`"
-        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         :item="item"
         :index="i"
         :arrayChoiceColor="arrayChoiceColor"
@@ -33,7 +32,8 @@ export default {
       required: true,
     },
     backendAnswer: {
-      type: Number,
+      type: Number | null,
+      required: true,
     },
     numberOfAnswer: {
       type: Number,
@@ -54,11 +54,15 @@ export default {
       choices: [
         {
           option: 'True',
-          status: null,
+          status: 'choice-blank', // choice-[blank / blur]
+          isSelect: false, // [true / false]
+          isCorrect: '', // [ '' / 'correct' / 'incorrect']
         },
         {
           option: 'False',
-          status: null,
+          status: 'choice-blank', // choice-[blank / blur]
+          isSelect: false, // [true / false]
+          isCorrect: '', // [ '' / 'correct' / 'incorrect']
         },
       ],
     }
@@ -69,10 +73,14 @@ export default {
         !this.isTimeExpired &&
         Object.keys(this.selectedChoice).length === 0
       ) {
-        item.status = 'selected'
+        item.isSelect = true
         this.selectedChoice = { item, index }
         this.$emit('select-choice', this.selectedChoice)
-        console.log(this.selectedChoice)
+        this.choices.forEach((item) => {
+          if (item.isSelect == false) {
+            item.status = 'choice-blur'
+          }
+        })
       }
     },
     renderBackendAnswer() {
@@ -80,17 +88,25 @@ export default {
       if (Object.keys(this.selectedChoice).length === 0) {
         this.choices.forEach((item, index) => {
           if (index === this.backendAnswer) {
-            item.status = 'correct'
+            item.isCorrect = 'correct'
           } else {
-            item.status = 'incorrect'
+            item.isCorrect = 'incorrect'
           }
         })
       } else {
         if (this.selectedChoice.index === this.backendAnswer) {
-          this.selectedChoice.item.status = 'correct'
+          this.selectedChoice.item.isCorrect = 'correct'
         } else {
-          this.selectedChoice.item.status = 'incorrect'
+          this.selectedChoice.item.isCorrect = 'incorrect'
         }
+        console.log(this.backendAnswer)
+        setTimeout(() => {
+          this.choices.forEach((item, index) => {
+            if (this.backendAnswer === index) {
+              item.isCorrect = 'correct'
+            } else item.status = 'choice-blur'
+          })
+        }, 500)
       }
     },
   },

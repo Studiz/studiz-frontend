@@ -11,7 +11,6 @@
       <base-question-choice
         v-for="(item, i) in renderQuestion"
         :key="`${i}-${item}`"
-        :class="isStepShowAnswer && item.status === null ? 'opacity-30' : ''"
         :index="i"
         :item="item"
         :arrayChoiceColor="arrayChoiceColor"
@@ -32,7 +31,8 @@ export default {
       required: true,
     },
     backendAnswer: {
-      type: Number,
+      type: Number | null,
+      required: true,
     },
     numberOfAnswer: {
       type: Number,
@@ -50,7 +50,7 @@ export default {
       isTimeExpired: false,
       isStepShowAnswer: false,
       selectedChoice: {},
-      choice: [],
+      choices: [],
     }
   },
   methods: {
@@ -59,37 +59,55 @@ export default {
         !this.isTimeExpired &&
         Object.keys(this.selectedChoice).length === 0
       ) {
-        item.status = 'selected'
+        item.isSelect = true
         this.selectedChoice = { item, index }
         this.$emit('select-choice', this.selectedChoice)
+        this.choices.forEach((item) => {
+          if (item.isSelect == false) {
+            item.status = 'choice-blur'
+          }
+        })
       }
     },
     renderBackendAnswer() {
       this.isStepShowAnswer = true
       if (Object.keys(this.selectedChoice).length === 0) {
-        this.choice.forEach((item, index) => {
+        this.choices.forEach((item, index) => {
           if (index === this.backendAnswer) {
-            item.status = 'correct'
+            item.isCorrect = 'correct'
           } else {
-            item.status = 'incorrect'
+            item.isCorrect = 'incorrect'
           }
         })
       } else {
         if (this.selectedChoice.index === this.backendAnswer) {
-          this.selectedChoice.item.status = 'correct'
+          this.selectedChoice.item.isCorrect = 'correct'
         } else {
-          this.selectedChoice.item.status = 'incorrect'
+          this.selectedChoice.item.isCorrect = 'incorrect'
         }
+        console.log(this.backendAnswer)
+        setTimeout(() => {
+          this.choices.forEach((item, index) => {
+            if (this.backendAnswer === index) {
+              item.isCorrect = 'correct'
+            } else item.status = 'choice-blur'
+          })
+        }, 500)
       }
     },
   },
   computed: {
     renderQuestion() {
-      return this.choice
+      return this.choices
     },
     addStatusForEachChoice() {
       return this.question.answer.options.map((item) => {
-        return { ...item, status: null }
+        return {
+          ...item,
+          status: 'choice-blank', // choice-[blank / blur]
+          isSelect: false, // [true / false]
+          isCorrect: '', // [ '' / 'correct' / 'incorrect']
+        }
       })
     },
     renderQuestionImage() {
@@ -100,7 +118,7 @@ export default {
     this.$nuxt.$on('time-expired', (prop) => {
       this.isTimeExpired = prop
     })
-    this.choice = this.addStatusForEachChoice
+    this.choices = this.addStatusForEachChoice
   },
   destroyed() {
     this.$nuxt.$off('time-expired')

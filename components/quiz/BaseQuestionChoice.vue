@@ -1,8 +1,13 @@
 <template>
   <button
-    class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline gap-x-3"
-    :class="[arrayChoiceColor[index], item.status]"
-    @click="selectAnswer(item, index)"
+    class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline gap-x-3 transition-all"
+    :class="[
+      arrayChoiceColor[index],
+      item.status,
+      item.isCorrect,
+      renderClassItemIsSelect,
+    ]"
+    @click.once="selectAnswer(item, index)"
   >
     <span class="text-lg leading-relaxed" :class="[renderFontSize, text_class]">
       {{ item.option }}
@@ -11,13 +16,17 @@
       v-if="typeQuestions === 'poll'"
       class="h-full w-14 inline-flex items-center p-2 bg-white/30 dark:bg-black/30 rounded-md"
     >
-      <span class="font-semibold">100%</span>
+      <span :id="`percentage-${index}`" class="font-semibold text-xl text-right"
+        >0%</span
+      >
     </div>
     <div v-else class="h-10">
-      <v-icon x-large v-if="item.status === 'incorrect'"
-        >mdi-close-thick</v-icon
-      >
-      <v-icon x-large v-if="item.status === 'correct'">mdi-check-bold</v-icon>
+      <v-icon x-large v-if="item.isCorrect === 'incorrect'"
+        >mdi-close-thick
+      </v-icon>
+      <v-icon x-large v-if="item.isCorrect === 'correct'"
+        >mdi-check-bold
+      </v-icon>
     </div>
   </button>
 </template>
@@ -65,6 +74,9 @@ export default {
         return 'text-2xl md:text-6xl lg:text-7xl xl:text-8xl'
       }
     },
+    renderClassItemIsSelect() {
+      return this.item.isSelect ? 'choice-selected' : ''
+    },
   },
 }
 </script>
@@ -72,35 +84,45 @@ export default {
 <style scoped>
 .red {
   @apply !bg-red-300/50 dark:!bg-red-300/40;
-  /* @apply md:hover:ring ring-red-300; */
 }
 .yellow {
   @apply !bg-yellow-300/50 dark:!bg-yellow-300/40;
-  /* @apply md:hover:ring ring-yellow-300; */
 }
 .green {
   @apply !bg-green-300/50 dark:!bg-green-300/40;
-  /* @apply md:hover:ring ring-green-300; */
 }
 .blue {
   @apply !bg-sky-300/50 dark:!bg-sky-300/40;
-  /* @apply md:hover:ring ring-sky-300; */
 }
 .cyan {
   @apply !bg-cyan-300/50 dark:!bg-cyan-300/40;
-  /* @apply md:hover:ring ring-cyan-300; */
 }
 .purple {
   @apply !bg-purple-300/50 dark:!bg-purple-300/40;
-  /* @apply md:hover:ring ring-purple-300; */
 }
+
+/* status: 'choice-blank', // choice-[blank / blur]
+  isSelect: false, // [true / false]
+  isCorrect: '', // [ '' / 'correct' / 'incorrect'] */
+
 .correct {
-  @apply !bg-green-500/50 dark:!bg-green-500/40;
+  @apply !bg-green-500/50 dark:!bg-green-500/40 !opacity-100;
 }
 .incorrect {
   @apply !bg-red-500/50 dark:!bg-red-500/40;
 }
-.selected {
+.choice-selected {
   @apply ring ring-light_primary ring-offset-2 dark:ring-offset-dark_background;
+}
+.choice-blank {
+  @apply opacity-100;
+}
+.choice-blur {
+  @apply opacity-40;
+}
+
+.choice-winner::before {
+  content: '👑';
+  @apply rounded-full px-[1px] py-[2px] text-4xl opacity-100;
 }
 </style>
