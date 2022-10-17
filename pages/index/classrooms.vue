@@ -11,7 +11,8 @@
         @click="showInput = !showInput"
         :showInput="showInput"
         v-if="userRole === 'STUDENT'"
-      >join classroom</v-btn>
+        >join classroom</v-btn
+      >
       <Create-classroom v-else />
     </div>
     <v-expand-transition>
@@ -32,14 +33,17 @@
               this.$route.name == 'index-classrooms' ? 'w-full col-span-6' : '',
             ]"
             @click="cancel()"
-          >cancel</v-btn>
+            >cancel</v-btn
+          >
         </Input-join>
       </v-card>
     </v-expand-transition>
 
     <v-divider class="my-5" />
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
+    >
       <nuxt-link
         v-for="classroom in classRoomList"
         :key="classroom.id"
@@ -48,16 +52,18 @@
           params: { classroomsid: classroom.id },
         }"
       >
-        <v-card flat rounded="lg" class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text">
+        <v-card
+          flat
+          rounded="lg"
+          class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text"
+        >
           <v-card-title class="w-full">
             <div class="text-h5 w-10/12 truncate">
               <span class="font-bold white--text">{{ classroom.name }}</span>
             </div>
           </v-card-title>
           <v-card-subtitle class="h-24 overflow-auto scrollbar white--text">
-            {{
-            classroom.description
-            }}
+            {{ classroom.description }}
           </v-card-subtitle>
           <v-card-text
             class="flex justify-between items-start white--text pt-4"
@@ -98,17 +104,19 @@ export default {
       this.showInput = !this.showInput
     },
     joinPinCode(num) {
+      this.$store.commit('TOGGLE_LOADING', true)
       StudentService.joinClassroom(num, this.$store.getters.userId)
         .then((res) => {
           UserService.signInGetProfile(
             localStorage.getItem('accessToken')
           ).then((res) => {
+            this.$store.commit('setUser', res.data)
+            this.$store.commit('TOGGLE_LOADING', false)
             this.$store.commit('TOGGLE_ALERT', {
               type: 'success',
               message: 'Joined classroom successfully',
             })
-            this.$store.commit('setUser', res.data)
-            this.$router.push('/')
+            this.$router.push('/classrooms')
           })
         })
         .catch((err) => {

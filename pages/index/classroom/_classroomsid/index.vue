@@ -75,17 +75,31 @@ export default {
   },
   methods: {
     leave() {
+      this.$store.commit('TOGGLE_LOADING', true)
       StudentService.leaveClassroom(
         this.$route.params.classroomsid,
         this.$store.getters.userId
-      ).then(() => {
-        UserService.signInGetProfile(localStorage.getItem('accessToken')).then(
-          (res) => {
+      )
+        .then(() => {
+          UserService.signInGetProfile(
+            localStorage.getItem('accessToken')
+          ).then((res) => {
             this.$store.commit('setUser', res.data)
-            this.$router.push('/')
-          }
-        )
-      })
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'success',
+              message: 'Leave classroom succeed',
+            })
+            this.$router.push('/classrooms')
+          })
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.message,
+          })
+        })
     },
     deleteclass() {
       console.log('deleteclass')

@@ -223,6 +223,7 @@ export default {
               type: 'error',
               message: err.response.message,
             })
+            this.propDialog = false
           })
       }
     },
@@ -278,6 +279,7 @@ export default {
             message: err.response.data,
           })
           this.isloading = false
+          this.closeImageUpload()
         })
     },
   },
