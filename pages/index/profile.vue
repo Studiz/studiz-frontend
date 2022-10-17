@@ -19,9 +19,13 @@
               v-bind="attrs"
               v-on="on"
             >
-              <v-icon size="94" color="primary" v-if="!imageProfile">mdi-account-circle</v-icon>
+              <v-icon size="94" color="primary" v-if="!imageProfile"
+                >mdi-account-circle</v-icon
+              >
               <v-img :src="imageProfile" v-else />
-              <div class="absolute bottom-0 left-0 bg-black/50 w-full text-sm h-6">
+              <div
+                class="absolute bottom-0 left-0 bg-black/50 w-full text-sm h-6"
+              >
                 <v-icon dark>mdi-camera</v-icon>
               </div>
             </v-avatar>
@@ -52,7 +56,8 @@
                 @click="uploadImage"
                 type="submit"
                 :loading="isloading"
-              >confirm</v-btn>
+                >confirm</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -77,7 +82,12 @@
             </template>
             <template #title>Change Your information</template>
             <template #contain>
-              <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="editInformation">
+              <v-form
+                ref="form"
+                class="pa-md-3"
+                lazy-validation
+                @submit.prevent="editInformation"
+              >
                 <v-container>
                   <v-text-field
                     label="Dsiplay name"
@@ -111,7 +121,12 @@
             </template>
             <template #title>Change Your information</template>
             <template #contain>
-              <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="editInformation">
+              <v-form
+                ref="form"
+                class="pa-md-3"
+                lazy-validation
+                @submit.prevent="editInformation"
+              >
                 <v-container>
                   <v-text-field
                     label="First name"
@@ -185,51 +200,30 @@ export default {
         userUpdated.data.firstName = this.newFirstName
         userUpdated.data.lastName = this.newLastName
 
-        if (this.$store.getters.userRole === 'TEACHER') {
-          TeacherService.updateProfile(
-            this.$store.getters.userId,
-            userUpdated.data
-          )
-            .then((res) => {
-              userUpdated.data = res.data
-              this.$store.commit('setUser', userUpdated)
-              this.$store.commit('TOGGLE_LOADING', false)
-              this.$store.commit('TOGGLE_ALERT', {
-                type: 'success',
-                message: 'Update information succeed',
-              })
-              this.propDialog = false
+        let service =
+          this.$store.getters.userRole === 'TEACHER'
+            ? TeacherService
+            : StudentService
+
+        service
+          .updateProfile(this.$store.getters.userId, userUpdated.data)
+          .then((res) => {
+            userUpdated.data = res.data
+            this.$store.commit('setUser', userUpdated)
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'success',
+              message: 'Update information succeed',
             })
-            .catch((err) => {
-              this.$store.commit('TOGGLE_LOADING', false)
-              this.$store.commit('TOGGLE_ALERT', {
-                type: 'error',
-                message: err.response.message,
-              })
+            this.propDialog = false
+          })
+          .catch((err) => {
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.message,
             })
-        } else {
-          StudentService.updateProfile(
-            this.$store.getters.userId,
-            userUpdated.data
-          )
-            .then((res) => {
-              userUpdated.data = res.data
-              this.$store.commit('setUser', userUpdated)
-              this.$store.commit('TOGGLE_LOADING', false)
-              this.$store.commit('TOGGLE_ALERT', {
-                type: 'success',
-                message: 'Update information succeed',
-              })
-              this.propDialog = false
-            })
-            .catch((err) => {
-              this.$store.commit('TOGGLE_LOADING', false)
-              this.$store.commit('TOGGLE_ALERT', {
-                type: 'error',
-                message: err.response.data.message,
-              })
-            })
-        }
+          })
       }
     },
     openForm() {
@@ -258,7 +252,14 @@ export default {
       data.append('studizImg', this.fileImage)
       this.isloading = true
       this.$store.commit('TOGGLE_LOADING', true)
-      StudentService.updateImageProfile(this.$store.getters.userId, data)
+
+      let service =
+        this.$store.getters.userRole === 'TEACHER'
+          ? TeacherService
+          : StudentService
+
+      service
+        .updateImageProfile(this.$store.getters.userId, data)
         .then((res) => {
           userUpdated.data = res.data
           this.$store.commit('setUser', userUpdated)
