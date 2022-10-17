@@ -7,19 +7,13 @@
         height="50"
         v-bind="attrs"
         v-on="on"
-        >create classroom</v-btn
-      >
+      >create classroom</v-btn>
     </template>
     <v-card>
       <v-card-title class="px-3 px-md-5">
         <span class="break-normal text-H1">Create classroom</span>
       </v-card-title>
-      <v-form
-        ref="form"
-        class="pa-md-3"
-        lazy-validation
-        @submit.prevent="createClassroom"
-      >
+      <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="createClassroom">
         <v-container>
           <v-text-field
             label="Classroom name"
@@ -107,13 +101,22 @@ export default {
         this.loading = true
         TeacherService.createClassroom(data).then((res) => {
           TeacherService.generatePinCode(res.data.id).then(() => {
-            UserService.signInGetProfile(
-              localStorage.getItem('accessToken')
-            ).then((res) => {
-              this.$store.commit('setUser', res.data)
-              this.loading = false
-              this.close()
-            })
+            UserService.signInGetProfile(localStorage.getItem('accessToken'))
+              .then((res) => {
+                this.$store.commit('setUser', res.data)
+                this.loading = false
+                this.$store.commit('TOGGLE_ALERT', {
+                  type: 'success',
+                  message: 'Created classroom successfully',
+                })
+                this.close()
+              })
+              .catch((err) => {
+                this.$store.commit('TOGGLE_ALERT', {
+                  type: 'error',
+                  message: err.response.message,
+                })
+              })
           })
         })
       }
