@@ -13,9 +13,7 @@
     @duplicate-question="duplicateQuestion"
     @save-quiz-template="saveQuizTemplate"
   >
-    <div
-      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1 pb-2"
-    >
+    <div class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1 pb-2">
       <input-question
         class="flex-none"
         :currentQuesiton="currentQuesiton"
@@ -465,6 +463,10 @@ export default {
         )
           .then((res) => {
             if (res.status == 200) {
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Successfully updated quiz template.',
+              })
               this.$store.commit('TOGGLE_LOADING', false)
               window.removeEventListener('beforeunload', this.leavePageHandler)
               this.$router.push('/library')
@@ -484,12 +486,23 @@ export default {
               }
             }
             this.resetQuizTemplate()
+          })
+          .catch((err) => {
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.message,
+            })
           })
       } else {
         TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
           .then((res) => {
             if (res.status == 200) {
               this.$store.commit('TOGGLE_LOADING', false)
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Successfully created quiz template.',
+              })
               window.removeEventListener('beforeunload', this.leavePageHandler)
               this.$router.push('/library')
             }
@@ -508,6 +521,13 @@ export default {
               }
             }
             this.resetQuizTemplate()
+          })
+          .catch((err) => {
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.message,
+            })
           })
       }
     },

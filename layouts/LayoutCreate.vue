@@ -1,7 +1,8 @@
 <template>
   <div>
-    <loaging-page />
+    <loading-page />
     <v-app class="overflow-hidden">
+      <alert-notification />
       <create-navbar
         :quizTitle="quizTitle"
         @save-quiz-template="$emit('save-quiz-template')"
@@ -161,6 +162,7 @@ import draggable from 'vuedraggable'
 import createNavbar from '~/components/navbar/createNavbar.vue'
 import Thumbnail from '~/components/createquesiton/Thumbnail.vue'
 import LoadingPage from '~/components/LoadingPage.vue'
+import AlertNotification from '~/components/AlertNotification.vue'
 import BaseBtnQuestionType from '~/components/createquesiton/BaseBtnQuestionType.vue'
 export default {
   components: {
@@ -169,6 +171,7 @@ export default {
     Thumbnail,
     LoadingPage,
     BaseBtnQuestionType,
+    AlertNotification,
   },
   props: {
     quizTitle: {

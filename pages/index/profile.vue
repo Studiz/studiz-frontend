@@ -46,7 +46,13 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn text @click="closeImageUpload">close</v-btn>
-              <v-btn class="primary" text @click="uploadImage" type="submit">confirm</v-btn>
+              <v-btn
+                class="primary"
+                text
+                @click="uploadImage"
+                type="submit"
+                :loading="isloading"
+              >confirm</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -183,22 +189,46 @@ export default {
           TeacherService.updateProfile(
             this.$store.getters.userId,
             userUpdated.data
-          ).then((res) => {
-            userUpdated.data = res.data
-            this.$store.commit('setUser', userUpdated)
-            this.$store.commit('TOGGLE_LOADING', false)
-            this.propDialog = false
-          })
+          )
+            .then((res) => {
+              userUpdated.data = res.data
+              this.$store.commit('setUser', userUpdated)
+              this.$store.commit('TOGGLE_LOADING', false)
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Update information succeed',
+              })
+              this.propDialog = false
+            })
+            .catch((err) => {
+              this.$store.commit('TOGGLE_LOADING', false)
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'error',
+                message: err.response.message,
+              })
+            })
         } else {
           StudentService.updateProfile(
             this.$store.getters.userId,
             userUpdated.data
-          ).then((res) => {
-            userUpdated.data = res.data
-            this.$store.commit('setUser', userUpdated)
-            this.$store.commit('TOGGLE_LOADING', false)
-            this.propDialog = false
-          })
+          )
+            .then((res) => {
+              userUpdated.data = res.data
+              this.$store.commit('setUser', userUpdated)
+              this.$store.commit('TOGGLE_LOADING', false)
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Update information succeed',
+              })
+              this.propDialog = false
+            })
+            .catch((err) => {
+              this.$store.commit('TOGGLE_LOADING', false)
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'error',
+                message: err.response.data.message,
+              })
+            })
         }
       }
     },
@@ -226,13 +256,28 @@ export default {
       }
       let data = new FormData()
       data.append('studizImg', this.fileImage)
-      StudentService.updateImageProfile(this.$store.getters.userId, data).then(
-        (res) => {
+      this.isloading = true
+      this.$store.commit('TOGGLE_LOADING', true)
+      StudentService.updateImageProfile(this.$store.getters.userId, data)
+        .then((res) => {
           userUpdated.data = res.data
           this.$store.commit('setUser', userUpdated)
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'success',
+            message: 'Update image succeed',
+          })
+          this.isloading = false
           this.closeImageUpload()
-        }
-      )
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.data,
+          })
+          this.isloading = false
+        })
     },
   },
   computed: {
