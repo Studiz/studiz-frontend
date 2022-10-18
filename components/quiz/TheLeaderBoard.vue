@@ -15,7 +15,9 @@
       :items-per-page="itemsPerPage"
     >
       <template #top>
-        <v-toolbar-title class="font-semibold p-3 flex items-center gap-x-5 flex-wrap">
+        <v-toolbar-title
+          class="font-semibold p-3 flex items-center gap-x-5 flex-wrap"
+        >
           <span class>Leader board 👑</span>
           <v-spacer />
         </v-toolbar-title>
@@ -31,6 +33,11 @@
             max-height="40px"
           ></v-img>
         </div>
+      </template>
+      <template v-slot:item.scoreInRound="{ item }">
+        <span class="font-semibold text-green-500" v-if="item.scoreInRound > 0"
+          >{{ item.scoreInRound }}+</span
+        >
       </template>
       <template v-slot:item.index="{ index }">
         <div class="p-2">{{ index + 1 }}</div>
@@ -71,8 +78,8 @@ export default {
         value: 'displayName',
         sortable: false,
       },
-      // { text: 'Name', value: 'name', sortable: false },
-      { text: 'Score', value: 'score', sortable: false, align: 'end' },
+      { text: 'Score', value: 'score', sortable: false },
+      { text: 'Round', value: 'scoreInRound', sortable: false, align: 'end' },
     ],
 
     isloading: false,
@@ -84,24 +91,7 @@ export default {
     // this.isloading = true
   },
 
-  methods: {
-    loadData() {
-      ClassroomService.getClassroom('mAA7cF92ibcyaaysUlik').then((res) => {
-        this.$store.commit('setClassroom', res.data)
-        this.isloading = false
-        this.membersInClass = this.$store.getters.students.map(
-          (student, index) => {
-            return {
-              image: student.imageUrl,
-              displayName: student.displayName,
-              name: `${student.firstName} ${student.lastName}`,
-              score: index + 1 * 10,
-            }
-          }
-        )
-      })
-    },
-  },
+  methods: {},
   computed: {
     itemsPerPage() {
       return this.membersInClass.length
