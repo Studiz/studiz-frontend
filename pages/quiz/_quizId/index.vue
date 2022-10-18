@@ -42,6 +42,12 @@
         :backendAnswer="backendAnswer"
         @select-multi-choice="selectChoice"
       />
+      <base-question-layout-sort
+        v-if="renderQuestionType === 'sort'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-choice="selectChoice"
+      />
     </div>
 
     <the-waiting v-if="currentStatus === 'wating'" />
@@ -54,6 +60,7 @@
 import BaseQuestionLayoutMultiple from '~/components/quiz/BaseQuestionLayoutMultiple.vue'
 import BaseQuestionLayoutPoll from '~/components/quiz/BaseQuestionLayoutPoll.vue'
 import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle.vue'
+import BaseQuestionLayoutSort from '~/components/quiz/BaseQuestionLayoutSort.vue'
 import BaseQuestionLayoutTrueFalse from '~/components/quiz/BaseQuestionLayoutTrueFalse.vue'
 import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
@@ -73,6 +80,7 @@ export default {
     TheLeaderBoard,
     BaseQuestionLayoutTrueFalse,
     BaseQuestionLayoutPoll,
+    BaseQuestionLayoutSort,
   },
   layout: 'layoutFree',
   data() {
@@ -82,34 +90,30 @@ export default {
       currentStatus: 'countdown',
 
       prepareQuestion: {
-        image: '',
-        type: 'poll',
+        image: 'https://picsum.photos/200/300',
+        time: 1000,
         answer: {
           options: [
             {
-              selected: 0,
               option: 'sadd',
+              index: 0,
             },
             {
               option: 'asd',
-              selected: 0,
+              index: 1,
             },
             {
-              selected: 0,
               option: 'sadsad',
+              index: 2,
             },
             {
               option: 'ffasd',
-              selected: 0,
-            },
-            {
-              option: 'ffasd',
-              selected: 0,
+              index: 3,
             },
           ],
         },
         question: 'Look at the shaded model. Which number sentence is true?',
-        time: 1000,
+        type: 'sort',
       },
       question: {},
       userSelected: null,
@@ -219,7 +223,7 @@ export default {
 
 <style scoped>
 .scrollbar {
-  @apply overflow-auto;
+  overflow: auto;
 }
 .scrollbar::-webkit-scrollbar {
   width: 5px;

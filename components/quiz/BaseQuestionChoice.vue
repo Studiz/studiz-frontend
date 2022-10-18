@@ -1,11 +1,12 @@
 <template>
   <button
-    class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline gap-x-3 transition-all"
+    class="rounded-lg drop-shadow-md p-3 flex justify-between items-center focus:no-underline gap-x-3"
     :class="[
       arrayChoiceColor[index],
       item.status,
       item.isCorrect,
       renderClassItemIsSelect,
+      typeQuestions === 'sort' ? 'pl-5' : 'transition-all',
     ]"
     @click.once="selectAnswer(item, index)"
   >
@@ -20,6 +21,13 @@
         >0%</span
       >
     </div>
+
+    <v-icon
+      v-if="typeQuestions === 'sort'"
+      class="handle cursor-grabbing py-3 px-1 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+      >mdi-drag-vertical</v-icon
+    >
+
     <div v-else class="h-10">
       <v-icon x-large v-if="item.isCorrect === 'incorrect'"
         >mdi-close-thick

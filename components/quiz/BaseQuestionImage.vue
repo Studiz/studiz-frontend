@@ -1,21 +1,44 @@
 <template>
   <div
-    class="relative flex-none"
-    :class="
+    class="flex-none"
+    :class="[
       questionImage === ''
-        ? 'p-1 flex-initial h-[100px] hidden md:block'
-        : 'min-h-0 md:flex-1 sm:h-56 lg:h-72'
-    "
+        ? 'flex-initial md:h-[100px] my-auto'
+        : 'min-h-0 min-w-0 md:flex-1',
+    ]"
   >
-    <v-img contain class="max-h-full drop-shadow-md" :src="renderImage">
-    </v-img>
-    <div
-      class="absolute top-1/2 right-2 transform -translate-y-1/2 text-center p-4 rounded-full background_card drop-shadow-md -space-y-1 w-[100px] h-[100px] hidden md:inline-flex flex-col justify-center items-center"
-    >
-      <div class="font-semibold text-lg">{{ numberOfAnswer }}</div>
-      <div>Answers</div>
+    <div class="flex flex-col gap-3 h-full relative">
+      <div class="self-center" v-if="renderIsTeacherRole">
+        <div
+          v-if="typeQuestions === 'sort'"
+          class="flex-none text-center p-4 rounded-full background_card drop-shadow-md -space-y-1 w-[100px] h-[100px] inline-flex flex-col justify-center items-center"
+        >
+          <div class="font-semibold text-lg">
+            {{ numberOfAnswer }}
+          </div>
+          <div>Answers</div>
+        </div>
+
+        <div
+          v-else
+          class="absolute top-1/2 right-2 transform -translate-y-1/2 text-center p-4 rounded-full background_card drop-shadow-md -space-y-1 w-[100px] h-[100px] hidden md:inline-flex flex-col justify-center items-center"
+        >
+          <div class="font-semibold text-lg">{{ numberOfAnswer }}</div>
+          <div>Answers</div>
+        </div>
+      </div>
+
+      <div v-if="questionImage !== ''" class="flex">
+        <v-img
+          contain
+          class="drop-shadow-md max-h-80 sm:max-h-full"
+          :content-class="renderImageClass"
+          :src="renderImage"
+        />
+      </div>
+
+      <slot></slot>
     </div>
-    <slot></slot>
   </div>
 </template>
 
@@ -29,15 +52,30 @@ export default {
     numberOfAnswer: {
       type: Number,
     },
+    typeQuestions: {
+      type: String,
+    },
   },
   computed: {
     renderImage() {
       if (this.questionImage === '') {
-        return 'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=556fa651-57d6-4877-a211-51ded3b82dcb'
+        return ''
       } else return this.questionImage
+    },
+    renderImageClass() {
+      if (this.questionImage === '') {
+        return 'h-[100px] p-1'
+      } else return 'w-auto sm:h-80 md:h-full'
+    },
+    renderIsTeacherRole() {
+      return this.$store.getters.userRole === 'TEACHER' ? true : false
     },
   },
 }
 </script>
 
-<style></style>
+<style scoped>
+:deep(.v-responsive__sizer) {
+  @apply pb-[224px] sm:!pb-0 !transition-none;
+}
+</style>
