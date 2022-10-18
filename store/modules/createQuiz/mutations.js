@@ -3,8 +3,8 @@ export default {
     state.quizTemplate = quizTemplate
   },
 
-  setTeacherId(state, teacherId) {
-    state.quizTemplate.teacherId = teacherId
+  setTeacher(state, teacher) {
+    state.quizTemplate.teacher = teacher
   },
 
 
