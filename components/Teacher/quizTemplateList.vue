@@ -134,9 +134,23 @@ export default {
   },
   methods: {
     deleteQuizTemplate() {
-      TeacherService.deleteQuizTemplate(this.quizTemplate.id).then(() => {
-        this.$emit('delete-quiz-template', this.quizTemplate.id)
-      })
+      this.$store.commit('TOGGLE_LOADING', true)
+      TeacherService.deleteQuizTemplate(this.quizTemplate.id)
+        .then(() => {
+          this.$emit('delete-quiz-template', this.quizTemplate.id)
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'success',
+            message: 'Delete quiz template succeed',
+          })
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.message,
+          })
+        })
       this.dialogDelete = false
     },
     editQuizTemplate() {
@@ -148,17 +162,30 @@ export default {
       })
     },
     startQuiz() {
+      this.$store.commit('TOGGLE_LOADING', true)
       TeacherService.createQuiz({
         teacherId: localStorage.getItem('userId'),
         quizTemplateId: this.quizTemplate.id,
         studentList: [],
-      }).then((res) => {
-        console.log(res.data)
-        this.$router.push({
-          name: 'lobby-quizId',
-          params: { quizId: res.data.id },
-        })
       })
+        .then((res) => {
+          this.$router.push({
+            name: 'lobby-quizId',
+            params: { quizId: res.data.id },
+          })
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'success',
+            message: 'Quiz created',
+          })
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.message,
+          })
+        })
     },
   },
   created() {},

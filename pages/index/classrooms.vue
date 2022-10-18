@@ -62,17 +62,17 @@
               <span class="font-bold white--text">{{ classroom.name }}</span>
             </div>
           </v-card-title>
-          <v-card-subtitle class="h-24 overflow-auto scrollbar white--text">{{
-            classroom.description
-          }}</v-card-subtitle>
+          <v-card-subtitle class="h-24 overflow-auto scrollbar white--text">
+            {{ classroom.description }}
+          </v-card-subtitle>
           <v-card-text
             class="flex justify-between items-start white--text pt-4"
             v-if="userRole == 'STUDENT'"
           >
             <span class="whitespace-nowrap">
               {{ classroom.teacher.firstName }}
-              {{ classroom.teacher.lastName }}</span
-            >
+              {{ classroom.teacher.lastName }}
+            </span>
             <v-avatar class="-m-5 mr-1 white--text">
               <v-icon x-large color="white">mdi-account-circle</v-icon>
             </v-avatar>
@@ -104,17 +104,27 @@ export default {
       this.showInput = !this.showInput
     },
     joinPinCode(num) {
+      this.$store.commit('TOGGLE_LOADING', true)
       StudentService.joinClassroom(num, this.$store.getters.userId)
         .then((res) => {
           UserService.signInGetProfile(
             localStorage.getItem('accessToken')
           ).then((res) => {
             this.$store.commit('setUser', res.data)
-            this.$router.push('/')
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'success',
+              message: 'Joined classroom successfully',
+            })
+            this.$router.push('/classrooms')
           })
         })
         .catch((err) => {
-          console.log(err)
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.message,
+          })
         })
     },
   },

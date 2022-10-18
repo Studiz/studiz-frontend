@@ -1,7 +1,8 @@
 <template>
   <div>
-    <loaging-page />
+    <loading-page />
     <v-app>
+      <alert-notification />
       <Navbar />
       <v-main class="-mt-16 md:-mt-6">
         <v-container>
@@ -13,10 +14,11 @@
 </template>
 
 <script>
-import LoagingPage from '~/components/LoagingPage.vue'
+import LoadingPage from '~/components/LoadingPage.vue'
+import AlertNotification from '~/components/AlertNotification.vue'
 import navbar from '~/components/navbar/navbar.vue'
 export default {
-  components: { navbar, LoagingPage },
+  components: { navbar, LoadingPage, AlertNotification },
   name: 'DefaultLayout',
   head() {
     return {

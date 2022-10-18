@@ -129,7 +129,7 @@ export default {
       propDialog: false,
       quizData: {
         id: '',
-        teacherId: '',
+        teacher: '',
         title: '',
         image: '',
         tags: [],
@@ -465,6 +465,10 @@ export default {
         )
           .then((res) => {
             if (res.status == 200) {
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Successfully updated quiz template.',
+              })
               this.$store.commit('TOGGLE_LOADING', false)
               window.removeEventListener('beforeunload', this.leavePageHandler)
               this.$router.push('/library')
@@ -484,12 +488,23 @@ export default {
               }
             }
             this.resetQuizTemplate()
+          })
+          .catch((err) => {
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.message,
+            })
           })
       } else {
         TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
           .then((res) => {
             if (res.status == 200) {
               this.$store.commit('TOGGLE_LOADING', false)
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Successfully created quiz template.',
+              })
               window.removeEventListener('beforeunload', this.leavePageHandler)
               this.$router.push('/library')
             }
@@ -508,6 +523,13 @@ export default {
               }
             }
             this.resetQuizTemplate()
+          })
+          .catch((err) => {
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.message,
+            })
           })
       }
     },
@@ -519,7 +541,17 @@ export default {
       let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')
       let yyyy = dateCreated.getFullYear()
       dateCreated = mm + '/' + dd + '/' + yyyy
-      this.$store.commit('setTeacherId', this.$store.getters.userId)
+
+      let teacher = structuredClone(this.$store.getters.user)
+      teacher = {
+        teacherId: this.$store.getters.userId,
+        displayName: teacher.displayName,
+        firstName: teacher.firstName,
+        lastName: teacher.lastName,
+        imageUrl: teacher.imageUrl,
+      }
+
+      this.$store.commit('setTeacher', teacher)
       this.$store.commit('setQuizQuestions', this.quizData.questions)
       this.$store.commit('setLastUpdated', dateCreated)
 

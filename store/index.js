@@ -18,6 +18,11 @@ const createStore = () => {
 
     state: {
       isLoading: false,
+      isAlertActive: false,
+      alertInfo: {
+        type: '',
+        message: ''
+      }
     },
 
     getters: {
@@ -27,8 +32,17 @@ const createStore = () => {
     mutations: {
       TOGGLE_LOADING(state, payload) {
         state.isLoading = payload
-        console.log(payload)
       },
+      TOGGLE_ALERT(state, payload) {
+        state.isAlertActive = true
+        state.alertInfo.type = payload.type
+        state.alertInfo.message = payload.message
+        setTimeout(() => {
+          state.alertInfo.type = ''
+          state.alertInfo.message = ''
+          state.isAlertActive = false
+        }, 3000)
+      }
     },
 
     actions: {},

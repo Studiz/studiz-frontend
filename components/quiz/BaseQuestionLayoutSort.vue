@@ -1,30 +1,43 @@
 <template>
-  <div class="flex flex-col min-h-0 gap-3 flex-none md:flex-1">
+  <div class="flex flex-col md:flex-row gap-3 flex-1">
     <base-question-image
+      typeQuestions="sort"
       :questionImage="renderQuestionImage"
       :numberOfAnswer="numberOfAnswer"
     />
 
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full auto-rows-fr"
-    >
-      <base-question-choice
-        v-for="(item, i) in renderQuestion"
-        :key="`${i}-${item}`"
-        :index="i"
-        :item="item"
-        :arrayChoiceColor="arrayChoiceColor"
-        @selectAnswer="selectAnswer"
-      />
+    <div class="grid grid-cols-1 gap-3 flex-1 h-full w-full auto-cols-fr">
+      <draggable
+        v-bind="dragOptions"
+        v-model="choices"
+        @end="changeOrdering"
+        handle=".handle"
+      >
+        <transition-group
+          type="transition"
+          class="gap-3 flex flex-col h-full auto-cols-fr"
+        >
+          <base-question-choice
+            v-for="(item, i) in choices"
+            :key="`${i}-${item}`"
+            :index="i"
+            :item="item"
+            :arrayChoiceColor="arrayChoiceColor"
+            @selectAnswer="selectAnswer"
+            typeQuestions="sort"
+          />
+        </transition-group>
+      </draggable>
     </div>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 import BaseQuestionChoice from './BaseQuestionChoice.vue'
 import BaseQuestionImage from './BaseQuestionImage.vue'
 export default {
-  components: { BaseQuestionImage, BaseQuestionChoice },
+  components: { draggable, BaseQuestionImage, BaseQuestionChoice },
   props: {
     question: {
       type: Object,
@@ -46,6 +59,11 @@ export default {
   },
   data() {
     return {
+      dragOptions: {
+        animation: 200,
+        disabled: false,
+        ghostClass: 'ghost',
+      },
       arrayChoiceColor: ['red', 'blue', 'yellow', 'green', 'cyan', 'purple'],
       isTimeExpired: false,
       isStepShowAnswer: false,
@@ -54,6 +72,12 @@ export default {
     }
   },
   methods: {
+    changeOrdering() {
+      // this.choices.forEach((item, index) => {
+      //   item.index = index
+      // })
+      // this.$emit('change-option-ordering', this.choices)
+    },
     selectAnswer(item, index) {
       if (
         !this.isTimeExpired &&
@@ -97,9 +121,9 @@ export default {
     },
   },
   computed: {
-    renderQuestion() {
-      return this.choices
-    },
+    // renderQuestion() {
+    //   return this.choices
+    // },
     addStatusForEachChoice() {
       return this.question.answer.options.map((item) => {
         return {
@@ -125,3 +149,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.ghost {
+  opacity: 0.2;
+}
+</style>

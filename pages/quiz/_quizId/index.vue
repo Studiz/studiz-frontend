@@ -10,6 +10,11 @@
     <div
       v-if="currentStatus === 'question'"
       class="md:h-[calc(100vh-calc(24px+60px))] flex flex-col gap-y-3"
+      :class="
+        renderQuestionType === 'true/false'
+          ? 'h-[calc(100vh-calc(24px+60px))]'
+          : ''
+      "
     >
       <base-question-text :question="renderQuestion.question" />
 
@@ -25,6 +30,24 @@
         :backendAnswer="backendAnswer"
         @select-multi-choice="selectChoice"
       />
+      <base-question-layout-true-false
+        v-if="renderQuestionType === 'true/false'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-multi-choice="selectChoice"
+      />
+      <base-question-layout-poll
+        v-if="renderQuestionType === 'poll'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-multi-choice="selectChoice"
+      />
+      <base-question-layout-sort
+        v-if="renderQuestionType === 'sort'"
+        :question="renderQuestion"
+        :backendAnswer="backendAnswer"
+        @select-choice="selectChoice"
+      />
     </div>
 
     <the-waiting v-if="currentStatus === 'wating'" />
@@ -35,7 +58,10 @@
 
 <script>
 import BaseQuestionLayoutMultiple from '~/components/quiz/BaseQuestionLayoutMultiple.vue'
+import BaseQuestionLayoutPoll from '~/components/quiz/BaseQuestionLayoutPoll.vue'
 import BaseQuestionLayoutSingle from '~/components/quiz/BaseQuestionLayoutSingle.vue'
+import BaseQuestionLayoutSort from '~/components/quiz/BaseQuestionLayoutSort.vue'
+import BaseQuestionLayoutTrueFalse from '~/components/quiz/BaseQuestionLayoutTrueFalse.vue'
 import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
@@ -52,6 +78,9 @@ export default {
     BaseQuestionText,
     TheWaiting,
     TheLeaderBoard,
+    BaseQuestionLayoutTrueFalse,
+    BaseQuestionLayoutPoll,
+    BaseQuestionLayoutSort,
   },
   layout: 'layoutFree',
   data() {
@@ -61,41 +90,34 @@ export default {
       currentStatus: 'countdown',
 
       prepareQuestion: {
-        index: 0,
+        image: 'https://picsum.photos/200/300',
         time: 1000,
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662913566784_L2FwcGhvc3RpbmdfcHJvZC9ibG9icy9BRW5CMlVwQnlmSUJxY05lOVlIM3R0eWFlMW5IaXJxS18xZzg4QllqTUw4TzNvcEstVEVlOUhVc2dOdmZ6REd3X0NVV2d5dE1Va0Jpd0w2LUw5RF9rQ2Q0ZHdHUE55TlJnUS5HWnVBa1pPSHVoX0FodTVy_900_900.png?alt=media&token=2c877977-766a-4152-84ff-d936c22b7d60',
         answer: {
           options: [
             {
+              option: 'sadd',
               index: 0,
-              option: '555555',
             },
             {
+              option: 'asd',
               index: 1,
-              option: '11111111111',
             },
             {
-              option: '3333333333333',
+              option: 'sadsad',
               index: 2,
             },
             {
+              option: 'ffasd',
               index: 3,
-              option: '22222222222',
-            },
-            {
-              index: 4,
-              option: '44444444',
             },
           ],
         },
-        question: 'Look at the shaded model.  Which number sentence is true?',
-        type: 'multiple',
-        fileImage: {},
+        question: 'Look at the shaded model. Which number sentence is true?',
+        type: 'sort',
       },
       question: {},
       userSelected: null,
-      prepareBackendAnswer: null,
+      prepareBackendAnswer: 1,
       backendAnswer: null,
       time: 0,
       timeInterval: null,
@@ -160,21 +182,6 @@ export default {
           quizId: this.$route.params.quizId,
         })
       }
-      // if (this.currentStatus === 'leaderBoard') {
-      //   this.currentQuestion++
-      //   if (this.currentQuestion === this.totalQuestions) {
-      //     this.$router.push({
-      //       name: 'quiz-result',
-      //       params: {
-      //         quizId: this.$route.params.quizId,
-      //       },
-      //     })
-      //   } else {
-      //     this.changeStatus('countdown')
-      //     this.countDownTree()
-      //   }
-      // }
-      // this.currentStatus = 'leaderBoard'
     },
     resetDataQuiz() {
       this.userSelected = null
@@ -239,7 +246,7 @@ export default {
 
 <style scoped>
 .scrollbar {
-  @apply overflow-auto;
+  overflow: auto;
 }
 .scrollbar::-webkit-scrollbar {
   width: 5px;

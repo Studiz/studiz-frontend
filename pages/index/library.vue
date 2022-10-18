@@ -10,7 +10,7 @@
           name: 'create-quizTemplateId',
           params: { quizTemplateId: 'new' },
         }"
-        >Create</v-btn
+        >Create quiz template</v-btn
       >
     </div>
 

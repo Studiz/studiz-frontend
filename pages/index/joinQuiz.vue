@@ -20,7 +20,6 @@ export default {
         studentId: localStorage.getItem('userId'),
       })
         .then((res) => {
-          console.log(res)
           this.$router.push({
             name: 'lobby-quizId',
             params: { quizId: res.data.quizId },

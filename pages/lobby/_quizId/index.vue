@@ -57,18 +57,20 @@
             <v-card-text>{{ quizData?.description }}</v-card-text>
           </div>
           <div class="flex md:flex-col items-end flex-wrap justify-between">
-            <v-card-subtitle
-              class="whitespace-nowrap text-end !font-semibold"
-            >Questions ({{ totalQuestion }})</v-card-subtitle>
-            <div class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end">
+            <v-card-subtitle class="whitespace-nowrap text-end !font-semibold"
+              >Questions ({{ totalQuestion }})</v-card-subtitle
+            >
+            <div
+              class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end"
+            >
               <v-img
                 class="rounded-full primary"
-                src="https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1661479781086_d8d9c4f9-859b-4afd-8837-2ebd237a35df.png?alt=media&token=4f5d8d8c-ab1f-4f40-b42e-2375f4a91661"
+                :src="quizData?.teacher.imageUrl"
                 max-height="48px"
                 max-width="48px"
               ></v-img>
               <div>
-                <div>Teacher</div>
+                <div>{{ quizData?.teacher.displayName }}</div>
                 <div>{{ quizData?.lastUpdated }}</div>
               </div>
             </div>
@@ -86,14 +88,17 @@
             <v-img :src="member.imageUrl" v-if="member?.imageUrl" />
             <v-icon x-large v-else>mdi-account-circle</v-icon>
           </v-avatar>
-          <div class="line-clamp-2 w-full" v-if="member">{{ member.displayName }}</div>
+          <div class="line-clamp-2 w-full" v-if="member">
+            {{ member.displayName }}
+          </div>
           <v-btn
             v-if="userRole == 'TEACHER'"
             color="erroraaa"
             text
             small
             class="group-hover:visible group-hover:w-auto group-hover:h-auto invisible w-0 h-0"
-          >leave</v-btn>
+            >leave</v-btn
+          >
         </div>
       </div>
     </div>
@@ -142,7 +147,9 @@ export default {
         socket.emit('join-lobby', {
           quizId: this.$route.params.quizId,
           user: {
-            displayName: this.$route.params.displayName,
+            displayName: this.$route.params.displayName
+              ? this.$route.params.displayName
+              : localStorage.getItem('displayName'),
             imageUrl: '',
             role: 'Guest',
           },
@@ -212,24 +219,54 @@ export default {
     })
 
     socket.on('move-to-home', () => {
-      alert('The quiz has been ended by the teacher')
+      this.$store.commit('TOGGLE_ALERT', {
+        type: 'info',
+        message: 'The quiz has been ended by the teacher',
+      })
       this.$router.push('/')
       localStorage.removeItem('memberId')
     })
   },
   created() {
+    this.$store.commit('TOGGLE_LOADING', true)
     if (this.userRole === 'TEACHER') {
-      TeacherService.getQuizById(this.$route.params.quizId).then((res) => {
-        this.$store.commit('setPinCode', res.data.pinCode)
-        this.$store.commit('setQuizData', res.data.quizTemplate)
-        this.initGame()
-      })
+      TeacherService.getQuizById(this.$route.params.quizId)
+        .then((res) => {
+          this.$store.commit('setPinCode', res.data.pinCode)
+          this.$store.commit('setQuizData', res.data.quizTemplate)
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.initGame()
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'success',
+            message: 'Quiz created',
+          })
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.message,
+          })
+        })
     } else {
-      StudentService.getQuizById(this.$route.params.quizId).then((res) => {
-        this.$store.commit('setPinCode', res.data.pinCode)
-        this.$store.commit('setQuizData', res.data.quizTemplate)
-        this.joinRoom()
-      })
+      StudentService.getQuizById(this.$route.params.quizId)
+        .then((res) => {
+          this.$store.commit('setPinCode', res.data.pinCode)
+          this.$store.commit('setQuizData', res.data.quizTemplate)
+          this.joinRoom()
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'success',
+            message: 'Joined',
+          })
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.message,
+          })
+        })
     }
   },
 }

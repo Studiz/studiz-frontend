@@ -3,6 +3,14 @@ import studizAPI from "./AxiosConfig";
 const baseURL = process.env.baseURL;
 
 export default {
+  updateProfile(teacherId, teacher) {
+    return studizAPI(baseURL).put(`/update/teacher/${teacherId}`, teacher);
+  },
+
+  updateImageProfile(teacherId, image) {
+    return studizAPI(baseURL).post(`/upload/teacher/image/${teacherId}`, image);
+  },
+
   createClassroom(data) {
     return studizAPI(baseURL).post('/create/classroom', data);
   },
