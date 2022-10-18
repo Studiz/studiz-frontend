@@ -13,7 +13,9 @@
     @duplicate-question="duplicateQuestion"
     @save-quiz-template="saveQuizTemplate"
   >
-    <div class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1 pb-2">
+    <div
+      class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1 pb-2"
+    >
       <input-question
         class="flex-none"
         :currentQuesiton="currentQuesiton"
@@ -127,7 +129,7 @@ export default {
       propDialog: false,
       quizData: {
         id: '',
-        teacherId: '',
+        teacher: '',
         title: '',
         image: '',
         tags: [],
@@ -539,7 +541,17 @@ export default {
       let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')
       let yyyy = dateCreated.getFullYear()
       dateCreated = mm + '/' + dd + '/' + yyyy
-      this.$store.commit('setTeacherId', this.$store.getters.userId)
+
+      let teacher = structuredClone(this.$store.getters.user)
+      teacher = {
+        teacherId: this.$store.getters.userId,
+        displayName: teacher.displayName,
+        firstName: teacher.firstName,
+        lastName: teacher.lastName,
+        imageUrl: teacher.imageUrl,
+      }
+
+      this.$store.commit('setTeacher', teacher)
       this.$store.commit('setQuizQuestions', this.quizData.questions)
       this.$store.commit('setLastUpdated', dateCreated)
 

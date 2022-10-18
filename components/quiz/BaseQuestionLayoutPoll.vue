@@ -10,6 +10,7 @@
     >
       <base-question-choice
         v-for="(item, i) in renderQuestion"
+        typeQuestions="poll"
         :key="`${i}-${item}`"
         :index="i"
         :item="item"
@@ -31,8 +32,7 @@ export default {
       required: true,
     },
     backendAnswer: {
-      type: Number | null,
-      required: true,
+      type: Number,
     },
     numberOfAnswer: {
       type: Number,
@@ -71,29 +71,50 @@ export default {
     },
     renderBackendAnswer() {
       this.isStepShowAnswer = true
-      if (Object.keys(this.selectedChoice).length === 0) {
+      let mockBackendAnswer = [90, 30, 50, 40, 10, 20]
+
+      this.choices.forEach((item, index) => {
+        if (item.isSelect == false) {
+          item.status = 'choice-blank'
+        }
+        item.selected = mockBackendAnswer[index]
+        this.counter(index, item.selected, 3000)
+      })
+
+      setTimeout(() => {
         this.choices.forEach((item, index) => {
-          if (index === this.backendAnswer) {
-            item.isCorrect = 'correct'
+          if (index === this.findMostSelected()) {
+            item.status = 'choice-winner'
           } else {
-            item.isCorrect = 'incorrect'
+            item.status = 'choice-blur'
           }
         })
-      } else {
-        if (this.selectedChoice.index === this.backendAnswer) {
-          this.selectedChoice.item.isCorrect = 'correct'
-        } else {
-          this.selectedChoice.item.isCorrect = 'incorrect'
+      }, 4000)
+    },
+    counter(index, end, duration) {
+      let obj = document.getElementById('percentage-' + index),
+        current = 0,
+        range = end - 0,
+        increment = end > 0 ? 1 : -1,
+        step = Math.abs(Math.floor(duration / range)),
+        timer = setInterval(() => {
+          current += increment
+          obj.textContent = current + '%'
+          if (current == end) {
+            clearInterval(timer)
+          }
+        }, step)
+    },
+    findMostSelected() {
+      let max = 0
+      let index = 0
+      this.choices.forEach((item, i) => {
+        if (item.selected > max) {
+          max = item.selected
+          index = i
         }
-        console.log(this.backendAnswer)
-        setTimeout(() => {
-          this.choices.forEach((item, index) => {
-            if (this.backendAnswer === index) {
-              item.isCorrect = 'correct'
-            } else item.status = 'choice-blur'
-          })
-        }, 500)
-      }
+      })
+      return index
     },
   },
   computed: {
@@ -106,7 +127,6 @@ export default {
           ...item,
           status: 'choice-blank', // choice-[blank / blur]
           isSelect: false, // [true / false]
-          isCorrect: '', // [ '' / 'correct' / 'incorrect']
         }
       })
     },

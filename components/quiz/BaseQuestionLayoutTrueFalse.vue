@@ -6,14 +6,15 @@
     />
 
     <div
-      class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-none md:flex-1 h-full w-full auto-rows-fr"
+      class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1 h-full w-full auto-rows-fr"
     >
       <base-question-choice
-        v-for="(item, i) in renderQuestion"
+        v-for="(item, i) in choices"
         :key="`${i}-${item}`"
-        :index="i"
         :item="item"
+        :index="i"
         :arrayChoiceColor="arrayChoiceColor"
+        text_class="text-center w-full"
         @selectAnswer="selectAnswer"
       />
     </div>
@@ -46,11 +47,24 @@ export default {
   },
   data() {
     return {
-      arrayChoiceColor: ['red', 'blue', 'yellow', 'green', 'cyan', 'purple'],
+      arrayChoiceColor: ['red', 'blue'],
       isTimeExpired: false,
       isStepShowAnswer: false,
       selectedChoice: {},
-      choices: [],
+      choices: [
+        {
+          option: 'True',
+          status: 'choice-blank', // choice-[blank / blur]
+          isSelect: false, // [true / false]
+          isCorrect: '', // [ '' / 'correct' / 'incorrect']
+        },
+        {
+          option: 'False',
+          status: 'choice-blank', // choice-[blank / blur]
+          isSelect: false, // [true / false]
+          isCorrect: '', // [ '' / 'correct' / 'incorrect']
+        },
+      ],
     }
   },
   methods: {
@@ -97,19 +111,6 @@ export default {
     },
   },
   computed: {
-    renderQuestion() {
-      return this.choices
-    },
-    addStatusForEachChoice() {
-      return this.question.answer.options.map((item) => {
-        return {
-          ...item,
-          status: 'choice-blank', // choice-[blank / blur]
-          isSelect: false, // [true / false]
-          isCorrect: '', // [ '' / 'correct' / 'incorrect']
-        }
-      })
-    },
     renderQuestionImage() {
       return this.question.image
     },
@@ -118,7 +119,6 @@ export default {
     this.$nuxt.$on('time-expired', (prop) => {
       this.isTimeExpired = prop
     })
-    this.choices = this.addStatusForEachChoice
   },
   destroyed() {
     this.$nuxt.$off('time-expired')

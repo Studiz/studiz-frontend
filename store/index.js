@@ -34,7 +34,6 @@ const createStore = () => {
         state.isLoading = payload
       },
       TOGGLE_ALERT(state, payload) {
-        console.log('Do');
         state.isAlertActive = true
         state.alertInfo.type = payload.type
         state.alertInfo.message = payload.message

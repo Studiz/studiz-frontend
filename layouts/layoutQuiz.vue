@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <alert-notification />
     <quiz-navbar
       :currentStatus="currentStatus"
       :time="renderQuestionTime"
@@ -19,8 +20,9 @@
 
 <script>
 import QuizNavbar from '~/components/navbar/quizNavbar.vue'
+import AlertnNotification from '~/components/AlertNotification.vue'
 export default {
-  components: { QuizNavbar },
+  components: { QuizNavbar, AlertnNotification },
   props: {
     currentStatus: {
       type: String,
