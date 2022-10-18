@@ -32,6 +32,16 @@
               <div class="text-H2">{{ quizData?.title }}</div>
               <div>Questions ({{ totalQuestion }})</div>
             </div>
+            <div>
+              <v-chip
+                label
+                outlined
+                v-for="tag in quizData?.tags"
+                :key="tag"
+                class="shadow-sm mr-2"
+                >{{ tag }}</v-chip
+              >
+            </div>
           </div>
           <div class="flex-wrap inline-flex gap-x-3 p-3 self-end h-fit">
             <!-- <span class="h-1 w-1 bg-gray-500 rounded-xl self-center" /> -->
@@ -55,6 +65,16 @@
           <div>
             <v-card-title>{{ quizData?.title }}</v-card-title>
             <v-card-text>{{ quizData?.description }}</v-card-text>
+            <div class="mx-3">
+              <v-chip
+                label
+                outlined
+                v-for="tag in quizData?.tags"
+                :key="tag"
+                class="shadow-sm mr-2"
+                >{{ tag }}</v-chip
+              >
+            </div>
           </div>
           <div class="flex md:flex-col items-end flex-wrap justify-between">
             <v-card-subtitle class="whitespace-nowrap text-end !font-semibold"
