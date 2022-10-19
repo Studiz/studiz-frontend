@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import "@lottiefiles/lottie-player";
 import LoadingPage from '~/components/LoadingPage.vue'
 import AlertNotification from '~/components/AlertNotification.vue'
 import navbar from '~/components/navbar/navbar.vue'

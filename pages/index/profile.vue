@@ -19,9 +19,14 @@
               v-bind="attrs"
               v-on="on"
             >
-              <v-icon size="94" color="primary" v-if="!imageProfile"
-                >mdi-account-circle</v-icon
-              >
+              <lottie-player
+                v-if="!imageProfile"
+                autoplay
+                loop
+                mode="normal"
+                src="https://assets4.lottiefiles.com/packages/lf20_qSkIccSXCE.json"
+                style="width: 94px"
+              />
               <v-img :src="imageProfile" v-else />
               <div
                 class="absolute bottom-0 left-0 bg-black/50 w-full text-sm h-6"
@@ -37,7 +42,14 @@
             <v-avatar size="300" class="self-center m-5 shadow-md">
               <v-img :src="imagePreview" v-if="imagePreview" />
               <v-img :src="imageProfile" v-else-if="imageProfile" />
-              <v-icon color="white" v-else>mdi-account-circle</v-icon>
+              <lottie-player
+                v-else
+                autoplay
+                loop
+                mode="normal"
+                src="https://assets4.lottiefiles.com/packages/lf20_qSkIccSXCE.json"
+                style="width: 320px"
+              />
             </v-avatar>
             <v-file-input
               class="mx-5"
