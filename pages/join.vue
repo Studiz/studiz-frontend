@@ -12,12 +12,22 @@
       class="p-3 overflow-hidden drop-shadow-md rounded-xl md:p-5 lg:p-10"
     >
       <Input-join @join-number="joinnumber" />
-      <v-dialog v-model="isOpenForm" scrollable :persistent="true" max-width="500px">
+      <v-dialog
+        v-model="isOpenForm"
+        scrollable
+        :persistent="true"
+        max-width="500px"
+      >
         <v-card class="h-fit">
           <v-card-title>
             <span class="break-normal">Enter your display name</span>
           </v-card-title>
-          <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="enterDisplayName">
+          <v-form
+            ref="form"
+            class="pa-md-3"
+            lazy-validation
+            @submit.prevent="enterDisplayName"
+          >
             <v-container>
               <v-text-field
                 label="Dsiplay name"
@@ -48,14 +58,18 @@
             to="/signup"
             class="w-full font-bold text-center text-H3 secondary--text whitespace-nowrap"
           >
-            <v-btn height="56" block outlined color="secondary" class="text-cap">Sign Up</v-btn>
+            <v-btn height="56" block outlined color="secondary" class="text-cap"
+              >Sign Up</v-btn
+            >
           </nuxt-link>
           <span class="h-10 mx-3"></span>
           <nuxt-link
             to="/login"
             class="w-full font-bold text-center text-H3 secondary--text whitespace-nowrap"
           >
-            <v-btn height="56" block color="primary" class="text-cap">login</v-btn>
+            <v-btn height="56" block color="primary" class="text-cap"
+              >login</v-btn
+            >
           </nuxt-link>
         </div>
       </div>
@@ -67,6 +81,11 @@
 import StudentService from '~/services/StudentService.js'
 
 export default {
+  head() {
+    return {
+      title: 'Join quiz',
+    }
+  },
   data() {
     return {
       rules: {

@@ -52,7 +52,10 @@
 
     <the-waiting v-if="currentStatus === 'wating'" />
 
-    <the-leader-board v-if="currentStatus === 'leaderBoard'" :membersInClass="membersInClass" />
+    <the-leader-board
+      v-if="currentStatus === 'leaderBoard'"
+      :membersInClass="membersInClass"
+    />
   </layout-quiz>
 </template>
 
@@ -83,6 +86,11 @@ export default {
     BaseQuestionLayoutSort,
   },
   layout: 'layoutFree',
+  head() {
+    return {
+      title: 'Quiz',
+    }
+  },
   data() {
     return {
       currentQuestion: 0,

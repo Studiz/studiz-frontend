@@ -4,16 +4,22 @@
       <v-btn
         color="primary"
         class="w-full rounded-lg text-cap md:w-auto"
-        height="50"
+        height="48"
         v-bind="attrs"
         v-on="on"
-      >create classroom</v-btn>
+        >create classroom
+      </v-btn>
     </template>
     <v-card>
       <v-card-title class="px-3 px-md-5">
         <span class="break-normal text-H1">Create classroom</span>
       </v-card-title>
-      <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="createClassroom">
+      <v-form
+        ref="form"
+        class="pa-md-3"
+        lazy-validation
+        @submit.prevent="createClassroom"
+      >
         <v-container>
           <v-text-field
             label="Classroom name"

@@ -19,13 +19,15 @@
                 displayName
               }}</v-list-item-title>
             </v-col>
-            <v-spacer></v-spacer>
+
+            <!-- <v-spacer></v-spacer> -->
             <!-- hidden when loing -->
             <v-col cols="6" md="2" class="align-self-center" v-if="!user">
               <v-btn to="signup" height="36" block color="secondary" outlined
                 >sign up</v-btn
               >
             </v-col>
+
             <v-col cols="6" md="2" class="align-self-center" v-if="!user">
               <v-btn to="login" height="36" block color="primary">login</v-btn>
             </v-col>
@@ -34,6 +36,8 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-divider class="my-5" />
 
     <v-list color="transparent" rounded class="pa-0 space-y-2 mt-2">
       <v-list-item
@@ -66,6 +70,11 @@
 import LightDarkMode from '~/components/navbar/light-dark-mode.vue'
 export default {
   components: { LightDarkMode },
+  head() {
+    return {
+      title: 'More options',
+    }
+  },
   data() {
     return {
       theme: '',

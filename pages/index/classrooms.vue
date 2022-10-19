@@ -4,7 +4,7 @@
       <h1 class="text-H1">Classroom</h1>
 
       <v-btn
-        height="50"
+        height="48"
         color="primary"
         class="text-cap w-full md:w-auto rounded-lg"
         :class="[showInput ? 'd-none d-md-block' : '']"
@@ -89,6 +89,11 @@ import StudentService from '../../services/StudentService.js'
 import CreateClassroom from '~/components/Teacher/create-classroom.vue'
 export default {
   components: { CreateClassroom },
+  head() {
+    return {
+      title: 'Classroom',
+    }
+  },
   data() {
     return {
       showInput: false,

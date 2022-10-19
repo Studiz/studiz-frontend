@@ -94,6 +94,11 @@ import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import ClassroomService from '~/services/ClassroomService'
 export default {
   components: { BaseDialogCondition },
+  head() {
+    return {
+      titleTemplate: '%s - Member',
+    }
+  },
   data: () => ({
     page: 1,
     dialog: false,

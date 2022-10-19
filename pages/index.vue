@@ -82,6 +82,11 @@
 <script>
 export default {
   name: 'IndexPage',
+  head() {
+    return {
+      title: 'Welcome to Studiz',
+    }
+  },
   data() {
     return {
       isAuthenticated: false,

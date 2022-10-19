@@ -25,6 +25,11 @@
 <script>
 import ClassroomService from '~/services/ClassroomService'
 export default {
+  head() {
+    return {
+      titleTemplate: '%s - Quiz',
+    }
+  },
   data() {
     return {
       quizzes: [],

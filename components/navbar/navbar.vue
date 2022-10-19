@@ -161,7 +161,7 @@ export default {
       return this.$store.getters.user ? false : true
     },
     isRouterJoin() {
-      return this.$route.path == '/join' ? true : false
+      return this.$route.path == '/join' && this.isGuest ? true : false
     },
     routerPath() {
       return !this.isGuest ? '/classrooms' : '/join'

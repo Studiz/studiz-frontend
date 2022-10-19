@@ -1,6 +1,11 @@
 <template>
   <div v-if="this.$store.getters.userRole == 'STUDENT'">
-    <h1 class="text-H1">Join Quiz</h1>
+    <div class="flex">
+      <h1 class="text-H1">Join Quiz</h1>
+    </div>
+
+    <v-divider class="my-5" />
+
     <div class="max-w-lg mx-auto mt-5">
       <Input-join @join-number="joinQuiz" />
     </div>

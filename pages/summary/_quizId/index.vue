@@ -96,6 +96,12 @@ import socket from '~/plugins/socket.io'
 export default {
   layout: 'layoutFree',
   components: { LayoutQuiz, TheLeaderBoard },
+  head() {
+    return {
+      title: this.renderQuizName,
+      titleTemplate: '%s - Quiz summary',
+    }
+  },
   data() {
     return {
       members: [],
@@ -175,6 +181,9 @@ export default {
     },
     pinCode() {
       return this.$store.getters.pinCode
+    },
+    renderQuizName() {
+      return this.quizData?.title
     },
   },
   destroyed() {
