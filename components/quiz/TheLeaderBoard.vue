@@ -58,36 +58,11 @@ export default {
   },
   data: () => ({
     page: 1,
-
-    headers: [
-      {
-        text: '#',
-        sortable: false,
-        value: 'index',
-        align: 'center',
-        width: '48px',
-      },
-      {
-        text: '',
-        sortable: false,
-        value: 'image',
-        width: '56px',
-      },
-      {
-        text: 'Display Name',
-        value: 'displayName',
-        sortable: false,
-      },
-      { text: 'Score', value: 'score', sortable: false },
-      { text: 'Round', value: 'scoreInRound', sortable: false, align: 'end' },
-    ],
-
     isloading: false,
   }),
 
   created() {
     // this.loadData()
-    console.log(this.membersInClass)
     // this.isloading = true
   },
 
@@ -95,6 +70,35 @@ export default {
   computed: {
     itemsPerPage() {
       return this.membersInClass.length
+    },
+    headers() {
+      let headers = [
+        {
+          text: '#',
+          sortable: false,
+          value: 'index',
+          align: 'center',
+          width: '48px',
+        },
+        {
+          text: '',
+          sortable: false,
+          value: 'image',
+          width: '56px',
+        },
+        {
+          text: 'Display Name',
+          value: 'displayName',
+          sortable: false,
+        },
+        { text: 'Score', value: 'score', sortable: false },
+        { text: 'Round', value: 'scoreInRound', sortable: false, align: 'end' },
+      ]
+
+      if (this.$route.path.startsWith('/summary')) {
+        delete headers[4]
+      }
+      return headers
     },
   },
 }

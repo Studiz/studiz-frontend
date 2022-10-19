@@ -233,6 +233,12 @@ export default {
         },
       })
     })
+
+
+    socket.on('show-quiz-summary', (data) => {
+      console.log(data);
+    })
+
   },
   created() {
     if (this.$route.params.quizId !== 'quiztest') {

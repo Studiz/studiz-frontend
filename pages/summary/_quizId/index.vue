@@ -31,6 +31,16 @@
               <div class="text-H2">{{ quizData?.title }}</div>
               <div>Questions ({{ totalQuestion }})</div>
             </div>
+            <div>
+              <v-chip
+                label
+                outlined
+                v-for="tag in quizData?.tags"
+                :key="tag"
+                class="shadow-sm mr-2"
+                >{{ tag }}</v-chip
+              >
+            </div>
           </div>
           <div class="flex-wrap inline-flex gap-x-3 p-3 self-end h-fit">
             <!-- <span class="h-1 w-1 bg-gray-500 rounded-xl self-center" /> -->
@@ -54,6 +64,16 @@
           <div>
             <v-card-title>{{ quizData?.title }}</v-card-title>
             <v-card-text>{{ quizData?.description }}</v-card-text>
+            <div class="mx-3">
+              <v-chip
+                label
+                outlined
+                v-for="tag in quizData?.tags"
+                :key="tag"
+                class="shadow-sm mr-2"
+                >{{ tag }}</v-chip
+              >
+            </div>
           </div>
           <div class="flex md:flex-col items-end flex-wrap justify-between">
             <v-card-subtitle class="whitespace-nowrap text-end !font-semibold"
@@ -76,11 +96,22 @@
           </div>
         </div>
       </v-card>
-
-      <the-leader-board
-        :membersInClass="membersInClass"
-        :currentStatus="'summary'"
-      />
+      <v-container fluid class="!max-w-6xl">
+        <v-row>
+          <the-leader-board
+            :membersInClass="membersInClass"
+            :currentStatus="'summary'"
+            class="col-12 col-md-6"
+          />
+          <!-- <v-card
+            flat
+            class="rounded-lg p-3 max-w-md mx-auto overflow-hidden drop-shadow-md w-1/3"
+          >
+            <v-card-title>{{ quizData?.title }}</v-card-title>
+            <v-card-text>{{ quizData?.description }}</v-card-text>
+          </v-card> -->
+        </v-row>
+      </v-container>
     </div>
   </layout-quiz>
 </template>
