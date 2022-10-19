@@ -52,7 +52,10 @@
 
     <the-waiting v-if="currentStatus === 'wating'" />
 
-    <the-leader-board v-if="currentStatus === 'leaderBoard'" :membersInClass="membersInClass" />
+    <the-leader-board
+      v-if="currentStatus === 'leaderBoard'"
+      :membersInClass="membersInClass"
+    />
   </layout-quiz>
 </template>
 
@@ -90,24 +93,29 @@ export default {
       currentStatus: 'countdown',
 
       prepareQuestion: {
-        image: 'https://picsum.photos/200/300',
+        image:
+          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662831260125_280293376_521951536307306_1630564870936868063_n.jpg?alt=media&token=22fd3e5c-6e08-4ff1-93ef-59e9bdd7389e',
         time: 1000,
         answer: {
           options: [
             {
-              option: 'sadd',
+              option:
+                'sadd Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
               index: 0,
             },
             {
-              option: 'asd',
+              option:
+                'asd Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
               index: 1,
             },
             {
-              option: 'sadsad',
+              option:
+                'sadsad Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
               index: 2,
             },
             {
-              option: 'ffasd',
+              option:
+                'ffasd Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
               index: 3,
             },
           ],
