@@ -230,14 +230,14 @@ export default {
       this.resetDataQuiz()
     })
 
-    socket.on('show-leaderboard-summary', (data) => {
-      // this.currentStatus = 'leaderBoard'
-      // this.membersInClass = data
+    socket.on('show-quiz-summary', (data) => {
+      this.changeStatus('leaderBoard')
+      this.membersInClass = data
       this.$router.push({
         name: 'summary-quizId',
         params: {
           quizId: this.$route.params.quizId,
-          membersInClass: data,
+          summaryData: data,
         },
       })
     })
