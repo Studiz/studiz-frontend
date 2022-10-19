@@ -32,6 +32,9 @@
         <v-img
           contain
           class="drop-shadow-md max-h-80 sm:max-h-full"
+          :class="[
+            typeQuestions === 'sort' ? 'rounded-md background_card' : '',
+          ]"
           :content-class="renderImageClass"
           :src="renderImage"
         />
