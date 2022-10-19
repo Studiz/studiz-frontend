@@ -48,7 +48,6 @@
 
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
-import ClassroomService from '~/services/ClassroomService'
 export default {
   components: { BaseDialogCondition },
   props: {
@@ -69,7 +68,7 @@ export default {
   methods: {},
   computed: {
     itemsPerPage() {
-      return this.membersInClass.length
+      return this.membersInClass?.length
     },
     headers() {
       let headers = [
@@ -91,12 +90,17 @@ export default {
           value: 'displayName',
           sortable: false,
         },
+        {
+          text: 'Role',
+          value: 'role',
+          sortable: false,
+        },
         { text: 'Score', value: 'score', sortable: false },
         { text: 'Round', value: 'scoreInRound', sortable: false, align: 'end' },
       ]
 
       if (this.$route.path.startsWith('/summary')) {
-        delete headers[4]
+        delete headers[5]
       }
       return headers
     },

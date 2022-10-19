@@ -1,6 +1,22 @@
 <template>
   <div class="max-w-lg mx-auto">
     <div class="justify-center my-8 d-flex">
+      <div class="absolute bottom-24 left-16">
+        <lottie-player
+          autoplay
+          loop
+          src="https://assets4.lottiefiles.com/packages/lf20_xiussssy.json"
+          style="width: 200px"
+        />
+      </div>
+      <div class="absolute top-24 right-16">
+        <lottie-player
+          autoplay
+          loop
+          src="https://assets8.lottiefiles.com/packages/lf20_GFBjYS.json"
+          style="width: 200px"
+        />
+      </div>
       <v-icon size="150">$vuetify.icons.Studiz_logo</v-icon>
       <!-- <div class="h-[150px] w-[150px] inline-flex items-center">
         <v-img src="/studiz-logo.png" max-width="150" max-height="150" />
@@ -12,12 +28,22 @@
       class="p-3 overflow-hidden drop-shadow-md rounded-xl md:p-5 lg:p-10"
     >
       <Input-join @join-number="joinnumber" />
-      <v-dialog v-model="isOpenForm" scrollable :persistent="true" max-width="500px">
+      <v-dialog
+        v-model="isOpenForm"
+        scrollable
+        :persistent="true"
+        max-width="500px"
+      >
         <v-card class="h-fit">
           <v-card-title>
             <span class="break-normal">Enter your display name</span>
           </v-card-title>
-          <v-form ref="form" class="pa-md-3" lazy-validation @submit.prevent="enterDisplayName">
+          <v-form
+            ref="form"
+            class="pa-md-3"
+            lazy-validation
+            @submit.prevent="enterDisplayName"
+          >
             <v-container>
               <v-text-field
                 label="Dsiplay name"
@@ -48,14 +74,18 @@
             to="/signup"
             class="w-full font-bold text-center text-H3 secondary--text whitespace-nowrap"
           >
-            <v-btn height="56" block outlined color="secondary" class="text-cap">Sign Up</v-btn>
+            <v-btn height="56" block outlined color="secondary" class="text-cap"
+              >Sign Up</v-btn
+            >
           </nuxt-link>
           <span class="h-10 mx-3"></span>
           <nuxt-link
             to="/login"
             class="w-full font-bold text-center text-H3 secondary--text whitespace-nowrap"
           >
-            <v-btn height="56" block color="primary" class="text-cap">login</v-btn>
+            <v-btn height="56" block color="primary" class="text-cap"
+              >login</v-btn
+            >
           </nuxt-link>
         </div>
       </div>

@@ -52,7 +52,10 @@
 
     <the-waiting v-if="currentStatus === 'wating'" />
 
-    <the-leader-board v-if="currentStatus === 'leaderBoard'" :membersInClass="membersInClass" />
+    <the-leader-board
+      v-if="currentStatus === 'leaderBoard'"
+      :membersInClass="membersInClass"
+    />
   </layout-quiz>
 </template>
 
@@ -222,23 +225,17 @@ export default {
       this.resetDataQuiz()
     })
 
-    socket.on('show-leaderboard-summary', (data) => {
-      // this.currentStatus = 'leaderBoard'
-      // this.membersInClass = data
+    socket.on('show-quiz-summary', (data) => {
+      this.changeStatus('leaderBoard')
+      this.membersInClass = data
       this.$router.push({
         name: 'summary-quizId',
         params: {
           quizId: this.$route.params.quizId,
-          membersInClass: data,
+          summaryData: data,
         },
       })
     })
-
-
-    socket.on('show-quiz-summary', (data) => {
-      console.log(data);
-    })
-
   },
   created() {
     if (this.$route.params.quizId !== 'quiztest') {
