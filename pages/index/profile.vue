@@ -179,6 +179,11 @@ import TeacherService from '../../services/TeacherService.js'
 
 export default {
   components: { BaseDialogCondition },
+  head() {
+    return {
+      title: 'Profile',
+    }
+  },
   data() {
     return {
       rules: {

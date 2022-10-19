@@ -86,6 +86,11 @@ export default {
     BaseQuestionLayoutSort,
   },
   layout: 'layoutFree',
+  head() {
+    return {
+      title: 'Quiz',
+    }
+  },
   data() {
     return {
       currentQuestion: 0,

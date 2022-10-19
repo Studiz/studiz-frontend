@@ -3,7 +3,7 @@
     <div class="items-center justify-between space-y-2 md:flex md:space-y-0">
       <h1 class="text-H1">My library</h1>
       <v-btn
-        height="50"
+        height="48"
         color="primary"
         class="text-cap w-full md:w-auto rounded-lg"
         :to="{
@@ -34,6 +34,11 @@ import TeacherService from '~/services/TeacherService'
 
 export default {
   components: { BaseDialogCondition, QuizTemplateList },
+  head() {
+    return {
+      title: 'Library',
+    }
+  },
   data() {
     return {
       rules: {

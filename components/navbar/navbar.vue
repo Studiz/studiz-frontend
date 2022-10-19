@@ -73,7 +73,7 @@
       fixed
       height="64"
       class="drop-shadow-md d-md-none background_card"
-      active-class="primary--text"
+      active-class="primary--text text-hidden"
       v-if="!isGuest"
     >
       <v-btn
@@ -85,7 +85,9 @@
         v-show="userRole == 'TEACHER' ? index !== 1 : index !== 2"
         :to="b.to"
       >
-        <span class="text-xs d-none d-sm-inline">{{ b.title }}</span>
+        <span class="text text-xs tracking-tight normal-case"
+          >{{ b.title }}
+        </span>
         <v-icon>{{ b.icon }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -110,14 +112,14 @@ export default {
       ],
       buttonNav: [
         {
-          title: 'classroom',
+          title: 'Classroom',
           icon: '$vuetify.icons.classroom',
           to: '/classrooms',
         },
         {
-          title: 'join quiz',
+          title: 'Join quiz',
           icon: '$vuetify.icons.quiz',
-          to: '/quiz',
+          to: '/joinquiz',
         },
         {
           title: 'My library',
@@ -125,12 +127,12 @@ export default {
           to: '/library',
         },
         {
-          title: 'notification',
+          title: 'Notification',
           icon: '$vuetify.icons.notification',
           to: '/notification',
         },
         {
-          title: 'more',
+          title: 'More',
           icon: '$vuetify.icons.more',
           to: '/more',
         },
@@ -159,7 +161,7 @@ export default {
       return this.$store.getters.user ? false : true
     },
     isRouterJoin() {
-      return this.$route.path == '/join' ? true : false
+      return this.$route.path == '/join' && this.isGuest ? true : false
     },
     routerPath() {
       return !this.isGuest ? '/classrooms' : '/join'
@@ -174,5 +176,15 @@ export default {
 }
 :deep(.v-btn.v-btn--disabled.v-btn--has-bg) {
   background-color: transparent !important;
+}
+
+:deep(.text-hidden > .v-btn__content > .text) {
+  @apply w-auto h-auto visible opacity-100;
+}
+:deep(.v-btn__content) {
+  @apply gap-1;
+}
+.text {
+  @apply w-0 h-0 invisible opacity-0 sm:w-auto sm:h-auto sm:visible sm:opacity-100;
 }
 </style>

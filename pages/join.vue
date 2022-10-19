@@ -97,6 +97,11 @@
 import StudentService from '~/services/StudentService.js'
 
 export default {
+  head() {
+    return {
+      title: 'Join quiz',
+    }
+  },
   data() {
     return {
       rules: {

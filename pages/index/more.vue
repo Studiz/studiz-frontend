@@ -7,19 +7,27 @@
           size="36px"
           class="align-self-start align-self-md-center"
         >
-          <v-icon large color="white">mdi-account-circle</v-icon>
-          <!-- <v-img src="https://api.lorem.space/image/face?hash=92310" /> -->
+          <v-icon large color="white" v-if="!imageProfile"
+            >mdi-account-circle</v-icon
+          >
+          <v-img v-else :src="imageProfile" />
         </v-list-item-avatar>
         <v-list-item-content>
           <v-row gutters>
             <v-col cols="12" md="6" class="d-flex items-center">
-              <v-list-item-title class="text-cap">{{displayName}}</v-list-item-title>
+              <v-list-item-title class="text-cap">{{
+                displayName
+              }}</v-list-item-title>
             </v-col>
-            <v-spacer></v-spacer>
+
+            <!-- <v-spacer></v-spacer> -->
             <!-- hidden when loing -->
             <v-col cols="6" md="2" class="align-self-center" v-if="!user">
-              <v-btn to="signup" height="36" block color="secondary" outlined>sign up</v-btn>
+              <v-btn to="signup" height="36" block color="secondary" outlined
+                >sign up</v-btn
+              >
             </v-col>
+
             <v-col cols="6" md="2" class="align-self-center" v-if="!user">
               <v-btn to="login" height="36" block color="primary">login</v-btn>
             </v-col>
@@ -29,11 +37,23 @@
       </v-list-item>
     </v-list>
 
+    <v-divider class="my-5" />
+
     <v-list color="transparent" rounded class="pa-0 space-y-2 mt-2">
-      <v-list-item v-for="page in pages" :key="page.icon" :to="page.to" link class="px-3">
-        <v-icon size="36px" color="primary" left class="mr-4">{{ page.icon }}</v-icon>
+      <v-list-item
+        v-for="page in pages"
+        :key="page.icon"
+        :to="page.to"
+        link
+        class="px-3"
+      >
+        <v-icon size="36px" color="primary" left class="mr-4">{{
+          page.icon
+        }}</v-icon>
         <v-list-item-content>
-          <v-list-item-title class="text-cap">{{ page.title }}</v-list-item-title>
+          <v-list-item-title class="text-cap">{{
+            page.title
+          }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item link class="px-3" @click="logout()">
@@ -50,6 +70,11 @@
 import LightDarkMode from '~/components/navbar/light-dark-mode.vue'
 export default {
   components: { LightDarkMode },
+  head() {
+    return {
+      title: 'More options',
+    }
+  },
   data() {
     return {
       theme: '',
@@ -71,6 +96,9 @@ export default {
     user() {
       return this.$store.getters.user
     },
+    imageProfile() {
+      return this.$store.getters.user ? this.$store.getters.user.imageUrl : ''
+    },
     displayName() {
       return this.$store.getters.user
         ? this.$store.getters.user.displayName
@@ -90,5 +118,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

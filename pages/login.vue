@@ -1,6 +1,9 @@
 <template>
   <div class="max-w-lg mx-auto">
-    <v-card class="w-screen px-3 py-5 px-md-10 py-md-10 space-y-8" color="background_card">
+    <v-card
+      class="w-screen px-3 py-5 px-md-10 py-md-10 space-y-8"
+      color="background_card"
+    >
       <div class="text-center primary--text text-H1">Login</div>
 
       <div id="firebaseui-auth-container"></div>
@@ -37,10 +40,13 @@
             :loading="loading"
             type="submit"
             class="text-cap"
-          >Login</v-btn>
+            >Login</v-btn
+          >
           <div class="flex items-center mt-7">
             <span>Don’t have an account?</span>
-            <v-btn outlined color="secondary" class="ml-2 text-cap" to="signup">Sign up</v-btn>
+            <v-btn outlined color="secondary" class="ml-2 text-cap" to="signup"
+              >Sign up</v-btn
+            >
           </div>
         </v-form>
       </div>
@@ -51,6 +57,11 @@
 <script>
 import userService from '../services/UserService.js'
 export default {
+  head() {
+    return {
+      title: 'Login',
+    }
+  },
   data() {
     return {
       email: '',

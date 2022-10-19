@@ -16,10 +16,29 @@
             <span>GAME PIN:</span>
             <span class="!text-6xl !font-bold select-all">{{ pinCode }}</span>
           </div>
-          <v-btn icon class="self-center" @click="copyToClipboard(pinCode)">
-            <v-icon>mdi-content-copy</v-icon>
-          </v-btn>
+
+          <v-tooltip
+            :open-on-hover="false"
+            :open-on-focus="false"
+            :open-on-click="true"
+            v-model="showTooltip"
+            bottom
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                icon
+                class="self-center"
+                @click="copyToClipboard(pinCode)"
+              >
+                <v-icon>mdi-content-copy</v-icon>
+              </v-btn>
+            </template>
+            <span>Copied!!</span>
+          </v-tooltip>
         </div>
+
         <div class="flex justify-between flex-wrap">
           <div class="inline-flex flex-wrap p-3 gap-3">
             <v-img
@@ -135,9 +154,16 @@ import socket from '~/plugins/socket.io'
 export default {
   layout: 'layoutFree',
   components: { LayoutQuiz },
+  head() {
+    return {
+      title: this.renderQuizName,
+      titleTemplate: '%s - Lobby',
+    }
+  },
   data() {
     return {
       members: [],
+      showTooltip: false,
       // quizData: {},
       // pinCode: '',
     }
@@ -202,6 +228,10 @@ export default {
     },
     copyToClipboard(data) {
       navigator.clipboard.writeText(data)
+      this.showTooltip = true
+      setTimeout(() => {
+        this.showTooltip = false
+      }, 2000)
     },
   },
   computed: {
@@ -216,6 +246,9 @@ export default {
     },
     pinCode() {
       return this.$store.getters.pinCode
+    },
+    renderQuizName() {
+      return this.quizData?.title
     },
   },
   destroyed() {

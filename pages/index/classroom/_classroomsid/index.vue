@@ -68,6 +68,12 @@ import StudentService from '~/services/StudentService'
 import UserService from '~/services/UserService'
 export default {
   components: { BaseDialogCondition },
+  head() {
+    return {
+      title: this.renderClassroomName,
+      titleTemplate: '%s - Classroom',
+    }
+  },
   data() {
     return {
       classroom: null,
@@ -108,6 +114,9 @@ export default {
   computed: {
     isStudent() {
       return this.$store.getters.userRole == 'STUDENT' ? true : false
+    },
+    renderClassroomName() {
+      return this.classroom ? this.classroom?.name : 'No classroom name'
     },
   },
   created() {
