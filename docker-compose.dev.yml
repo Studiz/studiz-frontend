@@ -1,0 +1,24 @@
+version: "3"
+services:
+    frontend:
+        container_name: studiz-frontend
+        build: .
+        image: ghcr.io/studiz/studiz-frontend:dev
+        restart: on-failure
+        networks: 
+            - frontend
+    reverse-poxy:
+        image: nginx
+        container_name: reverse-poxy
+        volumes: 
+            - ./studiz.conf:/etc/nginx/conf.d/studiz.conf
+            - ../../certificateFiles:/etc/nginx/certificateFiles
+        restart: on-failure
+        ports:
+            - "80:80"
+            - "443:443"
+        networks: 
+            - frontend
+networks:
+    frontend:
+        external: true

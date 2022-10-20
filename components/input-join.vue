@@ -1,36 +1,59 @@
 <template>
   <form
-    @submit.prevent=""
-    class="primary_shade p-2 md:p-4 flex flex-col md:flex-row items-center rounded-lg"
+    @submit.prevent
+    class="grid grid-flow-col grid-rows-2 gap-2 rounded-lg primary_shade md:grid-rows-1"
+    :class="[this.$route.name == 'index-classrooms' ? 'p-2' : 'p-2 md:p-4']"
   >
     <input
       id="pincode"
       name="pincode"
       v-model="pincode"
       type="tel"
-      class="p-2 w-full md:w-11/12 h-60px rounded-lg focus:outline-none text-H3 md:text-H2 bg-white dark:bg-dark_background"
+      class="w-full p-2 rounded-lg h-60px focus:outline-none text-H3 md:text-H2 background_card"
+      :class="[
+        this.$route.name == 'index-classrooms'
+          ? 'col-span-12 md:col-span-9'
+          : 'col-span-12 ',
+      ]"
       minlength="6"
       maxlength="6"
-      placeholder="Enter a join qiuz"
+      :placeholder="[
+        this.$route.name == 'index-classrooms'
+          ? 'Enter code to join classroom'
+          : 'Enter code to join quiz',
+      ]"
       autocomplete="off"
-      @keypress="filterNumber(evt)"
+      @keypress="filterNumber()"
     />
+    <!-- <div class="w-full md:w-2/12"> -->
+    <slot></slot>
     <v-btn
       hide-details
       inset
       height="60"
       color="primary"
-      class="mt-2 mt-md-0 ml-md-4 w-full md:w-1/12 rounded-lg text-cap"
+      class="rounded-lg text-cap"
+      :class="[
+        this.$route.name == 'index-classrooms'
+          ? 'w-full col-span-6 md:col-span-3'
+          : 'w-full col-span-12',
+      ]"
       :disabled="pincode.length !== 6"
       @click="join"
+      >{{ this.$store.getters.user ? 'join' : 'join guest' }}</v-btn
     >
-      join</v-btn
-    >
+
+    <!-- </div> -->
   </form>
 </template>
 
 <script>
 export default {
+  props: {
+    showInput: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       pincode: '',
@@ -48,6 +71,7 @@ export default {
     },
     join() {
       this.$emit('join-number', this.pincode)
+      console.log(this.$nuxt.$route.name)
     },
   },
 }

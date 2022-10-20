@@ -1,30 +1,14 @@
 <template>
   <div class="max-w-lg mx-auto">
-    <v-card class="px-3 py-5 px-md-10 py-md-10 w-screen" color="background">
-      <p class="text-secondary text-H1 font-bold text-center">Login</p>
+    <v-card class="w-screen px-3 py-5 px-md-10 py-md-10 space-y-8" color="background_card">
+      <div class="text-center primary--text text-H1">Login</div>
 
-      <script src="https://accounts.google.com/gsi/client" async defer></script>
-      <div
-        id="g_id_onload"
-        data-client_id="YOUR_GOOGLE_CLIENT_ID"
-        data-login_uri="https://your.domain/your_login_endpoint"
-        data-auto_prompt="false"
-      ></div>
-      <div
-        class="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left"
-      ></div>
-      <div id="buttonDiv"></div>
+      <div id="firebaseui-auth-container"></div>
 
-      <div class="flex justify-center items-center my-5">
-        <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
-        <span class="text-H3 font-bold bg_disable--text">or</span>
-        <span class="border-b-4 w-full mx-4 dark:border-bg_disable"></span>
+      <div class="flex gap-5 items-center justify-center my-5">
+        <v-divider />
+        <span class="font-bold text-H3 bg_disable--text">or</span>
+        <v-divider />
       </div>
 
       <div>
@@ -47,23 +31,16 @@
             @click:append="show = !show"
           ></v-text-field>
           <v-btn
-            color="primary fontbold"
-            height="60"
+            color="primary"
+            height="56"
             block
             :loading="loading"
             type="submit"
-            >Login</v-btn
-          >
+            class="text-cap"
+          >Login</v-btn>
           <div class="flex items-center mt-7">
             <span>Don’t have an account?</span>
-            <v-btn
-              outlined
-              color="secondary"
-              class="text-nor-btn ml-2 text-cap"
-              to="signup"
-            >
-              Sign up</v-btn
-            >
+            <v-btn outlined color="secondary" class="ml-2 text-cap" to="signup">Sign up</v-btn>
           </div>
         </v-form>
       </div>
@@ -72,6 +49,7 @@
 </template>
 
 <script>
+import userService from '../services/UserService.js'
 export default {
   data() {
     return {
@@ -80,7 +58,7 @@ export default {
       show: false,
       rules: {
         required: (v) => !!v || 'Required.',
-        min: (v) => v.length >= 5 || 'Min 5 characters',
+        min: (v) => v.length >= 6 || 'Min 6 characters',
         email: (v) => {
           const pattern =
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -94,13 +72,90 @@ export default {
     async submit() {
       if (this.$refs.form.validate()) {
         this.loading = true
-        await new Promise((resolve) => setTimeout(resolve, 3000))
-        this.loading = false
-        this.$route.push('/')
+        this.$fire.auth
+          .signInWithEmailAndPassword(this.email, this.password)
+          .then((res) => {
+            let accessToken = res.user._delegate.accessToken
+            userService.signInGetProfile(accessToken).then((res) => {
+              this.$store.commit('setUser', res.data)
+              localStorage.setItem('userId', res.data.id)
+              localStorage.setItem('accessToken', accessToken)
+              this.loading = false
+              this.$router.push('/classrooms')
+            })
+          })
+          .catch((err) => {
+            alert(err)
+            this.loading = false
+          })
       }
     },
+
+    // async loginWithEmail() {
+    //   return await this.$fire.auth.signInWithEmailAndPassword(
+    //     this.email,
+    //     this.password
+    //   )
+    // },
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
+    },
+  },
+  mounted() {
+    const firebaseui = require('firebaseui')
+
+    const ui =
+      firebaseui.auth.AuthUI.getInstance() ||
+      new firebaseui.auth.AuthUI(this.$fire.auth)
+
+    let config = {
+      signInFlow: 'popup',
+      signInOptions: [this.$fireModule.auth.GoogleAuthProvider.PROVIDER_ID],
+      signInSuccessUrl: '/classrooms',
+      callbacks: {
+        signInSuccessWithAuthResult(res) {
+          let user = res.user
+          let accessToken = res.user._delegate.accessToken
+          userService
+            .signInGetProfile(accessToken)
+            .then((res) => {
+              // localStorage.setItem('user', JSON.stringify(res.data))
+              localStorage.setItem('accessToken', accessToken)
+              localStorage.setItem('userId', res.data.id)
+              window.location.href = '/classrooms'
+            })
+            .catch(() => {
+              localStorage.setItem('googleAccountSignUp', JSON.stringify(user))
+              window.location.href = '/signup'
+            })
+        },
+      },
+    }
+
+    ui.start('#firebaseui-auth-container', config)
   },
 }
 </script>
 
-<style></style>
+<style scoped>
+:deep(.firebaseui-idp-list) {
+  @apply w-full px-0;
+}
+:deep(.firebaseui-idp-button) {
+  @apply flex flex-wrap overflow-hidden items-center gap-x-5 gap-y-3 w-full rounded-md ring-1 ring-light_primary hover:ring-2 p-4 justify-center transition-all !bg-transparent;
+}
+:deep(.firebaseui-idp-text-long) {
+  @apply font-medium whitespace-nowrap;
+}
+:deep(.firebaseui-idp-icon-wrapper) {
+  @apply w-6 h-6;
+}
+:deep(.firebaseui-idp-icon) {
+  @apply w-full w-full;
+}
+:deep(.firebaseui-idp-text-short) {
+  @apply hidden;
+}
+</style>

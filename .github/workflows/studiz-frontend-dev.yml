@@ -2,7 +2,7 @@ name: studiz-frontend-dev
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   build:
@@ -18,9 +18,38 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker images 
+      - name: Build and push Docker images
         uses: docker/build-push-action@v3.0.0
         with:
           context: .
           push: true
           tags: ghcr.io/studiz/studiz-frontend:dev
+
+      - name: Copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: ./docker-compose.dev.yml, ./nginx.conf, ./reverse-poxy.conf
+          target: ~/studiz-frontend/dev/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull images and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            docker rmi -f ghcr.io/studiz/studiz-frontend:dev
+            docker pull ghcr.io/studiz/studiz-frontend:dev
+            docker rm -f studiz-frontend
+            docker rm -f reverse-poxy
+            docker-compose -f ~/studiz-frontend/dev/docker-compose.dev.yml up -d
