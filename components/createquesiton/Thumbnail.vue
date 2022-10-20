@@ -43,7 +43,11 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn text @click="cancel">cancel</v-btn>
-              <v-btn type="submit" color="error" @click="deleteQuestion(index)"
+              <v-btn
+                text
+                type="submit"
+                color="error"
+                @click="deleteQuestion(index)"
                 >delete
               </v-btn>
             </v-card-actions>

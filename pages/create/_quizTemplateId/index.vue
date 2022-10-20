@@ -138,7 +138,7 @@ export default {
           {
             question: '',
             image: '',
-            time: 0,
+            time: 15000,
             type: 'single',
             answer: {
               options: [
@@ -235,7 +235,7 @@ export default {
       let defaultData = {
         question: '',
         image: '',
-        time: 1000,
+        time: 15000,
         type: type,
         answer: null,
       }

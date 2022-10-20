@@ -134,10 +134,10 @@
       <div class="d-none d-md-inline-flex">
         <light-dark-mode class="!h-9 !w-9" />
       </div>
-      <v-btn height="44" outlined disabled class="d-none d-sm-inline">
+      <!-- <v-btn height="44" outlined disabled class="d-none d-sm-inline">
         <v-icon>mdi-eye-outline</v-icon>
         <span class="hidden md:inline">preview</span>
-      </v-btn>
+      </v-btn> -->
       <v-divider vertical class="mx-2 d-none d-md-inline-flex" />
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
