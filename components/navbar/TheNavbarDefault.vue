@@ -25,7 +25,7 @@
           <div class="flex items-center gap-x-4">
             <v-spacer></v-spacer>
             <!-- right  -->
-            <LightDarkMode />
+            <base-button-light-dark-mode />
             <v-menu offset-y left transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -95,9 +95,9 @@
 </template>
 
 <script>
-import LightDarkMode from './light-dark-mode.vue'
+import BaseButtonLightDarkMode from './BaseButtonLightDarkMode.vue'
 export default {
-  components: { LightDarkMode },
+  components: { BaseButtonLightDarkMode },
   data() {
     return {
       route: [

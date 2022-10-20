@@ -7,15 +7,17 @@
     <v-divider class="my-5" />
 
     <div class="max-w-lg mx-auto mt-5">
-      <Input-join @join-number="joinQuiz" />
+      <the-input-join @join-number="joinQuiz" />
     </div>
   </div>
 </template>
 
 <script>
+import TheInputJoin from '~/components/TheInputJoin.vue'
 import StudentService from '~/services/StudentService.js'
 
 export default {
+  components: { TheInputJoin },
   created() {
     this.$store.getters.userRole == 'TEACHER' ? this.$router.push('/') : ''
   },
@@ -31,7 +33,10 @@ export default {
           })
         })
         .catch((err) => {
-          alert(err.response.data)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.data,
+          })
           this.$router.push('/joinquiz')
         })
     },

@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <alert-notification />
-    <quiz-navbar
+    <the-alert-notification />
+    <the-navbar-quiz
       :currentStatus="currentStatus"
       :time="renderQuestionTime"
       @leave-room="$emit('leave-room', $event)"
@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import QuizNavbar from '~/components/navbar/quizNavbar.vue'
-import AlertnNotification from '~/components/AlertNotification.vue'
+import TheNavbarQuiz from '~/components/navbar/TheNavbarQuiz.vue'
+import TheAlertNotification from '~/components/TheAlertNotification.vue'
 export default {
-  components: { QuizNavbar, AlertnNotification },
+  components: { TheNavbarQuiz, TheAlertNotification },
   props: {
     currentStatus: {
       type: String,

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <loading-page />
+    <the-loading-screen />
     <v-app>
-      <alert-notification />
-      <Navbar />
+      <the-alert-notification />
+      <the-navbar-default />
       <v-main class="-mt-16 md:-mt-6">
         <v-container>
           <Nuxt />
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import "@lottiefiles/lottie-player";
-import LoadingPage from '~/components/LoadingPage.vue'
-import AlertNotification from '~/components/AlertNotification.vue'
-import navbar from '~/components/navbar/navbar.vue'
+import '@lottiefiles/lottie-player'
+import TheAlertNotification from '~/components/TheAlertNotification.vue'
+import TheNavbarDefault from '~/components/navbar/TheNavbarDefault.vue'
+import TheLoadingScreen from '~/components/TheLoadingScreen.vue'
 export default {
-  components: { navbar, LoadingPage, AlertNotification },
+  components: { TheAlertNotification, TheNavbarDefault, TheLoadingScreen },
   name: 'DefaultLayout',
   head() {
     return {

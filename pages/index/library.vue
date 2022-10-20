@@ -17,7 +17,7 @@
     <v-divider class="my-5" />
 
     <div class="space-y-2">
-      <quiz-template-list
+      <base-quiz-template-item
         v-for="quizTemplate in quizTemplates"
         :quizTemplate="quizTemplate"
         :key="quizTemplate.id"
@@ -29,11 +29,11 @@
 
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
-import QuizTemplateList from '~/components/Teacher/quizTemplateList.vue'
+import BaseQuizTemplateItem from '~/components/Teacher/BaseQuizTemplateItem.vue'
 import TeacherService from '~/services/TeacherService'
 
 export default {
-  components: { BaseDialogCondition, QuizTemplateList },
+  components: { BaseDialogCondition, BaseQuizTemplateItem,  },
   head() {
     return {
       title: 'Library',
