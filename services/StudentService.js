@@ -4,7 +4,11 @@ const baseURL = process.env.baseURL;
 
 export default {
   joinClassroom(pinCode, studentId) {
-    return studizAPI(baseURL).put(`/join/classroom/${pinCode}/${studentId}`);
+    return studizAPI(baseURL).put(`/join/classroom/${pinCode}/${studentId}`, void 0, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
   },
 
   leaveClassroom(classroomId, studentId) {

@@ -112,18 +112,19 @@
                     >
                     <v-card-text class="space-y-2">
                       <v-btn
-                        v-for="i in 20"
-                        :key="i"
+                        v-for="classroom in this.$store.getters.classRooms"
+                        :key="classroom.id"
                         block
                         height="44"
                         elevation="0"
                         color="primary_shade"
                         class="px-0 quiz-btn"
+                        @click="startQuiz(classroom.id)"
                       >
                         <span
                           class="normal-case text-center w-full font-semibold"
                         >
-                          Classroom name</span
+                          {{ classroom.name }}</span
                         >
                       </v-btn>
                     </v-card-text>
@@ -214,11 +215,12 @@ export default {
         params: { quizTemplateId: this.quizTemplate.id },
       })
     },
-    startQuiz() {
+    startQuiz(classRoomId) {
       this.$store.commit('TOGGLE_LOADING', true)
       TeacherService.createQuiz({
         teacherId: localStorage.getItem('userId'),
         quizTemplateId: this.quizTemplate.id,
+        classRoomId: typeof classRoomId === 'string' ? classRoomId : null,
         studentList: [],
       })
         .then((res) => {

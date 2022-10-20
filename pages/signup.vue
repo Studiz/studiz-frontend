@@ -391,7 +391,7 @@ export default {
           }
         })
         .catch((err) => {
-          if (err.response.status === 404) {
+          if (err.response?.status === 404) {
             this.isGoogleAccount = true
             this.stepPage = 2
           } else {

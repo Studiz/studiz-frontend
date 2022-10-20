@@ -7,6 +7,10 @@ export default {
     state.quizData = quizData
   },
 
+  setClassRoomId(state, classRoomId) {
+    state.quizData.classRoomId = classRoomId
+  },
+
   setCurrentPage(state, currentPage) {
     state.currentPage = currentPage
   }
