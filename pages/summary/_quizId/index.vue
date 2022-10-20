@@ -1,16 +1,11 @@
 <template>
-  <layout-quiz
-    @leave-room="leaveRoom"
-    @start-game="startGame"
-    @end-game="endGame"
-  >
-    <div class="space-y-3 xl:space-y-5">
-      <v-card
-        v-if="userRole == 'TEACHER'"
-        flat
-        class="primary_shade rounded-lg p-3 !max-w-6xl mx-auto overflow-hidden drop-shadow-md space-y-3"
-      >
-        <div class="flex items-start justify-center gap-3">
+  <div class="space-y-3 xl:space-y-5">
+    <v-card
+      v-if="userRole == 'TEACHER'"
+      flat
+      class="primary_shade rounded-lg p-3 !max-w-6xl mx-auto overflow-hidden drop-shadow-md space-y-3"
+    >
+      <!-- <div class="flex items-start justify-center gap-3">
           <div class="inline-flex flex-col">
             <span>GAME PIN:</span>
             <span class="!text-6xl !font-bold select-all">{{ pinCode }}</span>
@@ -18,133 +13,144 @@
           <v-btn icon class="self-center" @click="copyToClipboard(pinCode)">
             <v-icon>mdi-content-copy</v-icon>
           </v-btn>
-        </div>
-        <div class="flex justify-between flex-wrap">
-          <div class="inline-flex flex-wrap p-3 gap-3">
-            <v-img
-              class="rounded-lg primary w-full h-auto"
-              :src="quizData?.image"
-              max-height="60px"
-              max-width="60px"
-            />
-            <div class="font-semibold">
-              <div class="text-H2">{{ quizData?.title }}</div>
-              <div>Questions ({{ totalQuestion }})</div>
-            </div>
-          </div>
-          <div class="flex-wrap inline-flex gap-x-3 p-3 self-end h-fit">
-            <!-- <span class="h-1 w-1 bg-gray-500 rounded-xl self-center" /> -->
-            <div>Update: {{ quizData?.lastUpdated }}</div>
-          </div>
-        </div>
-      </v-card>
-
-      <v-card
-        v-else
-        flat
-        class="primary_shade rounded-lg p-3 !max-w-6xl mx-auto overflow-hidden drop-shadow-md"
-      >
-        <div class="md:flex">
+        </div> -->
+      <div class="flex justify-between flex-wrap">
+        <div class="inline-flex flex-wrap p-3 gap-3">
           <v-img
-            class="rounded-lg primary w-full h-auto mx-auto"
-            :src="quizData?.image"
-            max-height="150px"
-            max-width="150px"
-          ></v-img>
-          <div>
-            <v-card-title>{{ quizData?.title }}</v-card-title>
-            <v-card-text>{{ quizData?.description }}</v-card-text>
+            class="rounded-lg primary w-full h-auto"
+            :src="summaryData?.quizData?.image"
+            max-height="60px"
+            max-width="60px"
+          />
+          <div class="font-semibold">
+            <div class="text-H2">{{ summaryData?.quizData?.title }}</div>
+            <div>Questions ({{ summaryData?.quizData?.totalQuestion }})</div>
           </div>
-          <div class="flex md:flex-col items-end flex-wrap justify-between">
-            <v-card-subtitle class="whitespace-nowrap text-end !font-semibold"
-              >Questions ({{ totalQuestion }})</v-card-subtitle
+          <div>
+            <v-chip
+              label
+              outlined
+              v-for="tag in summaryData?.quizData?.tags"
+              :key="tag"
+              class="shadow-sm mr-2"
+              >{{ tag }}</v-chip
             >
-            <div
-              class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end"
+          </div>
+        </div>
+        <div class="flex-wrap inline-flex gap-x-3 p-3 self-end h-fit">
+          <!-- <span class="h-1 w-1 bg-gray-500 rounded-xl self-center" /> -->
+          <div>Update: {{ summaryData?.quizData?.lastUpdated }}</div>
+        </div>
+      </div>
+    </v-card>
+
+    <v-card
+      v-else
+      flat
+      class="primary_shade rounded-lg p-3 !max-w-6xl mx-auto overflow-hidden drop-shadow-md"
+    >
+      <div class="md:flex">
+        <v-img
+          class="rounded-lg primary w-full h-auto mx-auto"
+          :src="summaryData?.quizData?.image"
+          max-height="150px"
+          max-width="150px"
+        ></v-img>
+        <div>
+          <v-card-title>{{ summaryData?.quizData?.title }}</v-card-title>
+          <v-card-text>{{ summaryData?.quizData?.description }}</v-card-text>
+          <div class="mx-3">
+            <v-chip
+              label
+              outlined
+              v-for="tag in summaryData?.quizData?.tags"
+              :key="tag"
+              class="shadow-sm mr-2"
+              >{{ tag }}</v-chip
             >
-              <v-img
-                class="rounded-full primary"
-                :src="quizData?.teacher.imageUrl"
-                max-height="48px"
-                max-width="48px"
-              ></v-img>
-              <div>
-                <div>{{ quizData?.teacher.displayName }}</div>
-                <div>{{ quizData?.lastUpdated }}</div>
-              </div>
+          </div>
+        </div>
+        <div class="flex md:flex-col items-end flex-wrap justify-between">
+          <v-card-subtitle class="whitespace-nowrap text-end !font-semibold"
+            >Questions ({{
+              summaryData?.quizData?.totalQuestion
+            }})</v-card-subtitle
+          >
+          <div
+            class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end"
+          >
+            <v-img
+              class="rounded-full primary"
+              :src="summaryData?.quizData?.teacher?.imageUrl"
+              max-height="48px"
+              max-width="48px"
+            />
+            <div>
+              <div>{{ summaryData?.quizData?.teacher?.displayName }}</div>
+              <div>{{ summaryData?.quizData?.lastUpdated }}</div>
             </div>
           </div>
         </div>
-      </v-card>
-
+      </div>
+    </v-card>
+    <div class="flex flex-row !max-w-6xl mx-auto gap-3">
       <the-leader-board
         :membersInClass="membersInClass"
         :currentStatus="'summary'"
+        class="flex-1"
       />
+      <v-card
+        flat
+        class="rounded-lg p-3 overflow-hidden drop-shadow-md flex-1 w-1/"
+      >
+        <div class="flex flex-row items-center justify-center">
+          <v-img
+            class="rounded-full primary"
+            :src="summaryData?.leaderboard?.winner?.image"
+            max-height="65px"
+            max-width="65px"
+          />
+          <v-card-title
+            >The winner is
+            {{ summaryData?.leaderboard?.winner?.displayName }}</v-card-title
+          >
+          <div>
+            <lottie-player
+              autoplay
+              loop
+              src="https://assets3.lottiefiles.com/packages/lf20_touohxv0.json"
+              style="width: 100px"
+            />
+          </div>
+        </div>
+        <v-card-subtitle v-if="userRole == 'STUDENT'"
+          >Your score {{ studentScore }}</v-card-subtitle
+        >
+        <v-card-text v-if="userRole == 'STUDENT'"
+          >Number of correct answers
+          {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
+            summaryData?.quizData?.totalQuestion
+          }}</v-card-text
+        >
+      </v-card>
     </div>
-  </layout-quiz>
+  </div>
 </template>
 
 <script>
-import LayoutQuiz from '~/layouts/layoutQuiz.vue'
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
-import TeacherService from '~/services/TeacherService'
-import StudentService from '~/services/StudentService'
-import { v4 as uuidv4 } from 'uuid'
+import QuizService from '~/services/QuizService'
 import socket from '~/plugins/socket.io'
 
 export default {
-  layout: 'layoutFree',
-  components: { LayoutQuiz, TheLeaderBoard },
-  head() {
-    return {
-      title: this.renderQuizName,
-      titleTemplate: '%s - Quiz summary',
-    }
-  },
+  components: { TheLeaderBoard },
   data() {
     return {
-      members: [],
+      summaryData: {},
       membersInClass: [],
     }
   },
   methods: {
-    initGame() {
-      socket.emit('init-game', {
-        quizId: this.$route.params.quizId,
-        quizData: this.quizData,
-      })
-    },
-    joinRoom() {
-      if (!localStorage.getItem('memberId')) {
-        let memberId = uuidv4()
-        localStorage.setItem('memberId', memberId)
-      }
-      if (this.userRole === 'STUDENT') {
-        socket.emit('join-lobby', {
-          quizId: this.$route.params.quizId,
-          user: this.$store.getters.user,
-          memberId: localStorage.getItem('memberId'),
-          socketId: socket.id,
-          quizData: [],
-          totalScore: 0,
-        })
-      } else {
-        socket.emit('join-lobby', {
-          quizId: this.$route.params.quizId,
-          user: {
-            displayName: this.$route.params.displayName,
-            imageUrl:
-              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=556fa651-57d6-4877-a211-51ded3b82dcb',
-            role: 'Guest',
-          },
-          memberId: localStorage.getItem('memberId'),
-          socketId: socket.id,
-          quizData: [],
-          totalScore: 0,
-        })
-      }
-    },
     leaveRoom() {
       if (confirm('Do you want to leave the room?')) {
         socket.emit('leave-lobby', {
@@ -155,36 +161,34 @@ export default {
         this.$router.push('/')
       }
     },
-    startGame() {
-      socket.emit('start-game', {
-        quizId: this.$route.params.quizId,
-      })
-    },
     endGame() {
       socket.emit('end-game', {
         quizId: this.$route.params.quizId,
       })
-    },
-    copyToClipboard(data) {
-      navigator.clipboard.writeText(data)
     },
   },
   computed: {
     userRole() {
       return this.$store.getters.userRole
     },
-    totalQuestion() {
-      return this.quizData?.totalQuestion
+    student() {
+      return this.summaryData?.members?.find((member) => {
+        return member.user?.uid === this.$store.getters.user?.uid
+      })
     },
-    quizData() {
-      return this.$store.getters.quizData
+    studentScore() {
+      return this.student?.totalScore
     },
-    pinCode() {
-      return this.$store.getters.pinCode
+    numberCorrectAnswers() {
+      return this.student?.quizData?.filter((quiz) => {
+        return quiz.studentAnswer
+      }).length
     },
-    renderQuizName() {
-      return this.quizData?.title
-    },
+    // membersInClass() {
+    //   return this.$route.params.summaryData?.leaderboard.members
+    //     ? this.$route.params.summaryData?.leaderboard.members
+    //     : this.summaryData.leaderboard.members
+    // },
   },
   destroyed() {
     // if (confirm('Do you want to leave the room?')) {
@@ -192,20 +196,7 @@ export default {
     // }
   },
   mounted() {
-    this.membersInClass = this.$route.params.membersInClass
-    socket.on('joined', (data) => {
-      this.members = data.map((member) => member.user)
-    })
-
-    socket.on('move-to-quiz', (data) => {
-      this.$router.push({
-        name: 'quiz-quizId',
-        params: {
-          quizId: this.$route.params.quizId,
-          questionData: data,
-        },
-      })
-    })
+    this.membersInClass = this.$route.params.summaryData?.leaderboard.members
 
     socket.on('move-to-home', () => {
       this.$store.commit('TOGGLE_ALERT', {
@@ -217,19 +208,12 @@ export default {
     })
   },
   created() {
-    if (this.userRole === 'TEACHER') {
-      TeacherService.getQuizById(this.$route.params.quizId).then((res) => {
-        this.$store.commit('setPinCode', res.data.pinCode)
-        this.$store.commit('setQuizData', res.data.quizTemplate)
-        this.initGame()
-      })
-    } else {
-      StudentService.getQuizById(this.$route.params.quizId).then((res) => {
-        this.$store.commit('setPinCode', res.data.pinCode)
-        this.$store.commit('setQuizData', res.data.quizTemplate)
-        this.joinRoom()
-      })
-    }
+    QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
+      (res) => {
+        this.summaryData = res.data
+        this.membersInClass = this.summaryData.leaderboard.members
+      }
+    )
   },
 }
 </script>

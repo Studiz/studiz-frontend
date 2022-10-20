@@ -197,7 +197,7 @@ export default {
               ? this.$route.params.displayName
               : localStorage.getItem('displayName'),
             imageUrl: '',
-            role: 'Guest',
+            role: 'GUEST',
           },
           memberId: localStorage.getItem('memberId'),
           socketId: socket.id,

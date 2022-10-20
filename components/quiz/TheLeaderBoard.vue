@@ -48,7 +48,6 @@
 
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
-import ClassroomService from '~/services/ClassroomService'
 export default {
   components: { BaseDialogCondition },
   props: {
@@ -58,43 +57,52 @@ export default {
   },
   data: () => ({
     page: 1,
-
-    headers: [
-      {
-        text: '#',
-        sortable: false,
-        value: 'index',
-        align: 'center',
-        width: '48px',
-      },
-      {
-        text: '',
-        sortable: false,
-        value: 'image',
-        width: '56px',
-      },
-      {
-        text: 'Display Name',
-        value: 'displayName',
-        sortable: false,
-      },
-      { text: 'Score', value: 'score', sortable: false },
-      { text: 'Round', value: 'scoreInRound', sortable: false, align: 'end' },
-    ],
-
     isloading: false,
   }),
 
   created() {
     // this.loadData()
-    console.log(this.membersInClass)
     // this.isloading = true
   },
 
   methods: {},
   computed: {
     itemsPerPage() {
-      return this.membersInClass.length
+      return this.membersInClass?.length
+    },
+    headers() {
+      let headers = [
+        {
+          text: '#',
+          sortable: false,
+          value: 'index',
+          align: 'center',
+          width: '48px',
+        },
+        {
+          text: '',
+          sortable: false,
+          value: 'image',
+          width: '56px',
+        },
+        {
+          text: 'Display Name',
+          value: 'displayName',
+          sortable: false,
+        },
+        {
+          text: 'Role',
+          value: 'role',
+          sortable: false,
+        },
+        { text: 'Score', value: 'score', sortable: false },
+        { text: 'Round', value: 'scoreInRound', sortable: false, align: 'end' },
+      ]
+
+      if (this.$route.path.startsWith('/summary')) {
+        delete headers[5]
+      }
+      return headers
     },
   },
 }
