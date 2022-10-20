@@ -67,7 +67,7 @@
           >Edit: {{ quizTemplate.lastUpdated }}</span
         >
         <div class="inline-flex flex-wrap gap-2 w-full sm:w-auto justify-end">
-          <v-btn color="white" class="w-full sm:w-auto" disabled>Assign</v-btn>
+          <!-- <v-btn color="white" class="w-full sm:w-auto" disabled>Assign</v-btn> -->
 
           <v-dialog v-model="dialogStartQuiz" width="400">
             <template v-slot:activator="{ on, attrs }">
@@ -82,19 +82,63 @@
             </template>
             <v-card>
               <v-card-title class="text-h5">Start quiz with ...?</v-card-title>
+
               <v-card-text class="space-y-2">
-                <v-btn
-                  block
-                  height="44"
-                  elevation="0"
-                  color="primary_shade"
-                  class="px-0 quiz-btn"
-                  @click="startQuiz"
+                <v-dialog
+                  scrollable
+                  v-model="dialogStartQuizWithClassroom"
+                  width="400"
                 >
-                  <span class="normal-case text-center w-full font-semibold">
-                    Quiz with classroom</span
-                  >
-                </v-btn>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      block
+                      height="44"
+                      elevation="0"
+                      color="primary_shade"
+                      class="px-0 quiz-btn"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <span
+                        class="normal-case text-center w-full font-semibold"
+                      >
+                        Quiz with classroom</span
+                      >
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title class="text-h5 !break-normal"
+                      >Select class to start quiz</v-card-title
+                    >
+                    <v-card-text class="space-y-2">
+                      <v-btn
+                        v-for="i in 20"
+                        :key="i"
+                        block
+                        height="44"
+                        elevation="0"
+                        color="primary_shade"
+                        class="px-0 quiz-btn"
+                      >
+                        <span
+                          class="normal-case text-center w-full font-semibold"
+                        >
+                          Classroom name</span
+                        >
+                      </v-btn>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer />
+                      <v-btn
+                        color="primary"
+                        text
+                        @click="dialogStartQuizWithClassroom = false"
+                      >
+                        Close
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
                 <v-btn
                   block
                   height="44"
@@ -108,6 +152,7 @@
                   >
                 </v-btn>
               </v-card-text>
+
               <v-card-actions>
                 <v-spacer />
                 <v-btn color="primary" text @click="dialogStartQuiz = false">
@@ -136,6 +181,7 @@ export default {
     return {
       pincode: '',
       dialogStartQuiz: false,
+      dialogStartQuizWithClassroom: false,
       dialogDelete: false,
     }
   },

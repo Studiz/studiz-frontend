@@ -81,7 +81,7 @@
       </div>
       <div>
         <div class="flex items-center h-16 px-4">
-          <div class="flex flex-wrap items-center">
+          <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Display name</span>
             <span class="font-normal">{{ displayName }}</span>
           </div>
@@ -92,9 +92,11 @@
             @open="openForm"
             :propDialog="propDialog"
           >
-            <template #namebtn>Edit</template>
+            <template #namebtn>
+              <span class="hidden md:block md:pr-2">Edit</span>
+            </template>
             <template #icon>
-              <v-icon left>mdi-pencil</v-icon>
+              <v-icon>mdi-pencil</v-icon>
             </template>
             <template #title>Change Your information</template>
             <template #contain>
@@ -120,7 +122,7 @@
         </div>
         <v-divider />
         <div class="flex items-center h-16 px-4">
-          <div class="flex flex-wrap items-center">
+          <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Name</span>
             <span class="font-normal">{{ name }}</span>
           </div>
@@ -130,9 +132,11 @@
             @open="openForm"
             :propDialog="propDialog"
           >
-            <template #namebtn>Edit</template>
+            <template #namebtn>
+              <span class="hidden md:block md:pr-2">Edit</span>
+            </template>
             <template #icon>
-              <v-icon left>mdi-pencil</v-icon>
+              <v-icon>mdi-pencil</v-icon>
             </template>
             <template #title>Change Your information</template>
             <template #contain>
@@ -166,7 +170,7 @@
         </div>
         <v-divider />
         <div class="flex items-center h-16 px-4">
-          <div class="flex flex-wrap items-center">
+          <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Email</span>
             <span class="font-normal">{{ email }}</span>
           </div>
