@@ -1,33 +1,52 @@
 <template>
-  <div class="flex flex-col md:flex-row gap-3 flex-1">
-    <base-question-image
-      typeQuestions="sort"
-      :questionImage="renderQuestionImage"
-      :numberOfAnswer="numberOfAnswer"
-    />
+  <div
+    class="flex flex-col gap-3 flex-1"
+    :class="[renderIsTeacherRole ? '' : 'pb-[72px] md:pb-0']"
+  >
+    <div class="flex flex-col md:flex-row gap-3">
+      <base-question-image
+        class=""
+        typeQuestions="sort"
+        :questionImage="renderQuestionImage"
+        :numberOfAnswer="numberOfAnswer"
+      />
 
-    <div class="grid grid-cols-1 gap-3 flex-1 h-full w-full auto-cols-fr">
-      <draggable
-        v-bind="dragOptions"
-        v-model="choices"
-        @end="changeOrdering"
-        handle=".handle"
-      >
-        <transition-group
-          type="transition"
-          class="gap-3 flex flex-col h-full auto-cols-fr"
+      <div class="grid grid-cols-1 gap-3 flex-1 h-full w-full auto-cols-fr">
+        <draggable
+          v-bind="dragOptions"
+          v-model="choices"
+          @end="changeOrdering"
+          handle=".handle"
         >
-          <base-question-choice
-            v-for="(item, i) in choices"
-            :key="`${i}-${item}`"
-            :index="i"
-            :item="item"
-            :arrayChoiceColor="arrayChoiceColor"
-            @selectAnswer="selectAnswer"
-            typeQuestions="sort"
-          />
-        </transition-group>
-      </draggable>
+          <transition-group
+            type="transition"
+            class="gap-3 flex flex-col h-full auto-cols-fr"
+          >
+            <base-question-choice
+              v-for="(item, i) in choices"
+              :key="`${i}-${item}`"
+              :index="i"
+              :item="item"
+              :arrayChoiceColor="arrayChoiceColor"
+              @selectAnswer="selectAnswer"
+              typeQuestions="sort"
+            />
+          </transition-group>
+        </draggable>
+      </div>
+    </div>
+
+    <div
+      v-if="!renderIsTeacherRole"
+      class="inline-flex justify-center fixed bottom-0 left-0 md:relative p-3 md:p-0 w-full background"
+    >
+      <v-btn
+        color="primary"
+        height="56"
+        class="w-full md:w-64 !px-5 rounded-md transition-all"
+      >
+        <span class="normal-case font-semibold">Summit</span>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -136,6 +155,9 @@ export default {
     },
     renderQuestionImage() {
       return this.question.image
+    },
+    renderIsTeacherRole() {
+      return this.$store.getters.userRole === 'TEACHER' ? true : false
     },
   },
   created() {
