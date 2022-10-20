@@ -1,9 +1,10 @@
 <template>
   <div>
-    <loading-page />
+    <the-loading-screen />
     <v-app class="overflow-hidden">
-      <alert-notification />
-      <create-navbar
+      <the-alert-notification />
+
+      <the-navbar-create-quiz
         :quizTitle="quizTitle"
         @save-quiz-template="$emit('save-quiz-template')"
         @toggle-nav-drawer="toggleNavDrawer"
@@ -190,19 +191,19 @@
 
 <script>
 import draggable from 'vuedraggable'
-import createNavbar from '~/components/navbar/createNavbar.vue'
+import TheNavbarCreateQuiz from '~/components/navbar/TheNavbarCreateQuiz.vue'
 import Thumbnail from '~/components/createquesiton/Thumbnail.vue'
-import LoadingPage from '~/components/LoadingPage.vue'
-import AlertNotification from '~/components/AlertNotification.vue'
+import TheLoadingScreen from '~/components/TheLoadingScreen.vue'
+import TheAlertNotification from '~/components/TheAlertNotification.vue'
 import BaseBtnQuestionType from '~/components/createquesiton/BaseBtnQuestionType.vue'
 export default {
   components: {
-    createNavbar,
+    TheNavbarCreateQuiz,
     draggable,
     Thumbnail,
-    LoadingPage,
+    TheLoadingScreen,
     BaseBtnQuestionType,
-    AlertNotification,
+    TheAlertNotification,
   },
   props: {
     quizTitle: {

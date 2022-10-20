@@ -67,9 +67,8 @@
 </template>
 
 <script>
-import LightDarkMode from '~/components/navbar/light-dark-mode.vue'
 export default {
-  components: { LightDarkMode },
+  components: {},
   head() {
     return {
       title: 'More options',

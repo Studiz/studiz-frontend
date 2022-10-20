@@ -24,7 +24,8 @@
       color="background_card"
       class="p-3 overflow-hidden drop-shadow-md rounded-xl md:p-5 lg:p-10"
     >
-      <Input-join @join-number="joinnumber" />
+      <the-input-join @join-number="joinnumber" />
+
       <v-dialog
         v-model="isOpenForm"
         scrollable
@@ -95,9 +96,11 @@
 </template>
 
 <script>
+import TheInputJoin from '~/components/TheInputJoin.vue'
 import StudentService from '~/services/StudentService.js'
 
 export default {
+  components: { TheInputJoin },
   head() {
     return {
       title: 'Join quiz',

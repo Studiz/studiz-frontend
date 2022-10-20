@@ -132,7 +132,7 @@
 
       <v-spacer />
       <div class="d-none d-md-inline-flex">
-        <light-dark-mode class="!h-9 !w-9" />
+        <base-button-light-dark-mode class="!h-9 !w-9" />
       </div>
       <!-- <v-btn height="44" outlined disabled class="d-none d-sm-inline">
         <v-icon>mdi-eye-outline</v-icon>
@@ -174,10 +174,10 @@
 
 <script>
 import BaseDialogCondition from '../BaseDialogCondition.vue'
-import lightDarkMode from './light-dark-mode.vue'
+import BaseButtonLightDarkMode from './BaseButtonLightDarkMode.vue'
 
 export default {
-  components: { lightDarkMode, BaseDialogCondition },
+  components: { BaseDialogCondition, BaseButtonLightDarkMode },
   data() {
     return {
       formIsOpen: true,

@@ -11,34 +11,59 @@
     >
       <div class="flex items-center gap-x-2">
         <div class="d-none d-md-inline-flex">
-          <v-btn v-if="!isFullScreen" color="primary" rounded icon @click="openFullscreen">
+          <v-btn
+            v-if="!isFullScreen"
+            color="primary"
+            rounded
+            icon
+            @click="openFullscreen"
+          >
             <v-icon>$vuetify.icons.full_screen</v-icon>
           </v-btn>
           <v-btn v-else color="primary" rounded icon @click="closeFullscreen">
             <v-icon>$vuetify.icons.normal_screen</v-icon>
           </v-btn>
         </div>
+
         <div class="d-none d-md-inline-flex">
-          <light-dark-mode />
+          <base-button-light-dark-mode />
         </div>
-        <v-spacer></v-spacer>
-        <quiz-progress-bar v-show="isQuestionStatus" />
-        <v-spacer></v-spacer>
+
+        <v-spacer />
+
+        <the-quiz-progress-bar v-show="isQuestionStatus" />
+
+        <v-spacer />
+
         <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
           <v-btn outlined @click="endGame">End</v-btn>
-          <v-btn color="primary" class="px-3" v-if="isLobbyStatus" @click="startGame">Start</v-btn>
           <v-btn
             color="primary"
             class="px-3"
-            v-if="isQuestionStatus ||  isLeaderBoardStatus"
+            v-if="isLobbyStatus"
+            @click="startGame"
+            >Start</v-btn
+          >
+          <v-btn
+            color="primary"
+            class="px-3"
+            v-if="isQuestionStatus || isLeaderBoardStatus"
             @click="nextQuestion"
-          >Next</v-btn>
+            >Next</v-btn
+          >
         </div>
-        <div v-else class="whitespace-nowrap space-x-3 inline-flex items-center">
+
+        <div
+          v-else
+          class="whitespace-nowrap space-x-3 inline-flex items-center"
+        >
           <span class="hidden sm:inline-flex">{{ user }}</span>
-          <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom">Leave</v-btn>
+          <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom"
+            >Leave</v-btn
+          >
         </div>
       </div>
+
       <div
         v-show="isQuestionStatus"
         class="absolute bottom-0 left-0 w-full h-1 secondary timer transition-all ease-linear rounded-r-full opacity-100"
@@ -62,10 +87,10 @@
 </template>
 
 <script>
-import lightDarkMode from './light-dark-mode.vue'
-import QuizProgressBar from './quizProgressBar.vue'
+import BaseButtonLightDarkMode from './BaseButtonLightDarkMode.vue'
+import TheQuizProgressBar from './TheQuizProgressBar.vue'
 export default {
-  components: { lightDarkMode, QuizProgressBar },
+  components: { TheQuizProgressBar, BaseButtonLightDarkMode },
   props: {
     time: {
       type: Number,

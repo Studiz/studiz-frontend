@@ -40,10 +40,10 @@ const createStore = () => {
         setTimeout(() => {
           state.alertInfo.message = ''
           state.isAlertActive = false
-        }, 5000)
+        }, 3000)
         setTimeout(() => {
           state.alertInfo.type = ''
-        }, 6000)
+        }, 4000)
       },
     },
 

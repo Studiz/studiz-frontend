@@ -13,7 +13,8 @@
         v-if="userRole === 'STUDENT'"
         >join classroom</v-btn
       >
-      <Create-classroom v-else />
+
+      <the-create-classroom v-else />
     </div>
     <v-expand-transition>
       <v-card
@@ -23,8 +24,8 @@
         hide-details
         class="w-full md:w-6/12 lg:w-4/12 ml-auto mb-3 mt-2"
       >
-        <Input-join @join-number="joinPinCode" v-if="userRole == 'STUDENT'">
-          <v-btn
+        <the-input-join @join-number="joinPinCode" v-if="userRole == 'STUDENT'"
+          ><v-btn
             hide-details
             inset
             height="56"
@@ -33,9 +34,9 @@
               this.$route.name == 'index-classrooms' ? 'w-full col-span-6' : '',
             ]"
             @click="cancel()"
-            >cancel</v-btn
-          >
-        </Input-join>
+            >cancel
+          </v-btn>
+        </the-input-join>
       </v-card>
     </v-expand-transition>
 
@@ -86,9 +87,10 @@
 <script>
 import UserService from '../../services/UserService.js'
 import StudentService from '../../services/StudentService.js'
-import CreateClassroom from '~/components/Teacher/create-classroom.vue'
+import TheCreateClassroom from '~/components/Teacher/TheCreateClassroom.vue'
+import TheInputJoin from '~/components/TheInputJoin.vue'
 export default {
-  components: { CreateClassroom },
+  components: { TheCreateClassroom, TheInputJoin },
   head() {
     return {
       title: 'Classroom',
