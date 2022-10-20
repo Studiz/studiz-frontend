@@ -1,6 +1,6 @@
 <template>
   <v-data-table
-    class="elevation-0 drop-shadow-sm !rounded-lg"
+    class="elevation-0 !rounded-lg"
     mobile-breakpoint="0"
     :headers="headers"
     :items="quizzes"

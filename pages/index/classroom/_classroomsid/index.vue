@@ -31,7 +31,9 @@
           classroom ? classroom.pinCode : ''
         }}</span>
       </p>
-      <p class="p-3 background rounded-lg leading-relaxed drop-shadow-sm">
+      <p
+        class="p-3 background ring-1 ring-black ring-opacity-10 rounded-lg leading-relaxed drop-shadow-sm"
+      >
         {{ classroom ? classroom.description : '' }}
       </p>
     </div>
@@ -57,7 +59,10 @@
         </v-tab>
       </v-tabs>
     </div>
-    <Nuxt />
+
+    <div class="ring-1 ring-black ring-opacity-10 drop-shadow-sm rounded-lg">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
