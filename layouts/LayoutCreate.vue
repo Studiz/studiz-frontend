@@ -19,7 +19,7 @@
         right
         v-model="drawerSettingQuiz"
       >
-        <v-list class="!py-4 !px-2 h-full">
+        <v-list class="!py-4 !px-2 h-full !flex justify-center">
           <v-list-item-group
             :key="currentQuesiton"
             class="inline-flex flex-col gap-6 justify-between h-full"

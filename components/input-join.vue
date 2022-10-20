@@ -38,7 +38,7 @@
           ? 'w-full col-span-6 md:col-span-3'
           : 'w-full col-span-12',
       ]"
-      :disabled="pincode.length !== 6"
+      :disabled="vaildPINCode"
       @click="join"
       >{{ this.$store.getters.user ? 'join' : 'join guest' }}</v-btn
     >
@@ -70,8 +70,19 @@ export default {
       }
     },
     join() {
-      this.$emit('join-number', this.pincode)
-      console.log(this.$nuxt.$route.name)
+      if (!this.vaildPINCode) {
+        this.$emit('join-number', this.pincode)
+      }
+    },
+  },
+  computed: {
+    vaildPINCode() {
+      const checkPIN = /^[0-9]{6}$/
+      if (checkPIN.test(this.pincode)) {
+        return false
+      } else {
+        return true
+      }
     },
   },
 }

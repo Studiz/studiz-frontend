@@ -18,9 +18,6 @@
         />
       </div>
       <v-icon size="150">$vuetify.icons.Studiz_logo</v-icon>
-      <!-- <div class="h-[150px] w-[150px] inline-flex items-center">
-        <v-img src="/studiz-logo.png" max-width="150" max-height="150" />
-      </div>-->
     </div>
     <v-card
       flat
@@ -50,15 +47,19 @@
                 outlined
                 required
                 :rules="rules.nameRules"
-                :counter="10"
+                :counter="30"
                 v-model="displayName"
               ></v-text-field>
             </v-container>
           </v-form>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text @click="closeForm">close</v-btn>
-            <v-btn text @click="enterDisplayName" type="submit">confirm</v-btn>
+            <v-btn text color="primary" class="!capitalize" @click="closeForm"
+              >close
+            </v-btn>
+            <v-btn text color="primary" @click="enterDisplayName" type="submit"
+              >confirm
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -109,14 +110,8 @@ export default {
         nameRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 10) ||
-            'Classroom name must be less than 10 characters',
-        ],
-        descriptionRules: [
-          (v) => !!v || 'Required.',
-          (v) =>
-            (v && v.length <= 10) ||
-            'DescriptionRules must be less than 10 characters',
+            (v && v.length <= 30) ||
+            'Classroom name must be less than 30 characters',
         ],
       },
       isOpenForm: false,
@@ -134,18 +129,26 @@ export default {
       this.displayName = ''
     },
     enterDisplayName() {
-      localStorage.setItem('displayName', this.displayName)
-      StudentService.joinQuiz(this.pinCode)
-        .then((res) => {
-          this.$router.push({
-            name: 'lobby-quizId',
-            params: { quizId: res.data.quizId, displayName: this.displayName },
+      if (this.$refs.form.validate()) {
+        localStorage.setItem('displayName', this.displayName)
+        StudentService.joinQuiz(this.pinCode)
+          .then((res) => {
+            this.$router.push({
+              name: 'lobby-quizId',
+              params: {
+                quizId: res.data.quizId,
+                displayName: this.displayName,
+              },
+            })
           })
-        })
-        .catch((err) => {
-          alert(err.response.data)
-          this.$router.push('/')
-        })
+          .catch((err) => {
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.data,
+            })
+            this.$router.push('/')
+          })
+      }
     },
   },
   computed: {

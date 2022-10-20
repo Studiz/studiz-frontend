@@ -13,7 +13,7 @@ const createStore = () => {
       theme: themeModule,
       classroom: classroomModule,
       createQuiz: createQuizModule,
-      quiz: quizModule
+      quiz: quizModule,
     },
 
     state: {
@@ -21,8 +21,8 @@ const createStore = () => {
       isAlertActive: false,
       alertInfo: {
         type: '',
-        message: ''
-      }
+        message: '',
+      },
     },
 
     getters: {
@@ -38,11 +38,13 @@ const createStore = () => {
         state.alertInfo.type = payload.type
         state.alertInfo.message = payload.message
         setTimeout(() => {
-          state.alertInfo.type = ''
           state.alertInfo.message = ''
           state.isAlertActive = false
-        }, 3000)
-      }
+        }, 5000)
+        setTimeout(() => {
+          state.alertInfo.type = ''
+        }, 6000)
+      },
     },
 
     actions: {},

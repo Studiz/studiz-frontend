@@ -42,7 +42,7 @@
         <div class="flex justify-between flex-wrap">
           <div class="inline-flex flex-wrap p-3 gap-3">
             <v-img
-              class="rounded-lg primary w-full h-auto"
+              class="rounded-lg background w-full h-auto"
               :src="quizData?.image"
               max-height="60px"
               max-width="60px"
@@ -76,14 +76,16 @@
       >
         <div class="md:flex">
           <v-img
-            class="rounded-lg primary w-full h-auto mx-auto"
+            class="rounded-lg background w-full h-auto mx-auto"
             :src="quizData?.image"
             max-height="150px"
             max-width="150px"
           ></v-img>
           <div>
-            <v-card-title>{{ quizData?.title }}</v-card-title>
-            <v-card-text>{{ quizData?.description }}</v-card-text>
+            <v-card-title class="!py-0">{{ quizData?.title }}</v-card-title>
+            <v-card-text v-if="quizData?.description">{{
+              quizData?.description
+            }}</v-card-text>
             <div class="mx-3">
               <v-chip
                 label
@@ -105,8 +107,8 @@
               <v-img
                 class="rounded-full primary"
                 :src="quizData?.teacher.imageUrl"
-                max-height="48px"
-                max-width="48px"
+                height="48px"
+                width="48px"
               ></v-img>
               <div>
                 <div>{{ quizData?.teacher.displayName }}</div>
@@ -164,8 +166,6 @@ export default {
     return {
       members: [],
       showTooltip: false,
-      // quizData: {},
-      // pinCode: '',
     }
   },
   methods: {
