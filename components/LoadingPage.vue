@@ -5,9 +5,16 @@
     ]"
     class="cover-loading bg-white/50 dark:bg-black/50 backdrop-blur-sm block z-[99]"
   >
-    <div class="w-full h-full lds-ring">
+    <!-- <div class="w-full h-full lds-ring">
       <span class="dot" v-for="i in 4" :key="i" />
-    </div>
+    </div> -->
+    <lottie-player
+      class="w-full h-full lds-ring"
+      autoplay
+      loop
+      src="https://assets8.lottiefiles.com/packages/lf20_mniampqn.json"
+      style="width: 120px"
+    />
   </div>
 </template>
 
