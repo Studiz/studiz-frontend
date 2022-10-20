@@ -79,13 +79,14 @@
           </v-card>
         </v-dialog>
       </div>
+
       <div>
         <div class="flex items-center h-16 px-4">
           <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Display name</span>
             <span class="font-normal">{{ displayName }}</span>
           </div>
-          <!-- <v-spacer></v-spacer> -->
+
           <base-dialog-condition
             @confirm="editInformation"
             colorBTN="primary"
@@ -93,7 +94,7 @@
             :propDialog="propDialog"
           >
             <template #namebtn>
-              <span class="hidden md:block md:pr-2">Edit</span>
+              <span class="hidden md:block md:pl-2">Edit</span>
             </template>
             <template #icon>
               <v-icon>mdi-pencil</v-icon>
@@ -120,7 +121,9 @@
             </template>
           </base-dialog-condition>
         </div>
+
         <v-divider />
+
         <div class="flex items-center h-16 px-4">
           <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Name</span>
@@ -133,7 +136,7 @@
             :propDialog="propDialog"
           >
             <template #namebtn>
-              <span class="hidden md:block md:pr-2">Edit</span>
+              <span class="hidden md:block md:pl-2">Edit</span>
             </template>
             <template #icon>
               <v-icon>mdi-pencil</v-icon>
@@ -168,7 +171,9 @@
             </template>
           </base-dialog-condition>
         </div>
+
         <v-divider />
+
         <div class="flex items-center h-16 px-4">
           <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Email</span>
