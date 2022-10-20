@@ -61,8 +61,12 @@
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text class="text-cap" @click="close">Close</v-btn>
-          <v-btn type="submit" color="primary" :loading="loading">create</v-btn>
+          <v-btn text color="primary" class="!capitalize" @click="close"
+            >Close</v-btn
+          >
+          <v-btn text type="submit" color="primary" :loading="loading"
+            >create</v-btn
+          >
         </v-card-actions>
       </v-form>
     </v-card>

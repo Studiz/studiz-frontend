@@ -30,7 +30,7 @@
       <slot name="contain"></slot>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn :color="btn1" text @click="close">
+        <v-btn :color="btn1" text class="!capitalize" @click="close">
           <slot name="btn1">close</slot>
         </v-btn>
         <v-btn :color="btn2" text @click="click2" type="submit">
@@ -54,6 +54,7 @@ export default {
     },
     btn1: {
       type: String,
+      default: 'primary',
     },
     btn2: {
       type: String,

@@ -61,12 +61,17 @@
             ></v-file-input>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn text @click="closeImageUpload">close</v-btn>
               <v-btn
-                class="primary"
                 text
+                color="primary"
+                class="!capitalize"
+                @click="closeImageUpload"
+                >close</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
                 @click="uploadImage"
-                type="submit"
                 :loading="isloading"
                 >confirm</v-btn
               >
@@ -84,7 +89,6 @@
           <base-dialog-condition
             @confirm="editInformation"
             colorBTN="primary"
-            btn2="primary"
             @open="openForm"
             :propDialog="propDialog"
           >
@@ -123,7 +127,6 @@
           <base-dialog-condition
             @confirm="editInformation"
             colorBTN="primary"
-            btn2="primary"
             @open="openForm"
             :propDialog="propDialog"
           >

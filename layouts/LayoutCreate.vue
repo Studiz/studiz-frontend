@@ -78,7 +78,13 @@
                     >
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn text @click="dialogDelete = false">cancel</v-btn>
+                      <v-btn
+                        text
+                        class="!capitalize"
+                        color="primary"
+                        @click="dialogDelete = false"
+                        >cancel</v-btn
+                      >
                       <v-btn
                         text
                         type="submit"

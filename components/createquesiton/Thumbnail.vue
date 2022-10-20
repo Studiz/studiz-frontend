@@ -42,7 +42,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn text @click="cancel">cancel</v-btn>
+              <v-btn text class="!capitalize" color="primary" @click="cancel"
+                >cancel</v-btn
+              >
               <v-btn
                 text
                 type="submit"

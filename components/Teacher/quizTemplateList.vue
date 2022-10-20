@@ -37,8 +37,15 @@
               <v-card-text>Are you sure to delete this quiz? </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn text @click="dialogDelete = false">cancel</v-btn>
                 <v-btn
+                  text
+                  class="!capitalize"
+                  color="primary"
+                  @click="dialogDelete = false"
+                  >cancel
+                </v-btn>
+                <v-btn
+                  text
                   type="submit"
                   color="error"
                   elevation="0"
