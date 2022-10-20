@@ -6,7 +6,7 @@ export default {
   joinClassroom(pinCode, studentId) {
     return studizAPI(baseURL).put(`/join/classroom/${pinCode}/${studentId}`, void 0, {
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
       }
     });
   },

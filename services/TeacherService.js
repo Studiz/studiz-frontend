@@ -14,7 +14,7 @@ export default {
   createClassroom(data) {
     return studizAPI(baseURL).post('/create/classroom', data, {
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
       }
     });
   },
