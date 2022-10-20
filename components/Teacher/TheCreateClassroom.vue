@@ -109,26 +109,35 @@ export default {
         let data = Object.assign({}, this.data)
         data.teacherId = this.$store.getters.userId
         this.loading = true
-        TeacherService.createClassroom(data).then((res) => {
-          TeacherService.generatePinCode(res.data.id).then(() => {
-            UserService.signInGetProfile(localStorage.getItem('accessToken'))
-              .then((res) => {
-                this.$store.commit('setUser', res.data)
-                this.loading = false
-                this.$store.commit('TOGGLE_ALERT', {
-                  type: 'success',
-                  message: 'Created classroom successfully',
+        TeacherService.createClassroom(data)
+          .then((res) => {
+            TeacherService.generatePinCode(res.data.id).then(() => {
+              UserService.signInGetProfile(localStorage.getItem('accessToken'))
+                .then((res) => {
+                  this.$store.commit('setUser', res.data)
+                  this.loading = false
+                  this.$store.commit('TOGGLE_ALERT', {
+                    type: 'success',
+                    message: 'Created classroom successfully',
+                  })
+                  this.close()
                 })
-                this.close()
-              })
-              .catch((err) => {
-                this.$store.commit('TOGGLE_ALERT', {
-                  type: 'error',
-                  message: err.response.message,
+                .catch((err) => {
+                  this.close()
+                  this.$store.commit('TOGGLE_ALERT', {
+                    type: 'error',
+                    message: err.response.message,
+                  })
                 })
-              })
+            })
           })
-        })
+          .catch((err) => {
+            this.close()
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.message,
+            })
+          })
       }
     },
     close() {

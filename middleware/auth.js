@@ -1,13 +1,16 @@
 import userService from '../services/UserService'
-
+import socket from '~/plugins/socket.io'
 export default function ({
   store,
   redirect
 }) {
   if (localStorage.getItem('accessToken') && !store.state.user) {
-    userService.signInGetProfile(localStorage.getItem('accessToken')).then(res => {
+    userService.signInGetProfile(localStorage.getItem('accessToken')).then(async res => {
       store.commit('setUser', res.data)
-
+      socket.emit(
+        'join-classrooms',
+        store.getters.classRooms.map((classRoom) => classRoom.id)
+      )
       // localStorage.setItem('user', JSON.stringify(res.data))
     }).catch(err => {
       localStorage.removeItem('accessToken')

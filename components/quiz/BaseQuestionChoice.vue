@@ -6,7 +6,7 @@
       item.status,
       item.isCorrect,
       renderClassItemIsSelect,
-      typeQuestions === 'sort' ? 'pl-5' : 'transition-all',
+      typeQuestions === 'sort' ? 'pl-6' : 'transition-all',
     ]"
     @click.once="selectAnswer(item, index)"
   >
@@ -23,6 +23,7 @@
     </div>
 
     <v-icon
+      large
       v-if="typeQuestions === 'sort'"
       class="handle cursor-grabbing py-3 px-1 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
       >mdi-drag-vertical</v-icon
