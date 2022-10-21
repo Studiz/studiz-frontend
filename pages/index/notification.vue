@@ -4,7 +4,11 @@
 
     <v-divider class="my-5" />
 
-    <base-notification-item />
+    <base-notification-item
+      v-for="(notification,i) in this.$store.getters.notifications"
+      :key="`${notification.classRoomId}-${i}`"
+      :notification="notification"
+    />
   </div>
 </template>
 
