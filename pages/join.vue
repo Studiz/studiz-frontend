@@ -1,22 +1,28 @@
 <template>
   <div class="max-w-lg mx-auto">
     <div class="justify-center my-8 d-flex">
-      <div class="absolute bottom-24 left-16">
+      <div
+        class="absolute left-1/2 right-auto bottom-3 top-auto transform sm:transform-none -translate-x-1/2 sm:bottom-auto sm:top-24 sm:left-auto sm:right-6 md:right-16 transition-all w-[40vh] sm:w-[30vh]"
+      >
         <lottie-player
-          autoplay
-          loop
-          src="https://assets4.lottiefiles.com/packages/lf20_xiussssy.json"
-          style="width: 200px"
-        />
-      </div>
-      <div class="absolute top-24 right-16">
-        <lottie-player
+          class="custon-lottie-star"
           autoplay
           loop
           src="https://assets8.lottiefiles.com/packages/lf20_GFBjYS.json"
-          style="width: 200px"
         />
       </div>
+
+      <div
+        class="absolute bottom-24 left-1/2 sm:left-16 sm:bottom-16 transition-all w-[20vh] sm:w-[36vh] rotate-45"
+      >
+        <lottie-player
+          autoplay
+          class="custon-lottie-rocket"
+          loop
+          src="https://assets4.lottiefiles.com/packages/lf20_xiussssy.json"
+        />
+      </div>
+
       <v-icon size="150">$vuetify.icons.Studiz_logo</v-icon>
     </div>
     <v-card
@@ -162,4 +168,18 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.custon-lottie-star
+  > div#animation-container
+  > div#animation
+  > svg
+  > g
+  > g:nth-child(4)
+  > rect {
+  @apply !fill-red-600;
+}
+
+:deep(#__lottie_element_98) {
+  @apply !fill-red-600;
+}
+</style>
