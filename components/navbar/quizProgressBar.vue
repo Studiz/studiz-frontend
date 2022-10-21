@@ -1,6 +1,8 @@
 <template>
-  <div class="flex items-center justify-center gap-x-3 w-full md:w-2/6 lg:w-1/6">
-    <div class="md:min-w-[64px]">
+  <div
+    class="flex items-center justify-center gap-x-3 w-full sm:w-2/6 lg:w-1/6"
+  >
+    <div v-show="isShowTimer" class="md:min-w-[64px]">
       <div id="text-timer" class="w-full text-right whitespace-nowrap"></div>
     </div>
     <div class="w-full overflow-hidden rounded-md background ring-1">
@@ -16,14 +18,10 @@
 <script>
 export default {
   props: {
-    // currentPage: {
-    //   type: Number,
-    //   default: 1,
-    // },
-    // totalPage: {
-    //   type: Number,
-    //   default: 10,
-    // },
+    isShowTimer: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     currentProgress() {

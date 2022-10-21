@@ -20,9 +20,9 @@
 
 <script>
 import QuizNavbar from '~/components/navbar/quizNavbar.vue'
-import AlertnNotification from '~/components/AlertNotification.vue'
+import AlertNotification from '~/components/AlertNotification.vue'
 export default {
-  components: { QuizNavbar, AlertnNotification },
+  components: { QuizNavbar, AlertNotification },
   props: {
     currentStatus: {
       type: String,
