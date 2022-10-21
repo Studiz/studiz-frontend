@@ -537,10 +537,11 @@ export default {
     async saveQuizTemplate() {
       this.$store.commit('TOGGLE_LOADING', true)
       let dateCreated = new Date()
-      let dd = String(dateCreated.getDate()).padStart(2, '0')
-      let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')
-      let yyyy = dateCreated.getFullYear()
-      dateCreated = mm + '/' + dd + '/' + yyyy
+      // let dd = String(dateCreated.getDate()).padStart(2, '0')
+      // let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')
+      // let yyyy = dateCreated.getFullYear()
+      // dateCreated = mm + '/' + dd + '/' + yyyy
+      dateCreated = dateCreated.toLocaleString('en-GB')
 
       let teacher = structuredClone(this.$store.getters.user)
       teacher = {

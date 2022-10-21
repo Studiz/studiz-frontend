@@ -64,8 +64,9 @@
         <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
         <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
         <span class="whitespace-nowrap self-end"
-          >Edit: {{ quizTemplate.lastUpdated }}</span
-        >
+          >Edit:
+          <base-time-to-text :time="quizTemplate.lastUpdated" />
+        </span>
         <div class="inline-flex flex-wrap gap-2 w-full sm:w-auto justify-end">
           <!-- <v-btn color="white" class="w-full sm:w-auto" disabled>Assign</v-btn> -->
 
@@ -169,8 +170,10 @@
 
 <script>
 import TeacherService from '~/services/TeacherService'
+import BaseTimeToText from '../BaseTimeToText.vue'
 
 export default {
+  components: { BaseTimeToText },
   props: {
     quizTemplate: {
       type: Object,
