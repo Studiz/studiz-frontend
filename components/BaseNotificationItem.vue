@@ -10,11 +10,11 @@
     <div class="flex gap-2" :class="expanded ? 'flex-row' : 'flex-col'">
       <div class="flex flex-col items-start justify-center text-left">
         <div class="inline-flex items-center gap-x-2 truncate">
-          <span class="sm:text-xl">{{ title }}</span>
+          <span class="sm:text-xl">{{ notification.title }}</span>
           <span class="w-1 h-1 bg-white/70 rounded-full" />
           <base-time-to-text
             textClass="text-sm"
-            :time="time"
+            :time="notification.startAt"
             :showTooltip="false"
           />
         </div>
@@ -22,7 +22,7 @@
           class="text-xs sm:text-base"
           :class="[expanded ? 'line-clamp-2' : 'line-clamp-3']"
         >
-          {{ content }}
+          {{ notification.description }}
         </span>
       </div>
       <div class="inline-flex">
@@ -30,7 +30,7 @@
           contain
           class="self-center justify-self-center"
           :class="[expanded ? 'w-14 h-14 sm:w-20 sm:h-20' : 'w-20 max-h-32']"
-          :src="image"
+          :src="notification.image"
         />
       </div>
 
@@ -75,6 +75,15 @@ export default {
       default:
         'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662862122512_085df103965f9888e1863338bfd62d7f.png?alt=media&token=4ede7562-dc1d-4688-a1de-109deef2c668',
     },
+    notification: {
+      type: Object,
+      default: {
+        title: '',
+        time: '',
+        content: '',
+        image: '',
+      },
+    },
   },
   data() {
     return {
@@ -83,6 +92,10 @@ export default {
   },
   methods: {
     openAction() {
+      this.$router.push({
+        name: 'lobby-quizId',
+        params: { quizId: this.notification.quizId },
+      })
       console.log('openAction')
     },
   },

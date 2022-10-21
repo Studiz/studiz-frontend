@@ -36,6 +36,7 @@ export default {
   },
   mounted() {
     socket.on('notification-quiz', (notificationData) => {
+      this.$store.commit('pushNotification', notificationData)
       this.$store.commit('TOGGLE_ALERT', {
         type: 'info',
         message: `Quiz ${notificationData.title} is starting`,
