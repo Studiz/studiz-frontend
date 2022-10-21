@@ -31,7 +31,10 @@
 
         <v-spacer />
 
-        <the-quiz-progress-bar v-show="isQuestionStatus" />
+        <the-quiz-progress-bar
+          :isShowTimer="!isLeaderBoardStatus"
+          v-show="isQuestionStatus || isLeaderBoardStatus"
+        />
 
         <v-spacer />
 

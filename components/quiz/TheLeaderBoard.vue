@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full max-w-md mx-auto">
+  <div class="h-full max-w-xl mx-auto">
     <v-data-table
       class="elevation-0 drop-shadow-md !rounded-lg"
       mobile-breakpoint="0"

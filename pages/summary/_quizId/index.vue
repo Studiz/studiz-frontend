@@ -5,15 +5,6 @@
       flat
       class="primary_shade rounded-lg p-3 !max-w-6xl mx-auto overflow-hidden drop-shadow-md space-y-3"
     >
-      <!-- <div class="flex items-start justify-center gap-3">
-          <div class="inline-flex flex-col">
-            <span>GAME PIN:</span>
-            <span class="!text-6xl !font-bold select-all">{{ pinCode }}</span>
-          </div>
-          <v-btn icon class="self-center" @click="copyToClipboard(pinCode)">
-            <v-icon>mdi-content-copy</v-icon>
-          </v-btn>
-        </div> -->
       <div class="flex justify-between flex-wrap">
         <div class="inline-flex flex-wrap p-3 gap-3">
           <v-img
@@ -93,16 +84,14 @@
         </div>
       </div>
     </v-card>
-    <div class="flex flex-row !max-w-6xl mx-auto gap-3">
+
+    <div class="flex md:flex-row flex-col-reverse gap-3">
       <the-leader-board
         :membersInClass="membersInClass"
         :currentStatus="'summary'"
-        class="flex-1"
+        class="flex-1 w-full"
       />
-      <v-card
-        flat
-        class="rounded-lg p-3 overflow-hidden drop-shadow-md flex-1 w-1/"
-      >
+      <v-card flat class="rounded-lg p-3 overflow-hidden drop-shadow-md flex-1">
         <div class="flex flex-row items-center justify-center">
           <v-img
             class="rounded-full primary"
