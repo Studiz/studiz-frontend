@@ -287,6 +287,7 @@ export default {
         .then((res) => {
           this.$store.commit('setPinCode', res.data.pinCode)
           this.$store.commit('setQuizData', res.data.quizTemplate)
+          this.$store.commit('setClassRoomId', res.data.classRoomId)
           this.$store.commit('TOGGLE_LOADING', false)
           this.initGame()
           this.$store.commit('TOGGLE_ALERT', {

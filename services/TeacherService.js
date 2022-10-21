@@ -12,7 +12,11 @@ export default {
   },
 
   createClassroom(data) {
-    return studizAPI(baseURL).post('/create/classroom', data);
+    return studizAPI(baseURL).post('/create/classroom', data, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
   },
 
   generatePinCode(classId) {

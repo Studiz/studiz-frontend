@@ -18,6 +18,8 @@ import '@lottiefiles/lottie-player'
 import TheAlertNotification from '~/components/TheAlertNotification.vue'
 import TheNavbarDefault from '~/components/navbar/TheNavbarDefault.vue'
 import TheLoadingScreen from '~/components/TheLoadingScreen.vue'
+import socket from '~/plugins/socket.io'
+
 export default {
   components: { TheAlertNotification, TheNavbarDefault, TheLoadingScreen },
   name: 'DefaultLayout',
@@ -31,6 +33,14 @@ export default {
         },
       ],
     }
+  },
+  mounted() {
+    socket.on('notification-quiz', (notificationData) => {
+      this.$store.commit('TOGGLE_ALERT', {
+        type: 'info',
+        message: `Quiz ${notificationData.title} is starting`,
+      })
+    })
   },
 }
 </script>
