@@ -63,7 +63,7 @@
       <div class="flex items-center justify-between w-full flex-wrap gap-4">
         <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
         <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
-        <span class="whitespace-nowrap self-end"
+        <span class="whitespace-nowrap self-end inline-flex gap-x-2"
           >Edit:
           <base-time-to-text :time="quizTemplate.lastUpdated" />
         </span>

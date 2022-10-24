@@ -1,8 +1,8 @@
 <template>
   <v-alert
     @click="openAction"
-    class="!p-3 md:!p-4"
-    color="primary"
+    class="!p-3 md:!p-4 mb-3"
+    color="primary lighten-1"
     icon="$vuetify.icons.quiz"
     :prominent="expanded"
     dark
@@ -28,7 +28,7 @@
       <div class="inline-flex">
         <v-img
           contain
-          class="self-center justify-self-center"
+          class="self-center justify-self-center background_card rounded-lg"
           :class="[expanded ? 'w-14 h-14 sm:w-20 sm:h-20' : 'w-20 max-h-32']"
           :src="notification.image"
         />
