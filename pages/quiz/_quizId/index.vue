@@ -56,6 +56,15 @@
       v-if="currentStatus === 'leaderBoard'"
       :membersInClass="membersInClass"
     />
+    <lottie-player
+      class="absolute"
+      :class="positionImageMeme[indaxPosition]"
+      v-if="currentStatus === 'leaderBoard'"
+      style="width: 200px !important; height: 200px !important"
+      autoplay
+      loop
+      :src="imagesMeme[indaxImageMeme]"
+    />
   </layout-quiz>
 </template>
 
@@ -96,7 +105,17 @@ export default {
       currentQuestion: 0,
       totalQuestions: 5,
       currentStatus: 'countdown',
-
+      positionImageMeme: ['right-14', 'left-14'],
+      indaxPosition: 0,
+      indaxImageMeme: 0,
+      imagesMeme: [
+        'https://assets2.lottiefiles.com/packages/lf20_nc99k6bp.json',
+        'https://assets7.lottiefiles.com/packages/lf20_bdzc21c8.json',
+        'https://assets9.lottiefiles.com/packages/lf20_sxh1eqfy.json',
+        'https://assets5.lottiefiles.com/packages/lf20_8ptubsmp.json',
+        'https://assets10.lottiefiles.com/packages/lf20_iqxl5bjr.json',
+        'https://assets3.lottiefiles.com/packages/lf20_zboivc9e.json',
+      ],
       prepareQuestion: {
         image:
           'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662831260125_280293376_521951536307306_1630564870936868063_n.jpg?alt=media&token=22fd3e5c-6e08-4ff1-93ef-59e9bdd7389e',
@@ -148,6 +167,10 @@ export default {
   methods: {
     changeStatus(stutus) {
       this.currentStatus = stutus
+      this.indaxImageMeme = Math.floor(Math.random() * this.imagesMeme.length)
+      this.indaxPosition = Math.floor(
+        Math.random() * this.positionImageMeme.length
+      )
     },
     timerProgress() {
       this.timeInterval = setInterval(() => {
@@ -243,6 +266,7 @@ export default {
         params: {
           quizId: this.$route.params.quizId,
           summaryData: data,
+          winnerId: data.members[0].memberId,
         },
       })
     })
