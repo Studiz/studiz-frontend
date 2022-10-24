@@ -10,7 +10,7 @@
       :sort-desc="true"
       :loading="isloading"
       :headers="headers"
-      :items="membersInClass"
+      :items="renderMembersInClass"
       :page.sync="page"
       :items-per-page="itemsPerPage"
     >
@@ -103,6 +103,10 @@ export default {
         delete headers[5]
       }
       return headers
+    },
+
+    renderMembersInClass() {
+      return this.membersInClass
     },
   },
 }
