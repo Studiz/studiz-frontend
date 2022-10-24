@@ -85,6 +85,14 @@
       </div>
     </v-card>
 
+    <lottie-player
+      v-if="isWinner"
+      autoplay
+      src="https://assets5.lottiefiles.com/private_files/lf30_ujs3c7ok.json"
+      style="width: 500px"
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
+    />
+
     <div class="flex md:flex-row flex-col-reverse gap-3">
       <the-leader-board
         :membersInClass="membersInClass"
@@ -173,11 +181,11 @@ export default {
         return quiz.studentAnswer
       }).length
     },
-    // membersInClass() {
-    //   return this.$route.params.summaryData?.leaderboard.members
-    //     ? this.$route.params.summaryData?.leaderboard.members
-    //     : this.summaryData.leaderboard.members
-    // },
+    isWinner() {
+      return this.$route.params.winnerId
+        ? this.$route.params.winnerId === localStorage.getItem('memberId')
+        : false
+    },
   },
   destroyed() {
     // if (confirm('Do you want to leave the room?')) {
@@ -185,7 +193,7 @@ export default {
     // }
   },
   mounted() {
-    this.membersInClass = this.$route.params.summaryData?.leaderboard.members
+    // this.membersInClass = this.$route.params.summaryData?.leaderboard.members
 
     socket.on('move-to-home', () => {
       this.$store.commit('TOGGLE_ALERT', {
@@ -200,7 +208,10 @@ export default {
     QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
       (res) => {
         this.summaryData = res.data
-        this.membersInClass = this.summaryData.leaderboard.members
+        console.log(this.summaryData?.leaderboard?.members)
+        this.membersInClass = this.summaryData?.leaderboard?.members
+        console.log('Param', this.$route.params.winnerId)
+        console.log(localStorage.getItem('memberId'))
       }
     )
   },
