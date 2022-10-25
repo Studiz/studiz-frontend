@@ -25,7 +25,13 @@ export default {
   },
 
   setQuizQuestions(state, quizQuestions) {
-    state.quizTemplate.questions = quizQuestions
+    // state.quizTemplate.questions = quizQuestions
+    state.quizTemplate.questions = quizQuestions.map((question) => {
+      if (question.type === 'multiple') {
+        question.numAnswers = question.answer.options.filter((option) => option.isCorrect).length
+      }
+      return question
+    })
   },
 
   setLastUpdated(state, date) {
