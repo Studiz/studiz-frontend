@@ -24,7 +24,7 @@
           <v-divider class="my-2"></v-divider>
 
           <div v-for="(page, index) in pages" :key="index">
-            <v-divider class="my-2" v-if="index == 4"></v-divider>
+            <v-divider class="my-2" v-if="index == 4 || index == 5"></v-divider>
             <v-list-item
               v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2"
               :to="page.to"
@@ -113,6 +113,11 @@ export default {
           title: 'Notification',
           icon: '$vuetify.icons.notification',
           to: '/notification',
+        },
+        {
+          title: 'Quiz History',
+          icon: 'mdi-history',
+          to: '/history',
         },
         {
           title: 'Setting',
