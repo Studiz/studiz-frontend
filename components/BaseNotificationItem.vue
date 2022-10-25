@@ -2,15 +2,11 @@
   <div class="rounded-lg ring-1 ring-black ring-opacity-10">
     <v-alert
       @click="openAction"
-      @mousemove="expanded = false"
-      @mouseleave="expanded = true"
-      @mousedown="expanded = false"
-      @mouseup="expanded = true"
       color="background"
       icon="$vuetify.icons.quiz"
-      class="!p-3 md:!p-4 mb-3 cursor-pointer w-full transition-all select-none sm:select-auto rounded-lg custom-icon"
+      class="!p-3 md:!p-4 mb-3 cursor-pointer w-full transition-all rounded-lg custom-icon"
       :class="notification.clicked ? 'custom-icon' : ''"
-      :prominent="expanded"
+      :prominent="true"
     >
       <div
         class="flex gap-2 flex-wrap overflow-hidden"
@@ -48,7 +44,8 @@
         <div class="inline-flex">
           <v-img
             contain
-            class="self-center justify-self-center background_card rounded-lg transition-all duration-500"
+            content-class="ring-1 ring-black ring-opacity-10 !rounded-lg"
+            class="self-center justify-self-center background_card transition-all duration-500 p-px rounded-lg overflow-hidden"
             :class="[expanded ? 'w-14 h-14' : 'w-20 h-20']"
             :src="notification.image"
           />
@@ -57,7 +54,7 @@
         <button
           icon
           @click.stop="closeNotification"
-          class="absolute right-3 top-3 transition-all flex justify-center items-center focus:outline-none w-7 h-7 p-0.5 bg-black/50 rounded-full"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2 transition-all flex justify-center items-center focus:outline-none w-7 h-7 p-0.5 bg-black/30 dark:bg-white/30 rounded-full hover:ring ring-0"
         >
           <v-icon dark>mdi-close</v-icon>
         </button>
