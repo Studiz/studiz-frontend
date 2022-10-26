@@ -28,6 +28,7 @@
         v-if="renderQuestionType === 'multiple'"
         :question="renderQuestion"
         :backendAnswer="backendAnswer"
+        :numberCanSelectedAnswer="prepareQuestion?.numAnswers"
         @select-multi-choice="selectChoice"
       />
       <base-question-layout-true-false
@@ -197,11 +198,15 @@ export default {
       this.time = this.question.time
     },
     selectChoice(data) {
+      let answer = {}
       clearInterval(this.timeInterval)
-      data.quizId = this.$route.params.quizId
-      data.timeAnswer = this.timeAnswer
-      data.memberId = localStorage.getItem('memberId')
-      socket.emit('select-choice', data)
+      answer.answer = data
+      answer.quizId = this.$route.params.quizId
+      answer.timeAnswer = this.timeAnswer
+      answer.memberId = localStorage.getItem('memberId')
+
+
+      socket.emit('select-choice', answer)
       this.userSelected = data
     },
     checkAnswer() {

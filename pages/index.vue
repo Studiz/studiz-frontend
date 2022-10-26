@@ -31,6 +31,7 @@
               link
               active-class="primary--text"
             >
+              <div :id="`list-${page.title}`"></div>
               <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
               <v-list-item-content>
                 <v-list-item-title>{{ page.title }}</v-list-item-title>
@@ -80,6 +81,7 @@
 </template>
 
 <script>
+import notificationNumber from '~/plugins/notification-number'
 export default {
   name: 'IndexPage',
   head() {
@@ -87,6 +89,7 @@ export default {
       title: 'Welcome to Studiz',
     }
   },
+  mixins: [notificationNumber],
   data() {
     return {
       isAuthenticated: false,
@@ -150,3 +153,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.Notification {
+  @apply bg-red-500 absolute top-0 left-0 rounded-full text-white text-xs w-5 h-5 flex justify-center items-center;
+}
+</style>
