@@ -140,49 +140,19 @@
       class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-3"
     >
       <div class="flex justify-between">
-        <span>Score: {0}/{00}</span>
+        <span class="text-lg font-semibold">Score: {{ studentScore }}</span>
       </div>
-      <div class="flex justify-between">
-        <span class="text-lg font-semibold">Correct: {0}</span>
+      <div class="flex justify-between flex-wrap">
+        <span>Correct: {0}</span>
         <span>Incorrect: {0}</span>
       </div>
-      <div
-        id="question"
-        class="p-2 flex flex-row-reverse items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
-        v-for="(question, index) in quiz.questions"
+
+      <base-summry-question-item
+        v-for="(question, index) in members[0].quizData"
         :key="`${question}-${index}`"
-      >
-        <div v-if="question.image" id="image" class="inline-flex">
-          <v-img
-            contain
-            content-class="ring-1 ring-black/10 dark:ring-white/10 !rounded-md"
-            class="self-center justify-self-center background_card transition-all duration-500 p-px rounded-md overflow-hidden w-14 h-14"
-            :src="question.image"
-          />
-        </div>
-
-        <div class="flex flex-col justify-start ml-2">
-          <div class="text-lg">{{ index + 1 }}. {{ question.question }}</div>
-          <v-divider class="my-2 mr-2" />
-          <div
-            id="choices"
-            class="flex flex-col"
-            v-for="(choice, i) in question.answer.options"
-            :key="i"
-          >
-            <div id="choice" class="flex gap-2 items-start">
-              <div class="w-3 h-3 py-1 inline-flex">
-                <span class="w-3 h-3 rounded-full bg-lime-500 mt-0.5" />
-              </div>
-              <span>{{ choice.option }}</span>
-              <v-spacer />
-              <div v-if="choice.selected">{{ choice.selected }}%</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="absolute top-0 bottom-0 left-0 bg-white w-2"></div>
-      </div>
+        :index="index"
+        :question="question"
+      />
     </div>
     <!-- </div> -->
   </div>
@@ -192,9 +162,10 @@
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
 import QuizService from '~/services/QuizService'
 import socket from '~/plugins/socket.io'
+import BaseSummryQuestionItem from '~/components/BaseSummryQuestionItem.vue'
 
 export default {
-  components: { TheLeaderBoard },
+  components: { TheLeaderBoard, BaseSummryQuestionItem },
   data() {
     return {
       summaryData: {},
@@ -220,130 +191,176 @@ export default {
         //   score: 0,
         // },
       ],
-      quiz: {
-        description: 'dfwafdadwa',
-        questions: [
-          {
-            type: 'single',
-            answer: {
-              options: [
-                {
-                  option: 'dawdad',
-                  isCorrect: false,
+      members: [
+        {
+          quizId: 'yihZAecROxcXoEwqvyVn',
+          user: {
+            firstName: 'Apisit',
+            email: 'top@mail.com',
+            uid: 'sfY0IswdXpR6ao4EFdxwGzeCpct2',
+            lastName: 'Kaewnongsaeng',
+            role: 'STUDENT',
+            classrooms: [
+              {
+                color: '',
+                teacher: {
+                  displayName: 'Top',
+                  imageUrl:
+                    'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666021562808_b8dda56a-ff13-45bf-bc47-34ec43e73202_200_200.gif?alt=media&token=4ca3ffec-c8c8-4095-989c-09f4adc1a3d0',
+                  firstName: 'Apisit',
+                  lastName: 'Kaewnongsaeng',
+                  email: 'apisit.top@mail.kmutt.ac.th',
                 },
-                {
-                  isCorrect: true,
-                  option: 'dwaadwadwa',
+                id: 'vuz1C7Dbx0s25R3Q5Uyl',
+                name: 'Test',
+                description: 'asd',
+              },
+              {
+                color: '',
+                teacher: {
+                  imageUrl:
+                    'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666021562808_b8dda56a-ff13-45bf-bc47-34ec43e73202_200_200.gif?alt=media&token=4ca3ffec-c8c8-4095-989c-09f4adc1a3d0',
+                  lastName: 'Kaewnongsaeng',
+                  email: 'apisit.top@mail.kmutt.ac.th',
+                  firstName: 'Apisit',
+                  displayName: 'Top',
                 },
-                {
-                  isCorrect: false,
-                  option: 'dawdwa',
-                },
-                {
-                  option: 'dawdwad',
-                  isCorrect: false,
-                },
-              ],
+                name: 'TTTT',
+                id: '6I431WaAT2hbXfyEfXQN',
+                description: 'SDDSF',
+              },
+            ],
+            imageUrl:
+              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666024535110_8c0506f6-300d-4394-ac87-a77d67d577cf_200_200.jpg?alt=media&token=a8192c05-fd68-4b65-b0a0-ea7da66680dd',
+            displayName: 'Toppy',
+          },
+          memberId: 'adba8ae1-8b00-4384-9804-0049a5b5aef2',
+          socketId: 'Fq0FRFV2rCM5Y0wtAAAF',
+          quizData: [
+            {
+              question: 'อาทจะกินอะไร',
+              image: '',
+              type: 'single',
+              answer: {
+                options: [
+                  {
+                    isCorrect: true,
+                    option: 'บะหมี่',
+                  },
+                  {
+                    option: 'สเต็ก',
+                    isCorrect: false,
+                  },
+                  {
+                    option: 'ข้าวมันไก่',
+                    isCorrect: false,
+                  },
+                ],
+              },
+              time: 5000,
+              indexStudentAnswer: 0,
+              studentAnswer: true,
+              score: 889,
             },
-            time: 10000,
-            question: 'fdawfwaf',
-            image: '',
-          },
-          {
-            answer: {
-              options: [
-                {
-                  option: 'dwadw',
-                  isCorrect: false,
-                },
-                {
-                  isCorrect: true,
-                  option: 'dawdwad',
-                },
-                {
-                  option: 'dawddwad',
-                  isCorrect: false,
-                },
-                {
-                  option: 'ddawdwa',
-                  isCorrect: false,
-                },
-              ],
+            {
+              question: 'อาทจะกินอะไร',
+              image: '',
+              type: 'true/false',
+              answer: true,
+              time: 5000,
+              indexStudentAnswer: 0,
+              studentAnswer: true,
+              score: 889,
             },
-            type: 'multiple',
-            numAnswers: 1,
-            time: 10000,
-            question: 'dawdadwa',
-            image: '',
-          },
-          {
-            question: 'Who',
-            type: 'true/false',
-            answer: false,
-            time: 5000,
-            fileImage: {},
-            image:
-              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666703105548_eula8.jpg?alt=media&token=1bf9a1b7-149d-428f-9565-eb4ddd212fc3',
-          },
-          {
-            time: 15000,
-            answer: {
-              options: [
-                {
-                  option: 'asfsda',
-                  selected: 0,
-                },
-                {
-                  option: 'fasfsf',
-                  selected: 0,
-                },
-              ],
+            {
+              question: 'Hsda',
+              answer: {
+                options: [
+                  {
+                    option: 'ASFSADF',
+                    isCorrect: true,
+                  },
+                  {
+                    isCorrect: false,
+                    option: 'SFDASAF',
+                  },
+                  {
+                    option: 'SFSDF',
+                    isCorrect: false,
+                  },
+                  {
+                    option: 'ADSF',
+                    isCorrect: false,
+                  },
+                ],
+              },
+              image: 'https://picsum.photos/200',
+              type: 'single',
+              time: 5000,
+              indexStudentAnswer: 0,
+              studentAnswer: true,
+              score: 939,
             },
-            image: '',
-            type: 'poll',
-            question: 'asfadsfads',
-          },
-          {
-            type: 'sort',
-            question: 'afadsfadsf',
-            answer: {
-              options: [
-                {
-                  index: 0,
-                  option: 'fasfdsdf',
-                  selected: 20,
-                },
-                {
-                  option: 'asdfsd',
-                  index: 1,
-                  selected: 30,
-                },
-                {
-                  option: 'afsdfasdf',
-                  index: 2,
-                  selected: 50,
-                },
-              ],
+            {
+              question: '23432432',
+              answer: {
+                options: [
+                  {
+                    option: 'ASFSADF',
+                    isCorrect: true,
+                  },
+                  {
+                    isCorrect: false,
+                    option: 'SFDASAF',
+                  },
+                  {
+                    option: 'SFSDF',
+                    isCorrect: true,
+                  },
+                  {
+                    option: 'ADSF',
+                    isCorrect: false,
+                  },
+                ],
+              },
+              image: '',
+              type: 'multiple',
+              time: 5000,
+              indexStudentAnswer: [2, 3],
+              studentAnswer: false,
+              score: 939,
             },
-            time: 15000,
-            image: '',
-          },
-        ],
-        tags: ['Music'],
-        teacher: {
-          teacherId: '56iqyWsODtR57lsaxyHo',
-          imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1664356348723_pen.png?alt=media&token=82a0f97e-87d4-487a-96da-19b982494067',
-          firstName: 'John',
-          displayName: 'Jann ka ',
-          lastName: 'Cena',
+            {
+              question: 'asfadsfads',
+              type: 'poll',
+              answer: {
+                options: [
+                  {
+                    option: 'asfsda',
+                    selected: 20,
+                  },
+                  {
+                    selected: 0,
+                    option: 'fasfsf',
+                  },
+                  {
+                    selected: 90,
+                    option: 'fasfsf',
+                  },
+                  {
+                    selected: 30,
+                    option: 'fasfsf',
+                  },
+                ],
+              },
+              time: 15000,
+              indexStudentAnswer: 0,
+              image: '',
+            },
+          ],
+          totalScore: 1828,
         },
-        lastUpdated: '26/10/2022, 21:01:53',
-        createAt: '25/10/2022, 13:05:05',
-        title: 'teads',
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=2cce045c-f6ba-4275-a81d-656343885abc',
-      },
+      ],
     }
   },
   methods: {
@@ -360,24 +377,6 @@ export default {
     endGame() {
       socket.emit('end-game', {
         quizId: this.$route.params.quizId,
-      })
-    },
-    addOptionInTrueFalseQuestion() {
-      this.quiz.questions.map((question) => {
-        if (question.type === 'true/false') {
-          question.answer = {
-            options: [
-              {
-                option: 'True',
-                isCorrect: false,
-              },
-              {
-                option: 'False',
-                isCorrect: false,
-              },
-            ],
-          }
-        }
       })
     },
   },
@@ -420,8 +419,6 @@ export default {
       this.$router.push('/')
       localStorage.removeItem('memberId')
     })
-
-    this.addOptionInTrueFalseQuestion()
   },
   created() {
     QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
