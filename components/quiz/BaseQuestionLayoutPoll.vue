@@ -71,7 +71,7 @@ export default {
     },
     renderBackendAnswer() {
       this.isStepShowAnswer = true
-      let mockBackendAnswer = [90, 30, 50, 40, 10, 20]
+      let mockBackendAnswer = [90, 0, 1, 40, 10, 20]
       console.log(this.backendAnswer)
       this.choices.forEach((item, index) => {
         if (item.isSelect == false) {
@@ -95,7 +95,7 @@ export default {
       let obj = document.getElementById('percentage-' + index),
         current = 0,
         range = end - 0,
-        increment = end > 0 ? 1 : -1,
+        increment = end > 0 ? 1 : 0,
         step = Math.abs(Math.floor(duration / range)),
         timer = setInterval(() => {
           current += increment
