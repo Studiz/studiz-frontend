@@ -24,7 +24,7 @@
           <v-divider class="my-2"></v-divider>
 
           <div v-for="(page, index) in pages" :key="index">
-            <v-divider class="my-2" v-if="index == 4 || index == 5"></v-divider>
+            <v-divider class="my-2" v-if="index == 5"></v-divider>
             <v-list-item
               v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2"
               :to="page.to"
@@ -32,7 +32,7 @@
               active-class="primary--text"
             >
               <div :id="`list-${page.title}`"></div>
-              <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
+              <v-icon left class="-m-1 lg:m-0">{{ page.icon }}</v-icon>
               <v-list-item-content>
                 <v-list-item-title>{{ page.title }}</v-list-item-title>
               </v-list-item-content>
@@ -110,14 +110,14 @@ export default {
           to: '/library',
         },
         {
-          title: 'Notification',
-          icon: '$vuetify.icons.notification',
-          to: '/notification',
-        },
-        {
           title: 'Quiz History',
           icon: 'mdi-history',
           to: '/history',
+        },
+        {
+          title: 'Notification',
+          icon: '$vuetify.icons.notification',
+          to: '/notification',
         },
         {
           title: 'Setting',
