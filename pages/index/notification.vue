@@ -7,6 +7,7 @@
         height="48"
         color="primary"
         class="w-full md:w-auto rounded-lg"
+        @click="deleteAllNoti"
       >
         <span class="normal-case">Clear all</span>
       </v-btn>
@@ -40,6 +41,11 @@ export default {
     return {
       title: 'Notification',
     }
+  },
+  methods: {
+    deleteAllNoti() {
+      this.$store.commit('DELETE_ALL_NOTIFICATION')
+    },
   },
   computed: {
     notifications() {
