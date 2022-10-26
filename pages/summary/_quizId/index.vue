@@ -1,9 +1,9 @@
 <template>
-  <div class="space-y-3 xl:space-y-5">
+  <div class="space-y-3 xl:space-y-5 max-w-6xl mx-auto">
     <v-card
       v-if="userRole == 'TEACHER'"
       flat
-      class="primary_shade rounded-lg p-3 !max-w-6xl mx-auto overflow-hidden drop-shadow-md space-y-3"
+      class="primary_shade rounded-lg p-3 overflow-hidden drop-shadow-md space-y-3"
     >
       <div class="flex justify-between flex-wrap">
         <div class="inline-flex flex-wrap p-3 gap-3">
@@ -93,44 +93,50 @@
       class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
     />
 
-    <div class="flex md:flex-row flex-col-reverse gap-3">
-      <the-leader-board
-        :membersInClass="membersInClass"
-        :currentStatus="'summary'"
-        class="flex-1 w-full"
-      />
-      <v-card flat class="rounded-lg p-3 overflow-hidden drop-shadow-md flex-1">
-        <div class="flex flex-row items-center justify-center">
-          <v-img
-            class="rounded-full primary"
-            :src="summaryData?.leaderboard?.winner?.image"
-            max-height="65px"
-            max-width="65px"
+    <!-- <div class="flex md:flex-row flex-col-reverse gap-3"> -->
+
+    <v-card
+      flat
+      class="rounded-lg p-3 overflow-hidden drop-shadow-md flex-1 h-fit"
+    >
+      <div class="flex flex-row items-center justify-center">
+        <v-img
+          class="rounded-full primary"
+          :src="summaryData?.leaderboard?.winner?.image"
+          max-height="65px"
+          max-width="65px"
+        />
+        <v-card-title
+          >The winner is
+          {{ summaryData?.leaderboard?.winner?.displayName }}</v-card-title
+        >
+        <div>
+          <lottie-player
+            autoplay
+            loop
+            src="https://assets3.lottiefiles.com/packages/lf20_touohxv0.json"
+            style="width: 100px"
           />
-          <v-card-title
-            >The winner is
-            {{ summaryData?.leaderboard?.winner?.displayName }}</v-card-title
-          >
-          <div>
-            <lottie-player
-              autoplay
-              loop
-              src="https://assets3.lottiefiles.com/packages/lf20_touohxv0.json"
-              style="width: 100px"
-            />
-          </div>
         </div>
-        <v-card-subtitle v-if="userRole == 'STUDENT'"
-          >Your score {{ studentScore }}</v-card-subtitle
-        >
-        <v-card-text v-if="userRole == 'STUDENT'"
-          >Number of correct answers
-          {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
-            summaryData?.quizData?.totalQuestion
-          }}</v-card-text
-        >
-      </v-card>
-    </div>
+      </div>
+      <v-card-subtitle v-if="userRole == 'STUDENT'"
+        >Your score {{ studentScore }}</v-card-subtitle
+      >
+      <v-card-text v-if="userRole == 'STUDENT'"
+        >Number of correct answers
+        {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
+          summaryData?.quizData?.totalQuestion
+        }}</v-card-text
+      >
+    </v-card>
+
+    <the-leader-board
+      :membersInClass="membersInClass"
+      :currentStatus="'summary'"
+      class="flex-1 w-full"
+    />
+
+    <!-- </div> -->
   </div>
 </template>
 
@@ -144,7 +150,28 @@ export default {
   data() {
     return {
       summaryData: {},
-      membersInClass: [],
+      membersInClass: [
+        // {
+        //   displayName: 'John Doe',
+        //   image: 'https://picsum.photos/200',
+        //   score: 0,
+        // },
+        // {
+        //   displayName: 'John Doe',
+        //   image: '',
+        //   score: 0,
+        // },
+        // {
+        //   displayName: 'John Doe',
+        //   image: 'https://picsum.photos/200',
+        //   score: 0,
+        // },
+        // {
+        //   displayName: 'John Doe',
+        //   image: 'https://picsum.photos/200',
+        //   score: 0,
+        // },
+      ],
     }
   },
   methods: {
