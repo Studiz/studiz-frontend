@@ -136,6 +136,54 @@
       class="flex-1 w-full"
     />
 
+    <div
+      class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-3"
+    >
+      <div class="flex justify-between">
+        <span>Score: {0}/{00}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-lg font-semibold">Correct: {0}</span>
+        <span>Incorrect: {0}</span>
+      </div>
+      <div
+        id="question"
+        class="p-2 flex flex-row-reverse items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
+        v-for="(question, index) in quiz.questions"
+        :key="`${question}-${index}`"
+      >
+        <div v-if="question.image" id="image" class="inline-flex">
+          <v-img
+            contain
+            content-class="ring-1 ring-black/10 dark:ring-white/10 !rounded-md"
+            class="self-center justify-self-center background_card transition-all duration-500 p-px rounded-md overflow-hidden w-14 h-14"
+            :src="question.image"
+          />
+        </div>
+
+        <div class="flex flex-col justify-start ml-2">
+          <div class="text-lg">{{ index + 1 }}. {{ question.question }}</div>
+          <v-divider class="my-2 mr-2" />
+          <div
+            id="choices"
+            class="flex flex-col"
+            v-for="(choice, i) in question.answer.options"
+            :key="i"
+          >
+            <div id="choice" class="flex gap-2 items-start">
+              <div class="w-3 h-3 py-1 inline-flex">
+                <span class="w-3 h-3 rounded-full bg-lime-500 mt-0.5" />
+              </div>
+              <span>{{ choice.option }}</span>
+              <v-spacer />
+              <div v-if="choice.selected">{{ choice.selected }}%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute top-0 bottom-0 left-0 bg-white w-2"></div>
+      </div>
+    </div>
     <!-- </div> -->
   </div>
 </template>
@@ -172,6 +220,130 @@ export default {
         //   score: 0,
         // },
       ],
+      quiz: {
+        description: 'dfwafdadwa',
+        questions: [
+          {
+            type: 'single',
+            answer: {
+              options: [
+                {
+                  option: 'dawdad',
+                  isCorrect: false,
+                },
+                {
+                  isCorrect: true,
+                  option: 'dwaadwadwa',
+                },
+                {
+                  isCorrect: false,
+                  option: 'dawdwa',
+                },
+                {
+                  option: 'dawdwad',
+                  isCorrect: false,
+                },
+              ],
+            },
+            time: 10000,
+            question: 'fdawfwaf',
+            image: '',
+          },
+          {
+            answer: {
+              options: [
+                {
+                  option: 'dwadw',
+                  isCorrect: false,
+                },
+                {
+                  isCorrect: true,
+                  option: 'dawdwad',
+                },
+                {
+                  option: 'dawddwad',
+                  isCorrect: false,
+                },
+                {
+                  option: 'ddawdwa',
+                  isCorrect: false,
+                },
+              ],
+            },
+            type: 'multiple',
+            numAnswers: 1,
+            time: 10000,
+            question: 'dawdadwa',
+            image: '',
+          },
+          {
+            question: 'Who',
+            type: 'true/false',
+            answer: false,
+            time: 5000,
+            fileImage: {},
+            image:
+              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666703105548_eula8.jpg?alt=media&token=1bf9a1b7-149d-428f-9565-eb4ddd212fc3',
+          },
+          {
+            time: 15000,
+            answer: {
+              options: [
+                {
+                  option: 'asfsda',
+                  selected: 0,
+                },
+                {
+                  option: 'fasfsf',
+                  selected: 0,
+                },
+              ],
+            },
+            image: '',
+            type: 'poll',
+            question: 'asfadsfads',
+          },
+          {
+            type: 'sort',
+            question: 'afadsfadsf',
+            answer: {
+              options: [
+                {
+                  index: 0,
+                  option: 'fasfdsdf',
+                  selected: 20,
+                },
+                {
+                  option: 'asdfsd',
+                  index: 1,
+                  selected: 30,
+                },
+                {
+                  option: 'afsdfasdf',
+                  index: 2,
+                  selected: 50,
+                },
+              ],
+            },
+            time: 15000,
+            image: '',
+          },
+        ],
+        tags: ['Music'],
+        teacher: {
+          teacherId: '56iqyWsODtR57lsaxyHo',
+          imageUrl:
+            'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1664356348723_pen.png?alt=media&token=82a0f97e-87d4-487a-96da-19b982494067',
+          firstName: 'John',
+          displayName: 'Jann ka ',
+          lastName: 'Cena',
+        },
+        lastUpdated: '26/10/2022, 21:01:53',
+        createAt: '25/10/2022, 13:05:05',
+        title: 'teads',
+        image:
+          'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/Studiz_logo.svg?alt=media&token=2cce045c-f6ba-4275-a81d-656343885abc',
+      },
     }
   },
   methods: {
@@ -188,6 +360,24 @@ export default {
     endGame() {
       socket.emit('end-game', {
         quizId: this.$route.params.quizId,
+      })
+    },
+    addOptionInTrueFalseQuestion() {
+      this.quiz.questions.map((question) => {
+        if (question.type === 'true/false') {
+          question.answer = {
+            options: [
+              {
+                option: 'True',
+                isCorrect: false,
+              },
+              {
+                option: 'False',
+                isCorrect: false,
+              },
+            ],
+          }
+        }
       })
     },
   },
@@ -230,6 +420,8 @@ export default {
       this.$router.push('/')
       localStorage.removeItem('memberId')
     })
+
+    this.addOptionInTrueFalseQuestion()
   },
   created() {
     QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
