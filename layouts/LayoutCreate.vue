@@ -249,7 +249,7 @@ export default {
         {
           text: 'Sort',
           value: 'sort',
-          disabled: false,
+          disabled: true,
         },
       ],
       selectQuizType: null,
