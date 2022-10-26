@@ -22,30 +22,36 @@
         v-if="renderQuestionType === 'single'"
         :question="renderQuestion"
         :backendAnswer="backendAnswer"
+        :numberOfAnswer="numStudentAnswer"
         @select-choice="selectChoice"
       />
       <base-question-layout-multiple
         v-if="renderQuestionType === 'multiple'"
         :question="renderQuestion"
         :backendAnswer="backendAnswer"
+        :numberCanSelectedAnswer="prepareQuestion?.numAnswers"
+        :numberOfAnswer="numStudentAnswer"
         @select-multi-choice="selectChoice"
       />
       <base-question-layout-true-false
         v-if="renderQuestionType === 'true/false'"
         :question="renderQuestion"
         :backendAnswer="backendAnswer"
-        @select-multi-choice="selectChoice"
+        :numberOfAnswer="numStudentAnswer"
+        @select-choice="selectChoice"
       />
       <base-question-layout-poll
         v-if="renderQuestionType === 'poll'"
         :question="renderQuestion"
         :backendAnswer="backendAnswer"
-        @select-multi-choice="selectChoice"
+        :numberOfAnswer="numStudentAnswer"
+        @select-choice="selectChoice"
       />
       <base-question-layout-sort
         v-if="renderQuestionType === 'sort'"
         :question="renderQuestion"
         :backendAnswer="backendAnswer"
+        :numberOfAnswer="numStudentAnswer"
         @select-choice="selectChoice"
       />
     </div>
@@ -155,6 +161,7 @@ export default {
       timeInterval: null,
       timeAnswer: 0,
       membersInClass: [],
+      numStudentAnswer: 0,
     }
   },
   watch: {
@@ -197,11 +204,16 @@ export default {
       this.time = this.question.time
     },
     selectChoice(data) {
+      console.log(data);
+      let answer = {}
       clearInterval(this.timeInterval)
-      data.quizId = this.$route.params.quizId
-      data.timeAnswer = this.timeAnswer
-      data.memberId = localStorage.getItem('memberId')
-      socket.emit('select-choice', data)
+      answer.answer = data
+      answer.quizId = this.$route.params.quizId
+      answer.timeAnswer = this.timeAnswer
+      answer.memberId = localStorage.getItem('memberId')
+
+
+      socket.emit('select-choice', answer)
       this.userSelected = data
     },
     checkAnswer() {
@@ -243,6 +255,14 @@ export default {
   mounted() {
     socket.on('check-answer', (data) => {
       this.prepareBackendAnswer = data
+    })
+
+    socket.on('show-poll-answer', (data) => {
+      this.prepareBackendAnswer = data
+    })
+
+    socket.on('show-number-answers', (data) => {
+      this.numStudentAnswer = data
     })
 
     socket.on('show-leaderboard', (data) => {

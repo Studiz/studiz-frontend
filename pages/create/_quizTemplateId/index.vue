@@ -555,7 +555,7 @@ export default {
       this.$store.commit('setTeacher', teacher)
       this.$store.commit('setQuizQuestions', this.quizData.questions)
       this.$store.commit('setLastUpdated', dateCreated)
-
+      
       if (this.$store.getters.imageQuizFile) {
         TeacherService.uploadImage(this.$store.getters.imageQuizFile)
           .then((res) => {
