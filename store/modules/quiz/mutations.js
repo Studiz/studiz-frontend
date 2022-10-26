@@ -7,8 +7,8 @@ export default {
     state.quizData = quizData
   },
 
-  setClassRoomId(state, classRoomId) {
-    state.quizData.classRoomId = classRoomId
+  setClassroomId(state, classroomId) {
+    state.quizData.classroomId = classroomId
   },
 
   setStartAt(state, startAt) {

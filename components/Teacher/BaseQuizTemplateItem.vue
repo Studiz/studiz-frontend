@@ -218,12 +218,12 @@ export default {
         params: { quizTemplateId: this.quizTemplate.id },
       })
     },
-    startQuiz(classRoomId) {
+    startQuiz(classroomId) {
       this.$store.commit('TOGGLE_LOADING', true)
       TeacherService.createQuiz({
         teacherId: localStorage.getItem('userId'),
         quizTemplateId: this.quizTemplate.id,
-        classRoomId: typeof classRoomId === 'string' ? classRoomId : null,
+        classroomId: typeof classroomId === 'string' ? classroomId : null,
         studentList: [],
       })
         .then((res) => {

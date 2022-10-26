@@ -5,14 +5,14 @@
       color="background"
       icon="$vuetify.icons.quiz"
       class="!p-3 md:!p-4 mb-3 cursor-pointer w-full transition-all rounded-lg custom-icon"
-      :class="notification.clicked ? 'custom-icon' : ''"
+      :class="notification.isRead ? 'custom-icon' : ''"
       :prominent="true"
     >
       <div
         class="flex gap-2 flex-wrap overflow-hidden"
         :class="[
           expanded ? 'flex-row max-h-14' : 'flex-col',
-          notification.clicked ? 'clicked' : 'new',
+          notification.isRead ? 'isRead' : 'new',
         ]"
       >
         <div
@@ -21,7 +21,7 @@
         >
           <div
             class="inline-flex items-center gap-x-2 truncate"
-            :class="[notification.clicked ? 'clicked' : 'font-bold new']"
+            :class="[notification.isRead ? 'isRead' : 'font-bold new']"
           >
             <span class="sm:text-xl">{{ notification.title }}</span>
             <span class="w-1 h-1 bg-black dark:bg-white/70 rounded-full" />
@@ -79,6 +79,8 @@
 <script>
 import dateFormat from '~/plugins/date-format'
 import BaseTimeToText from './BaseTimeToText.vue'
+import UserService from '~/services/UserService.js'
+
 export default {
   components: { BaseTimeToText },
   mixins: [dateFormat],
@@ -90,7 +92,7 @@ export default {
         time: '',
         content: '',
         image: '',
-        clicked: false,
+        isRead: false,
       },
     },
     index: {
@@ -104,15 +106,26 @@ export default {
   },
   methods: {
     openAction() {
-      this.$store.commit('CLICKED_NOTIFICATION', this.index)
-      this.$router.push({
-        name: 'lobby-quizId',
-        params: { quizId: this.notification.quizId },
-      })
-      console.log('openAction')
+      UserService.readNotification(this.notification.id)
+        .then(() => {
+          this.$store.commit('READED_NOTIFICATION', this.index)
+          this.$router.push({
+            name: 'lobby-quizId',
+            params: { quizId: this.notification.quizId },
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     closeNotification() {
-      this.$store.commit('CLOSE_NOTIFICATION', this.index)
+      UserService.deleteNotification(this.notification.id)
+        .then(() => {
+          this.$store.commit('DELETE_NOTIFICATION', this.index)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
   },
 }
@@ -141,7 +154,7 @@ export default {
 .new {
   @apply !text-black dark:!text-white;
 }
-.clicked {
+.isRead {
   @apply !text-black/50 dark:!text-white/50;
 }
 
