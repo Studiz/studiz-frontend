@@ -402,6 +402,7 @@ export default {
             userService.signInGetProfile(accessToken).then((res) => {
               localStorage.setItem('accessToken', accessToken)
               localStorage.setItem('userId', res.data.id)
+              localStorage.setItem('uid', res.data.data.uid)
               window.location.href = '/classrooms'
             })
             localStorage.removeItem('googleAccountSignUp')

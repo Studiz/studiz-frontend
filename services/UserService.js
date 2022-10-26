@@ -42,5 +42,30 @@ export default {
     return studizAPI(baseURL).post('/user/checkDuplicateEmail', {
       email
     })
-  }
+  },
+
+  getNotificationByUID(uid) {
+    return studizAPI(baseURL).get(`/get/notification/uid/${uid}`, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
+  },
+
+  readNotification(id) {
+    return studizAPI(baseURL).put(`/read/notification/${id}`, void 0, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
+  },
+
+  deleteNotification(id) {
+    return studizAPI(baseURL).delete(`/delete/notification/${id}`, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
+  },
+
 }

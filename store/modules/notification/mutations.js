@@ -1,13 +1,13 @@
 export default {
-  pushNotification(state, notification) {
-    state.notifications.push(notification)
+  SET_NOTIFICATION(state, notifications) {
+    state.notifications = notifications
   },
 
-  CLICKED_NOTIFICATION(state, payload) {
-    state.notifications[payload].clicked = true
+  READED_NOTIFICATION(state, payload) {
+    state.notifications[payload].isRead = true
   },
 
-  CLOSE_NOTIFICATION(state, payload) {
+  DELETE_NOTIFICATION(state, payload) {
     state.notifications.splice(payload, 1)
   },
 

@@ -7,16 +7,16 @@ export default {
   methods: {
     notificationNumber() {
       let notiNumber
-      notiNumber = this.$store.getters.notifications
-        ? this.$store.getters.notifications.length
-        : ''
+      notiNumber = this.$store.getters.notifications ?
+        this.$store.getters.notificationsNumber :
+        ''
 
       let listNoti = document.getElementById('list-Notification')
       listNoti.innerHTML = notiNumber
       let bottonNoti = document.getElementById('bottom-nav-Notification')
       bottonNoti.innerHTML = notiNumber
 
-      if (this.$store.getters.notifications.length > 0) {
+      if (this.$store.getters.notificationsNumber > 0) {
         listNoti.classList.add('Notification')
         bottonNoti.classList.add('Notification')
       } else {
