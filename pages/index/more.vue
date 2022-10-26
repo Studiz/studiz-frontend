@@ -79,15 +79,15 @@ export default {
       theme: '',
       pages: [
         {
+          title: 'Quiz History',
+          icon: 'mdi-history',
+          to: '/history',
+        },
+        {
           title: 'setting',
-          icon: '$vuetify.icons.setting',
+          icon: 'mdi-cog-outline',
           to: '/setting',
         },
-        // {
-        //   title: 'more',
-        //   icon: '$vuetify.icons.more',
-        //   to: '/more',
-        // },
       ],
     }
   },

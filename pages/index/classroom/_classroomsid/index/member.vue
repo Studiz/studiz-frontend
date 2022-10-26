@@ -121,7 +121,6 @@ export default {
     selected: [],
     chooseOne: null,
 
-    editedIndex: -1,
     isloading: false,
     propRemoveStudent: false,
   }),

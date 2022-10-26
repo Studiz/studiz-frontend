@@ -75,6 +75,7 @@
       class="drop-shadow-md d-md-none background_card"
       active-class="primary--text text-hidden"
       v-if="!isGuest"
+      shift
     >
       <v-btn
         color="background_card"
@@ -180,15 +181,8 @@ export default {
 :deep(.v-btn.v-btn--disabled.v-btn--has-bg) {
   background-color: transparent !important;
 }
-
-:deep(.text-hidden > .v-btn__content > .text) {
-  @apply w-auto h-auto visible opacity-100;
-}
 :deep(.v-btn__content) {
   @apply gap-1;
-}
-.text {
-  @apply w-0 h-0 invisible opacity-0 sm:w-auto sm:h-auto sm:visible sm:opacity-100;
 }
 .Notification {
   @apply bg-red-500 absolute top-1 left-1/2 transform translate-x-1 z-10 rounded-full text-white text-xs w-5 h-5 flex justify-center items-center;
