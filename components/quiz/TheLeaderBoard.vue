@@ -24,21 +24,23 @@
       </template>
 
       <template v-slot:item.image="{ item }">
-        <div class="p-2">
-          <v-img
-            class="rounded-full"
-            :src="item.image"
-            :alt="item.name"
-            max-width="40px"
-            max-height="40px"
-          ></v-img>
-        </div>
+        <v-img
+          v-if="item.image"
+          class="rounded-full"
+          :src="item.image"
+          :alt="item.name"
+          max-width="40px"
+          max-height="40px"
+        ></v-img>
+        <v-icon v-else size="40" color="white">mdi-account-circle</v-icon>
       </template>
+
       <template v-slot:item.scoreInRound="{ item }">
         <span class="font-semibold text-green-500" v-if="item.scoreInRound > 0"
           >{{ item.scoreInRound }}+</span
         >
       </template>
+
       <template v-slot:item.index="{ index }">
         <div class="p-2">{{ index + 1 }}</div>
       </template>
@@ -80,13 +82,14 @@ export default {
           width: '48px',
         },
         {
-          text: '',
+          text: 'Image',
           sortable: false,
           value: 'image',
-          width: '56px',
+          width: '40px',
+          align: 'center',
         },
         {
-          text: 'Display Name',
+          text: 'Display name',
           value: 'displayName',
           sortable: false,
         },
@@ -95,7 +98,7 @@ export default {
           value: 'role',
           sortable: false,
         },
-        { text: 'Score', value: 'score', sortable: false },
+        { text: 'Score', value: 'score', sortable: false, align: 'end' },
         { text: 'Round', value: 'scoreInRound', sortable: false, align: 'end' },
       ]
 
@@ -141,16 +144,16 @@ export default {
   @apply rounded-r-lg;
 }
 :deep(tbody > tr:nth-child(1) > td) {
-  @apply bg-light_primary/50 dark:bg-light_primary/50;
+  @apply bg-light_primary/30;
 }
 :deep(tbody > tr:nth-child(1) > td:nth-child(3))::before {
   content: '👑';
-  @apply rounded-full px-[1px] py-[2px] bg-white/50;
+  @apply rounded-full px-[1px] py-[2px] bg-white/30  mr-2;
 }
 :deep(tbody > tr:nth-child(2) > td) {
-  @apply bg-light_primary/30 dark:bg-light_primary/30;
+  @apply bg-light_primary/20;
 }
 :deep(tbody > tr:nth-child(3) > td) {
-  @apply bg-light_primary/10 dark:bg-light_primary/10;
+  @apply bg-light_primary/10;
 }
 </style>
