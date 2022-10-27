@@ -181,7 +181,6 @@ export default {
           quizId: item.quizId,
         },
       })
-      console.log(item)
     },
   },
   computed: {
