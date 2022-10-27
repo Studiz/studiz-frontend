@@ -1,30 +1,30 @@
 <template>
   <div
-    :id="`question-${question.type}`"
+    :id="`question-${question?.type}`"
     class="p-2 flex flex-row-reverse gap-2 items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
   >
     <div
-      v-if="question.image || question.score"
+      v-if="question?.image || question?.score"
       id="image"
       class="inline-flex flex-col"
     >
       <v-img
-        v-if="question.image"
+        v-if="question?.image"
         contain
         content-class="ring-1 ring-black/10 dark:ring-white/10 !rounded-md"
         class="self-center justify-self-center background_card transition-all duration-500 p-px rounded-md overflow-hidden w-14 h-14"
-        :src="question.image"
+        :src="question?.image"
       />
       <div
         v-if="renderIsCorrect === 'correct'"
         class="text-right font-semibold text-green-500"
       >
-        +{{ question.score }}
+        +{{ question?.score }}
       </div>
     </div>
 
     <div class="flex flex-col justify-start ml-2">
-      <div class="text-lg">{{ index + 1 }}. {{ question.question }}</div>
+      <div class="text-lg">{{ index + 1 }}. {{ question?.question }}</div>
 
       <v-divider class="my-2" />
       <div
@@ -39,14 +39,14 @@
             <span
               class="w-3 h-3 rounded-full mt-0.5 outline outline-1 outline-black/30 dark:outline-white/30"
               :class="[
-                choice.isCorrect ? 'correct' : 'blank',
+                choice?.isCorrect ? 'correct' : 'blank',
                 findMostSelected() === i ? 'most-selected' : '',
               ]"
             />
           </div>
-          <span>{{ choice.option }}</span>
+          <span>{{ choice?.option }}</span>
           <v-spacer />
-          <div v-if="choice.selected >= 0">{{ choice.selected }}%</div>
+          <div v-if="choice?.selected >= 0">{{ choice?.selected }}%</div>
         </div>
       </div>
     </div>
@@ -62,12 +62,10 @@
 export default {
   props: {
     question: {
-      type: Object,
-      required: true,
+      type: Object
     },
     index: {
       type: Number,
-      required: true,
     },
   },
   data() {

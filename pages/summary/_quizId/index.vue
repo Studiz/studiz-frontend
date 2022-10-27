@@ -138,23 +138,22 @@
 
     <div
       class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-3"
+      v-if="userRole == 'STUDENT'"
     >
       <div class="flex justify-between">
         <span class="text-lg font-semibold">Score: {{ studentScore }}</span>
       </div>
       <div class="flex justify-between flex-wrap">
-        <span>Correct: {0}</span>
-        <span>Incorrect: {0}</span>
+        <span>Correct: {{ numberCorrectAnswers }}</span>
+        <span>Incorrect: {{ numberInCorrectAnswers }}</span>
       </div>
-
       <base-summry-question-item
-        v-for="(question, index) in members[0].quizData"
+        v-for="(question, index) in studentQuizData"
         :key="`${question}-${index}`"
         :index="index"
         :question="question"
       />
     </div>
-    <!-- </div> -->
   </div>
 </template>
 
@@ -169,198 +168,8 @@ export default {
   data() {
     return {
       summaryData: {},
-      membersInClass: [
-        // {
-        //   displayName: 'John Doe',
-        //   image: 'https://picsum.photos/200',
-        //   score: 0,
-        // },
-        // {
-        //   displayName: 'John Doe',
-        //   image: '',
-        //   score: 0,
-        // },
-        // {
-        //   displayName: 'John Doe',
-        //   image: 'https://picsum.photos/200',
-        //   score: 0,
-        // },
-        // {
-        //   displayName: 'John Doe',
-        //   image: 'https://picsum.photos/200',
-        //   score: 0,
-        // },
-      ],
-      members: [
-        {
-          quizId: 'yihZAecROxcXoEwqvyVn',
-          user: {
-            firstName: 'Apisit',
-            email: 'top@mail.com',
-            uid: 'sfY0IswdXpR6ao4EFdxwGzeCpct2',
-            lastName: 'Kaewnongsaeng',
-            role: 'STUDENT',
-            classrooms: [
-              {
-                color: '',
-                teacher: {
-                  displayName: 'Top',
-                  imageUrl:
-                    'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666021562808_b8dda56a-ff13-45bf-bc47-34ec43e73202_200_200.gif?alt=media&token=4ca3ffec-c8c8-4095-989c-09f4adc1a3d0',
-                  firstName: 'Apisit',
-                  lastName: 'Kaewnongsaeng',
-                  email: 'apisit.top@mail.kmutt.ac.th',
-                },
-                id: 'vuz1C7Dbx0s25R3Q5Uyl',
-                name: 'Test',
-                description: 'asd',
-              },
-              {
-                color: '',
-                teacher: {
-                  imageUrl:
-                    'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666021562808_b8dda56a-ff13-45bf-bc47-34ec43e73202_200_200.gif?alt=media&token=4ca3ffec-c8c8-4095-989c-09f4adc1a3d0',
-                  lastName: 'Kaewnongsaeng',
-                  email: 'apisit.top@mail.kmutt.ac.th',
-                  firstName: 'Apisit',
-                  displayName: 'Top',
-                },
-                name: 'TTTT',
-                id: '6I431WaAT2hbXfyEfXQN',
-                description: 'SDDSF',
-              },
-            ],
-            imageUrl:
-              'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1666024535110_8c0506f6-300d-4394-ac87-a77d67d577cf_200_200.jpg?alt=media&token=a8192c05-fd68-4b65-b0a0-ea7da66680dd',
-            displayName: 'Toppy',
-          },
-          memberId: 'adba8ae1-8b00-4384-9804-0049a5b5aef2',
-          socketId: 'Fq0FRFV2rCM5Y0wtAAAF',
-          quizData: [
-            {
-              question: 'อาทจะกินอะไร',
-              image: '',
-              type: 'single',
-              answer: {
-                options: [
-                  {
-                    isCorrect: true,
-                    option: 'บะหมี่',
-                  },
-                  {
-                    option: 'สเต็ก',
-                    isCorrect: false,
-                  },
-                  {
-                    option: 'ข้าวมันไก่',
-                    isCorrect: false,
-                  },
-                ],
-              },
-              time: 5000,
-              indexStudentAnswer: 0,
-              studentAnswer: true,
-              score: 889,
-            },
-            {
-              question: 'อาทจะกินอะไร',
-              image: '',
-              type: 'true/false',
-              answer: true,
-              time: 5000,
-              indexStudentAnswer: 0,
-              studentAnswer: true,
-              score: 889,
-            },
-            {
-              question: 'Hsda',
-              answer: {
-                options: [
-                  {
-                    option: 'ASFSADF',
-                    isCorrect: true,
-                  },
-                  {
-                    isCorrect: false,
-                    option: 'SFDASAF',
-                  },
-                  {
-                    option: 'SFSDF',
-                    isCorrect: false,
-                  },
-                  {
-                    option: 'ADSF',
-                    isCorrect: false,
-                  },
-                ],
-              },
-              image: 'https://picsum.photos/200',
-              type: 'single',
-              time: 5000,
-              indexStudentAnswer: 0,
-              studentAnswer: true,
-              score: 939,
-            },
-            {
-              question: '23432432',
-              answer: {
-                options: [
-                  {
-                    option: 'ASFSADF',
-                    isCorrect: true,
-                  },
-                  {
-                    isCorrect: false,
-                    option: 'SFDASAF',
-                  },
-                  {
-                    option: 'SFSDF',
-                    isCorrect: true,
-                  },
-                  {
-                    option: 'ADSF',
-                    isCorrect: false,
-                  },
-                ],
-              },
-              image: '',
-              type: 'multiple',
-              time: 5000,
-              indexStudentAnswer: [2, 3],
-              studentAnswer: false,
-              score: 939,
-            },
-            {
-              question: 'asfadsfads',
-              type: 'poll',
-              answer: {
-                options: [
-                  {
-                    option: 'asfsda',
-                    selected: 20,
-                  },
-                  {
-                    selected: 0,
-                    option: 'fasfsf',
-                  },
-                  {
-                    selected: 90,
-                    option: 'fasfsf',
-                  },
-                  {
-                    selected: 30,
-                    option: 'fasfsf',
-                  },
-                ],
-              },
-              time: 15000,
-              indexStudentAnswer: 0,
-              image: '',
-            },
-          ],
-          totalScore: 1828,
-        },
-      ],
+      membersInClass: [],
+      studentQuizData: {},
     }
   },
   methods: {
@@ -386,7 +195,7 @@ export default {
     },
     student() {
       return this.summaryData?.members?.find((member) => {
-        return member.user?.uid === this.$store.getters.user?.uid
+        return member.user?.uid === localStorage.getItem('uid')
       })
     },
     studentScore() {
@@ -395,6 +204,11 @@ export default {
     numberCorrectAnswers() {
       return this.student?.quizData?.filter((quiz) => {
         return quiz.studentAnswer
+      }).length
+    },
+    numberInCorrectAnswers() {
+      return this.student?.quizData?.filter((quiz) => {
+        return !quiz.studentAnswer
       }).length
     },
     isWinner() {
@@ -424,10 +238,13 @@ export default {
     QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
       (res) => {
         this.summaryData = res.data
-        console.log(this.summaryData?.leaderboard?.members)
         this.membersInClass = this.summaryData?.leaderboard?.members
-        console.log('Param', this.$route.params.winnerId)
-        console.log(localStorage.getItem('memberId'))
+        this.studentQuizData =
+          this.summaryData?.members[
+            this.summaryData?.members?.findIndex((member) => {
+              return member.user.uid === localStorage.getItem('uid')
+            })
+          ]?.quizData
       }
     )
   },
