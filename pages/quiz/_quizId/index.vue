@@ -219,6 +219,7 @@ export default {
         socket.emit('send-leaderboard', {
           quizId: this.$route.params.quizId,
         })
+        this.$nuxt.$emit('remove-time-interval')
       }
       if (this.currentStatus === 'leaderBoard') {
         socket.emit('send-next-question', {
@@ -267,6 +268,7 @@ export default {
 
     socket.on('show-next-question', (data) => {
       this.$store.commit('setCurrentPage', data.currentQuestion)
+      this.$nuxt.$emit('remove-time-interval')
       this.currentStatus = 'countdown'
       this.countDownTree()
       this.prepareQuestion = data
