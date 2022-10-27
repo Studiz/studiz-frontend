@@ -105,6 +105,14 @@ export default {
 
   getQuizById(quizId) {
     return studizAPI(baseURL).get(`/get/quiz/${quizId}`);
+  },
+
+  getQuizHistoryByTeacherId(id) {
+    return studizAPI(baseURL).get(`/get/quizHistory/teacherId/${id}`, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
   }
 
 }
