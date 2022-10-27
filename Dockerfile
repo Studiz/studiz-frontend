@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY ./ .
-RUN /bin/sh -c npm run generate
+RUN -c npm run generate /bin/sh 
 
 FROM nginx as deploy-stage
 RUN mkdir /app
