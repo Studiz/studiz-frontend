@@ -91,6 +91,7 @@ export default {
               this.$store.commit('setUser', res.data)
               localStorage.setItem('userId', res.data.id)
               localStorage.setItem('accessToken', accessToken)
+              localStorage.setItem('uid', res.data.data.uid)
               this.loading = false
               this.$router.push('/classrooms')
             })
@@ -135,6 +136,7 @@ export default {
               // localStorage.setItem('user', JSON.stringify(res.data))
               localStorage.setItem('accessToken', accessToken)
               localStorage.setItem('userId', res.data.id)
+              localStorage.setItem('uid', res.data.data.uid)
               window.location.href = '/classrooms'
             })
             .catch(() => {

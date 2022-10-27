@@ -129,29 +129,25 @@ export default {
         answer: {
           options: [
             {
-              option:
-                'sadd Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
+              option: 'sadd Look at the shaded model.',
               index: 0,
             },
             {
-              option:
-                'asd Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
+              option: 'asd Look at the shaded model.',
               index: 1,
             },
             {
-              option:
-                'sadsad Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
+              option: 'sadsad Look at the shaded model.',
               index: 2,
             },
             {
-              option:
-                'ffasd Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true Look at the shaded model. Which number sentence is true',
+              option: 'ffasd Look at the shaded model.',
               index: 3,
             },
           ],
         },
         question: 'Look at the shaded model. Which number sentence is true?',
-        type: 'sort',
+        type: 'poll',
       },
       question: {},
       userSelected: null,
@@ -204,14 +200,13 @@ export default {
       this.time = this.question.time
     },
     selectChoice(data) {
-      console.log(data);
+      console.log(data)
       let answer = {}
       clearInterval(this.timeInterval)
       answer.answer = data
       answer.quizId = this.$route.params.quizId
       answer.timeAnswer = this.timeAnswer
       answer.memberId = localStorage.getItem('memberId')
-
 
       socket.emit('select-choice', answer)
       this.userSelected = data

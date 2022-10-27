@@ -17,7 +17,7 @@
     <div v-if="notifications.length > 0">
       <base-notification-item
         v-for="(notification, i) in notifications"
-        :key="`${notification.classRoomId}-${i}`"
+        :key="`${notification.classroomId}-${i}`"
         :notification="notification"
         :index="i"
       />

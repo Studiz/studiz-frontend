@@ -33,6 +33,7 @@
 
         <the-quiz-progress-bar
           :isShowTimer="!isLeaderBoardStatus"
+          :key="currentStatus"
           v-show="isQuestionStatus || isLeaderBoardStatus"
         />
 

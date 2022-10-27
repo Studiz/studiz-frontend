@@ -9,8 +9,8 @@
     <div class="ring-1 ring-black ring-opacity-10 drop-shadow-sm rounded-lg">
       <v-data-table
         hide-default-footer
-        mobile-breakpoint="600px"
-        class="elevation-0 !rounded-lg"
+        mobile-breakpoint="600"
+        class="elevation-0 !rounded-lg cursor-pointer"
         item-key="date"
         loading-text="Loading... Please wait"
         sort-by="date"
@@ -35,9 +35,10 @@
           </v-toolbar-title>
         </template>
 
-        <template v-slot:item.date="{ item }">
-          <base-time-to-text :time="item.date" />
-        </template>
+        <!-- <template v-slot:item.startAt="{ item }">
+          <base-time-to-text :time="item.startAt" />
+          {{ formatDateForTimeAgo(item.startAt) }}
+        </template> -->
 
         <template v-slot:item.image="{ item }">
           <v-img
@@ -55,7 +56,12 @@
 
 <script>
 import BaseTimeToText from '~/components/BaseTimeToText.vue'
+import StudentService from '~/services/StudentService.js'
+import TeacherService from '~/services/TeacherService.js'
+import dateFormat from '~/plugins/date-format'
+
 export default {
+  mixins: [dateFormat],
   components: { BaseTimeToText },
   head() {
     return {
@@ -75,7 +81,7 @@ export default {
       headers: [
         {
           text: 'Date',
-          value: 'date',
+          value: 'startAt',
         },
         {
           text: 'Image',
@@ -86,11 +92,11 @@ export default {
         },
         {
           text: 'Quiz name',
-          value: 'quizName',
+          value: 'title',
         },
         {
           text: 'Class room',
-          value: 'class',
+          value: 'classroomName',
         },
         // {
         //   text: 'Score',
@@ -108,7 +114,7 @@ export default {
         // },
         {
           text: 'Total',
-          value: 'total',
+          value: 'totalQuestion',
           sortable: false,
           align: 'right',
         },
@@ -152,16 +158,16 @@ export default {
     hiddenScoreDependOnRole() {
       if (this.isTeacher) {
         this.headers.splice(4, 0, {
-          text: 'AVG score',
-          value: 'avgScore',
+          text: 'AVG answer',
+          value: 'avgAnswer',
           sortable: false,
           align: 'right',
           class: 'avg-score-column',
         })
-      } else if (this.isStudent) {
-        this.headers.splice(5, 0, {
-          text: 'Score',
-          value: 'score',
+      } else {
+        this.headers.splice(4, 0, {
+          text: 'Correct Answers',
+          value: 'correctAnswers',
           sortable: false,
           align: 'right',
           class: 'score-column',
@@ -169,6 +175,12 @@ export default {
       }
     },
     clickRow(item) {
+      this.$router.push({
+        name: 'summary-quizId',
+        params: {
+          quizId: item.quizId,
+        },
+      })
       console.log(item)
     },
   },
@@ -179,10 +191,54 @@ export default {
     isTeacher() {
       return this.$store.getters.userRole == 'TEACHER' ? true : false
     },
+    renderItemQuizHistory() {
+      return this.itemQuizHistory
+    },
   },
 
   mounted() {
     this.hiddenScoreDependOnRole()
+
+    if (this.$store.getters.userRole === 'TEACHER') {
+      TeacherService.getQuizHistoryByTeacherId(localStorage.getItem('userId'))
+        .then((res) => {
+          this.itemQuizHistory = res.data.map((item) => {
+            let sumAnswers = 0
+            let memberInClass = item.members.length
+            item.members.forEach((member) => {
+              sumAnswers += member.quizData.filter(
+                (data) => data.studentAnswer
+              ).length
+            })
+            item.quizData.avgAnswer = sumAnswers / memberInClass
+            item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
+            item.quizData.quizId = item.quizId
+            return item.quizData
+          })
+        })
+        .catch((err) => {
+          this.itemQuizHistory = []
+          console.log(err)
+        })
+    } else {
+      StudentService.getQuizHistoryByStudentUid(localStorage.getItem('uid'))
+        .then((res) => {
+          this.itemQuizHistory = res.data.map((item) => {
+            item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
+            item.quizData.correctAnswers = item.members[
+              item.members.findIndex((member) => {
+                return member.user.uid === localStorage.getItem('uid')
+              })
+            ].quizData.filter((question) => question.studentAnswer).length
+            item.quizData.quizId = item.quizId
+            return item.quizData
+          })
+        })
+        .catch((err) => {
+          this.itemQuizHistory = []
+          console.log(err)
+        })
+    }
   },
 }
 </script>
