@@ -86,7 +86,7 @@ export default {
   methods: {
     renderIndexStudentAnswer(index) {
       if (this.question.type === 'multiple') {
-        return this.question.indexStudentAnswer.includes(index)
+        return this.question.indexStudentAnswer?.includes(index)
           ? 'selected'
           : ''
       } else {

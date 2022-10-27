@@ -271,6 +271,15 @@ export default {
       })
     })
 
+    socket.on('quiz-end', () => {
+      this.$store.commit('TOGGLE_ALERT', {
+        type: 'info',
+        message: 'The quiz already ended',
+      })
+      this.$router.push('/')
+      localStorage.removeItem('memberId')
+    })
+
     socket.on('move-to-home', () => {
       this.$store.commit('TOGGLE_ALERT', {
         type: 'info',
