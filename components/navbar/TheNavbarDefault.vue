@@ -185,6 +185,6 @@ export default {
   @apply gap-1;
 }
 .Notification {
-  @apply bg-red-500 !absolute !top-1 left-1/2 transform translate-x-1 z-10 rounded-full text-white text-xs w-5 h-5 flex justify-center items-center;
+  @apply bg-red-500 !absolute !top-1 left-1/2 transform translate-x-1 z-10 rounded-full text-white text-xs w-5 h-5 flex justify-center items-center !opacity-100;
 }
 </style>

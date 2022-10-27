@@ -32,8 +32,8 @@
         <v-spacer />
 
         <the-quiz-progress-bar
-          :isShowTimer="!isLeaderBoardStatus"
           :key="currentStatus"
+          :isShowTimer="!isLeaderBoardStatus"
           v-show="isQuestionStatus || isLeaderBoardStatus"
         />
 
@@ -69,8 +69,11 @@
       </div>
 
       <div
+        id="timer"
         v-show="isQuestionStatus"
-        class="absolute bottom-0 left-0 w-full h-1 secondary timer transition-all ease-linear rounded-r-full opacity-100"
+        :key="isQuestionStatus"
+        class="absolute bottom-0 left-0 w-full h-1 secondary transition-all ease-linear rounded-r-full opacity-100"
+        :class="isTimeLimitOut ? 'w-0' : 'w-100'"
         :style="{ 'transition-duration': timeLimit / 1000 + 's' }"
       ></div>
     </v-app-bar>
@@ -106,7 +109,21 @@ export default {
   watch: {
     currentStatus(newVal) {
       if (newVal == 'question') {
+        this.timeLimit = this.time
+        this.isTimeLimitOut = false
+        setTimeout(() => {
+          this.setTextTime()
+        }, 10)
         this.timerProgress()
+      }
+    },
+    time(newVal) {
+      if (newVal !== 0) {
+        // this.timeLimit = this.time
+        // setTimeout(() => {
+        //   this.setTextTime()
+        // }, 10)
+        // this.timerProgress()
       }
     },
   },
@@ -115,7 +132,11 @@ export default {
       isFullScreen: false,
       isLobby: false,
       eventFullscreen: null,
-      timeLimit: 0,
+      timeLimit: null,
+      isTimeLimitOut: false,
+      m: null,
+      s: null,
+      timeInterval: null,
     }
   },
   computed: {
@@ -157,32 +178,27 @@ export default {
       }
       this.isFullScreen = true
     },
-    timerProgress() {
-      this.timeLimit = this.time
-      let setTextTime = () => {
-        var m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
-        var s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
-        document.getElementById('text-timer').innerHTML =
-          (m ? m + 'm ' : '') + s + 's'
-      }
-      setTextTime()
 
-      let x = setInterval(() => {
+    timerProgress() {
+      this.timeInterval = setInterval(() => {
         this.timeLimit = this.timeLimit - 1000
-        setTextTime()
+        this.setTextTime()
         if (this.timeLimit < 0) {
-          clearInterval(x)
           document.getElementById('text-timer').innerHTML = 'Expired'
-          this.$emit('time-expired')
-          this.$nuxt.$emit('time-expired', true)
+          this.$nuxt.$emit('remove-time-interval')
         }
       }, 1000)
 
-      const elem = document.querySelector('.timer')
-      elem.style.width = '100%'
       setTimeout(() => {
-        elem.style.width = '0%'
-      }, 0)
+        this.isTimeLimitOut = true
+      }, 10)
+    },
+
+    setTextTime() {
+      this.m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
+      this.s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
+      document.getElementById('text-timer').innerHTML =
+        (this.m ? this.m + 'm ' : '') + this.s + 's'
     },
 
     closeFullscreen() {
@@ -219,7 +235,21 @@ export default {
       }
     })
   },
-  created() {},
+
+  created() {
+    this.$nuxt.$on('remove-time-interval', () => {
+      clearInterval(this.timeInterval)
+      this.m = null
+      this.s = null
+      this.timeInterval = null
+      this.$emit('time-expired')
+      this.$nuxt.$emit('time-expired', true)
+    })
+  },
+
+  destroyed() {
+    this.$nuxt.$off('remove-time-interval')
+  },
 }
 </script>
 
