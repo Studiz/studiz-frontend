@@ -47,7 +47,7 @@
               'Physics',
               'Science',
               'Biology',
-              'Mmathematics',
+              'Mathematics',
               'Health and hygeine',
               'Other',
             ]"
