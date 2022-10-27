@@ -32,9 +32,9 @@
         <v-spacer />
 
         <the-quiz-progress-bar
-          :isShowTimer="!isLeaderBoardStatus"
+          :isShowTimer="timeLimit !== null"
           :key="currentStatus"
-          v-show="isQuestionStatus || isLeaderBoardStatus"
+          v-show="isQuestionStatus"
         />
 
         <v-spacer />
@@ -63,8 +63,8 @@
         >
           <span class="hidden sm:inline-flex">{{ user }}</span>
           <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom"
-            >Leave</v-btn
-          >
+            >Leave
+          </v-btn>
         </div>
       </div>
 
@@ -105,7 +105,16 @@ export default {
   },
   watch: {
     currentStatus(newVal) {
-      if (newVal == 'question') {
+      if (newVal !== 'question') {
+        this.timeLimit = null
+      }
+    },
+    time(newVal) {
+      if (newVal !== null) {
+        this.timeLimit = this.time
+        setTimeout(() => {
+          this.setTextTime()
+        }, 10)
         this.timerProgress()
       }
     },
@@ -115,7 +124,9 @@ export default {
       isFullScreen: false,
       isLobby: false,
       eventFullscreen: null,
-      timeLimit: 0,
+      timeLimit: null,
+      m: null,
+      s: null,
     }
   },
   computed: {
@@ -144,6 +155,9 @@ export default {
     isSummaryStatus() {
       return this.currentStatus === 'summary'
     },
+    isIntroQuestionStatus() {
+      return this.currentStatus === 'introQuestion'
+    },
   },
   methods: {
     openFullscreen() {
@@ -158,18 +172,11 @@ export default {
       this.isFullScreen = true
     },
     timerProgress() {
-      this.timeLimit = this.time
-      let setTextTime = () => {
-        var m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
-        var s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
-        document.getElementById('text-timer').innerHTML =
-          (m ? m + 'm ' : '') + s + 's'
-      }
-      setTextTime()
+      this.setTextTime()
 
       let x = setInterval(() => {
         this.timeLimit = this.timeLimit - 1000
-        setTextTime()
+        this.setTextTime()
         if (this.timeLimit < 0) {
           clearInterval(x)
           document.getElementById('text-timer').innerHTML = 'Expired'
@@ -183,6 +190,13 @@ export default {
       setTimeout(() => {
         elem.style.width = '0%'
       }, 0)
+    },
+
+    setTextTime() {
+      this.m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
+      this.s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
+      document.getElementById('text-timer').innerHTML =
+        (this.m ? this.m + 'm ' : '') + this.s + 's'
     },
 
     closeFullscreen() {

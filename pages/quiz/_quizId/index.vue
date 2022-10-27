@@ -8,6 +8,30 @@
     <the-count-down v-if="currentStatus === 'countdown'" />
 
     <div
+      v-if="currentStatus === 'introQuestion'"
+      class="h-[calc(100vh-calc(24px+60px))] flex items-center"
+    >
+      <base-question-text
+        :question="renderQuestion.question"
+        :key="currentStatus"
+        class="w-full text-center"
+      >
+        <div
+          id="question-timer"
+          class="absolute bottom-0 left-0 h-1 secondary transition-all ease-linear rounded-r-full opacity-100"
+          :class="
+            isTimerToShowQuestion !== null
+              ? isTimerToShowQuestion
+                ? 'w-full'
+                : 'w-0'
+              : ''
+          "
+          :style="{ 'transition-duration': '5000ms' }"
+        ></div
+      ></base-question-text>
+    </div>
+
+    <div
       v-if="currentStatus === 'question'"
       class="md:h-[calc(100vh-calc(24px+60px))] flex flex-col gap-y-3"
       :class="
@@ -62,6 +86,7 @@
       v-if="currentStatus === 'leaderBoard'"
       :membersInClass="membersInClass"
     />
+
     <lottie-player
       class="absolute"
       :class="positionImageMeme[indaxPosition]"
@@ -125,7 +150,7 @@ export default {
       prepareQuestion: {
         image:
           'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662831260125_280293376_521951536307306_1630564870936868063_n.jpg?alt=media&token=22fd3e5c-6e08-4ff1-93ef-59e9bdd7389e',
-        time: 1000,
+        time: 3000,
         answer: {
           options: [
             {
@@ -153,9 +178,10 @@ export default {
       userSelected: null,
       prepareBackendAnswer: 1,
       backendAnswer: null,
-      time: 0,
+      time: null,
       timeInterval: null,
       timeAnswer: 0,
+      isTimerToShowQuestion: null,
       membersInClass: [],
       numStudentAnswer: 0,
     }
@@ -185,16 +211,36 @@ export default {
       }, 10)
     },
     countDownTree() {
-      this.countDown = 3
-      this.countDownInterval = setInterval(() => {
-        this.countDown--
-        if (this.countDown === 0) {
-          clearInterval(this.countDownInterval)
-          this.changeStatus('question')
-          this.questionReady()
+      let countDown = 3
+      let countDownInterval1 = setInterval(() => {
+        countDown--
+        if (countDown === 0) {
+          this.question = this.prepareQuestion
+          this.changeStatus('introQuestion')
+          this.countDownFive()
+          clearInterval(countDownInterval1)
+          setTimeout(() => {
+            this.isTimerToShowQuestion = true
+          }, 10)
         }
       }, 1200)
     },
+
+    countDownFive() {
+      setTimeout(() => {
+        this.isTimerToShowQuestion = false
+      }, 20)
+      let countDown = 5
+      let countDownInterval2 = setInterval(() => {
+        countDown--
+        if (countDown === 0) {
+          this.questionReady()
+          this.changeStatus('question')
+          clearInterval(countDownInterval2)
+        }
+      }, 1000)
+    },
+
     questionReady() {
       this.question = this.prepareQuestion
       this.time = this.question.time
@@ -219,11 +265,13 @@ export default {
         socket.emit('send-leaderboard', {
           quizId: this.$route.params.quizId,
         })
+        this.isTimerToShowQuestion = null
       }
       if (this.currentStatus === 'leaderBoard') {
         socket.emit('send-next-question', {
           quizId: this.$route.params.quizId,
         })
+        this.isTimerToShowQuestion = true
       }
     },
     resetDataQuiz() {
@@ -234,6 +282,14 @@ export default {
       this.timeInterval = null
       this.timeAnswer = 0
       this.membersInClass = []
+    },
+
+    timerProgress() {
+      const elem = document.querySelector('#question-timer')
+      elem.style.width = '100%'
+      setTimeout(() => {
+        elem.style.width = '0%'
+      }, 10)
     },
   },
   computed: {
@@ -291,7 +347,7 @@ export default {
       this.prepareQuestion = this.$route.params.questionData
     }
     this.countDownTree()
-    // this.currentStatus = 'leaderBoard'
+    // this.currentStatus = 'introQuestion'
   },
 }
 </script>

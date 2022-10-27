@@ -3,7 +3,7 @@
     class="background_card overflow-hidden p-3 drop-shadow-md text-lg sm:text-2xl leading-relaxed flex-none rounded-lg"
     :class="renderFontSize"
   >
-    {{ renderQuestion }}
+    {{ renderQuestion }}<slot></slot>
   </div>
 </template>
 
