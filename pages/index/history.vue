@@ -11,9 +11,9 @@
         hide-default-footer
         mobile-breakpoint="600"
         class="elevation-0 !rounded-lg cursor-pointer"
-        item-key="date"
+        item-key="startAt"
         loading-text="Loading... Please wait"
-        sort-by="date"
+        sort-by="startAt"
         :search="search"
         :sort-desc="true"
         :loading="isloading"
@@ -35,10 +35,16 @@
           </v-toolbar-title>
         </template>
 
-        <!-- <template v-slot:item.startAt="{ item }">
-          <base-time-to-text :time="item.startAt" />
-          {{ formatDateForTimeAgo(item.startAt) }}
-        </template> -->
+        <template v-slot:item.startAt="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <span v-bind="attrs" v-on="on">
+                {{ item.startAtAgo }}
+              </span>
+            </template>
+            <span> {{ item.startAt }}</span>
+          </v-tooltip>
+        </template>
 
         <template v-slot:item.image="{ item }">
           <v-img
@@ -210,7 +216,11 @@ export default {
               ).length
             })
             item.quizData.avgAnswer = sumAnswers / memberInClass
-            item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
+            item.quizData.startAt = item.quizData.startAt
+            item.quizData.startAtAgo = this.timeToWords(
+              this.formatDateForTimeAgo(item.quizData.startAt)
+            )
+
             item.quizData.quizId = item.quizId
             return item.quizData
           })
