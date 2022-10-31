@@ -105,6 +105,24 @@ export default {
 
   getQuizById(quizId) {
     return studizAPI(baseURL).get(`/get/quiz/${quizId}`);
+  },
+
+  getQuizHistoryByTeacherId(id) {
+    return studizAPI(baseURL).get(`/get/quizHistory/teacherId/${id}`, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
+  },
+
+  kickStudntInClassroom(classroomId, studentId) {
+    return studizAPI(baseURL).delete(`/kick/student/${classroomId}/${studentId}`, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
+
   }
+
 
 }

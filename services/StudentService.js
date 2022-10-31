@@ -42,6 +42,14 @@ export default {
 
   getQuizById(quizId) {
     return studizAPI(baseURL).get(`/get/quizForStudent/${quizId}`);
+  },
+
+  getQuizHistoryByStudentUid(uid) {
+    return studizAPI(baseURL).get(`/get/quizHistory/studentUid/${uid}`, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
   }
 
 }

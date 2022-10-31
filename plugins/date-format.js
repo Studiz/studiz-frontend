@@ -51,10 +51,11 @@ export default {
         )
       }
     },
+
     formatDateForTimeAgo(date) {
       return date
-        .replace(/(\/)/gi, '-')
-        .replace(/(\w+)-(\w+)-(\w+)/gi, '$3-$2-$1')
+        ?.replace(/(\/)/gi, '-')
+        ?.replace(/(\w+)-(\w+)-(\w+)/gi, '$3-$2-$1')
     },
   },
   mounted() {},

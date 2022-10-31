@@ -305,7 +305,7 @@ export default {
           this.$store.commit('TOGGLE_LOADING', false)
           this.$store.commit('TOGGLE_ALERT', {
             type: 'error',
-            message: err.response.data,
+            message: 'Update image failed',
           })
           this.isloading = false
           this.closeImageUpload()
