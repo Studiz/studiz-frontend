@@ -20,7 +20,7 @@
         :headers="headers"
         :items="itemQuizHistory"
         :page.sync="page"
-        :items-per-page="itemsPerPage"
+        :items-per-page="itemsLength"
         @click:row="clickRow"
       >
         <template #top
@@ -75,7 +75,10 @@ export default {
     }
   },
   watch: {
-    isTeacher() {
+    haveRole() {
+      this.loadData()
+    },
+    itemsLength() {
       this.hiddenScoreDependOnRole()
     },
   },
@@ -169,6 +172,7 @@ export default {
           sortable: false,
           align: 'right',
           class: 'avg-score-column',
+          width: 100,
         })
       } else {
         this.headers.splice(4, 0, {
@@ -177,6 +181,7 @@ export default {
           sortable: false,
           align: 'right',
           class: 'score-column',
+          width: 100,
         })
       }
     },
@@ -218,7 +223,10 @@ export default {
         StudentService.getQuizHistoryByStudentUid(localStorage.getItem('uid'))
           .then((res) => {
             this.itemQuizHistory = res.data.map((item) => {
-              item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
+              item.quizData.startAt = item.quizData.startAt
+              item.quizData.startAtAgo = this.timeToWords(
+                this.formatDateForTimeAgo(item.quizData.startAt)
+              )
               item.quizData.correctAnswers = item.members[
                 item.members.findIndex((member) => {
                   return member.user.uid === localStorage.getItem('uid')
@@ -237,11 +245,14 @@ export default {
     },
   },
   computed: {
-    itemsPerPage() {
+    itemsLength() {
       return this.itemQuizHistory.length
     },
     isTeacher() {
       return this.$store.getters.userRole == 'TEACHER' ? true : false
+    },
+    haveRole() {
+      return this.$store.getters.userRole !== '' ? true : false
     },
     renderItemQuizHistory() {
       return this.itemQuizHistory
@@ -249,14 +260,7 @@ export default {
   },
 
   mounted() {
-    this.hiddenScoreDependOnRole()
     this.isloading = true
-
-    setTimeout(() => {
-      if (this.itemsPerPage === 0) {
-        this.loadData()
-      }
-    }, 1000)
   },
   created() {
     this.loadData()
@@ -264,4 +268,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+:deep(div.v-data-table__wrapper
+    > table
+    > tbody
+    > tr
+    > td.text-right:nth-child(5)) {
+  @apply truncate !w-24;
+}
+</style>
