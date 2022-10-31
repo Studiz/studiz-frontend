@@ -127,36 +127,36 @@ export default {
       ],
 
       itemQuizHistory: [
-        {
-          id: 1,
-          image: 'https://picsum.photos/200/300',
-          quizName: 'Quiz 1',
-          class: 'Class 1',
-          date: '2021-05-01 12:00:00',
-          score: 10,
-          avgScore: 3,
-          total: 20,
-        },
-        {
-          id: 2,
-          image: 'https://picsum.photos/200/300',
-          quizName: 'Quiz 2',
-          class: 'Class 1',
-          date: '2021-05-02 12:00:00',
-          score: 15,
-          avgScore: 8,
-          total: 20,
-        },
-        {
-          id: 3,
-          image: 'https://picsum.photos/200/300',
-          quizName: 'Quiz 3',
-          class: 'Class 2',
-          date: '2021-05-03 12:00:00',
-          score: 20,
-          avgScore: 20,
-          total: 20,
-        },
+        // {
+        //   id: 1,
+        //   image: 'https://picsum.photos/200/300',
+        //   quizName: 'Quiz 1',
+        //   class: 'Class 1',
+        //   date: '2021-05-01 12:00:00',
+        //   score: 10,
+        //   avgScore: 3,
+        //   total: 20,
+        // },
+        // {
+        //   id: 2,
+        //   image: 'https://picsum.photos/200/300',
+        //   quizName: 'Quiz 2',
+        //   class: 'Class 1',
+        //   date: '2021-05-02 12:00:00',
+        //   score: 15,
+        //   avgScore: 8,
+        //   total: 20,
+        // },
+        // {
+        //   id: 3,
+        //   image: 'https://picsum.photos/200/300',
+        //   quizName: 'Quiz 3',
+        //   class: 'Class 2',
+        //   date: '2021-05-03 12:00:00',
+        //   score: 20,
+        //   avgScore: 20,
+        //   total: 20,
+        // },
       ],
     }
   },
@@ -188,6 +188,53 @@ export default {
         },
       })
     },
+    loadData() {
+      if (this.$store.getters.userRole === 'TEACHER') {
+        TeacherService.getQuizHistoryByTeacherId(localStorage.getItem('userId'))
+          .then((res) => {
+            this.itemQuizHistory = res.data.map((item) => {
+              let sumAnswers = 0
+              let memberInClass = item.members.length
+              item.members.forEach((member) => {
+                sumAnswers += member.quizData.filter(
+                  (data) => data.studentAnswer
+                ).length
+              })
+              item.quizData.avgAnswer = sumAnswers / memberInClass
+              item.quizData.startAt = item.quizData.startAt
+              item.quizData.startAtAgo = this.timeToWords(
+                this.formatDateForTimeAgo(item.quizData.startAt)
+              )
+              this.isloading = false
+              item.quizData.quizId = item.quizId
+              return item.quizData
+            })
+          })
+          .catch((err) => {
+            this.itemQuizHistory = []
+            console.log(err)
+          })
+      } else {
+        StudentService.getQuizHistoryByStudentUid(localStorage.getItem('uid'))
+          .then((res) => {
+            this.itemQuizHistory = res.data.map((item) => {
+              item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
+              item.quizData.correctAnswers = item.members[
+                item.members.findIndex((member) => {
+                  return member.user.uid === localStorage.getItem('uid')
+                })
+              ].quizData.filter((question) => question.studentAnswer).length
+              item.quizData.quizId = item.quizId
+              this.isloading = false
+              return item.quizData
+            })
+          })
+          .catch((err) => {
+            this.itemQuizHistory = []
+            console.log(err)
+          })
+      }
+    },
   },
   computed: {
     itemsPerPage() {
@@ -203,51 +250,16 @@ export default {
 
   mounted() {
     this.hiddenScoreDependOnRole()
+    this.isloading = true
 
-    if (this.$store.getters.userRole === 'TEACHER') {
-      TeacherService.getQuizHistoryByTeacherId(localStorage.getItem('userId'))
-        .then((res) => {
-          this.itemQuizHistory = res.data.map((item) => {
-            let sumAnswers = 0
-            let memberInClass = item.members.length
-            item.members.forEach((member) => {
-              sumAnswers += member.quizData.filter(
-                (data) => data.studentAnswer
-              ).length
-            })
-            item.quizData.avgAnswer = sumAnswers / memberInClass
-            item.quizData.startAt = item.quizData.startAt
-            item.quizData.startAtAgo = this.timeToWords(
-              this.formatDateForTimeAgo(item.quizData.startAt)
-            )
-
-            item.quizData.quizId = item.quizId
-            return item.quizData
-          })
-        })
-        .catch((err) => {
-          this.itemQuizHistory = []
-          console.log(err)
-        })
-    } else {
-      StudentService.getQuizHistoryByStudentUid(localStorage.getItem('uid'))
-        .then((res) => {
-          this.itemQuizHistory = res.data.map((item) => {
-            item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
-            item.quizData.correctAnswers = item.members[
-              item.members.findIndex((member) => {
-                return member.user.uid === localStorage.getItem('uid')
-              })
-            ].quizData.filter((question) => question.studentAnswer).length
-            item.quizData.quizId = item.quizId
-            return item.quizData
-          })
-        })
-        .catch((err) => {
-          this.itemQuizHistory = []
-          console.log(err)
-        })
-    }
+    setTimeout(() => {
+      if (this.itemsPerPage === 0) {
+        this.loadData()
+      }
+    }, 1000)
+  },
+  created() {
+    this.loadData()
   },
 }
 </script>
