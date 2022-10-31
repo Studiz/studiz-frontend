@@ -272,7 +272,6 @@ export default {
         socket.emit('send-next-question', {
           quizId: this.$route.params.quizId,
         })
-        this.isTimerToShowQuestion = true
       }
     },
     resetDataQuiz() {
@@ -283,14 +282,7 @@ export default {
       this.timeInterval = null
       this.timeAnswer = 0
       this.membersInClass = []
-    },
-
-    timerProgress() {
-      const elem = document.querySelector('#question-timer')
-      elem.style.width = '100%'
-      setTimeout(() => {
-        elem.style.width = '0%'
-      }, 10)
+      this.isTimerToShowQuestion = null
     },
   },
   computed: {
