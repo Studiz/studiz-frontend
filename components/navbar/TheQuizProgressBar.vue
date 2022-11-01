@@ -20,7 +20,11 @@ export default {
   props: {
     isShowTimer: {
       type: Boolean,
-      default: true,
+    },
+  },
+  watch: {
+    isShowTimer() {
+      this.$forceUpdate()
     },
   },
   computed: {

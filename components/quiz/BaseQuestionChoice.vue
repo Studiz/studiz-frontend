@@ -68,7 +68,9 @@ export default {
   },
   methods: {
     selectAnswer(item, i) {
-      this.$emit('selectAnswer', item, i)
+      if (!this.isTeacher) {
+        this.$emit('selectAnswer', item, i)
+      }
     },
   },
   computed: {
@@ -88,6 +90,9 @@ export default {
     },
     renderClassItemIsSelect() {
       return this.item.isSelect ? 'choice-selected' : ''
+    },
+    isTeacher() {
+      return this.$store.getters.userRole == 'TEACHER' ? true : false
     },
   },
 }
