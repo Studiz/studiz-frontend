@@ -48,11 +48,10 @@
 
         <template v-slot:item.image="{ item }">
           <v-img
-            class="rounded-full"
+            contain
+            class="rounded-full background_card w-10 h-10"
             :src="item.image"
             :alt="item.name"
-            max-width="40px"
-            max-height="40px"
           ></v-img>
         </template>
       </v-data-table>
@@ -91,6 +90,7 @@ export default {
         {
           text: 'Date',
           value: 'startAtTimestamp',
+          filterable: false,
         },
         {
           text: 'Image',
