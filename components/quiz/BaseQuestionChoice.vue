@@ -15,7 +15,7 @@
     </span>
     <div
       v-if="typeQuestions === 'poll'"
-      class="h-full w-14 inline-flex items-center p-2 bg-white/30 dark:bg-black/30 rounded-md"
+      class="h-full w-16 inline-flex items-center p-2 bg-white/30 dark:bg-black/30 rounded-md"
     >
       <span
         :id="`percentage-${index}`"

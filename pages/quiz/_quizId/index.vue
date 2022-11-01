@@ -24,7 +24,7 @@
               ? isTimerToShowQuestion
                 ? 'w-full'
                 : 'w-0'
-              : ''
+              : 'w-full'
           "
           :style="{ 'transition-duration': '5000ms' }"
         ></div
