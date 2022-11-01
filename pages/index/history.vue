@@ -11,9 +11,9 @@
         hide-default-footer
         mobile-breakpoint="600"
         class="elevation-0 !rounded-lg cursor-pointer"
-        item-key="startAt"
+        item-key="startAtTimestamp"
         loading-text="Loading... Please wait"
-        sort-by="startAt"
+        sort-by="startAtTimestamp"
         :search="search"
         :sort-desc="true"
         :loading="isloading"
@@ -35,7 +35,7 @@
           </v-toolbar-title>
         </template>
 
-        <template v-slot:item.startAt="{ item }">
+        <template v-slot:item.startAtTimestamp="{ item }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <span v-bind="attrs" v-on="on">
@@ -90,7 +90,7 @@ export default {
       headers: [
         {
           text: 'Date',
-          value: 'startAt',
+          value: 'startAtTimestamp',
         },
         {
           text: 'Image',
@@ -207,8 +207,11 @@ export default {
               })
               item.quizData.avgAnswer = sumAnswers / memberInClass
               item.quizData.startAt = item.quizData.startAt
+              item.quizData.startAtTimestamp = Date.parse(
+                this.formatDateForParse(item.quizData.startAt)
+              )
               item.quizData.startAtAgo = this.timeToWords(
-                this.formatDateForTimeAgo(item.quizData.startAt)
+                this.formatDateForParse(item.quizData.startAt)
               )
               this.isloading = false
               item.quizData.quizId = item.quizId
@@ -224,8 +227,11 @@ export default {
           .then((res) => {
             this.itemQuizHistory = res.data.map((item) => {
               item.quizData.startAt = item.quizData.startAt
+              item.quizData.startAtTimestamp = Date.parse(
+                this.formatDateForParse(item.quizData.startAt)
+              )
               item.quizData.startAtAgo = this.timeToWords(
-                this.formatDateForTimeAgo(item.quizData.startAt)
+                this.formatDateForParse(item.quizData.startAt)
               )
               item.quizData.correctAnswers = item.members[
                 item.members.findIndex((member) => {

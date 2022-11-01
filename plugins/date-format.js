@@ -52,7 +52,7 @@ export default {
       }
     },
 
-    formatDateForTimeAgo(date) {
+    formatDateForParse(date) {
       return date
         ?.replace(/(\/)/gi, '-')
         ?.replace(/(\w+)-(\w+)-(\w+)/gi, '$3-$2-$1')
