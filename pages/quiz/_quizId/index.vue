@@ -154,25 +154,33 @@ export default {
         answer: {
           options: [
             {
-              option: 'sadd Look at the shaded model.',
+              option: '1',
               index: 0,
             },
             {
-              option: 'asd Look at the shaded model.',
+              option: '2',
               index: 1,
             },
             {
-              option: 'sadsad Look at the shaded model.',
+              option: '3',
               index: 2,
             },
             {
-              option: 'ffasd Look at the shaded model.',
+              option: '4',
               index: 3,
+            },
+            {
+              option: '5',
+              index: 4,
+            },
+            {
+              option: '6',
+              index: 5,
             },
           ],
         },
         question: 'Look at the shaded model. Which number sentence is true?',
-        type: 'poll',
+        type: 'sort',
       },
       question: {},
       userSelected: null,

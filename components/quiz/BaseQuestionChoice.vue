@@ -27,7 +27,8 @@
     <v-icon
       large
       v-if="typeQuestions === 'sort'"
-      class="handle cursor-grabbing py-3 px-1 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+      class="handle cursor-grabbing py-3 px-1 !absolute top-1/2 left-2 transform -translate-x-1/2 -translate-y-1/2 opacity-60 transition-all"
+      :id="`handle-${index}`"
       >mdi-drag-vertical</v-icon
     >
 
@@ -83,9 +84,9 @@ export default {
       } else if (length > 24) {
         return 'md:text-3xl lg:text-4xl'
       } else if (length > 6) {
-        return 'md:text-5xl lg:text-6xl xl:text-7xl'
+        return 'md:text-4xl lg:text-5xl xl:text-6xl'
       } else if (length > 0) {
-        return 'text-2xl md:text-6xl lg:text-7xl xl:text-8xl'
+        return 'text-2xl md:text-3xl lg:text-4xl xl:text-5xl'
       }
     },
     renderClassItemIsSelect() {
