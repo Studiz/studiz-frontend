@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      disabledIndex: [4],
+      disabledIndex: [],
     }
   },
   methods: {

@@ -113,6 +113,16 @@ export default {
         'token': 'Bearer ' + localStorage.getItem('accessToken')
       }
     });
+  },
+
+  kickStudntInClassroom(classroomId, studentId) {
+    return studizAPI(baseURL).delete(`/kick/student/${classroomId}/${studentId}`, {
+      headers: {
+        'token': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    });
+
   }
+
 
 }

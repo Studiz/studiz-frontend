@@ -84,6 +84,7 @@ export default {
       }
     },
     renderBackendAnswer() {
+      console.log(this.backendAnswer)
       this.isStepShowAnswer = true
       if (Object.keys(this.selectedChoice).length === 0) {
         this.choices.forEach((item, index) => {
@@ -99,7 +100,6 @@ export default {
         } else {
           this.selectedChoice.item.isCorrect = 'incorrect'
         }
-        console.log(this.backendAnswer)
         setTimeout(() => {
           this.choices.forEach((item, index) => {
             if (this.backendAnswer === index) {

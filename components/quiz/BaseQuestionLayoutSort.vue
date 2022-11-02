@@ -44,6 +44,7 @@
         color="primary"
         height="56"
         class="w-full md:w-64 !px-5 rounded-md transition-all"
+        :disabled="isTimeExpired"
       >
         <span class="normal-case font-semibold">Summit</span>
       </v-btn>
@@ -72,9 +73,9 @@ export default {
     },
   },
   watch: {
-    backendAnswer() {
-      this.renderBackendAnswer()
-    },
+    // backendAnswer() {
+    //   this.renderBackendAnswer()
+    // },
   },
   data() {
     return {
@@ -96,6 +97,21 @@ export default {
       //   item.index = index
       // })
       // this.$emit('change-option-ordering', this.choices)
+    },
+    shuffle(array) {
+      let currentIndex = array.length,
+        randomIndex
+
+      while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--
+        ;[array[currentIndex], array[randomIndex]] = [
+          array[randomIndex],
+          array[currentIndex],
+        ]
+      }
+
+      return array
     },
     selectAnswer(item, index) {
       if (
@@ -138,11 +154,19 @@ export default {
         }, 500)
       }
     },
+
+    disabledDrag() {
+      this.dragOptions.disabled = true
+      this.choices.forEach((element, index) => {
+        let handle = document.querySelector(`#handle-${index}`)
+        handle.classList.remove('cursor-grabbing')
+        handle.classList.remove('opacity-60')
+        handle.classList.add('opacity-30')
+        handle.classList.add('cursor-default')
+      })
+    },
   },
   computed: {
-    // renderQuestion() {
-    //   return this.choices
-    // },
     addStatusForEachChoice() {
       return this.question.answer.options.map((item) => {
         return {
@@ -163,8 +187,9 @@ export default {
   created() {
     this.$nuxt.$on('time-expired', (prop) => {
       this.isTimeExpired = prop
+      this.disabledDrag()
     })
-    this.choices = this.addStatusForEachChoice
+    this.choices = this.shuffle(this.addStatusForEachChoice)
   },
   destroyed() {
     this.$nuxt.$off('time-expired')

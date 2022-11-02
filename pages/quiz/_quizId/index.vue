@@ -24,7 +24,7 @@
               ? isTimerToShowQuestion
                 ? 'w-full'
                 : 'w-0'
-              : ''
+              : 'w-full'
           "
           :style="{ 'transition-duration': '5000ms' }"
         ></div
@@ -154,25 +154,33 @@ export default {
         answer: {
           options: [
             {
-              option: 'sadd Look at the shaded model.',
+              option: '1',
               index: 0,
             },
             {
-              option: 'asd Look at the shaded model.',
+              option: '2',
               index: 1,
             },
             {
-              option: 'sadsad Look at the shaded model.',
+              option: '3',
               index: 2,
             },
             {
-              option: 'ffasd Look at the shaded model.',
+              option: '4',
               index: 3,
+            },
+            {
+              option: '5',
+              index: 4,
+            },
+            {
+              option: '6',
+              index: 5,
             },
           ],
         },
         question: 'Look at the shaded model. Which number sentence is true?',
-        type: 'poll',
+        type: 'sort',
       },
       question: {},
       userSelected: null,
@@ -266,12 +274,12 @@ export default {
           quizId: this.$route.params.quizId,
         })
         this.isTimerToShowQuestion = null
+        this.$nuxt.$emit('remove-time-interval')
       }
       if (this.currentStatus === 'leaderBoard') {
         socket.emit('send-next-question', {
           quizId: this.$route.params.quizId,
         })
-        this.isTimerToShowQuestion = true
       }
     },
     resetDataQuiz() {
@@ -282,14 +290,7 @@ export default {
       this.timeInterval = null
       this.timeAnswer = 0
       this.membersInClass = []
-    },
-
-    timerProgress() {
-      const elem = document.querySelector('#question-timer')
-      elem.style.width = '100%'
-      setTimeout(() => {
-        elem.style.width = '0%'
-      }, 10)
+      this.isTimerToShowQuestion = null
     },
   },
   computed: {
@@ -323,6 +324,7 @@ export default {
 
     socket.on('show-next-question', (data) => {
       this.$store.commit('setCurrentPage', data.currentQuestion)
+      this.$nuxt.$emit('remove-time-interval')
       this.currentStatus = 'countdown'
       this.countDownTree()
       this.prepareQuestion = data

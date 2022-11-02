@@ -3,14 +3,14 @@
     <v-tooltip bottom v-if="showTooltip">
       <template v-slot:activator="{ on, attrs }">
         <span v-bind="attrs" v-on="on" :class="textClass">
-          {{ timeToWords(formatDateForTimeAgo(time)) }}
+          {{ timeToWords(formatDateForParse(time)) }}
         </span>
       </template>
       <span>{{ time }}</span>
     </v-tooltip>
     <div v-else>
       <span class="cursor-default" :class="textClass">
-        {{ timeToWords(formatDateForTimeAgo(time)) }}
+        {{ timeToWords(formatDateForParse(time)) }}
       </span>
     </div>
   </div>
