@@ -85,7 +85,6 @@ export default {
         } else {
           this.selectedChoice.item.isCorrect = 'incorrect'
         }
-        console.log(this.backendAnswer)
         setTimeout(() => {
           this.choices.forEach((item, index) => {
             if (this.backendAnswer === index) {
