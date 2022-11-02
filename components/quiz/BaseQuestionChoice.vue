@@ -17,7 +17,9 @@
       v-if="typeQuestions === 'poll'"
       class="h-full w-14 inline-flex items-center p-2 bg-white/30 dark:bg-black/30 rounded-md"
     >
-      <span :id="`percentage-${index}`" class="font-semibold text-xl text-right"
+      <span
+        :id="`percentage-${index}`"
+        class="font-semibold text-xl text-right w-14"
         >0%</span
       >
     </div>
@@ -29,7 +31,7 @@
       >mdi-drag-vertical</v-icon
     >
 
-    <div v-else class="h-10">
+    <div v-if="typeQuestions === ''">
       <v-icon x-large v-if="item.isCorrect === 'incorrect'"
         >mdi-close-thick
       </v-icon>
@@ -61,11 +63,14 @@ export default {
     },
     typeQuestions: {
       type: String,
+      default: '',
     },
   },
   methods: {
     selectAnswer(item, i) {
-      this.$emit('selectAnswer', item, i)
+      if (!this.isTeacher) {
+        this.$emit('selectAnswer', item, i)
+      }
     },
   },
   computed: {
@@ -85,6 +90,9 @@ export default {
     },
     renderClassItemIsSelect() {
       return this.item.isSelect ? 'choice-selected' : ''
+    },
+    isTeacher() {
+      return this.$store.getters.userRole == 'TEACHER' ? true : false
     },
   },
 }

@@ -92,6 +92,8 @@
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import ClassroomService from '~/services/ClassroomService'
+import TeacherService from '~/services/TeacherService'
+
 export default {
   components: { BaseDialogCondition },
   head() {
@@ -121,7 +123,6 @@ export default {
     selected: [],
     chooseOne: null,
 
-    editedIndex: -1,
     isloading: false,
     propRemoveStudent: false,
   }),
@@ -151,6 +152,7 @@ export default {
               image: student.imageUrl,
               displayName: student.displayName,
               name: `${student.firstName} ${student.lastName}`,
+              id: student.id,
             }
           })
         }
@@ -169,9 +171,17 @@ export default {
       this.propRemoveStudent = true
     },
     removeStudent() {
-      console.log('choose one: ', this.chooseOne)
-      console.log('selected: ', this.selected)
-      this.propRemoveStudent = false
+      TeacherService.kickStudntInClassroom(
+        this.$route.params.classroomsid,
+        this.chooseOne.id
+      ).then((res) => {
+        this.$store.commit('TOGGLE_ALERT', {
+          type: 'success',
+          message: res.data,
+        })
+        this.loadData()
+        this.propRemoveStudent = false
+      })
     },
   },
   computed: {

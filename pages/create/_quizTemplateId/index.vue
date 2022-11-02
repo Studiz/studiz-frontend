@@ -464,27 +464,33 @@ export default {
           this.$store.getters.quizTemplate
         )
           .then((res) => {
-            if (res.status == 200) {
-              this.$store.commit('TOGGLE_ALERT', {
-                type: 'success',
-                message: 'Successfully updated quiz template.',
-              })
-              this.$store.commit('TOGGLE_LOADING', false)
-              window.removeEventListener('beforeunload', this.leavePageHandler)
-              this.$router.push('/library')
-            }
             return res.data
           })
           .then(async (res) => {
             let questions = await this.$store.getters.quizTemplate.questions
             for (let i = 0; i < questions.length; i++) {
               const item = questions[i]
-              if (item.fileImage) {
+              if (item.fileImage.name) {
                 await TeacherService.updateImageQuestion(
-                  res.data.id,
+                  this.$route.params.quizTemplateId,
                   i,
                   item.fileImage
-                )
+                ).then((res) => {
+                  if (res.status == 200) {
+                    if (i === questions.length - 1) {
+                      this.$store.commit('TOGGLE_ALERT', {
+                        type: 'success',
+                        message: 'Successfully updated quiz template.',
+                      })
+                      this.$store.commit('TOGGLE_LOADING', false)
+                      window.removeEventListener(
+                        'beforeunload',
+                        this.leavePageHandler
+                      )
+                      this.$router.push('/library')
+                    }
+                  }
+                })
               }
             }
             this.resetQuizTemplate()
@@ -499,15 +505,6 @@ export default {
       } else {
         TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
           .then((res) => {
-            if (res.status == 200) {
-              this.$store.commit('TOGGLE_LOADING', false)
-              this.$store.commit('TOGGLE_ALERT', {
-                type: 'success',
-                message: 'Successfully created quiz template.',
-              })
-              window.removeEventListener('beforeunload', this.leavePageHandler)
-              this.$router.push('/library')
-            }
             return res.data
           })
           .then(async (res) => {
@@ -519,7 +516,22 @@ export default {
                   res.data.id,
                   i,
                   item.fileImage
-                )
+                ).then((res) => {
+                  if (res.status == 200) {
+                    if (i === questions.length - 1) {
+                      this.$store.commit('TOGGLE_ALERT', {
+                        type: 'success',
+                        message: 'Successfully created quiz template.',
+                      })
+                      this.$store.commit('TOGGLE_LOADING', false)
+                      window.removeEventListener(
+                        'beforeunload',
+                        this.leavePageHandler
+                      )
+                      this.$router.push('/library')
+                    }
+                  }
+                })
               }
             }
             this.resetQuizTemplate()

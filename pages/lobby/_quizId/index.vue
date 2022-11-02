@@ -42,7 +42,7 @@
         <div class="flex justify-between flex-wrap">
           <div class="inline-flex flex-wrap p-3 gap-3">
             <v-img
-              class="rounded-lg background w-full h-auto"
+              class="rounded-lg background_card w-full h-auto"
               :src="quizData?.image"
               max-height="60px"
               max-width="60px"
@@ -76,7 +76,7 @@
       >
         <div class="md:flex">
           <v-img
-            class="rounded-lg background w-full h-auto mx-auto"
+            class="rounded-lg background_card w-full h-auto mx-auto"
             :src="quizData?.image"
             max-height="150px"
             max-width="150px"
@@ -271,6 +271,15 @@ export default {
       })
     })
 
+    socket.on('quiz-end', () => {
+      this.$store.commit('TOGGLE_ALERT', {
+        type: 'info',
+        message: 'The quiz already ended',
+      })
+      this.$router.push('/')
+      localStorage.removeItem('memberId')
+    })
+
     socket.on('move-to-home', () => {
       this.$store.commit('TOGGLE_ALERT', {
         type: 'info',
@@ -287,7 +296,8 @@ export default {
         .then((res) => {
           this.$store.commit('setPinCode', res.data.pinCode)
           this.$store.commit('setQuizData', res.data.quizTemplate)
-          this.$store.commit('setClassRoomId', res.data.classRoomId)
+          this.$store.commit('setClassroomId', res.data.classroomId)
+          this.$store.commit('setStartAt', res.data.startAt)
           this.$store.commit('TOGGLE_LOADING', false)
           this.initGame()
           this.$store.commit('TOGGLE_ALERT', {

@@ -33,7 +33,7 @@ import BaseQuizTemplateItem from '~/components/Teacher/BaseQuizTemplateItem.vue'
 import TeacherService from '~/services/TeacherService'
 
 export default {
-  components: { BaseDialogCondition, BaseQuizTemplateItem,  },
+  components: { BaseDialogCondition, BaseQuizTemplateItem },
   head() {
     return {
       title: 'Library',
@@ -69,7 +69,20 @@ export default {
   created() {
     TeacherService.getQuizTemplate(localStorage.getItem('userId')).then(
       (res) => {
-        this.quizTemplates = res.data
+        this.quizTemplates = res.data.sort((a, b) => {
+          let dateA = Date.parse(
+            a.lastUpdated
+              .replace(/(\/)/gi, '-')
+              .replace(/(\w+)-(\w+)-(\w+)/gi, '$3-$2-$1')
+          )
+
+          let dateB = Date.parse(
+            b.lastUpdated
+              .replace(/(\/)/gi, '-')
+              .replace(/(\w+)-(\w+)-(\w+)/gi, '$3-$2-$1')
+          )
+          return dateA < dateB ? 1 : -1
+        })
       }
     )
   },

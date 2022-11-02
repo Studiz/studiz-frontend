@@ -9,7 +9,7 @@
       min-width="144"
       min-height="96"
       contain
-      class="self-center"
+      class="self-center background_card"
     />
     <div class="flex flex-col gap-4">
       <div class="flex w-full">
@@ -63,7 +63,7 @@
       <div class="flex items-center justify-between w-full flex-wrap gap-4">
         <!-- <div class="px-3 py-1 rounded-full">10 items</div> -->
         <!-- <v-chip color="secondary" class="!hover:bg-secondary">10 items</v-chip> -->
-        <span class="whitespace-nowrap self-end"
+        <span class="whitespace-nowrap self-end inline-flex gap-x-2"
           >Edit:
           <base-time-to-text :time="quizTemplate.lastUpdated" />
         </span>
@@ -218,12 +218,12 @@ export default {
         params: { quizTemplateId: this.quizTemplate.id },
       })
     },
-    startQuiz(classRoomId) {
+    startQuiz(classroomId) {
       this.$store.commit('TOGGLE_LOADING', true)
       TeacherService.createQuiz({
         teacherId: localStorage.getItem('userId'),
         quizTemplateId: this.quizTemplate.id,
-        classRoomId: typeof classRoomId === 'string' ? classRoomId : null,
+        classroomId: typeof classroomId === 'string' ? classroomId : null,
         studentList: [],
       })
         .then((res) => {

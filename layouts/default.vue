@@ -19,6 +19,7 @@ import TheAlertNotification from '~/components/TheAlertNotification.vue'
 import TheNavbarDefault from '~/components/navbar/TheNavbarDefault.vue'
 import TheLoadingScreen from '~/components/TheLoadingScreen.vue'
 import socket from '~/plugins/socket.io'
+import UserService from '~/services/UserService'
 
 export default {
   components: { TheAlertNotification, TheNavbarDefault, TheLoadingScreen },
@@ -35,7 +36,20 @@ export default {
     }
   },
   mounted() {
+    if (localStorage.getItem('accessToken')) {
+      UserService.getNotificationByUID(localStorage.getItem('uid')).then(
+        (res) => {
+          this.$store.commit('SET_NOTIFICATION', res.data)
+        }
+      )
+    }
     socket.on('notification-quiz', (notificationData) => {
+      UserService.getNotificationByUID(localStorage.getItem('uid')).then(
+        (res) => {
+          this.$store.commit('SET_NOTIFICATION', res.data)
+        }
+      )
+
       this.$store.commit('TOGGLE_ALERT', {
         type: 'info',
         message: `Quiz ${notificationData.title} is starting`,

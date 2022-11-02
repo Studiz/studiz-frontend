@@ -24,14 +24,15 @@
           <v-divider class="my-2"></v-divider>
 
           <div v-for="(page, index) in pages" :key="index">
-            <v-divider class="my-2" v-if="index == 4"></v-divider>
+            <v-divider class="my-2" v-if="index == 5"></v-divider>
             <v-list-item
               v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2"
               :to="page.to"
               link
               active-class="primary--text"
             >
-              <v-icon left class="-m-0.5 lg:m-0">{{ page.icon }}</v-icon>
+              <div :id="`list-${page.title}`"></div>
+              <v-icon left class="-m-1 lg:m-0">{{ page.icon }}</v-icon>
               <v-list-item-content>
                 <v-list-item-title>{{ page.title }}</v-list-item-title>
               </v-list-item-content>
@@ -80,6 +81,7 @@
 </template>
 
 <script>
+import notificationNumber from '~/plugins/notification-number'
 export default {
   name: 'IndexPage',
   head() {
@@ -87,6 +89,7 @@ export default {
       title: 'Welcome to Studiz',
     }
   },
+  mixins: [notificationNumber],
   data() {
     return {
       isAuthenticated: false,
@@ -105,6 +108,11 @@ export default {
           title: 'My library',
           icon: '$vuetify.icons.quiz',
           to: '/library',
+        },
+        {
+          title: 'Quiz History',
+          icon: 'mdi-history',
+          to: '/history',
         },
         {
           title: 'Notification',
@@ -150,3 +158,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.Notification {
+  @apply bg-red-500 absolute top-0 left-0 rounded-full text-white text-xs w-5 h-5 flex justify-center items-center;
+}
+</style>

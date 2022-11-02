@@ -7,8 +7,12 @@ export default {
     state.quizData = quizData
   },
 
-  setClassRoomId(state, classRoomId) {
-    state.quizData.classRoomId = classRoomId
+  setClassroomId(state, classroomId) {
+    state.quizData.classroomId = classroomId
+  },
+
+  setStartAt(state, startAt) {
+    state.quizData.startAt = startAt
   },
 
   setCurrentPage(state, currentPage) {

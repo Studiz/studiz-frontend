@@ -1,79 +1,102 @@
 <template>
-  <v-alert
-    @click="openAction"
-    class="!p-3 md:!p-4"
-    color="primary"
-    icon="$vuetify.icons.quiz"
-    :prominent="expanded"
-    dark
-  >
-    <div class="flex gap-2" :class="expanded ? 'flex-row' : 'flex-col'">
-      <div class="flex flex-col items-start justify-center text-left">
-        <div class="inline-flex items-center gap-x-2 truncate">
-          <span class="sm:text-xl">{{ title }}</span>
-          <span class="w-1 h-1 bg-white/70 rounded-full" />
-          <base-time-to-text
-            textClass="text-sm"
-            :time="time"
-            :showTooltip="false"
+  <div class="rounded-lg ring-1 ring-black ring-opacity-10">
+    <v-alert
+      @click="openAction"
+      color="background"
+      icon="$vuetify.icons.quiz"
+      class="!p-3 md:!p-4 mb-3 cursor-pointer w-full transition-all rounded-lg custom-icon"
+      :class="notification.isRead ? 'custom-icon' : ''"
+      :prominent="true"
+    >
+      <div
+        class="flex gap-2 flex-wrap overflow-hidden"
+        :class="[
+          expanded ? 'flex-row max-h-14' : 'flex-col',
+          notification.isRead ? 'isRead' : 'new',
+        ]"
+      >
+        <div
+          class="flex flex-col items-start justify-center text-left gap-x-2"
+          :class="expanded ? 'h-14 !max-w-[83%]' : ''"
+        >
+          <div
+            class="inline-flex items-center gap-x-2 truncate"
+            :class="[notification.isRead ? 'isRead' : 'font-bold new']"
+          >
+            <span class="sm:text-xl">{{ notification.title }}</span>
+            <span class="w-1 h-1 bg-black dark:bg-white/70 rounded-full" />
+            <base-time-to-text
+              textClass="text-sm"
+              :time="notification.startAt"
+              :showTooltip="false"
+            />
+          </div>
+          <span
+            class="text-xs sm:text-base"
+            :class="[expanded ? 'line-clamp-1' : 'line-clamp-3']"
+          >
+            {{ notification.description }}
+          </span>
+        </div>
+
+        <v-spacer class="d-none d-md-flex" />
+
+        <div class="inline-flex">
+          <v-img
+            contain
+            content-class="ring-1 ring-black ring-opacity-10 !rounded-lg"
+            class="self-center justify-self-center background_card transition-all duration-500 p-px rounded-lg overflow-hidden"
+            :class="[expanded ? 'w-14 h-14' : 'w-20 h-20']"
+            :src="notification.image"
           />
         </div>
-        <span
-          class="text-xs sm:text-base"
-          :class="[expanded ? 'line-clamp-2' : 'line-clamp-3']"
-        >
-          {{ content }}
-        </span>
-      </div>
-      <div class="inline-flex">
-        <v-img
-          contain
-          class="self-center justify-self-center"
-          :class="[expanded ? 'w-14 h-14 sm:w-20 sm:h-20' : 'w-20 max-h-32']"
-          :src="image"
-        />
-      </div>
 
-      <button
+        <button
+          icon
+          @click.stop="closeNotification"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2 transition-all flex justify-center items-center focus:outline-none w-7 h-7 p-0.5 bg-black/30 dark:bg-white/30 rounded-full hover:ring ring-0"
+        >
+          <v-icon dark>mdi-close</v-icon>
+        </button>
+
+        <!-- <button
         @click.stop="expanded = !expanded"
         @blur="expanded = true"
-        class="absolute right-3 transition-all flex justify-center items-center focus:outline-none w-7 h-7 p-0.5 bg-black/50 rounded-full"
-        :class="[expanded ? 'top-6 sm:top-10' : 'top-3 rotate-180']"
+        class="absolute right-3 top-10 sm:top-12 transition-all flex justify-center items-center focus:outline-none w-7 h-7 p-0.5 bg-black/50 rounded-full"
+        :class="[expanded ? '' : ' rotate-180']"
       >
         <v-icon dark>mdi-chevron-down</v-icon>
-      </button>
+      </button> -->
 
-      <div class="w-7">
-        <div class="w-7" />
+        <div :class="expanded ? 'w-7' : 'hidden'">
+          <div class="w-7" />
+        </div>
       </div>
-    </div>
-  </v-alert>
+    </v-alert>
+  </div>
 </template>
 
 <script>
 import dateFormat from '~/plugins/date-format'
 import BaseTimeToText from './BaseTimeToText.vue'
+import UserService from '~/services/UserService.js'
+
 export default {
   components: { BaseTimeToText },
   mixins: [dateFormat],
   props: {
-    title: {
-      type: String,
-      default: 'title',
+    notification: {
+      type: Object,
+      default: {
+        title: '',
+        time: '',
+        content: '',
+        image: '',
+        isRead: false,
+      },
     },
-    time: {
-      type: String,
-      default: '21/10/2022, 00:54:18',
-    },
-    content: {
-      type: String,
-      default:
-        'Praesent congue erat at massa. Nullam vel sem. Aliquam lorem ante dapibus',
-    },
-    image: {
-      type: String,
-      default:
-        'https://firebasestorage.googleapis.com/v0/b/studiz-ce53f.appspot.com/o/1662862122512_085df103965f9888e1863338bfd62d7f.png?alt=media&token=4ede7562-dc1d-4688-a1de-109deef2c668',
+    index: {
+      type: Number,
     },
   },
   data() {
@@ -83,7 +106,26 @@ export default {
   },
   methods: {
     openAction() {
-      console.log('openAction')
+      UserService.readNotification(this.notification.id)
+        .then(() => {
+          this.$store.commit('READED_NOTIFICATION', this.index)
+          this.$router.push({
+            name: 'lobby-quizId',
+            params: { quizId: this.notification.quizId },
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    closeNotification() {
+      UserService.deleteNotification(this.notification.id)
+        .then(() => {
+          this.$store.commit('DELETE_NOTIFICATION', this.index)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
   },
 }
@@ -91,15 +133,15 @@ export default {
 
 <style scoped>
 :deep(.v-alert__content) {
-  @apply flex;
+  @apply flex overflow-hidden;
 }
 
 :deep(.v-responsive__sizer) {
   @apply pb-0 !transition-none;
 }
 
-:deep(.v-alert--prominent .v-alert__icon) {
-  @apply min-w-[20px] h-5 sm:min-w-[36px] sm:h-9 md:min-w-[48px] md:h-12;
+:deep(.v-alert__icon) {
+  @apply !min-w-[20px] !h-5 sm:!min-w-[32px] sm:!h-8 md:!min-w-[48px] md:!h-12;
 }
 
 :deep(.v-icon) {
@@ -107,5 +149,16 @@ export default {
 }
 :deep(.v-alert__wrapper) {
   @apply gap-3;
+}
+
+.new {
+  @apply !text-black dark:!text-white;
+}
+.isRead {
+  @apply !text-black/50 dark:!text-white/50;
+}
+
+.custom-icon > .v-alert__wrapper > .v-alert__icon {
+  @apply opacity-50;
 }
 </style>
