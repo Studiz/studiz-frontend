@@ -9,7 +9,7 @@
       min-width="144"
       min-height="96"
       contain
-      class="self-center"
+      class="self-center background_card"
     />
     <div class="flex flex-col gap-4">
       <div class="flex w-full">
