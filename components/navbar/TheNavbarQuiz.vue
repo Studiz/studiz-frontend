@@ -63,8 +63,8 @@
         >
           <span class="hidden sm:inline-flex">{{ user }}</span>
           <v-btn v-if="!isRouterQuiz" color="error" @click="leaveRoom"
-            >Leave</v-btn
-          >
+            >Leave
+          </v-btn>
         </div>
       </div>
 
@@ -165,6 +165,9 @@ export default {
     isSummaryStatus() {
       return this.currentStatus === 'summary'
     },
+    isIntroQuestionStatus() {
+      return this.currentStatus === 'introQuestion'
+    },
   },
   methods: {
     openFullscreen() {
@@ -192,6 +195,13 @@ export default {
       setTimeout(() => {
         this.isTimeLimitOut = true
       }, 10)
+    },
+
+    setTextTime() {
+      this.m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
+      this.s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
+      document.getElementById('text-timer').innerHTML =
+        (this.m ? this.m + 'm ' : '') + this.s + 's'
     },
 
     setTextTime() {

@@ -11,16 +11,16 @@
         hide-default-footer
         mobile-breakpoint="600"
         class="elevation-0 !rounded-lg cursor-pointer"
-        item-key="date"
+        item-key="startAtTimestamp"
         loading-text="Loading... Please wait"
-        sort-by="date"
+        sort-by="startAtTimestamp"
         :search="search"
         :sort-desc="true"
         :loading="isloading"
         :headers="headers"
         :items="itemQuizHistory"
         :page.sync="page"
-        :items-per-page="itemsPerPage"
+        :items-per-page="itemsLength"
         @click:row="clickRow"
       >
         <template #top
@@ -35,18 +35,23 @@
           </v-toolbar-title>
         </template>
 
-        <!-- <template v-slot:item.startAt="{ item }">
-          <base-time-to-text :time="item.startAt" />
-          {{ formatDateForTimeAgo(item.startAt) }}
-        </template> -->
+        <template v-slot:item.startAtTimestamp="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <span v-bind="attrs" v-on="on">
+                {{ item.startAtAgo }}
+              </span>
+            </template>
+            <span> {{ item.startAt }}</span>
+          </v-tooltip>
+        </template>
 
         <template v-slot:item.image="{ item }">
           <v-img
-            class="rounded-full"
+            contain
+            class="rounded-full background_card w-10 h-10"
             :src="item.image"
             :alt="item.name"
-            max-width="40px"
-            max-height="40px"
           ></v-img>
         </template>
       </v-data-table>
@@ -69,7 +74,10 @@ export default {
     }
   },
   watch: {
-    isTeacher() {
+    haveRole() {
+      this.loadData()
+    },
+    itemsLength() {
       this.hiddenScoreDependOnRole()
     },
   },
@@ -81,7 +89,8 @@ export default {
       headers: [
         {
           text: 'Date',
-          value: 'startAt',
+          value: 'startAtTimestamp',
+          filterable: false,
         },
         {
           text: 'Image',
@@ -121,36 +130,36 @@ export default {
       ],
 
       itemQuizHistory: [
-        {
-          id: 1,
-          image: 'https://picsum.photos/200/300',
-          quizName: 'Quiz 1',
-          class: 'Class 1',
-          date: '2021-05-01 12:00:00',
-          score: 10,
-          avgScore: 3,
-          total: 20,
-        },
-        {
-          id: 2,
-          image: 'https://picsum.photos/200/300',
-          quizName: 'Quiz 2',
-          class: 'Class 1',
-          date: '2021-05-02 12:00:00',
-          score: 15,
-          avgScore: 8,
-          total: 20,
-        },
-        {
-          id: 3,
-          image: 'https://picsum.photos/200/300',
-          quizName: 'Quiz 3',
-          class: 'Class 2',
-          date: '2021-05-03 12:00:00',
-          score: 20,
-          avgScore: 20,
-          total: 20,
-        },
+        // {
+        //   id: 1,
+        //   image: 'https://picsum.photos/200/300',
+        //   quizName: 'Quiz 1',
+        //   class: 'Class 1',
+        //   date: '2021-05-01 12:00:00',
+        //   score: 10,
+        //   avgScore: 3,
+        //   total: 20,
+        // },
+        // {
+        //   id: 2,
+        //   image: 'https://picsum.photos/200/300',
+        //   quizName: 'Quiz 2',
+        //   class: 'Class 1',
+        //   date: '2021-05-02 12:00:00',
+        //   score: 15,
+        //   avgScore: 8,
+        //   total: 20,
+        // },
+        // {
+        //   id: 3,
+        //   image: 'https://picsum.photos/200/300',
+        //   quizName: 'Quiz 3',
+        //   class: 'Class 2',
+        //   date: '2021-05-03 12:00:00',
+        //   score: 20,
+        //   avgScore: 20,
+        //   total: 20,
+        // },
       ],
     }
   },
@@ -163,6 +172,7 @@ export default {
           sortable: false,
           align: 'right',
           class: 'avg-score-column',
+          width: 100,
         })
       } else {
         this.headers.splice(4, 0, {
@@ -171,6 +181,7 @@ export default {
           sortable: false,
           align: 'right',
           class: 'score-column',
+          width: 100,
         })
       }
     },
@@ -182,13 +193,72 @@ export default {
         },
       })
     },
+    loadData() {
+      if (this.$store.getters.userRole === 'TEACHER') {
+        TeacherService.getQuizHistoryByTeacherId(localStorage.getItem('userId'))
+          .then((res) => {
+            this.itemQuizHistory = res.data.map((item) => {
+              let sumAnswers = 0
+              let memberInClass = item.members.length
+              item.members.forEach((member) => {
+                sumAnswers += member.quizData.filter(
+                  (data) => data.studentAnswer
+                ).length
+              })
+              item.quizData.avgAnswer = sumAnswers / memberInClass
+              item.quizData.startAt = item.quizData.startAt
+              item.quizData.startAtTimestamp = Date.parse(
+                this.formatDateForParse(item.quizData.startAt)
+              )
+              item.quizData.startAtAgo = this.timeToWords(
+                this.formatDateForParse(item.quizData.startAt)
+              )
+              this.isloading = false
+              item.quizData.quizId = item.quizId
+              return item.quizData
+            })
+          })
+          .catch((err) => {
+            this.itemQuizHistory = []
+            console.log(err)
+          })
+      } else {
+        StudentService.getQuizHistoryByStudentUid(localStorage.getItem('uid'))
+          .then((res) => {
+            this.itemQuizHistory = res.data.map((item) => {
+              item.quizData.startAt = item.quizData.startAt
+              item.quizData.startAtTimestamp = Date.parse(
+                this.formatDateForParse(item.quizData.startAt)
+              )
+              item.quizData.startAtAgo = this.timeToWords(
+                this.formatDateForParse(item.quizData.startAt)
+              )
+              item.quizData.correctAnswers = item.members[
+                item.members.findIndex((member) => {
+                  return member.user.uid === localStorage.getItem('uid')
+                })
+              ].quizData.filter((question) => question.studentAnswer).length
+              item.quizData.quizId = item.quizId
+              this.isloading = false
+              return item.quizData
+            })
+          })
+          .catch((err) => {
+            this.itemQuizHistory = []
+            console.log(err)
+          })
+      }
+    },
   },
   computed: {
-    itemsPerPage() {
+    itemsLength() {
       return this.itemQuizHistory.length
     },
     isTeacher() {
       return this.$store.getters.userRole == 'TEACHER' ? true : false
+    },
+    haveRole() {
+      return this.$store.getters.userRole !== '' ? true : false
     },
     renderItemQuizHistory() {
       return this.itemQuizHistory
@@ -196,50 +266,20 @@ export default {
   },
 
   mounted() {
-    this.hiddenScoreDependOnRole()
-
-    if (this.$store.getters.userRole === 'TEACHER') {
-      TeacherService.getQuizHistoryByTeacherId(localStorage.getItem('userId'))
-        .then((res) => {
-          this.itemQuizHistory = res.data.map((item) => {
-            let sumAnswers = 0
-            let memberInClass = item.members.length
-            item.members.forEach((member) => {
-              sumAnswers += member.quizData.filter(
-                (data) => data.studentAnswer
-              ).length
-            })
-            item.quizData.avgAnswer = sumAnswers / memberInClass
-            item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
-            item.quizData.quizId = item.quizId
-            return item.quizData
-          })
-        })
-        .catch((err) => {
-          this.itemQuizHistory = []
-          console.log(err)
-        })
-    } else {
-      StudentService.getQuizHistoryByStudentUid(localStorage.getItem('uid'))
-        .then((res) => {
-          this.itemQuizHistory = res.data.map((item) => {
-            item.quizData.startAt = this.fullFormatDate(item.quizData.startAt)
-            item.quizData.correctAnswers = item.members[
-              item.members.findIndex((member) => {
-                return member.user.uid === localStorage.getItem('uid')
-              })
-            ].quizData.filter((question) => question.studentAnswer).length
-            item.quizData.quizId = item.quizId
-            return item.quizData
-          })
-        })
-        .catch((err) => {
-          this.itemQuizHistory = []
-          console.log(err)
-        })
-    }
+    this.isloading = true
+  },
+  created() {
+    this.loadData()
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+:deep(div.v-data-table__wrapper
+    > table
+    > tbody
+    > tr
+    > td.text-right:nth-child(5)) {
+  @apply truncate !w-24;
+}
+</style>
