@@ -213,6 +213,7 @@ export default {
           memberId: localStorage.getItem('memberId'),
         })
         localStorage.removeItem('memberId')
+        localStorage.removeItem('displayName')
         this.$router.push('/')
       }
     },
@@ -277,6 +278,7 @@ export default {
         message: 'The quiz already ended',
       })
       this.$router.push('/')
+      localStorage.removeItem('displayName')
       localStorage.removeItem('memberId')
     })
 
@@ -286,6 +288,7 @@ export default {
         message: 'The quiz has been ended by the teacher',
       })
       this.$router.push('/')
+      localStorage.removeItem('displayName')
       localStorage.removeItem('memberId')
     })
   },
@@ -325,11 +328,20 @@ export default {
           })
         })
         .catch((err) => {
-          this.$store.commit('TOGGLE_LOADING', false)
-          this.$store.commit('TOGGLE_ALERT', {
-            type: 'error',
-            message: err.response.message,
-          })
+          if (err.response.status === 400) {
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'info',
+              message: err.response.data,
+            })
+          } else {
+            this.$store.commit('TOGGLE_LOADING', false)
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.data,
+            })
+          }
+          this.$router.push('/')
         })
     }
   },

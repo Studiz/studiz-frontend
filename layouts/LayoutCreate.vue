@@ -237,7 +237,7 @@ export default {
           disabled: false,
         },
         {
-          text: 'Trur or False',
+          text: 'True or False',
           value: 'true/false',
           disabled: false,
         },
