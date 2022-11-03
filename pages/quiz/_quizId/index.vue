@@ -348,6 +348,14 @@ export default {
     if (this.$route.params.quizId !== 'quiztest') {
       this.prepareQuestion = this.$route.params.questionData
     }
+    if (!this.prepareQuestion) {
+      this.$store.commit('TOGGLE_LOADING', false)
+      this.$store.commit('TOGGLE_ALERT', {
+        type: 'info',
+        message: 'You have left the quiz.',
+      })
+      this.$router.push('/')
+    }
     this.countDownTree()
     // this.currentStatus = 'introQuestion'
   },
