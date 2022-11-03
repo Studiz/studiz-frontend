@@ -219,12 +219,16 @@ export default {
       })
     },
     startQuiz(classroomId) {
+      let startAt = new Date()
+      startAt = startAt.toLocaleString('en-GB')
+
       this.$store.commit('TOGGLE_LOADING', true)
       TeacherService.createQuiz({
         teacherId: localStorage.getItem('userId'),
         quizTemplateId: this.quizTemplate.id,
         classroomId: typeof classroomId === 'string' ? classroomId : null,
         studentList: [],
+        startAt: startAt,
       })
         .then((res) => {
           this.$router.push({
