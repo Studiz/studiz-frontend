@@ -234,7 +234,6 @@ export default {
         this.isFullScreen = false
       }
     })
-    console.log(this.$route.name)
   },
 
   created() {

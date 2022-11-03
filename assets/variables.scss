@@ -11,6 +11,10 @@ $data-table-regular-header-height: 56px;
 
 $data-table-regular-row-height: 56px;
 
+html {
+  overflow-y: auto;
+}
+
 // $material-dark: ('background': rgb(83, 40, 117));
 
 // $body-font-family: 'Montserrat',sans-serif;
