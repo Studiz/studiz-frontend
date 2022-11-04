@@ -17,6 +17,9 @@ export default {
 
   setCurrentPage(state, currentPage) {
     state.currentPage = currentPage
-  }
+  },
 
-};
+  setPickedItemList(state, payload) {
+    state.pickedItemList.push(payload)
+  },
+}

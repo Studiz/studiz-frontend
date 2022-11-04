@@ -8,7 +8,7 @@
       <div class="flex justify-between flex-wrap">
         <div class="inline-flex flex-wrap p-3 gap-3">
           <v-img
-            class="rounded-lg primary w-full h-auto"
+            class="rounded-lg background w-full h-auto"
             :src="summaryData?.quizData?.image"
             max-height="60px"
             max-width="60px"
@@ -42,8 +42,9 @@
     >
       <div class="md:flex">
         <v-img
-          class="rounded-lg primary w-full h-auto mx-auto"
           :src="summaryData?.quizData?.image"
+          class="rounded-lg background w-full h-auto mx-auto"
+          contain
           max-height="150px"
           max-width="150px"
         ></v-img>

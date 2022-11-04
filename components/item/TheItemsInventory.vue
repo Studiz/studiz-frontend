@@ -96,6 +96,12 @@ import BaseItemBtn from './BaseItemBtn.vue'
 
 export default {
   components: { BaseItemBtn },
+  props: {
+    propPickedItemList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       dialogValue: false,
@@ -134,7 +140,9 @@ export default {
     rendomPickItem() {
       const randomIndex = Math.floor(Math.random() * this.itemsList.length)
       this.pickedItemList.push(this.itemsList[randomIndex])
+      this.$store.commit('setPickedItemList', this.itemsList[randomIndex])
     },
+
     pickItem() {
       let countItem = 1
 
@@ -149,9 +157,14 @@ export default {
     },
   },
   mounted() {
-    this.timeOut = setTimeout(() => {
-      this.openDialog()
-    }, 2000)
+    if (this.$route.name === 'lobby-quizId') {
+      this.timeOut = setTimeout(() => {
+        this.openDialog()
+      }, 2000)
+    }
+    if (this.propPickedItemList.length > 0) {
+      this.pickedItemList = this.propPickedItemList
+    }
   },
 }
 </script>
