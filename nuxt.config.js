@@ -63,10 +63,6 @@ export default {
     // '@nuxt/postcss8'
   ],
 
-  generate: {
-    fallback: true,
-  },
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -148,9 +144,6 @@ export default {
       description:
         'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
       start_url: '/join',
-    },
-    workbox: {
-      dev: true, // or use a global variable to track the current NODE_ENV, etc to determine dev mode
     },
   },
 }
