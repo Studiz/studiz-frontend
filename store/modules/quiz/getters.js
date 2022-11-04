@@ -7,5 +7,8 @@ export default {
   },
   currentPage(state) {
     return state.currentPage
-  }
-};
+  },
+  pickedItemList(state) {
+    return state.pickedItemList
+  },
+}
