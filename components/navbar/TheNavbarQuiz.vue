@@ -78,26 +78,20 @@
       ></div>
     </v-app-bar>
 
-    <v-footer fixed color="transparent" padless v-if="isLeaderBoardStatus">
-      <div class="primary p-3 rounded-lg w-fit mx-auto my-5">
-        <v-btn
-          color="black"
-          x-large
-          icon
-          class="rounded-lg shadow-[inset_0px_4px_0px_#374151] bg-gray-500"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </div>
-    </v-footer>
+    <the-items-inventory v-if="isLeaderBoardStatus || isRouteLobby" />
   </div>
 </template>
 
 <script>
+import TheItemsInventory from '../item/TheItemsInventory.vue'
 import BaseButtonLightDarkMode from './BaseButtonLightDarkMode.vue'
 import TheQuizProgressBar from './TheQuizProgressBar.vue'
 export default {
-  components: { TheQuizProgressBar, BaseButtonLightDarkMode },
+  components: {
+    TheQuizProgressBar,
+    BaseButtonLightDarkMode,
+    TheItemsInventory,
+  },
   props: {
     time: {
       type: Number,
@@ -165,6 +159,9 @@ export default {
     isSummaryStatus() {
       return this.currentStatus === 'summary'
     },
+    isRouteLobby() {
+      return this.$route.name === 'lobby-quizId'
+    },
     isIntroQuestionStatus() {
       return this.currentStatus === 'introQuestion'
     },
@@ -195,13 +192,6 @@ export default {
       setTimeout(() => {
         this.isTimeLimitOut = true
       }, 10)
-    },
-
-    setTextTime() {
-      this.m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
-      this.s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
-      document.getElementById('text-timer').innerHTML =
-        (this.m ? this.m + 'm ' : '') + this.s + 's'
     },
 
     setTextTime() {
