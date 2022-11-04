@@ -46,7 +46,9 @@
             </v-btn>
           </template>
 
-          <v-card class="overflow-hidden !min-h-[400px] max-h-[600px] w-full">
+          <v-card
+            class="overflow-hidden !min-h-[400px] max-h-[600px] w-full relative"
+          >
             <!-- <div
               class="absolute bottom-0 left-1/2 transform -translate-x-1/2 transition-all"
               :class="
@@ -64,12 +66,18 @@
             </v-toolbar>
 
             <div
-              class="opacity-30 sm:opacity-100 transition-all absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-10 w-[110vw] sm:w-[100%] z-0 pl-2"
+              class="opacity-30 sm:opacity-100 transition-all absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-20 sm:translate-y-10 w-[500px] sm:w-[100%] z-0 pl-2"
             >
               <lottie-player
                 autoplay
                 src="https://assets6.lottiefiles.com/packages/lf20_MtLf9OrM16.json"
               />
+            </div>
+
+            <div class="absolute top-[10px] right-[10px] sm:hidden">
+              <v-btn icon @click="dialogValue = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
             </div>
 
             <div

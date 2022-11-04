@@ -17,7 +17,10 @@
         <div
           v-if="isShowName"
           class="text-center text-xs tracking-tighter line-clamp-2 w-16 h-8"
-          :class="isBtnLight ? 'text-black' : ''"
+          :class="[
+            isBtnLight ? 'sm:text-black' : '',
+            isRouteLobby ? 'text-white' : '',
+          ]"
         >
           {{ name }}
         </div>
@@ -53,6 +56,11 @@ export default {
   methods: {
     pickItem() {
       this.$emit('pick-item')
+    },
+  },
+  computed: {
+    isRouteLobby() {
+      return this.$route.name === 'lobby-quizId' ? true : false
     },
   },
 }

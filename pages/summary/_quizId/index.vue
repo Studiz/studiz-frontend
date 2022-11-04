@@ -8,10 +8,9 @@
       <div class="flex justify-between flex-wrap">
         <div class="inline-flex flex-wrap p-3 gap-3">
           <v-img
-            class="rounded-lg background w-full h-auto"
+            contain
+            class="rounded-lg background_card w-[60px] h-[60px]"
             :src="summaryData?.quizData?.image"
-            max-height="60px"
-            max-width="60px"
           />
           <div class="font-semibold">
             <div class="text-H2">{{ summaryData?.quizData?.title }}</div>
@@ -43,7 +42,7 @@
       <div class="md:flex">
         <v-img
           :src="summaryData?.quizData?.image"
-          class="rounded-lg background w-full h-auto mx-auto"
+          class="rounded-lg background_card w-full h-auto mx-auto"
           contain
           max-height="150px"
           max-width="150px"

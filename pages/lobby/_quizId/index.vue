@@ -42,9 +42,9 @@
         <div class="flex justify-between flex-wrap">
           <div class="inline-flex flex-wrap p-3 gap-3">
             <v-img
-              class="rounded-lg background_card w-full h-auto"
+              contain
+              class="rounded-lg background_card w-[60px] h-[60px]"
               :src="quizData?.image"
-              max-height="60px"
               max-width="60px"
             />
             <div class="font-semibold">
@@ -266,6 +266,7 @@ export default {
     // }
   },
   mounted() {
+    console.log(this.$route.name)
     socket.on('joined', (data) => {
       this.members = data.map((member) => member.user)
     })

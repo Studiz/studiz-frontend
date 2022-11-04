@@ -282,4 +282,9 @@ export default {
     > td.text-right:nth-child(5)) {
   @apply truncate !w-24;
 }
+
+.v-data-table {
+  background-color: var(--v-background-base) !important;
+  @apply p-2;
+}
 </style>
