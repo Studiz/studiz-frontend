@@ -100,20 +100,19 @@
                 </v-btn>
               </div>
             </div>
-            <div class="grid grid-cols-2 gap-3 mt-7">
+            <div class="flex gap-3 mt-7">
               <v-btn
                 text
                 @click="cancel"
                 outlined
                 height="56"
-                block
-                class="text-cap"
+                class="!flex-1 capitalize"
                 >cancel</v-btn
               >
               <v-btn
+                class="!flex-1"
                 color="primary"
                 height="56"
-                block
                 :loading="loading"
                 :disabled="data.role == null"
                 @click="
@@ -172,24 +171,22 @@
                   label="Confirm Password"
                   @click:append="show_password2 = !show_password2"
                 ></v-text-field>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="flex gap-3">
                   <v-btn
                     text
                     @click="cancel"
                     outlined
                     height="56"
-                    block
-                    class="text-cap"
+                    class="capitalize !flex-1"
                     >cancel</v-btn
                   >
                   <v-btn
                     color="primary"
                     height="56"
-                    block
                     :loading="loading"
                     type="submit"
                     :disabled="data.email == ''"
-                    class="text-H1"
+                    class="!font-bold !flex-1"
                     >Create account</v-btn
                   >
                 </div>
