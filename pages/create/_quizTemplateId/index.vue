@@ -590,7 +590,7 @@ export default {
       // let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')
       // let yyyy = dateCreated.getFullYear()
       // dateCreated = mm + '/' + dd + '/' + yyyy
-      dateCreated = dateCreated.toLocaleString('en-GB')
+      dateCreated = dateCreated.toLocaleString('en-GB', { timeZone: 'UTC' })
 
       let teacher = structuredClone(this.$store.getters.user)
       teacher = {

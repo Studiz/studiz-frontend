@@ -234,6 +234,14 @@ export default {
         this.showTooltip = false
       }, 2000)
     },
+    randomItems() {
+      console.log(this.totalQuestion)
+      StudentService.randomItems(Math.floor(this.totalQuestion / 5)).then(
+        (response) => {
+          console.log(response.data)
+        }
+      )
+    },
   },
   computed: {
     userRole() {
@@ -326,6 +334,7 @@ export default {
             type: 'success',
             message: 'Joined',
           })
+          this.randomItems()
         })
         .catch((err) => {
           if (err.response.status === 400) {

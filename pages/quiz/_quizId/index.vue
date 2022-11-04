@@ -7,28 +7,14 @@
   >
     <the-count-down v-if="currentStatus === 'countdown'" />
 
-    <div
-      v-if="currentStatus === 'introQuestion'"
-      class="h-[calc(100vh-calc(24px+60px))] flex items-center"
-    >
-      <base-question-text
-        :question="renderQuestion.question"
-        :key="currentStatus"
-        class="w-full text-center"
-      >
-        <div
-          id="question-timer"
-          class="absolute bottom-0 left-0 h-1 secondary transition-all ease-linear rounded-r-full opacity-100"
-          :class="
-            isTimerToShowQuestion !== null
-              ? isTimerToShowQuestion
-                ? 'w-full'
-                : 'w-0'
-              : 'w-full'
-          "
-          :style="{ 'transition-duration': '5000ms' }"
-        ></div
-      ></base-question-text>
+    <div v-if="currentStatus === 'introQuestion'">
+      <the-intro-question
+        :questionText="renderQuestion.question"
+        :questionType="renderQuestion.type"
+        :questionLimitTime="renderQuestion.time"
+        :isTimerToShowQuestion="isTimerToShowQuestion"
+        :introQuestionTime="introQuestionTime"
+      />
     </div>
 
     <div
@@ -107,6 +93,7 @@ import BaseQuestionLayoutSort from '~/components/quiz/BaseQuestionLayoutSort.vue
 import BaseQuestionLayoutTrueFalse from '~/components/quiz/BaseQuestionLayoutTrueFalse.vue'
 import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
+import TheIntroQuestion from '~/components/quiz/TheIntroQuestion.vue'
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
 import TheWaiting from '~/components/quiz/TheWaiting.vue'
 import layoutQuiz from '~/layouts/layoutQuiz.vue'
@@ -124,6 +111,7 @@ export default {
     BaseQuestionLayoutTrueFalse,
     BaseQuestionLayoutPoll,
     BaseQuestionLayoutSort,
+    TheIntroQuestion,
   },
   layout: 'layoutFree',
   head() {
@@ -180,7 +168,7 @@ export default {
           ],
         },
         question: 'Look at the shaded model. Which number sentence is true?',
-        type: 'sort',
+        type: 'single',
       },
       question: {},
       userSelected: null,
@@ -189,6 +177,7 @@ export default {
       time: null,
       timeInterval: null,
       timeAnswer: 0,
+      introQuestionTime: 5000,
       isTimerToShowQuestion: null,
       membersInClass: [],
       numStudentAnswer: 0,
@@ -348,6 +337,10 @@ export default {
     if (this.$route.params.quizId !== 'quiztest') {
       this.prepareQuestion = this.$route.params.questionData
     }
+
+    // this.currentStatus = 'introQuestion'
+    // this.question = this.prepareQuestion
+
     if (!this.prepareQuestion) {
       this.$store.commit('TOGGLE_LOADING', false)
       this.$store.commit('TOGGLE_ALERT', {
@@ -357,7 +350,6 @@ export default {
       this.$router.push('/')
     }
     this.countDownTree()
-    // this.currentStatus = 'introQuestion'
   },
 }
 </script>
