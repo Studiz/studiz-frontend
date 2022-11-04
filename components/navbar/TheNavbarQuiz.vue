@@ -78,7 +78,7 @@
       ></div>
     </v-app-bar>
 
-    <the-items-inventory v-if="isLeaderBoardStatus || isRouteLobby" />
+    <the-items-inventory v-if="(isLeaderBoardStatus || isRouteLobby) && userRole == 'STUDENT'"/>
   </div>
 </template>
 
