@@ -20,9 +20,9 @@
             v-for="(item, i) in pickedItemList"
             :key="`${i}-${item}`"
             :isShowName="false"
-            :description="item.description"
-            :icon="item.icon"
-            :name="item.name"
+            :description="item?.description"
+            :icon="item?.icon"
+            :name="item?.name"
           />
         </div>
 
@@ -39,7 +39,6 @@
               x-large
               icon
               class="rounded-lg shadow-[inset_0px_4px_0px_#374151] bg-gray-300 dark:bg-gray-600"
-              v-if="pickedItemList.length == 0"
               @click="openDialog"
             >
               <v-icon class="dark:!text-gray-300">mdi-shuffle</v-icon>
@@ -64,6 +63,7 @@
             </v-toolbar>
 
             <div
+              :key="renderHaveItem"
               class="opacity-30 sm:opacity-100 transition-all absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-10 w-[110vw] sm:w-[100%] z-0 pl-2"
             >
               <lottie-player
@@ -78,9 +78,9 @@
               <base-item-btn
                 v-for="(item, i) in pickedItemList"
                 :key="`${i}-${item}`"
-                :description="item.description"
-                :icon="item.icon"
-                :name="item.name"
+                :description="item?.description"
+                :icon="item?.icon"
+                :name="item?.name"
                 :isBtnLight="true"
               />
             </div>
@@ -93,6 +93,7 @@
 
 <script>
 import BaseItemBtn from './BaseItemBtn.vue'
+import StudentService from '~/services/StudentService'
 
 export default {
   components: { BaseItemBtn },
@@ -101,6 +102,15 @@ export default {
       type: Array,
       default: () => [],
     },
+  },
+  watch: {
+    // renderHaveItem() {
+    //   if (this.$route.name === 'lobby-quizId') {
+    //     this.timeOut = setTimeout(() => {
+    //       this.openDialog()
+    //     }, 2000)
+    //   }
+    // },
   },
   data() {
     return {
@@ -132,28 +142,34 @@ export default {
     openDialog() {
       clearTimeout(this.timeOut)
       this.dialogValue = true
+      this.$store.commit('SET_ITEMS', [])
+      this.pickedItemList = []
+      StudentService.randomItems(
+        Math.floor(this.$store.getters.quizData.totalQuestion / 5)
+      ).then((response) => {
+        this.$store.commit('SET_ITEMS', response.data)
+      })
       setTimeout(() => {
         this.pickItem()
       }, 1000)
-    },
-
-    rendomPickItem() {
-      const randomIndex = Math.floor(Math.random() * this.itemsList.length)
-      this.pickedItemList.push(this.itemsList[randomIndex])
-      this.$store.commit('setPickedItemList', this.itemsList[randomIndex])
     },
 
     pickItem() {
       let countItem = 1
 
       this.functionTimeToPickItem = setInterval(() => {
-        if (countItem === this.numberOfItemToHave) {
+        if (countItem === this.$store.getters.items.length || countItem === 8) {
           clearInterval(this.functionTimeToPickItem)
           this.functionTimeToPickItem = null
         }
-        this.rendomPickItem()
+        this.pickedItemList.push(this.$store.getters.items[countItem - 1])
         countItem++
       }, 500)
+    },
+  },
+  computed: {
+    renderHaveItem() {
+      return this.$store.getters.items.length
     },
   },
   mounted() {
