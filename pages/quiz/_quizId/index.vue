@@ -13,6 +13,7 @@
         :questionType="renderQuestion.type"
         :questionLimitTime="renderQuestion.time"
         :isTimerToShowQuestion="isTimerToShowQuestion"
+        :introQuestionTime="introQuestionTime"
       />
     </div>
 
@@ -176,6 +177,7 @@ export default {
       time: null,
       timeInterval: null,
       timeAnswer: 0,
+      introQuestionTime: 5000,
       isTimerToShowQuestion: null,
       membersInClass: [],
       numStudentAnswer: 0,
@@ -334,11 +336,20 @@ export default {
   created() {
     if (this.$route.params.quizId !== 'quiztest') {
       this.prepareQuestion = this.$route.params.questionData
-    } else {
-      this.currentStatus = 'introQuestion'
-      this.question = this.prepareQuestion
     }
-    // this.countDownTree()
+
+    // this.currentStatus = 'introQuestion'
+    // this.question = this.prepareQuestion
+
+    if (!this.prepareQuestion) {
+      this.$store.commit('TOGGLE_LOADING', false)
+      this.$store.commit('TOGGLE_ALERT', {
+        type: 'info',
+        message: 'You have left the quiz.',
+      })
+      this.$router.push('/')
+    }
+    this.countDownTree()
   },
 }
 </script>

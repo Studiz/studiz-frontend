@@ -24,7 +24,7 @@
               : 'w-0'
             : 'w-full'
         "
-        :style="{ 'transition-duration': '5000ms' }"
+        :style="{ 'transition-duration': introQuestionTime + 'ms' }"
       />
     </base-question-text>
 
@@ -53,6 +53,10 @@ export default {
     isTimerToShowQuestion: {
       type: Boolean | null,
       default: null,
+    },
+    introQuestionTime: {
+      type: Number,
+      required: true,
     },
   },
   data() {

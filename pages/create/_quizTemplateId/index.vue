@@ -468,30 +468,48 @@ export default {
           })
           .then(async (res) => {
             let questions = await this.$store.getters.quizTemplate.questions
-            for (let i = 0; i < questions.length; i++) {
-              const item = questions[i]
-              if (item.fileImage.name) {
-                await TeacherService.updateImageQuestion(
-                  this.$route.params.quizTemplateId,
-                  i,
-                  item.fileImage
-                ).then((res) => {
-                  if (res.status == 200) {
-                    if (i === questions.length - 1) {
-                      this.$store.commit('TOGGLE_ALERT', {
-                        type: 'success',
-                        message: 'Successfully updated quiz template.',
-                      })
-                      this.$store.commit('TOGGLE_LOADING', false)
-                      window.removeEventListener(
-                        'beforeunload',
-                        this.leavePageHandler
-                      )
-                      this.$router.push('/library')
+            let questionsForCheck = structuredClone(questions)
+            let hasImages = questionsForCheck.some(
+              (question) => question?.fileImage?.name
+            )
+            if (hasImages) {
+              for (let i = 0; i < questions.length; i++) {
+                questionsForCheck = questionsForCheck.slice(i + 1)
+                hasImages = questionsForCheck.some(
+                  (question) => question?.fileImage?.name
+                )
+                const item = questions[i]
+                if (item.fileImage.name) {
+                  await TeacherService.updateImageQuestion(
+                    this.$route.params.quizTemplateId,
+                    i,
+                    item.fileImage
+                  ).then((res) => {
+                    if (res.status == 200) {
+                      if (!hasImages) {
+                        this.$store.commit('TOGGLE_ALERT', {
+                          type: 'success',
+                          message: 'Successfully updated quiz template.',
+                        })
+                        this.$store.commit('TOGGLE_LOADING', false)
+                        window.removeEventListener(
+                          'beforeunload',
+                          this.leavePageHandler
+                        )
+                        this.$router.push('/library')
+                      }
                     }
-                  }
-                })
+                  })
+                }
               }
+            } else {
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Successfully updated quiz template.',
+              })
+              this.$store.commit('TOGGLE_LOADING', false)
+              window.removeEventListener('beforeunload', this.leavePageHandler)
+              this.$router.push('/library')
             }
             this.resetQuizTemplate()
           })
@@ -509,31 +527,50 @@ export default {
           })
           .then(async (res) => {
             let questions = await this.$store.getters.quizTemplate.questions
-            for (let i = 0; i < questions.length; i++) {
-              const item = questions[i]
-              if (item.fileImage) {
-                await TeacherService.updateImageQuestion(
-                  res.data.id,
-                  i,
-                  item.fileImage
-                ).then((res) => {
-                  if (res.status == 200) {
-                    if (i === questions.length - 1) {
-                      this.$store.commit('TOGGLE_ALERT', {
-                        type: 'success',
-                        message: 'Successfully created quiz template.',
-                      })
-                      this.$store.commit('TOGGLE_LOADING', false)
-                      window.removeEventListener(
-                        'beforeunload',
-                        this.leavePageHandler
-                      )
-                      this.$router.push('/library')
+            let questionsForCheck = structuredClone(questions)
+            let hasImages = questionsForCheck.some(
+              (question) => question?.fileImage?.name
+            )
+            if (hasImages) {
+              for (let i = 0; i < questions.length; i++) {
+                questionsForCheck = questionsForCheck.slice(i + 1)
+                hasImages = questionsForCheck.some(
+                  (question) => question?.fileImage?.name
+                )
+                const item = questions[i]
+                if (item.fileImage.name) {
+                  await TeacherService.updateImageQuestion(
+                    res.data.id,
+                    i,
+                    item.fileImage
+                  ).then((res) => {
+                    if (res.status == 200) {
+                      if (!hasImages) {
+                        this.$store.commit('TOGGLE_ALERT', {
+                          type: 'success',
+                          message: 'Successfully created quiz template.',
+                        })
+                        this.$store.commit('TOGGLE_LOADING', false)
+                        window.removeEventListener(
+                          'beforeunload',
+                          this.leavePageHandler
+                        )
+                        this.$router.push('/library')
+                      }
                     }
-                  }
-                })
+                  })
+                }
               }
+            } else {
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Successfully created quiz template.',
+              })
+              this.$store.commit('TOGGLE_LOADING', false)
+              window.removeEventListener('beforeunload', this.leavePageHandler)
+              this.$router.push('/library')
             }
+
             this.resetQuizTemplate()
           })
           .catch((err) => {
