@@ -1,7 +1,7 @@
 <template>
   <v-tooltip bottom class="wheel">
     <template v-slot:activator="{ on, attrs }">
-      <div v-bind="attrs" v-on="on" class="inline-flex flex-col gap-y-2 z-30">
+      <div v-bind="attrs" v-on="on" class="inline-flex flex-col gap-y-2 z-10">
         <v-btn
           :height="52"
           :width="52"

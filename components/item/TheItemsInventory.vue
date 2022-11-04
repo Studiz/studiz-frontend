@@ -73,7 +73,7 @@
             </div>
 
             <div
-              class="flex gap-3 flex-wrap justify-center items-center content-center w-[320px] !mx-auto h-full min-h-[320px] sm:h-[530px]"
+              class="flex gap-3 flex-wrap justify-center items-center content-center w-[320px] !mx-auto h-full min-h-[320px] sm:h-[530px] p-3"
             >
               <base-item-btn
                 v-for="(item, i) in pickedItemList"
