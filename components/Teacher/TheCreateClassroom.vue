@@ -12,7 +12,11 @@
     </template>
     <v-card>
       <v-card-title class="px-3 px-md-5">
-        <span class="break-normal text-H1">Create classroom</span>
+        <span class="break-normal text-H1">
+          <span v-if="idModeEdit == true">Edit </span>
+          <span v-else>Create </span>
+          classroom</span
+        >
       </v-card-title>
       <v-form
         ref="form"
@@ -64,7 +68,15 @@
           <v-btn text color="primary" class="!capitalize" @click="close"
             >Close</v-btn
           >
-          <v-btn text type="submit" color="primary" :loading="loading"
+          <v-btn
+            v-if="idModeEdit == true"
+            text
+            color="primary"
+            :loading="loading"
+            @click="editClassroom"
+            >edit</v-btn
+          >
+          <v-btn v-else text type="submit" color="primary" :loading="loading"
             >create</v-btn
           >
         </v-card-actions>
@@ -76,6 +88,24 @@
 import UserService from '~/services/UserService'
 import TeacherService from '../../services/TeacherService'
 export default {
+  props: {
+    idModeEdit: {
+      type: Boolean,
+      default: false,
+    },
+    classroomObj: {
+      type: Object,
+    },
+  },
+  watch: {
+    idModeEdit: {
+      handler: function (val) {
+        this.dialog = val
+        this.mappingData()
+      },
+      immediate: true,
+    },
+  },
   data() {
     return {
       dialog: false,
@@ -105,7 +135,7 @@ export default {
   },
   methods: {
     async createClassroom() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && !this.idModeEdit) {
         let data = Object.assign({}, this.data)
         data.teacherId = this.$store.getters.userId
         this.loading = true
@@ -140,11 +170,25 @@ export default {
           })
       }
     },
+
+    editClassroom() {
+      if (this.$refs.form.validate() && this.idModeEdit) {
+        console.log('edit')
+        // edit classroom here
+      }
+    },
     close() {
       this.dialog = false
       this.data.name = ''
       this.data.description = ''
       this.data.relevantSubjects = ''
+      this.$emit('close-dialog')
+    },
+    mappingData() {
+      this.data.name = this.classroomObj.name
+      this.data.description = this.classroomObj.description
+      this.data.relevantSubjects = this.classroomObj.relevantSubjects
+      this.data.color = this.classroomObj.color
     },
   },
 }

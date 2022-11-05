@@ -14,7 +14,12 @@
         >join classroom</v-btn
       >
 
-      <the-create-classroom v-else />
+      <the-create-classroom
+        :idModeEdit="idModeEditClassroom"
+        :classroomObj="classroomObjForEdit"
+        @close-dialog="idModeEditClassroom = false"
+        v-else
+      />
     </div>
     <v-expand-transition>
       <v-card
@@ -43,44 +48,107 @@
     <v-divider class="my-5" />
 
     <div
-      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
+      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 auto-rows-fr auto-cols-fr"
     >
-      <nuxt-link
+      <div
+        class="w-full h-full bg-gradient-to-r from-cyan-500 to-blue-500 white--text rounded-lg overflow-hidden p-4 relative"
         v-for="classroom in classRoomList"
         :key="classroom.id"
-        :to="{
-          name: 'index-classroom-classroomsid-index-quiz',
-          params: { classroomsid: classroom.id },
-        }"
       >
-        <v-card
-          flat
-          rounded="lg"
-          class="bg-gradient-to-r from-cyan-500 to-blue-500 white--text"
+        <nuxt-link
+          class="focus:outline-none"
+          :to="{
+            name: 'index-classroom-classroomsid-index-quiz',
+            params: { classroomsid: classroom.id },
+          }"
         >
-          <v-card-title class="w-full">
-            <div class="text-h5 w-10/12 truncate">
-              <span class="font-bold white--text">{{ classroom.name }}</span>
+          <div class="flex flex-col gap-2">
+            <div class="w-full">
+              <div class="text-h5 w-10/12 truncate">
+                <span class="font-bold white--text">{{ classroom.name }}</span>
+              </div>
             </div>
-          </v-card-title>
-          <v-card-subtitle class="h-24 overflow-auto scrollbar white--text">
-            {{ classroom.description }}
-          </v-card-subtitle>
-          <v-card-text
-            class="flex justify-between items-start white--text pt-4"
-            v-if="userRole == 'STUDENT'"
-          >
-            <span class="whitespace-nowrap">
-              {{ classroom.teacher.firstName }}
-              {{ classroom.teacher.lastName }}
-            </span>
-            <v-avatar class="-m-5 mr-1 white--text">
-              <v-icon x-large color="white">mdi-account-circle</v-icon>
-            </v-avatar>
-          </v-card-text>
-        </v-card>
-      </nuxt-link>
+
+            <div
+              class="line-clamp-2 md:line-clamp-none h-12 md:h-24 md:overflow-auto scrollbar white--text"
+            >
+              {{ classroom.description }}
+            </div>
+
+            <div
+              class="flex justify-between items-start white--text gap-x-3"
+              v-if="userRole == 'STUDENT'"
+            >
+              <span class="whitespace-normal self-center leading-none truncate">
+                {{ classroom.teacher.firstName }}
+                {{ classroom.teacher.lastName }}
+              </span>
+
+              <v-avatar size="40px" class="!flex-none">
+                <v-img
+                  v-if="classroom.teacher.imageUrl"
+                  :src="classroom.teacher.imageUrl"
+                />
+                <v-icon v-else large color="white">mdi-account-circle</v-icon>
+              </v-avatar>
+            </div>
+          </div>
+        </nuxt-link>
+        <div
+          class="white--text absolute top-3 right-1"
+          v-if="userRole == 'TEACHER'"
+        >
+          <v-menu offset-y left transition="slide-y-transition" color="primary">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn dark v-bind="attrs" v-on="on" icon @click.stop="">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item @click="openDialogEditClassroom(classroom)">
+                Edit
+              </v-list-item>
+              <v-list-item
+                @click="openDialogDeleteClassroom(classroom)"
+                class="!text-red-500"
+              >
+                Delete
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+      </div>
     </div>
+
+    <v-dialog
+      v-model="dialogDelete"
+      width="500"
+      @click:outside="dialogDelete = false"
+    >
+      <v-card>
+        <v-card-title>
+          <span class="break-normal"
+            >Delete classroom "{{ classroomObjForDelete.name }}"</span
+          >
+        </v-card-title>
+        <v-card-text
+          >Are you sure you want to delete this classroom?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            class="!capitalize"
+            color="primary"
+            @click="dialogDelete = false"
+            >cancel</v-btn
+          >
+          <v-btn text type="submit" color="error" @click="deleteClassroom"
+            >delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -104,6 +172,10 @@ export default {
         { color1: '', color2: '' },
         { color1: '', color2: '' },
       ],
+      idModeEditClassroom: false,
+      classroomObjForEdit: {},
+      dialogDelete: false,
+      classroomObjForDelete: {},
     }
   },
   methods: {
@@ -134,13 +206,25 @@ export default {
           })
         })
     },
+    openDialogEditClassroom(classroomObj) {
+      this.idModeEditClassroom = true
+      this.classroomObjForEdit = classroomObj
+    },
+    openDialogDeleteClassroom(classroomObj) {
+      console.log(classroomObj)
+      this.dialogDelete = true
+      this.classroomObjForDelete = classroomObj
+    },
+    deleteClassroom() {
+      console.log('delete classroom')
+    },
   },
   computed: {
     classRoomList() {
       return this.$store.getters.classRooms
     },
     userRole() {
-      return this.$store.getters.user ? this.$store.getters.user.role : ''
+      return this.$store.getters.userRole ? this.$store.getters.userRole : ''
     },
   },
 }
