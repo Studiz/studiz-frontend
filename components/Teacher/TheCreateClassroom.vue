@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px">
+  <v-dialog v-model="dialog" persistent max-width="600px" :key="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         color="primary"
@@ -102,6 +102,14 @@ export default {
       handler: function (val) {
         this.dialog = val
         this.mappingData()
+        if (val == false) {
+          this.data = {
+            name: '',
+            description: '',
+            relevantSubjects: '',
+            color: '',
+          }
+        }
       },
       immediate: true,
     },
@@ -177,11 +185,20 @@ export default {
         // edit classroom here
       }
     },
+    resetData() {
+      this.data = {
+        name: '',
+        description: '',
+        relevantSubjects: '',
+        color: '',
+      }
+    },
     close() {
       this.dialog = false
       this.data.name = ''
       this.data.description = ''
       this.data.relevantSubjects = ''
+      this.data.color = ''
       this.$emit('close-dialog')
     },
     mappingData() {
