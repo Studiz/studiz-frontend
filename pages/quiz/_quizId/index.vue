@@ -189,6 +189,11 @@ export default {
         this.timerProgress()
       }
     },
+    renderItem(newVal) {
+      if (newVal?.code.includes('T')) {
+        this.question.time += newVal.value
+      }
+    },
   },
   methods: {
     changeStatus(stutus) {
@@ -243,13 +248,15 @@ export default {
       this.time = this.question.time
     },
     selectChoice(data) {
-      console.log(data)
       let answer = {}
       clearInterval(this.timeInterval)
       answer.answer = data
       answer.quizId = this.$route.params.quizId
       answer.timeAnswer = this.timeAnswer
       answer.memberId = localStorage.getItem('memberId')
+      if (this.$store.getters.useItem) {
+        answer.item = this.$store.getters.useItem
+      }
 
       socket.emit('select-choice', answer)
       this.userSelected = data
@@ -292,6 +299,9 @@ export default {
     renderQuestion() {
       return this.question
     },
+    renderItem() {
+      return this.$store.getters.useItem
+    },
   },
   mounted() {
     socket.on('check-answer', (data) => {
@@ -313,6 +323,7 @@ export default {
 
     socket.on('show-next-question', (data) => {
       this.$store.commit('setCurrentPage', data.currentQuestion)
+      this.$store.commit('RESET_ITEM_USED')
       this.$nuxt.$emit('remove-time-interval')
       this.currentStatus = 'countdown'
       this.countDownTree()

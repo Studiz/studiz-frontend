@@ -13,16 +13,17 @@
         </v-btn> -->
 
         <div
-          v-if="pickedItemList.length > 0"
+          v-if="$store.getters.items.length > 0 && (isQuiz || isLobby)"
           class="inline-flex gap-2 flex-wrap justify-center"
         >
           <base-item-btn
-            v-for="(item, i) in pickedItemList"
+            v-for="(item, i) in $store.getters.items"
             :key="`${i}-${item}`"
             :isShowName="false"
             :description="item?.description"
             :icon="item?.icon"
             :name="item?.name"
+            @use-item="useItem(item, i)"
           />
         </div>
 
@@ -148,6 +149,7 @@ export default {
   },
   methods: {
     openDialog() {
+      this.$emit('random-items')
       clearTimeout(this.timeOut)
       this.dialogValue = true
       this.$store.commit('SET_ITEMS', [])
@@ -174,14 +176,27 @@ export default {
         countItem++
       }, 500)
     },
+    useItem(item, index) {
+      this.$store.commit('USE_ITEM', index)
+      // this.$emit('use-item', item)
+    },
   },
   computed: {
     renderHaveItem() {
       return this.$store.getters.items.length
     },
+    isLobby() {
+      return this.$route.name === 'lobby-quizId'
+    },
+    isQuiz() {
+      return this.$route.name === 'quiz-quizId'
+    },
+    canUseItem() {
+      return !this.$store.getters.useItem
+    },
   },
   mounted() {
-    if (this.$route.name === 'lobby-quizId') {
+    if (this.isLobby) {
       this.timeOut = setTimeout(() => {
         this.openDialog()
       }, 2000)

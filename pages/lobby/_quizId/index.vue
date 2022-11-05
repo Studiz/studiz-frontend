@@ -4,6 +4,7 @@
     @leave-room="leaveRoom"
     @start-game="startGame"
     @end-game="endGame"
+    @random-items="collectItems"
   >
     <div class="space-y-3 xl:space-y-5">
       <v-card
@@ -234,14 +235,6 @@ export default {
         this.showTooltip = false
       }, 2000)
     },
-    randomItems() {
-      console.log(this.totalQuestion)
-      StudentService.randomItems(Math.floor(this.totalQuestion / 5)).then(
-        (response) => {
-          console.log(response.data)
-        }
-      )
-    },
   },
   computed: {
     userRole() {
@@ -266,7 +259,6 @@ export default {
     // }
   },
   mounted() {
-    console.log(this.$route.name)
     socket.on('joined', (data) => {
       this.members = data.map((member) => member.user)
     })
