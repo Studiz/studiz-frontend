@@ -28,7 +28,10 @@
       />
     </base-question-text>
 
-    <the-items-inventory :propPickedItemList="renderPickedItemList" />
+    <the-items-inventory
+      v-if="$store.getters.userRole == 'STUDENT'"
+      :propPickedItemList="renderPickedItemList"
+    />
   </div>
 </template>
 
@@ -129,7 +132,7 @@ export default {
   },
   computed: {
     renderPickedItemList() {
-      return this.$store.getters.pickedItemList
+      return this.$store.getters.items
     },
     renderQuestionType() {
       return this.listQuizType.find((item) => item.value === this.questionType)

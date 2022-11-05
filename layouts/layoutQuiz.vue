@@ -9,6 +9,7 @@
       @next-question="$emit('next-question', $event)"
       @end-game="$emit('end-game', $event)"
       @time-expired="$emit('time-expired', $event)"
+      @random-items="$emit('random-items', $event)"
     />
     <v-main>
       <v-container fluid>

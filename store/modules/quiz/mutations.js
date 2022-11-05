@@ -22,4 +22,8 @@ export default {
   setPickedItemList(state, payload) {
     state.pickedItemList.push(payload)
   },
+
+  useItemAddTime(state, payload) {
+    state.quizData = payload
+  }
 }

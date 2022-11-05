@@ -78,7 +78,10 @@
       ></div>
     </v-app-bar>
 
-    <the-items-inventory v-if="(isLeaderBoardStatus || isRouteLobby) && userRole == 'STUDENT'"/>
+    <the-items-inventory
+      v-if="isRouteLobby && userRole == 'STUDENT'"
+      @random-items="$emit('random-items', $event)"
+    />
   </div>
 </template>
 

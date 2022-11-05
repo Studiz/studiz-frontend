@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     pickItem() {
-      this.$emit('pick-item')
+      this.$emit('use-item')
     },
   },
   computed: {
