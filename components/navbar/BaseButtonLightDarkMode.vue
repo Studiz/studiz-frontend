@@ -2,7 +2,7 @@
   <v-menu offset-y left color="primary" transition="slide-y-transition">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" id="theme" v-bind="attrs" rounded icon v-on="on">
-        <v-icon>{{icon}}</v-icon>
+        <v-icon>{{ icon }}</v-icon>
       </v-btn>
     </template>
     <v-list>
@@ -10,8 +10,6 @@
         v-for="mode in ThemeMode"
         :key="mode.mode"
         @click="themeMode(mode.methods)"
-        hide-details
-        inset
       >
         <v-icon left>{{ mode.icon }}</v-icon>
         {{ mode.title }}
