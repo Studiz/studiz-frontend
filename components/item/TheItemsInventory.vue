@@ -1,6 +1,9 @@
 <template>
   <v-footer fixed color="transparent" padless>
-    <div class="primary_shade p-2 rounded-lg w-fit mx-auto my-5 space-y-2" v-if="$store.getters.canUseItem">
+    <div
+      class="primary_shade p-2 rounded-lg w-fit mx-auto my-5 space-y-2"
+      v-if="$store.getters.canUseItem && $store.getters.items.length > 0"
+    >
       <div>Item</div>
       <div class="inline-flex gap-2 w-full justify-center">
         <!-- <v-btn
@@ -13,11 +16,26 @@
         </v-btn> -->
 
         <div
-          v-if="$store.getters.items.length > 0 && (isQuiz || isLobby)"
+          v-if="$store.getters.items.length > 0 && isQuiz"
           class="inline-flex gap-2 flex-wrap justify-center"
         >
           <base-item-btn
             v-for="(item, i) in $store.getters.items"
+            :key="`${i}-${item}`"
+            :isShowName="false"
+            :description="item?.description"
+            :icon="item?.icon"
+            :name="item?.name"
+            :color="item?.color"
+            @use-item="useItem(item, i)"
+          />
+        </div>
+        <div
+          v-if="$store.getters.items.length > 0 && isLobby"
+          class="inline-flex gap-2 flex-wrap justify-center"
+        >
+          <base-item-btn
+            v-for="(item, i) in pickedItemList"
             :key="`${i}-${item}`"
             :isShowName="false"
             :description="item?.description"
