@@ -12,7 +12,7 @@
           "
           @click="pickItem()"
         >
-          <v-icon size="40" class="!text-green-400">{{ icon }}</v-icon>
+          <v-icon size="40" :color="color">{{ icon }}</v-icon>
         </v-btn>
         <div
           v-if="isShowName"
@@ -44,6 +44,10 @@ export default {
     description: {
       type: String,
       default: '',
+    },
+    color: {
+      type: String,
+      default: 'green',
     },
     isShowName: {
       type: Boolean,

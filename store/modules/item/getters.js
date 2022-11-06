@@ -5,4 +5,7 @@ export default {
   useItem(state) {
     return state.useItem
   },
+  canUseItem(state) {
+    return state.useItem ? false : true
+  },
 }

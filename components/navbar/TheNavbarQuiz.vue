@@ -37,6 +37,20 @@
           v-show="isQuestionStatus || isLeaderBoardStatus"
         />
 
+        <div
+          v-if="$store.getters.useItem"
+          class="absolute bottom-0.5 left-1/2 -translate-x-1/2 flex items-center"
+        >
+          <v-icon size="10" :color="$store.getters.useItem?.color">{{
+            $store.getters.useItem?.icon
+          }}</v-icon>
+          <span
+            class="text-[10px] font-medium"
+            :class="`text-[${$store.getters.useItem?.color}]`"
+            >{{ $store.getters.useItem?.name }}</span
+          >
+        </div>
+
         <v-spacer />
 
         <div v-if="userRole == 'TEACHER'" class="inline-flex gap-x-2">
