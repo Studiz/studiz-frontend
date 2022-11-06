@@ -1,6 +1,6 @@
 <template>
   <v-footer fixed color="transparent" padless>
-    <div class="primary_shade p-2 rounded-lg w-fit mx-auto my-5 space-y-2">
+    <div class="primary_shade p-2 rounded-lg w-fit mx-auto my-5 space-y-2" v-if="$store.getters.canUseItem">
       <div>Item</div>
       <div class="inline-flex gap-2 w-full justify-center">
         <!-- <v-btn
@@ -23,6 +23,7 @@
             :description="item?.description"
             :icon="item?.icon"
             :name="item?.name"
+            :color="item?.color"
             @use-item="useItem(item, i)"
           />
         </div>
@@ -40,6 +41,7 @@
               x-large
               icon
               class="rounded-lg shadow-[inset_0px_4px_0px_#374151] bg-gray-300 dark:bg-gray-600"
+              v-if="isLobby"
               @click="openDialog"
             >
               <v-icon class="dark:!text-gray-300">mdi-shuffle</v-icon>
@@ -90,6 +92,7 @@
                 :description="item?.description"
                 :icon="item?.icon"
                 :name="item?.name"
+                :color="item?.color"
                 :isBtnLight="true"
               />
             </div>

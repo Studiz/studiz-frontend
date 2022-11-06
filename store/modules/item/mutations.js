@@ -5,7 +5,6 @@ export default {
 
   USE_ITEM(state, index) {
     state.useItem = state.items[index]
-    console.log(state.useItem );
     state.items.splice(index, 1)
   },
 
