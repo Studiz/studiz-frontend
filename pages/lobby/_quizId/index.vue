@@ -4,7 +4,6 @@
     @leave-room="leaveRoom"
     @start-game="startGame"
     @end-game="endGame"
-    @random-items="collectItems"
   >
     <div class="space-y-3 xl:space-y-5">
       <v-card
