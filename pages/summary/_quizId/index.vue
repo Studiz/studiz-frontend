@@ -125,7 +125,7 @@
       <v-card-text v-if="userRole == 'STUDENT'"
         >Number of correct answers
         {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
-          summaryData?.quizData?.totalQuestion
+          numberQuestions
         }}</v-card-text
       >
     </v-card>
@@ -208,13 +208,18 @@ export default {
     },
     numberInCorrectAnswers() {
       return this.student?.quizData?.filter((quiz) => {
-        return !quiz.studentAnswer
+        return !quiz.studentAnswer && quiz.type !== 'poll'
       }).length
     },
     isWinner() {
       return this.$route.params.winnerId
         ? this.$route.params.winnerId === localStorage.getItem('memberId')
         : false
+    },
+    numberQuestions() {
+      return this.summaryData?.quizData?.questions.filter((question) => {
+        return question.type !== 'poll'
+      }).length
     },
   },
   destroyed() {
