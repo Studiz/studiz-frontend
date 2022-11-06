@@ -62,6 +62,21 @@
             outlined
             chips
           ></v-autocomplete>
+
+          <v-radio-group v-model="data.color">
+            <v-radio
+              off-icon=""
+              on-icon="mdi-checkbox-marked-circle"
+              v-for="color in colors"
+              :key="color.label"
+              color="white"
+              :value="color.label"
+              :class="color.classColor"
+              class="bg-gradient-to-r"
+            >
+            </v-radio>
+            <!-- :label="color.label" -->
+          </v-radio-group>
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -107,7 +122,7 @@ export default {
             name: '',
             description: '',
             relevantSubjects: '',
-            color: '',
+            color: 'light blue',
           }
         }
       },
@@ -122,7 +137,7 @@ export default {
         name: '',
         description: '',
         relevantSubjects: '',
-        color: '',
+        color: 'light blue',
       },
       rules: {
         required: (v) => !!v || 'Required.',
@@ -139,6 +154,80 @@ export default {
             'Description must be less than 50 characters',
         ],
       },
+      colors: [
+        {
+          id: 'color1',
+          label: 'red',
+          hexCode: 'f44336',
+          classColor: 'bg-red-600',
+        },
+        {
+          id: 'color2',
+          label: 'pink',
+          hexCode: 'e91e63',
+          classColor: 'bg-pink-600',
+        },
+        {
+          id: 'color3',
+          label: 'purple',
+          hexCode: '9c27b0',
+          classColor: 'bg-purple-600',
+        },
+        {
+          id: 'color5',
+          label: 'indigo',
+          hexCode: '3f51b5',
+          classColor: 'bg-indigo-600',
+        },
+        {
+          id: 'color6',
+          label: 'blue',
+          hexCode: '2196f3',
+          classColor: 'bg-blue-600',
+        },
+        {
+          id: 'color7',
+          label: 'light blue',
+          hexCode: '03a9f4',
+          classColor: ' from-cyan-500 to-blue-500',
+        },
+        {
+          id: 'color8',
+          label: 'cyan',
+          hexCode: '00bcd4',
+          classColor: 'bg-cyan-600',
+        },
+        {
+          id: 'color9',
+          label: 'teal',
+          hexCode: '009688',
+          classColor: 'bg-teal-600',
+        },
+        {
+          id: 'color10',
+          label: 'green',
+          hexCode: '4caf50',
+          classColor: 'bg-green-600',
+        },
+        {
+          id: 'color13',
+          label: 'yellow',
+          hexCode: 'ffeb3b',
+          classColor: 'bg-yellow-600',
+        },
+        {
+          id: 'color14',
+          label: 'amber',
+          hexCode: 'ffc107',
+          classColor: 'bg-amber-600',
+        },
+        {
+          id: 'color15',
+          label: 'orange',
+          hexCode: 'ff9800',
+          classColor: 'bg-orange-600',
+        },
+      ],
     }
   },
   methods: {
@@ -211,4 +300,17 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+:deep(.v-input--selection-controls__ripple) {
+  @apply sm:w-[82px] sm:left-[-36px] rounded-md;
+}
+:deep(.v-input--selection-controls__input) {
+  @apply !mx-0;
+}
+:deep(.v-radio) {
+  @apply flex-col justify-center items-center w-[41px] sm:w-[100px] h-[41px] !m-0 rounded-md;
+}
+:deep(.v-input--radio-group__input) {
+  @apply !flex-row flex-wrap justify-center items-center gap-3;
+}
+</style>
