@@ -144,6 +144,7 @@ export default {
       description:
         'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
       start_url: '/join',
+      id: '/join',
     },
   },
 }
