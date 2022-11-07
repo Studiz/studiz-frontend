@@ -165,6 +165,10 @@ export default {
       return this.$store.getters.user ? false : true
     },
   },
+  mounted() {
+    localStorage.removeItem('memberId')
+    localStorage.removeItem('displayName')
+  },
 }
 </script>
 
