@@ -36,10 +36,7 @@
         class="p-3 background ring-1 ring-black ring-opacity-10 rounded-lg leading-relaxed drop-shadow-sm"
       >
         <span :class="isShowDiscription ? '' : 'line-clamp-2 max-h-14'">
-          {{ classroom ? classroom.description : '' }} Lorem ipsum, dolor sit
-          amet consectetur adipisicing elit. Quidem expedita minus ea distinctio
-          modi, odio provident a esse nihil mollitia suscipit repellat, eligendi
-          debitis ullam beatae, ab deserunt. Et, iure?
+          {{ classroom ? classroom.description : '' }}
         </span>
       </div>
     </div>
