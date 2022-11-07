@@ -165,7 +165,7 @@ export default {
           id: 'color2',
           label: 'pink',
           hexCode: 'e91e63',
-          classColor: 'bg-pink-600',
+          classColor: 'from-pink-200 to-indigo-400',
         },
         {
           id: 'color3',
