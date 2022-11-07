@@ -25,6 +25,19 @@
 
     <div class="flex flex-col justify-start ml-2">
       <div class="text-lg">{{ index + 1 }}. {{ question?.question }}</div>
+      <div
+        v-if="question.item"
+        class="absolute top-7 right-2 flex items-center"
+      >
+        <v-icon size="10" :color="question.item.color">{{
+          question.item.icon
+        }}</v-icon>
+        <span
+          class="text-[10px] font-medium"
+          :class="`!text-[${question?.item?.color}]`"
+          >{{ question.item.name }}</span
+        >
+      </div>
 
       <v-divider class="my-2" />
       <div
@@ -62,7 +75,7 @@
 export default {
   props: {
     question: {
-      type: Object
+      type: Object,
     },
     index: {
       type: Number,
