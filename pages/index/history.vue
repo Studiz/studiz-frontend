@@ -129,38 +129,7 @@ export default {
         },
       ],
 
-      itemQuizHistory: [
-        // {
-        //   id: 1,
-        //   image: 'https://picsum.photos/200/300',
-        //   quizName: 'Quiz 1',
-        //   class: 'Class 1',
-        //   date: '2021-05-01 12:00:00',
-        //   score: 10,
-        //   avgScore: 3,
-        //   total: 20,
-        // },
-        // {
-        //   id: 2,
-        //   image: 'https://picsum.photos/200/300',
-        //   quizName: 'Quiz 2',
-        //   class: 'Class 1',
-        //   date: '2021-05-02 12:00:00',
-        //   score: 15,
-        //   avgScore: 8,
-        //   total: 20,
-        // },
-        // {
-        //   id: 3,
-        //   image: 'https://picsum.photos/200/300',
-        //   quizName: 'Quiz 3',
-        //   class: 'Class 2',
-        //   date: '2021-05-03 12:00:00',
-        //   score: 20,
-        //   avgScore: 20,
-        //   total: 20,
-        // },
-      ],
+      itemQuizHistory: [],
     }
   },
   methods: {
@@ -197,6 +166,7 @@ export default {
       if (this.$store.getters.userRole === 'TEACHER') {
         TeacherService.getQuizHistoryByTeacherId(localStorage.getItem('userId'))
           .then((res) => {
+            this.isloading = false
             this.itemQuizHistory = res.data.map((item) => {
               let sumAnswers = 0
               let memberInClass = item.members.length
@@ -213,7 +183,6 @@ export default {
               item.quizData.startAtAgo = this.timeToWords(
                 this.formatDateForParse(item.quizData.startAt)
               )
-              this.isloading = false
               item.quizData.quizId = item.quizId
               return item.quizData
             })
@@ -225,6 +194,7 @@ export default {
       } else {
         StudentService.getQuizHistoryByStudentUid(localStorage.getItem('uid'))
           .then((res) => {
+            this.isloading = false
             this.itemQuizHistory = res.data.map((item) => {
               item.quizData.startAt = item.quizData.startAt
               item.quizData.startAtTimestamp = Date.parse(
@@ -239,7 +209,6 @@ export default {
                 })
               ].quizData.filter((question) => question.studentAnswer).length
               item.quizData.quizId = item.quizId
-              this.isloading = false
               return item.quizData
             })
           })

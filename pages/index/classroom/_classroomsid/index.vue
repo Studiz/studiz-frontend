@@ -31,11 +31,17 @@
           classroom ? classroom.pinCode : ''
         }}</span>
       </p>
-      <p
+      <div
+        @click="isShowDiscription = !isShowDiscription"
         class="p-3 background ring-1 ring-black ring-opacity-10 rounded-lg leading-relaxed drop-shadow-sm"
       >
-        {{ classroom ? classroom.description : '' }}
-      </p>
+        <span :class="isShowDiscription ? '' : 'line-clamp-2 max-h-14'">
+          {{ classroom ? classroom.description : '' }} Lorem ipsum, dolor sit
+          amet consectetur adipisicing elit. Quidem expedita minus ea distinctio
+          modi, odio provident a esse nihil mollitia suscipit repellat, eligendi
+          debitis ullam beatae, ab deserunt. Et, iure?
+        </span>
+      </div>
     </div>
     <div class="mb-4">
       <v-tabs grow background-color="transparent">
@@ -82,6 +88,7 @@ export default {
   data() {
     return {
       classroom: null,
+      isShowDiscription: false,
     }
   },
   methods: {

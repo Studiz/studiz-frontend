@@ -51,12 +51,12 @@
       class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 auto-rows-fr auto-cols-fr"
     >
       <div
-        class="w-full h-full bg-gradient-to-r from-cyan-500 to-blue-500 white--text rounded-lg overflow-hidden p-4 relative"
         v-for="classroom in classRoomList"
         :key="classroom.id"
+        class="flex relative hover:drop-shadow-lg"
       >
         <nuxt-link
-          class="focus:outline-none"
+          class="w-full h-full bg-gradient-to-r from-cyan-500 to-blue-500 white--text rounded-lg overflow-hidden p-4 transition-all"
           :to="{
             name: 'index-classroom-classroomsid-index-quiz',
             params: { classroomsid: classroom.id },

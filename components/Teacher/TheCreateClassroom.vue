@@ -31,14 +31,14 @@
             required
             v-model="data.name"
             :rules="rules.nameRules"
-            :counter="20"
+            :counter="30"
           ></v-text-field>
           <v-text-field
             label="Description"
             outlined
             v-model="data.description"
             :rules="rules.descriptionRules"
-            :counter="50"
+            :counter="100"
           ></v-text-field>
           <v-autocomplete
             :items="[
@@ -144,14 +144,14 @@ export default {
         nameRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 20) ||
-            'Classroom name must be less than 20 characters',
+            (v && v.length <= 30) ||
+            'Classroom name must be less than 30 characters',
         ],
         descriptionRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 50) ||
-            'Description must be less than 50 characters',
+            (v && v.length <= 100) ||
+            'Description must be less than 100 characters',
         ],
       },
       colors: [
