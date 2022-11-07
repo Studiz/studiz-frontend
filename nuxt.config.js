@@ -146,6 +146,7 @@ export default {
       id: '/join',
       start_url: '/join',
       background_color: '#0c8ce9',
+      scope: '/',
     },
   },
 }
