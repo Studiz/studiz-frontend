@@ -110,6 +110,12 @@ export default {
   head() {
     return {
       title: 'Join quiz',
+      meta: [
+        {
+          'http-equiv': 'Content-Security-Policy',
+          content: 'upgrade-insecure-requests',
+        },
+      ],
     }
   },
   data() {
