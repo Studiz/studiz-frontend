@@ -31,14 +31,14 @@
             required
             v-model="data.name"
             :rules="rules.nameRules"
-            :counter="20"
+            :counter="30"
           ></v-text-field>
           <v-text-field
             label="Description"
             outlined
             v-model="data.description"
             :rules="rules.descriptionRules"
-            :counter="50"
+            :counter="100"
           ></v-text-field>
           <v-autocomplete
             :items="[
@@ -63,14 +63,15 @@
             chips
           ></v-autocomplete>
 
-          <v-radio-group v-model="data.color">
+          <div>Theme colors</div>
+          <v-radio-group v-model="data.color" class="w-[500px] mx-auto">
             <v-radio
               off-icon=""
               on-icon="mdi-checkbox-marked-circle"
               v-for="color in colors"
-              :key="color.label"
+              :key="color.classColor"
               color="white"
-              :value="color.label"
+              :value="color.classColor"
               :class="color.classColor"
               class="bg-gradient-to-r"
             >
@@ -122,7 +123,7 @@ export default {
             name: '',
             description: '',
             relevantSubjects: '',
-            color: 'light blue',
+            color: 'from-cyan-500 to-blue-500',
           }
         }
       },
@@ -137,96 +138,36 @@ export default {
         name: '',
         description: '',
         relevantSubjects: '',
-        color: 'light blue',
+        color: 'from-cyan-500 to-blue-500',
       },
       rules: {
         required: (v) => !!v || 'Required.',
         nameRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 20) ||
-            'Classroom name must be less than 20 characters',
+            (v && v.length <= 30) ||
+            'Classroom name must be less than 30 characters',
         ],
         descriptionRules: [
           (v) => !!v || 'Required.',
           (v) =>
-            (v && v.length <= 50) ||
-            'Description must be less than 50 characters',
+            (v && v.length <= 100) ||
+            'Description must be less than 100 characters',
         ],
       },
       colors: [
-        {
-          id: 'color1',
-          label: 'red',
-          hexCode: 'f44336',
-          classColor: 'bg-red-600',
-        },
-        {
-          id: 'color2',
-          label: 'pink',
-          hexCode: 'e91e63',
-          classColor: 'bg-pink-600',
-        },
-        {
-          id: 'color3',
-          label: 'purple',
-          hexCode: '9c27b0',
-          classColor: 'bg-purple-600',
-        },
-        {
-          id: 'color5',
-          label: 'indigo',
-          hexCode: '3f51b5',
-          classColor: 'bg-indigo-600',
-        },
-        {
-          id: 'color6',
-          label: 'blue',
-          hexCode: '2196f3',
-          classColor: 'bg-blue-600',
-        },
-        {
-          id: 'color7',
-          label: 'light blue',
-          hexCode: '03a9f4',
-          classColor: ' from-cyan-500 to-blue-500',
-        },
-        {
-          id: 'color8',
-          label: 'cyan',
-          hexCode: '00bcd4',
-          classColor: 'bg-cyan-600',
-        },
-        {
-          id: 'color9',
-          label: 'teal',
-          hexCode: '009688',
-          classColor: 'bg-teal-600',
-        },
-        {
-          id: 'color10',
-          label: 'green',
-          hexCode: '4caf50',
-          classColor: 'bg-green-600',
-        },
-        {
-          id: 'color13',
-          label: 'yellow',
-          hexCode: 'ffeb3b',
-          classColor: 'bg-yellow-600',
-        },
-        {
-          id: 'color14',
-          label: 'amber',
-          hexCode: 'ffc107',
-          classColor: 'bg-amber-600',
-        },
-        {
-          id: 'color15',
-          label: 'orange',
-          hexCode: 'ff9800',
-          classColor: 'bg-orange-600',
-        },
+        { classColor: 'from-[#db2777] to-[#4f46e5]' },
+        { classColor: 'from-[#6d51a5] to-[#e4a7c5]' },
+        { classColor: 'from-[#f492f0] to-[#a18dce]' },
+        { classColor: 'from-[#30c5d2] to-[#471069]' },
+        { classColor: 'from-[#06b6d4] to-[#2563eb]' },
+        { classColor: 'from-[#45B649] to-[#036ED9]' },
+        { classColor: 'from-[#16a085] to-[#f4d03f]' },
+        { classColor: 'from-[#ec8c69] to-[#ed6ea0]' },
+        { classColor: 'from-[#f86ca7] to-[#FF8818]' }, //
+        { classColor: 'from-[#ff7e5f] to-[#feb47b]' },
+        { classColor: 'from-[#FFA62E] to-[#EA4D2C]' },
+        { classColor: 'from-[#616161] to-[#9bc5c3]' }, //
       ],
     }
   },
