@@ -36,6 +36,10 @@ export default {
         property: 'twitter:image',
         content: '/studiz-logo.png',
       },
+      {
+        'http-equiv': 'Content-Security-Policy',
+        content: 'upgrade-insecure-requests',
+      },
     ],
     link: [
       {
@@ -143,10 +147,14 @@ export default {
       theme_color: '#0c8ce9',
       description:
         'This web application will help students interact with friends and teachers to create an active learning process and make students feel more interested in learning and having fun.',
-      id: '/join',
-      start_url: '/join',
+      id: '/',
+      start_url: '/',
       background_color: '#22A1EE',
-      scope: '/join',
+      scope: '/',
     },
+    // workbox: {
+    //   dev: true,
+    //   debug: true,
+    // },
   },
 }
