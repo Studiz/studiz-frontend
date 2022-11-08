@@ -119,28 +119,39 @@
           />
         </div>
       </div>
-      <v-card-subtitle v-if="userRole == 'STUDENT'"
-        >Your score {{ studentScore }}</v-card-subtitle
-      >
-      <v-card-text v-if="userRole == 'STUDENT'"
-        >Number of correct answers
-        {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
-          summaryData?.quizData?.totalQuestion
-        }}</v-card-text
-      >
+      <div v-if="userRole !== 'TEACHER'">
+        <v-card-subtitle>Your score {{ studentScore }}</v-card-subtitle>
+        <v-card-text
+          >Number of correct answers
+          {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
+            numberQuestions
+          }}</v-card-text
+        >
+      </div>
     </v-card>
+    <the-summary-leader-board
+      v-if="userRole == 'TEACHER'"
+      :membersInClass="membersInClass"
+      :currentStatus="'summary'"
+      class="flex-1 w-full"
+      @choose-member="chooseMember"
+    />
 
     <the-leader-board
-      :membersInClass="membersInClass"
+      v-else
+      :membersInClass="summaryData?.leaderboard?.members"
       :currentStatus="'summary'"
       class="flex-1 w-full"
     />
 
     <div
       class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-3"
-      v-if="userRole == 'STUDENT'"
+      v-if="studentQuizData"
     >
       <div class="flex justify-between">
+        <span class="text-lg font-semibold" v-if="userRole == 'TEACHER'">{{
+          student?.user?.displayName
+        }}</span>
         <span class="text-lg font-semibold">Score: {{ studentScore }}</span>
       </div>
       <div class="flex justify-between flex-wrap">
@@ -158,18 +169,20 @@
 </template>
 
 <script>
+import TheSummaryLeaderBoard from '~/components/TheSummaryLeaderBoard.vue'
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
 import QuizService from '~/services/QuizService'
 import socket from '~/plugins/socket.io'
 import BaseSummryQuestionItem from '~/components/BaseSummryQuestionItem.vue'
 
 export default {
-  components: { TheLeaderBoard, BaseSummryQuestionItem },
+  components: { TheLeaderBoard, TheSummaryLeaderBoard, BaseSummryQuestionItem },
   data() {
     return {
       summaryData: {},
       membersInClass: [],
       studentQuizData: {},
+      memberChosen: {},
     }
   },
   methods: {
@@ -188,33 +201,46 @@ export default {
         quizId: this.$route.params.quizId,
       })
     },
+    chooseMember(member) {
+      this.memberChosen = this.summaryData?.members[member.index]
+      this.studentQuizData = this.summaryData?.members[member.index]?.quizData
+    },
   },
   computed: {
     userRole() {
       return this.$store.getters.userRole
     },
     student() {
-      return this.summaryData?.members?.find((member) => {
-        return member.user?.uid === localStorage.getItem('uid')
-      })
+      if (this.userRole == 'TEACHER') {
+        return this.memberChosen ? this.memberChosen : {}
+      } else if (this.userRole == 'STUDENT') {
+        return this.summaryData?.members?.find((member) => {
+          return member.user?.uid === localStorage.getItem('uid')
+        })
+      } else {
+        return localStorage.getItem('memberId')
+          ? this.summaryData?.members?.find((member) => {
+              return member.memberId === localStorage.getItem('memberId')
+            })
+          : {}
+      }
     },
     studentScore() {
       return this.student?.totalScore
     },
     numberCorrectAnswers() {
-      return this.student?.quizData?.filter((quiz) => {
-        return quiz.studentAnswer
-      }).length
+      return this.student?.numberCorrectAnswers
     },
     numberInCorrectAnswers() {
-      return this.student?.quizData?.filter((quiz) => {
-        return !quiz.studentAnswer
-      }).length
+      return this.student?.numberInCorrectAnswers
     },
     isWinner() {
       return this.$route.params.winnerId
         ? this.$route.params.winnerId === localStorage.getItem('memberId')
         : false
+    },
+    numberQuestions() {
+      return this.summaryData?.quizData?.numberQuestions
     },
   },
   destroyed() {
@@ -238,13 +264,8 @@ export default {
     QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
       (res) => {
         this.summaryData = res.data
-        this.membersInClass = this.summaryData?.leaderboard?.members
-        this.studentQuizData =
-          this.summaryData?.members[
-            this.summaryData?.members?.findIndex((member) => {
-              return member.user.uid === localStorage.getItem('uid')
-            })
-          ]?.quizData
+        this.membersInClass = this.summaryData?.members
+        this.studentQuizData = this.student?.quizData
       }
     )
   },

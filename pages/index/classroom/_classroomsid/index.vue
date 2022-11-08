@@ -31,11 +31,14 @@
           classroom ? classroom.pinCode : ''
         }}</span>
       </p>
-      <p
+      <div
+        @click="isShowDiscription = !isShowDiscription"
         class="p-3 background ring-1 ring-black ring-opacity-10 rounded-lg leading-relaxed drop-shadow-sm"
       >
-        {{ classroom ? classroom.description : '' }}
-      </p>
+        <span :class="isShowDiscription ? '' : 'line-clamp-2 max-h-14'">
+          {{ classroom ? classroom.description : '' }}
+        </span>
+      </div>
     </div>
     <div class="mb-4">
       <v-tabs grow background-color="transparent">
@@ -82,6 +85,7 @@ export default {
   data() {
     return {
       classroom: null,
+      isShowDiscription: false,
     }
   },
   methods: {

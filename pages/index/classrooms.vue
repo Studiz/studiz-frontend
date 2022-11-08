@@ -51,17 +51,17 @@
       class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 auto-rows-fr auto-cols-fr"
     >
       <div
-        class="w-full h-full bg-gradient-to-r white--text rounded-lg overflow-hidden p-4 relative text-white hover:drop-shadow-lg"
-        :class="
-          classroom.color !== ''
-            ? classroom.color
-            : 'from-[#06b6d4] to-[#2563eb]'
-        "
         v-for="classroom in classRoomList"
         :key="classroom.id"
+        class="flex relative hover:drop-shadow-lg"
       >
         <nuxt-link
-          class="focus:outline-none"
+          class="w-full h-full bg-gradient-to-r text-white rounded-lg overflow-hidden p-4 transition-all"
+          :class="
+            classroom.color !== ''
+              ? classroom.color
+              : 'from-[#06b6d4] to-[#2563eb]'
+          "
           :to="{
             name: 'index-classroom-classroomsid-index-quiz',
             params: { classroomsid: classroom.id },

@@ -64,7 +64,11 @@
           ></v-autocomplete>
 
           <div>Theme colors</div>
-          <v-radio-group v-model="data.color" class="w-[500px] mx-auto">
+          <v-radio-group
+            v-model="data.color"
+            :rules="[rules.required]"
+            class="mt-3 pt-0"
+          >
             <v-radio
               off-icon=""
               on-icon="mdi-checkbox-marked-circle"
@@ -123,7 +127,7 @@ export default {
             name: '',
             description: '',
             relevantSubjects: '',
-            color: 'from-cyan-500 to-blue-500',
+            color: 'from-[#06b6d4] to-[#2563eb]',
           }
         }
       },
@@ -138,7 +142,7 @@ export default {
         name: '',
         description: '',
         relevantSubjects: '',
-        color: 'from-cyan-500 to-blue-500',
+        color: 'from-[#06b6d4] to-[#2563eb]',
       },
       rules: {
         required: (v) => !!v || 'Required.',
@@ -215,20 +219,12 @@ export default {
         // edit classroom here
       }
     },
-    resetData() {
-      this.data = {
-        name: '',
-        description: '',
-        relevantSubjects: '',
-        color: '',
-      }
-    },
     close() {
       this.dialog = false
       this.data.name = ''
       this.data.description = ''
       this.data.relevantSubjects = ''
-      this.data.color = ''
+      this.data.color = 'from-[#06b6d4] to-[#2563eb]'
       this.$emit('close-dialog')
     },
     mappingData() {
@@ -243,13 +239,13 @@ export default {
 
 <style scoped>
 :deep(.v-input--selection-controls__ripple) {
-  @apply sm:w-[82px] sm:left-[-36px] rounded-md;
+  @apply sm:w-[107px] sm:left-[-48px] rounded-md;
 }
 :deep(.v-input--selection-controls__input) {
   @apply !mx-0;
 }
 :deep(.v-radio) {
-  @apply flex-col justify-center items-center w-[41px] sm:w-[100px] h-[41px] !m-0 rounded-md;
+  @apply flex-col justify-center items-center w-[41px] sm:w-32 h-[41px] !m-0 rounded-md;
 }
 :deep(.v-input--radio-group__input) {
   @apply !flex-row flex-wrap justify-center items-center gap-3;
