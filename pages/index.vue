@@ -42,12 +42,23 @@
       </v-sheet>
     </v-col>
 
-    <v-col cols="12" md="11" lg="10" class="pa-2 pa-md-3 mb-16 mb-md-0">
+    <v-col
+      cols="12"
+      md="11"
+      lg="10"
+      class="pa-2 pa-md-3"
+      :class="isRouterHidden ? '' : 'mb-16 mb-md-0'"
+    >
       <v-sheet
         rounded="lg"
         elevation="1"
         color="background_card"
-        class="overflow-hidden pa-2 pa-md-5 min-h-[calc(100vh-64px-24px)]"
+        class="overflow-hidden pa-2 pa-md-5"
+        :class="
+          isRouterHidden
+            ? 'min-h-[calc(100vh-16px)]'
+            : 'min-h-[calc(100vh-64px-16px)]'
+        "
       >
         <Nuxt v-if="!isRouterIndex" />
 
@@ -125,6 +136,7 @@ export default {
           to: '/setting',
         },
       ],
+      hiddenReouteName: ['index-history', 'index-setting'],
     }
   },
   computed: {
@@ -146,6 +158,9 @@ export default {
     },
     renderRouterName() {
       return this.$route.name
+    },
+    isRouterHidden() {
+      return this.hiddenReouteName.includes(this.$route.name)
     },
   },
   created() {
