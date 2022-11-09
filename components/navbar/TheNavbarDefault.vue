@@ -74,7 +74,7 @@
       height="64"
       class="drop-shadow-md d-md-none background_card"
       active-class="primary--text text-hidden"
-      v-if="!isGuest"
+      v-if="!isGuest && !isRouterHidden"
       shift
     >
       <v-btn
@@ -141,6 +141,12 @@ export default {
           to: '/more',
         },
       ],
+      hiddenReouteName: [
+        'index-history',
+        'index-setting',
+        'index-classroom-classroomsid-index-member',
+        'index-classroom-classroomsid-index-quiz',
+      ],
     }
   },
   methods: {
@@ -169,6 +175,9 @@ export default {
     },
     routerPath() {
       return !this.isGuest ? '/classrooms' : '/join'
+    },
+    isRouterHidden() {
+      return this.hiddenReouteName.includes(this.$route.name)
     },
   },
 }

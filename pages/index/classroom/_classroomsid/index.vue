@@ -1,8 +1,22 @@
 <template>
   <div>
+    <div
+      class="bg-gradient-to-r h-36 -mx-2 -mt-2 md:-mx-5 md:-mt-5"
+      :class="
+        renderClassroomColor
+          ? renderClassroomColor
+          : 'from-[#06b6d4] to-[#2563eb]'
+      "
+    />
+    <div
+      class="bg-gradient-to-b from-transparent to-white dark:from-transparent dark:to-dark_background h-24 -mt-24 -mx-2 md:-mx-5"
+    />
+
     <div>
-      <div class="flex-wrap d-flex mb-4">
-        <h1 class="text-H1">{{ classroom ? classroom.name : '' }}</h1>
+      <div class="flex-wrap d-flex mb-4 -mt-12">
+        <h1 class="text-H1">
+          {{ classroom ? classroom.name : '' }}
+        </h1>
 
         <v-spacer></v-spacer>
         <base-dialog-condition
@@ -40,25 +54,12 @@
         </span>
       </div>
     </div>
-    <div class="mb-4">
-      <v-tabs grow background-color="transparent">
-        <v-tab
-          :to="{
-            name: 'index-classroom-classroomsid-index-quiz',
-            params: { classid: $route.params.classroomsid },
-          }"
-        >
-          <v-icon left>$vuetify.icons.quiz</v-icon>
-          <span class="text-cap w-16">quiz</span>
-        </v-tab>
-        <v-tab
-          :to="{
-            name: 'index-classroom-classroomsid-index-member',
-            params: { classid: $route.params.classroomsid },
-          }"
-        >
-          <v-icon left>$vuetify.icons.member</v-icon>
-          <span class="text-cap w-16">member</span>
+
+    <div class="opacity-0 max-h-[0vh] md:opacity-100 md:max-h-[100vh]">
+      <v-tabs grow background-color="transparent" class="mb-4 mt-2">
+        <v-tab v-for="route in routeObj" :key="route.title" :to="route.to">
+          <v-icon left>{{ route.icon }}</v-icon>
+          <span class="text-cap w-16">{{ route.title }}</span>
         </v-tab>
       </v-tabs>
     </div>
@@ -66,6 +67,29 @@
     <div class="ring-1 ring-black ring-opacity-10 drop-shadow-sm rounded-lg">
       <Nuxt />
     </div>
+
+    <v-bottom-navigation
+      grow
+      fixed
+      height="64"
+      class="drop-shadow-md d-md-none background_card"
+      active-class="primary--text text-hidden"
+      shift
+    >
+      <v-btn
+        color="background_card"
+        height="64"
+        v-for="route in routeObj"
+        min-width="50"
+        :key="route.title"
+        :to="route.to"
+      >
+        <span class="text text-xs tracking-tight normal-case"
+          >{{ route.title }}
+        </span>
+        <v-icon>{{ route.icon }}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </div>
 </template>
 
@@ -86,6 +110,24 @@ export default {
     return {
       classroom: null,
       isShowDiscription: false,
+      routeObj: [
+        {
+          title: 'quiz',
+          icon: '$vuetify.icons.quiz',
+          to: {
+            name: 'index-classroom-classroomsid-index-quiz',
+            params: { classid: this.$route.params.classroomsid },
+          },
+        },
+        {
+          title: 'member',
+          icon: '$vuetify.icons.member',
+          to: {
+            name: 'index-classroom-classroomsid-index-member',
+            params: { classid: this.$route.params.classroomsid },
+          },
+        },
+      ],
     }
   },
   methods: {
@@ -126,6 +168,9 @@ export default {
     },
     renderClassroomName() {
       return this.classroom ? this.classroom?.name : 'No classroom name'
+    },
+    renderClassroomColor() {
+      return this.classroom ? this.classroom?.color : ''
     },
   },
   created() {

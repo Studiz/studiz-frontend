@@ -163,7 +163,7 @@ export default {
         { classColor: 'from-[#db2777] to-[#4f46e5]' },
         { classColor: 'from-[#6d51a5] to-[#e4a7c5]' },
         { classColor: 'from-[#f492f0] to-[#a18dce]' },
-        { classColor: 'from-[#30c5d2] to-[#471069]' },
+        { classColor: 'from-[#30c5d2] to-[#6d51a5]' },
         { classColor: 'from-[#06b6d4] to-[#2563eb]' },
         { classColor: 'from-[#45B649] to-[#036ED9]' },
         { classColor: 'from-[#16a085] to-[#f4d03f]' },

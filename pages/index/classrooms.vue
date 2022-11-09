@@ -50,79 +50,14 @@
     <div
       class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 auto-rows-fr auto-cols-fr"
     >
-      <div
+      <base-classroom-item
         v-for="classroom in classRoomList"
         :key="classroom.id"
-        class="flex relative hover:drop-shadow-lg"
-      >
-        <nuxt-link
-          class="w-full h-full bg-gradient-to-r text-white rounded-lg overflow-hidden p-4 transition-all"
-          :class="
-            classroom.color !== ''
-              ? classroom.color
-              : 'from-[#06b6d4] to-[#2563eb]'
-          "
-          :to="{
-            name: 'index-classroom-classroomsid-index-quiz',
-            params: { classroomsid: classroom.id },
-          }"
-        >
-          <div class="flex flex-col gap-2">
-            <div class="w-full">
-              <div class="text-h5 w-10/12 truncate white--text text-white">
-                <span class="font-bold">{{ classroom.name }}</span>
-              </div>
-            </div>
-
-            <div
-              class="line-clamp-2 md:line-clamp-none h-12 md:h-24 md:overflow-auto scrollbar white--text"
-            >
-              {{ classroom.description }}
-            </div>
-
-            <div
-              class="flex justify-between items-start white--text gap-x-3"
-              v-if="userRole == 'STUDENT'"
-            >
-              <span class="whitespace-normal self-center leading-none truncate">
-                {{ classroom.teacher.firstName }}
-                {{ classroom.teacher.lastName }}
-              </span>
-
-              <v-avatar size="40px" class="!flex-none">
-                <v-img
-                  v-if="classroom.teacher.imageUrl"
-                  :src="classroom.teacher.imageUrl"
-                />
-                <v-icon v-else large color="white">mdi-account-circle</v-icon>
-              </v-avatar>
-            </div>
-          </div>
-        </nuxt-link>
-        <div
-          class="white--text absolute top-3 right-1"
-          v-if="userRole == 'TEACHER'"
-        >
-          <v-menu offset-y left transition="slide-y-transition" color="primary">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn dark v-bind="attrs" v-on="on" icon @click.stop="">
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item @click="openDialogEditClassroom(classroom)">
-                Edit
-              </v-list-item>
-              <v-list-item
-                @click="openDialogDeleteClassroom(classroom)"
-                class="!text-red-500"
-              >
-                Delete
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </div>
-      </div>
+        :classroom="classroom"
+        :userRole="userRole"
+        @open-dialog-edit-classroom="openDialogEditClassroom"
+        @open-dialog-delete-classroom="openDialogDeleteClassroom"
+      />
     </div>
 
     <v-dialog
@@ -161,9 +96,10 @@
 import UserService from '../../services/UserService.js'
 import StudentService from '../../services/StudentService.js'
 import TheCreateClassroom from '~/components/Teacher/TheCreateClassroom.vue'
+import BaseClassroomItem from '~/components/BaseClassroomItem.vue'
 import TheInputJoin from '~/components/TheInputJoin.vue'
 export default {
-  components: { TheCreateClassroom, TheInputJoin },
+  components: { TheCreateClassroom, TheInputJoin, BaseClassroomItem },
   head() {
     return {
       title: 'Classroom',
