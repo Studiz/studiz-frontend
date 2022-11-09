@@ -105,7 +105,7 @@
               class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end"
             >
               <v-img
-                class="rounded-full primary"
+                class="rounded-full background_card"
                 :src="quizData?.teacher.imageUrl"
                 height="48px"
                 width="48px"

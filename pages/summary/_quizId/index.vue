@@ -11,6 +11,7 @@
             contain
             class="rounded-lg background_card w-[60px] h-[60px]"
             :src="summaryData?.quizData?.image"
+            max-width="60px"
           />
           <div class="font-semibold">
             <div class="text-H2">{{ summaryData?.quizData?.title }}</div>
@@ -41,9 +42,8 @@
     >
       <div class="md:flex">
         <v-img
-          :src="summaryData?.quizData?.image"
           class="rounded-lg background_card w-full h-auto mx-auto"
-          contain
+          :src="summaryData?.quizData?.image"
           max-height="150px"
           max-width="150px"
         ></v-img>
@@ -71,10 +71,10 @@
             class="whitespace-nowrap inline-flex px-4 pb-4 gap-x-3 items-end md:justify-end"
           >
             <v-img
-              class="rounded-full primary"
+              class="rounded-full background_card"
               :src="summaryData?.quizData?.teacher?.imageUrl"
-              max-height="48px"
-              max-width="48px"
+              height="48px"
+              width="48px"
             />
             <div>
               <div>{{ summaryData?.quizData?.teacher?.displayName }}</div>
@@ -101,7 +101,7 @@
     >
       <div class="flex flex-row items-center justify-center">
         <v-img
-          class="rounded-full primary"
+          class="rounded-full background_card"
           :src="summaryData?.leaderboard?.winner?.image"
           max-height="65px"
           max-width="65px"
@@ -120,9 +120,9 @@
         </div>
       </div>
       <div v-if="userRole !== 'TEACHER'">
-        <v-card-subtitle>Your score {{ studentScore }}</v-card-subtitle>
+        <v-card-subtitle>Your score : {{ studentScore }}</v-card-subtitle>
         <v-card-text
-          >Number of correct answers
+          >Number of correct answers :
           {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
             numberQuestions
           }}</v-card-text
@@ -146,7 +146,7 @@
 
     <div
       class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-3"
-      v-if="studentQuizData"
+      v-if="Object.keys(studentQuizData).length !== 0"
     >
       <div class="flex justify-between">
         <span class="text-lg font-semibold" v-if="userRole == 'TEACHER'">{{
@@ -158,6 +158,7 @@
         <span>Correct: {{ numberCorrectAnswers }}</span>
         <span>Incorrect: {{ numberInCorrectAnswers }}</span>
       </div>
+
       <base-summry-question-item
         v-for="(question, index) in studentQuizData"
         :key="`${question}-${index}`"
@@ -177,6 +178,14 @@ import BaseSummryQuestionItem from '~/components/BaseSummryQuestionItem.vue'
 
 export default {
   components: { TheLeaderBoard, TheSummaryLeaderBoard, BaseSummryQuestionItem },
+  watch: {
+    userRole: {
+      handler: function (newVal, oldVal) {
+        this.loadData()
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       summaryData: {},
@@ -204,6 +213,15 @@ export default {
     chooseMember(member) {
       this.memberChosen = this.summaryData?.members[member.index]
       this.studentQuizData = this.summaryData?.members[member.index]?.quizData
+    },
+    loadData() {
+      QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
+        (res) => {
+          this.summaryData = res.data
+          this.membersInClass = res.data.members
+          this.studentQuizData = this.student?.quizData
+        }
+      )
     },
   },
   computed: {
@@ -242,6 +260,12 @@ export default {
     numberQuestions() {
       return this.summaryData?.quizData?.numberQuestions
     },
+    haveStudentQuizData() {
+      return Object.keys(this.studentQuizData).length
+    },
+    renderStudentQuizData() {
+      return this.studentQuizData
+    },
   },
   destroyed() {
     // if (confirm('Do you want to leave the room?')) {
@@ -260,15 +284,7 @@ export default {
       localStorage.removeItem('memberId')
     })
   },
-  created() {
-    QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
-      (res) => {
-        this.summaryData = res.data
-        this.membersInClass = this.summaryData?.members
-        this.studentQuizData = this.student?.quizData
-      }
-    )
-  },
+  created() {},
 }
 </script>
 

@@ -1,12 +1,43 @@
 <template>
   <div
     :id="`question-${question?.type}`"
-    class="p-2 flex flex-row-reverse gap-2 items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
+    class="p-2 pl-4 flex flex-col gap-2 items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
   >
+    <div
+      class="absolute top-0 left-0 right-0 h-8 !bg-opacity-30 px-3 py-1"
+      :class="renderIsCorrect"
+    >
+      <div
+        v-if="renderIsCorrect === 'correct' || question.item"
+        class="flex justify-between w-full"
+      >
+        <div
+          v-if="renderIsCorrect === 'correct'"
+          class="text-right font-semibold text-green-500"
+        >
+          +{{ question?.score }}
+        </div>
+
+        <div
+          v-if="question.item"
+          class="inline-flex items-center gap-x-1 text-xs h-6"
+        >
+          <v-icon size="12" :color="question.item.color">{{
+            question.item.icon
+          }}</v-icon>
+          <span
+            class="font-medium"
+            :class="`!text-[${question?.item?.color}]`"
+            >{{ question.item.name }}</span
+          >
+        </div>
+      </div>
+    </div>
+
     <div
       v-if="question?.image || question?.score"
       id="image"
-      class="inline-flex flex-col"
+      class="flex flex-col self-center mt-8"
     >
       <v-img
         v-if="question?.image"
@@ -15,34 +46,15 @@
         class="self-center justify-self-center background_card transition-all duration-500 p-px rounded-md overflow-hidden w-14 h-14"
         :src="question?.image"
       />
-      <div
-        v-if="renderIsCorrect === 'correct'"
-        class="text-right font-semibold text-green-500"
-      >
-        +{{ question?.score }}
-      </div>
     </div>
 
-    <div class="flex flex-col justify-start ml-2">
+    <div class="flex flex-col justify-start w-full">
       <div class="text-lg">{{ index + 1 }}. {{ question?.question }}</div>
-      <div
-        v-if="question.item"
-        class="absolute top-7 right-2 flex items-center"
-      >
-        <v-icon size="10" :color="question.item.color">{{
-          question.item.icon
-        }}</v-icon>
-        <span
-          class="text-[10px] font-medium"
-          :class="`!text-[${question?.item?.color}]`"
-          >{{ question.item.name }}</span
-        >
-      </div>
 
       <v-divider class="my-2" />
       <div
         id="choices"
-        class="flex flex-col p-0.5 pl-2 rounded-full mb-1"
+        class="flex flex-col p-0.5 px-2 rounded-full mb-1"
         :class="[renderIndexStudentAnswer(i)]"
         v-for="(choice, i) in newOptions"
         :key="i"
