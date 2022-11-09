@@ -13,7 +13,7 @@
     />
 
     <div>
-      <div class="flex-wrap d-flex mb-4 -mt-16">
+      <div class="flex-wrap d-flex mb-4 -mt-12">
         <h1 class="text-H1">
           {{ classroom ? classroom.name : '' }}
         </h1>
