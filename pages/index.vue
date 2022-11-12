@@ -60,10 +60,10 @@
             : 'min-h-[calc(100vh-64px-16px)] md:min-h-[calc(100vh-64px-24px)]'
         "
       >
-        <transition name="slide-fade" mode="out-in">
-          <Nuxt v-if="!isRouterIndex" />
+        <transition :name="isFristLoad ? '' : 'slide-fade'" mode="out-in">
+          <Nuxt v-if="!isRouterIndex && !isFristLoad" />
 
-          <div v-else class="max-w-xl mx-auto">
+          <div v-else-if="isRouterIndex" class="max-w-xl mx-auto">
             <div class="flex flex-col gap-y-4">
               <v-btn
                 height="150"
@@ -139,6 +139,7 @@ export default {
         },
       ],
       hiddenReouteName: ['index-history', 'index-setting'],
+      isFristLoad: true,
     }
   },
   computed: {
@@ -164,6 +165,11 @@ export default {
     isRouterHidden() {
       return this.hiddenReouteName.includes(this.$route.name)
     },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isFristLoad = false
+    }, 100)
   },
   created() {
     if (this.$store.getters.user || localStorage.getItem('accessToken')) {

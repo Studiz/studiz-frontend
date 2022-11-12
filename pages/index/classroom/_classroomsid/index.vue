@@ -68,28 +68,31 @@
       <Nuxt />
     </div>
 
-    <v-bottom-navigation
-      grow
-      fixed
-      height="64"
-      class="drop-shadow-md d-md-none background_card"
-      active-class="primary--text text-hidden"
-      shift
-    >
-      <v-btn
-        color="background_card"
+    <transition :name="isShowBNav ? 'slide-fade' : ''" mode="out-in">
+      <v-bottom-navigation
+        grow
+        fixed
         height="64"
-        v-for="route in routeObj"
-        min-width="50"
-        :key="route.title"
-        :to="route.to"
+        class="drop-shadow-md d-md-none background_card transition-all"
+        active-class="primary--text text-hidden"
+        shift
+        v-if="isShowBNav"
       >
-        <span class="text text-xs tracking-tight normal-case"
-          >{{ route.title }}
-        </span>
-        <v-icon>{{ route.icon }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
+        <v-btn
+          color="background_card"
+          height="64"
+          v-for="route in routeObj"
+          min-width="50"
+          :key="route.title"
+          :to="route.to"
+        >
+          <span class="text text-xs tracking-tight normal-case"
+            >{{ route.title }}
+          </span>
+          <v-icon>{{ route.icon }}</v-icon>
+        </v-btn>
+      </v-bottom-navigation></transition
+    >
   </div>
 </template>
 
@@ -128,6 +131,7 @@ export default {
           },
         },
       ],
+      isShowBNav: false,
     }
   },
   methods: {
@@ -173,6 +177,11 @@ export default {
       return this.classroom ? this.classroom?.color : ''
     },
   },
+  mounted() {
+    setTimeout(() => {
+      this.isShowBNav = true
+    }, 500)
+  },
   created() {
     ClassroomService.getClassroom(this.$route.params.classroomsid).then(
       (res) => {
@@ -187,5 +196,17 @@ export default {
 <style scoped>
 .v-tab {
   @apply px-0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.5s;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateY(2rem);
+  opacity: 0;
 }
 </style>
