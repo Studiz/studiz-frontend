@@ -66,7 +66,7 @@
       />
     </div>
 
-    <the-waiting v-if="currentStatus === 'wating'" />
+    <the-waiting v-if="currentStatus === 'waiting'" />
 
     <the-leader-board
       v-if="currentStatus === 'leaderBoard'"
@@ -195,6 +195,11 @@ export default {
         this.question.time += newVal.value
       }
     },
+    prepareBackendAnswer() {
+      if (this.question.type === 'poll') {
+        this.backendAnswer = this.prepareBackendAnswer
+      }
+    },
   },
   methods: {
     changeStatus(stutus) {
@@ -263,13 +268,27 @@ export default {
       this.userSelected = data
     },
     checkAnswer() {
-      this.backendAnswer = this.prepareBackendAnswer
+      if (this.question.type === 'poll') {
+        if (this.$store.getters.userRole === 'TEACHER') {
+          socket.emit('get-poll-result', {
+            quizId: this.$route.params.quizId,
+          })
+        }
+      } else {
+        this.backendAnswer = this.prepareBackendAnswer
+      }
     },
     nextQuestion() {
       if (this.currentStatus === 'question') {
-        socket.emit('send-leaderboard', {
-          quizId: this.$route.params.quizId,
-        })
+        if (this.question.type === 'poll') {
+          socket.emit('send-next-question', {
+            quizId: this.$route.params.quizId,
+          })
+        } else {
+          socket.emit('send-leaderboard', {
+            quizId: this.$route.params.quizId,
+          })
+        }
         this.isTimerToShowQuestion = null
         this.$nuxt.$emit('remove-time-interval')
       }
@@ -309,7 +328,8 @@ export default {
       this.prepareBackendAnswer = data
     })
 
-    socket.on('show-poll-answer', (data) => {
+
+    socket.on('show-poll-result', (data) => {
       this.prepareBackendAnswer = data
     })
 
