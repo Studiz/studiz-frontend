@@ -6,7 +6,9 @@
       <the-navbar-default />
       <v-main class="-mt-16 md:-mt-6">
         <v-container>
-          <Nuxt />
+          <transition :name="isFristLoad ? '' : 'slide-fade'" mode="out-in">
+            <Nuxt v-if="!isFristLoad" />
+          </transition>
         </v-container>
       </v-main>
     </v-app>
@@ -35,6 +37,11 @@ export default {
       ],
     }
   },
+  data() {
+    return {
+      isFristLoad: true,
+    }
+  },
   mounted() {
     if (localStorage.getItem('accessToken')) {
       UserService.getNotificationByUID(localStorage.getItem('uid')).then(
@@ -55,6 +62,10 @@ export default {
         message: `Quiz ${notificationData.title} is starting`,
       })
     })
+
+    setTimeout(() => {
+      this.isFristLoad = false
+    }, 500)
   },
 }
 </script>

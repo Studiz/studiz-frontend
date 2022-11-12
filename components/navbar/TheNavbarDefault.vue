@@ -68,31 +68,33 @@
     </div>
 
     <!-- Bottom -->
-    <v-bottom-navigation
-      grow
-      fixed
-      height="64"
-      class="drop-shadow-md d-md-none background_card"
-      active-class="primary--text text-hidden"
-      v-if="!isGuest && !isRouterHidden"
-      shift
-    >
-      <v-btn
-        color="background_card"
+    <transition name="slide-fade" mode="out-in">
+      <v-bottom-navigation
+        grow
+        fixed
         height="64"
-        v-for="(b, index) in buttonNav"
-        min-width="50"
-        :key="index"
-        v-show="userRole == 'TEACHER' ? index !== 1 : index !== 2"
-        :to="b.to"
+        class="drop-shadow-md d-md-none background_card"
+        active-class="primary--text text-hidden"
+        v-if="!isGuest && !isRouterHidden"
+        shift
       >
-        <div :id="`bottom-nav-${b.title}`"></div>
-        <span class="text text-xs tracking-tight normal-case"
-          >{{ b.title }}
-        </span>
-        <v-icon>{{ b.icon }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
+        <v-btn
+          color="background_card"
+          height="64"
+          v-for="(b, index) in buttonNav"
+          min-width="50"
+          :key="index"
+          v-show="userRole == 'TEACHER' ? index !== 1 : index !== 2"
+          :to="b.to"
+        >
+          <div :id="`bottom-nav-${b.title}`"></div>
+          <span class="text text-xs tracking-tight normal-case"
+            >{{ b.title }}
+          </span>
+          <v-icon>{{ b.icon }}</v-icon>
+        </v-btn>
+      </v-bottom-navigation>
+    </transition>
   </div>
 </template>
 

@@ -193,20 +193,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.v-tab {
-  @apply px-0;
-}
-
-.slide-fade-enter-active {
-  transition: all 0.5s;
-}
-.slide-fade-leave-active {
-  transition: all 0.5s;
-}
-.slide-fade-enter,
-.slide-fade-leave-to {
-  transform: translateY(2rem);
-  opacity: 0;
-}
-</style>
+<style scoped></style>

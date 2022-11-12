@@ -186,16 +186,4 @@ export default {
 .Notification {
   @apply bg-red-500 absolute top-0 left-0 rounded-full text-white text-xs w-5 h-5 flex justify-center items-center;
 }
-
-.slide-fade-enter-active {
-  transition: all 0.5s;
-}
-.slide-fade-leave-active {
-  transition: all 0.5s;
-}
-.slide-fade-enter,
-.slide-fade-leave-to {
-  transform: translateY(2rem);
-  opacity: 0;
-}
 </style>
