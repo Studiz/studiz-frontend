@@ -18,9 +18,12 @@
         </div>
 
         <div
-          class="line-clamp-2 md:line-clamp-none h-12 md:h-24 md:overflow-auto scrollbar white--text"
+          class="line-clamp-2 md:line-clamp-none h-12 md:h-24 md:overflow-auto scrollbar white--text pr-1"
         >
-          {{ classroom.description }}
+          {{ classroom.description }} Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Veniam esse, unde ullam, molestiae quos perspiciatis
+          earum ipsam deleniti magnam sequi tempora assumenda ducimus iure
+          inventore quidem doloremque. Atque, optio eum?
         </div>
 
         <div
