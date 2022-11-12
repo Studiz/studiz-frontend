@@ -20,7 +20,7 @@
         <v-divider dark />
 
         <div
-          class="line-clamp-2 md:line-clamp-none h-12 md:h-20 md:overflow-auto scrollbar white--text pr-1 opacity-70"
+          class="line-clamp-2 md:line-clamp-none h-12 md:h-24 md:overflow-auto scrollbar white--text pr-1 opacity-70"
         >
           {{ classroom.description }} Lorem ipsum dolor sit amet consectetur
           adipisicing elit. Veniam esse, unde ullam, molestiae quos perspiciatis
