@@ -13,7 +13,7 @@
       </div>
 
       <div
-        class="absolute bottom-24 left-1/2 sm:left-16 sm:bottom-16 transition-all w-[20vh] sm:w-[36vh] rotate-45"
+        class="absolute bottom-24 left-1/2 sm:left-16 sm:bottom-20 transition-all w-[20vh] sm:w-[36vh] rotate-45"
       >
         <lottie-player
           autoplay

@@ -57,7 +57,7 @@
         :class="
           isRouterHidden
             ? 'min-h-[calc(100vh-16px)]'
-            : 'min-h-[calc(100vh-64px-16px)]'
+            : 'min-h-[calc(100vh-64px-16px)] md:min-h-[calc(100vh-64px-24px)]'
         "
       >
         <Nuxt v-if="!isRouterIndex" />

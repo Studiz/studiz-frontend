@@ -77,7 +77,7 @@
               color="white"
               :value="color.classColor"
               :class="color.classColor"
-              class="bg-gradient-to-r"
+              class="bg-gradient-to-br"
             >
             </v-radio>
             <!-- :label="color.label" -->
@@ -160,18 +160,18 @@ export default {
         ],
       },
       colors: [
-        { classColor: 'from-[#db2777] to-[#4f46e5]' },
-        { classColor: 'from-[#6d51a5] to-[#e4a7c5]' },
-        { classColor: 'from-[#f492f0] to-[#a18dce]' },
-        { classColor: 'from-[#30c5d2] to-[#6d51a5]' },
         { classColor: 'from-[#06b6d4] to-[#2563eb]' },
+        { classColor: 'from-[#00DBDE] to-[#D721FF]' },
+        { classColor: 'from-[#F0C27B] to-[#B721FF]' },
+        { classColor: 'from-[#f86ca7] to-[#4f46e5]' },
         { classColor: 'from-[#45B649] to-[#036ED9]' },
+        { classColor: 'from-[#2563eb] to-[#FFE32C]' },
         { classColor: 'from-[#16a085] to-[#f4d03f]' },
-        { classColor: 'from-[#ec8c69] to-[#ed6ea0]' },
-        { classColor: 'from-[#f86ca7] to-[#FF8818]' }, //
-        { classColor: 'from-[#ff7e5f] to-[#feb47b]' },
+        { classColor: 'from-[#134E5E] to-[#71B280]' },
+        { classColor: 'from-[#457fca] to-[#FFA17F]' },
+        { classColor: 'from-[#FF5ACD] to-[#FF8818]' },
         { classColor: 'from-[#FFA62E] to-[#EA4D2C]' },
-        { classColor: 'from-[#616161] to-[#9bc5c3]' }, //
+        { classColor: 'from-[#517fa4] to-[#243949]' },
       ],
     }
   },

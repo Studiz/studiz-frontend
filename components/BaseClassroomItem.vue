@@ -1,7 +1,7 @@
 <template>
   <div class="flex relative hover:drop-shadow-lg">
     <nuxt-link
-      class="w-full h-full bg-gradient-to-r text-white rounded-lg overflow-hidden p-4 transition-all"
+      class="w-full h-full bg-gradient-to-br text-white rounded-lg overflow-hidden p-4 transition-all"
       :class="
         classroom.color !== '' ? classroom.color : 'from-[#06b6d4] to-[#2563eb]'
       "

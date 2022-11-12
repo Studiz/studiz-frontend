@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="bg-gradient-to-r h-36 -mx-2 -mt-2 md:-mx-5 md:-mt-5"
+      class="bg-gradient-to-br h-36 -mx-2 -mt-2 md:-mx-5 md:-mt-5"
       :class="
         renderClassroomColor
           ? renderClassroomColor
