@@ -326,10 +326,9 @@ export default {
             type: 'success',
             message: 'Joined',
           })
-          this.randomItems()
         })
         .catch((err) => {
-          if (err.response.status === 400) {
+          if (err.response?.status === 400) {
             this.$store.commit('TOGGLE_LOADING', false)
             this.$store.commit('TOGGLE_ALERT', {
               type: 'info',

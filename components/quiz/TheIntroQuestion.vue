@@ -31,6 +31,7 @@
     <the-items-inventory
       v-if="$store.getters.userRole == 'STUDENT'"
       :propPickedItemList="renderPickedItemList"
+      :questionType="renderQuestionType"
     />
   </div>
 </template>

@@ -188,6 +188,7 @@ export default {
       if (newVal == 'question') {
         this.timerProgress()
       }
+      this.numStudentAnswer = 0
     },
     renderItem(newVal) {
       if (newVal?.code.includes('T')) {
@@ -333,7 +334,6 @@ export default {
 
     socket.on('show-quiz-summary', (data) => {
       this.changeStatus('leaderBoard')
-      this.membersInClass = data
       this.$router.push({
         name: 'summary-quizId',
         params: {
