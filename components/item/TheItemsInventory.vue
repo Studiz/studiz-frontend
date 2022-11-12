@@ -2,7 +2,7 @@
   <v-footer fixed color="transparent" padless>
     <div
       class="primary_shade p-2 rounded-lg w-fit mx-auto my-5 space-y-2"
-      v-if="$store.getters.canUseItem && $store.getters.items.length > 0"
+      v-if="$store.getters.canUseItem && $store.getters.items.length > 0 && questionType !== 'Poll'"
     >
       <div>Item</div>
       <div class="inline-flex gap-2 w-full justify-center">
@@ -132,6 +132,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    questionType: {
+      type: String,
+      default: '',
+    },
   },
   watch: {
     // renderHaveItem() {
@@ -176,7 +180,7 @@ export default {
       this.$store.commit('SET_ITEMS', [])
       this.pickedItemList = []
       StudentService.randomItems(
-        Math.floor(this.$store.getters.quizData.totalQuestion / 5)
+        Math.floor(this.$store.getters.quizData?.totalQuestion / 5)
       ).then((response) => {
         this.$store.commit('SET_ITEMS', response.data)
       })

@@ -146,7 +146,7 @@
 
     <div
       class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-3"
-      v-if="Object.keys(studentQuizData).length !== 0"
+      v-if="studentQuizData"
     >
       <div class="flex justify-between">
         <span class="text-lg font-semibold" v-if="userRole == 'TEACHER'">{{
@@ -215,13 +215,21 @@ export default {
       this.studentQuizData = this.summaryData?.members[member.index]?.quizData
     },
     loadData() {
-      QuizService.getQuizHistoryByQuizId(this.$route.params.quizId).then(
-        (res) => {
+      this.$store.commit('TOGGLE_LOADING', true)
+      QuizService.getQuizHistoryByQuizId(this.$route.params.quizId)
+        .then((res) => {
           this.summaryData = res.data
           this.membersInClass = res.data.members
           this.studentQuizData = this.student?.quizData
-        }
-      )
+          this.$store.commit('TOGGLE_LOADING', false)
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.data,
+          })
+        })
     },
   },
   computed: {
@@ -274,7 +282,7 @@ export default {
   },
   mounted() {
     // this.membersInClass = this.$route.params.summaryData?.leaderboard.members
-
+    this.loadData()
     socket.on('move-to-home', () => {
       this.$store.commit('TOGGLE_ALERT', {
         type: 'info',

@@ -32,7 +32,7 @@ export default {
       required: true,
     },
     backendAnswer: {
-      type: Number,
+      type: Array,
     },
     numberOfAnswer: {
       type: Number,
