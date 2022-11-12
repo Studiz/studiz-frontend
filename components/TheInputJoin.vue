@@ -25,25 +25,18 @@
       autocomplete="off"
       @keypress="filterNumber()"
     />
-    <!-- <div class="w-full md:w-2/12"> -->
+
     <slot></slot>
     <v-btn
       hide-details
       inset
       height="60"
       color="primary"
-      class="rounded-lg text-cap"
-      :class="[
-        this.$route.name == 'index-classrooms'
-          ? 'w-full col-span-6 md:col-span-3'
-          : 'w-full col-span-12',
-      ]"
+      class="rounded-lg text-cap w-full col-span-12 md:col-span-6 px-0"
       :disabled="vaildPINCode"
       @click="join"
       >{{ this.$store.getters.user ? 'join' : 'join guest' }}</v-btn
     >
-
-    <!-- </div> -->
   </form>
 </template>
 

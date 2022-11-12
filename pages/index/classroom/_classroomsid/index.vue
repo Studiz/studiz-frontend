@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="bg-gradient-to-br h-36 -mx-2 -mt-2 md:-mx-5 md:-mt-5"
+      class="bg-gradient-to-br h-16 lg:h-32 -mx-2 -mt-2 md:-mx-5 md:-mt-5"
       :class="
         renderClassroomColor
           ? renderClassroomColor
@@ -9,11 +9,11 @@
       "
     />
     <div
-      class="bg-gradient-to-b from-transparent to-white dark:from-transparent dark:to-dark_background h-24 -mt-24 -mx-2 md:-mx-5"
+      class="bg-gradient-to-b from-transparent to-white dark:from-transparent dark:to-dark_background h-20 -mt-20 -mx-2 md:-mx-5"
     />
 
     <div>
-      <div class="flex-wrap d-flex mb-4 -mt-12">
+      <div class="flex-wrap d-flex mb-4 -mt-5">
         <h1 class="text-H1">
           {{ classroom ? classroom.name : '' }}
         </h1>

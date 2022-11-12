@@ -3,16 +3,29 @@
     <div class="md:flex justify-between items-center space-y-2 md:space-y-0">
       <h1 class="text-H1">Classroom</h1>
 
-      <v-btn
-        height="48"
-        color="primary"
-        class="text-cap w-full md:w-auto rounded-lg"
-        :class="[showInput ? 'd-none d-md-block' : '']"
-        @click="showInput = !showInput"
-        :showInput="showInput"
+      <v-dialog
         v-if="userRole === 'STUDENT'"
-        >join classroom</v-btn
+        v-model="dialogJoin"
+        max-width="440px"
       >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            v-on="on"
+            height="48"
+            color="primary"
+            class="text-cap w-full md:w-auto rounded-lg"
+            >join classroom
+          </v-btn>
+        </template>
+        <v-card class="p-2 md:p-5 transition-all">
+          <the-input-join
+            @join-number="joinPinCode"
+            v-if="userRole == 'STUDENT'"
+          >
+          </the-input-join>
+        </v-card>
+      </v-dialog>
 
       <the-create-classroom
         :idModeEdit="idModeEditClassroom"
@@ -21,29 +34,6 @@
         v-else
       />
     </div>
-    <v-expand-transition>
-      <v-card
-        v-show="showInput"
-        color="transparent"
-        flat
-        hide-details
-        class="w-full md:w-6/12 lg:w-4/12 ml-auto mb-3 mt-2"
-      >
-        <the-input-join @join-number="joinPinCode" v-if="userRole == 'STUDENT'"
-          ><v-btn
-            hide-details
-            inset
-            height="56"
-            class="rounded-lg text-cap d-md-none"
-            :class="[
-              this.$route.name == 'index-classrooms' ? 'w-full col-span-6' : '',
-            ]"
-            @click="cancel()"
-            >cancel
-          </v-btn>
-        </the-input-join>
-      </v-card>
-    </v-expand-transition>
 
     <v-divider class="my-5" />
 
@@ -107,7 +97,6 @@ export default {
   },
   data() {
     return {
-      showInput: false,
       color: [
         { color1: '', color2: '' },
         { color1: '', color2: '' },
@@ -117,13 +106,12 @@ export default {
       classroomObjForEdit: {},
       dialogDelete: false,
       classroomObjForDelete: {},
+      dialogJoin: false,
     }
   },
   methods: {
-    cancel() {
-      this.showInput = !this.showInput
-    },
     joinPinCode(num) {
+      this.dialogJoin = false
       this.$store.commit('TOGGLE_LOADING', true)
       StudentService.joinClassroom(num, this.$store.getters.userId)
         .then((res) => {
