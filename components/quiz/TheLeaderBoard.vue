@@ -109,7 +109,7 @@ export default {
     },
 
     renderMembersInClass() {
-      return this.membersInClass
+      return this.membersInClass ? this.membersInClass : []
     },
   },
 }
