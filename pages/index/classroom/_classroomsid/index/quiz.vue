@@ -58,6 +58,18 @@ export default {
   created() {
     this.loadData()
   },
+  beforeRouteEnter(to, from, next) {
+    if (from.name === 'index-classrooms') {
+      history.replaceState({}, '', '/classrooms')
+    }
+    next()
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.name == 'index-classroom-classroomsid-index-member') {
+      next()
+    }
+    next()
+  },
 }
 </script>
 

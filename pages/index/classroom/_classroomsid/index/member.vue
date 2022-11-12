@@ -205,6 +205,21 @@ export default {
         : `student "${this.chooseOne.displayName}"?`
     },
   },
+  beforeRouteEnter(to, from, next) {
+    if (from.name == 'index-classroom-classroomsid-index-quiz') {
+      history.replaceState({}, '', '/classrooms')
+    }
+    next()
+  },
+  beforeRouteLeave(to, from, next) {
+    if (
+      from.name == 'index-classroom-classroomsid-index-quiz' ||
+      to.name == 'index-classroom-classroomsid-index-quiz'
+    ) {
+      history.replaceState({}, '', '/classrooms')
+    }
+    next()
+  },
 }
 </script>
 
