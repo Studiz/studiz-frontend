@@ -215,8 +215,34 @@ export default {
 
     editClassroom() {
       if (this.$refs.form.validate() && this.idModeEdit) {
-        console.log('edit')
-        // edit classroom here
+        this.loading = true
+        TeacherService.updateClassroom(this.classroomObj.id, this.data)
+          .then((res) => {
+            UserService.signInGetProfile(localStorage.getItem('accessToken'))
+              .then((res) => {
+                this.$store.commit('setUser', res.data)
+                this.loading = false
+                this.$store.commit('TOGGLE_ALERT', {
+                  type: 'success',
+                  message: 'Updated classroom successfully',
+                })
+                this.close()
+              })
+              .catch((err) => {
+                this.close()
+                this.$store.commit('TOGGLE_ALERT', {
+                  type: 'error',
+                  message: err.response.message,
+                })
+              })
+          })
+          .catch((err) => {
+            this.close()
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: err.response.message,
+            })
+          })
       }
     },
     close() {

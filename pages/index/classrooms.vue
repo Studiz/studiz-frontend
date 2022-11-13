@@ -85,6 +85,7 @@
 <script>
 import UserService from '../../services/UserService.js'
 import StudentService from '../../services/StudentService.js'
+import TeacherService from '../../services/TeacherService.js'
 import TheCreateClassroom from '~/components/Teacher/TheCreateClassroom.vue'
 import BaseClassroomItem from '~/components/BaseClassroomItem.vue'
 import TheInputJoin from '~/components/TheInputJoin.vue'
@@ -140,12 +141,41 @@ export default {
       this.classroomObjForEdit = classroomObj
     },
     openDialogDeleteClassroom(classroomObj) {
-      console.log(classroomObj)
       this.dialogDelete = true
       this.classroomObjForDelete = classroomObj
     },
     deleteClassroom() {
-      console.log('delete classroom')
+      this.$store.commit('TOGGLE_LOADING', true)
+      TeacherService.deleteClassroom(this.classroomObjForDelete.id)
+        .then((res) => {
+          UserService.signInGetProfile(localStorage.getItem('accessToken'))
+            .then((res) => {
+              this.$store.commit('setUser', res.data)
+              this.$store.commit('TOGGLE_LOADING', false)
+              this.dialogDelete = false
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'success',
+                message: 'Deleted classroom successfully',
+              })
+            })
+            .catch((err) => {
+              this.close()
+              this.$store.commit('TOGGLE_LOADING', false)
+              this.dialogDelete = false
+              this.$store.commit('TOGGLE_ALERT', {
+                type: 'error',
+                message: err.response.message,
+              })
+            })
+        })
+        .catch((err) => {
+          this.$store.commit('TOGGLE_LOADING', false)
+          this.dialogDelete = false
+          this.$store.commit('TOGGLE_ALERT', {
+            type: 'error',
+            message: err.response.message,
+          })
+        })
     },
   },
   computed: {
