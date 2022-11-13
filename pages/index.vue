@@ -53,13 +53,24 @@
         rounded="lg"
         elevation="1"
         color="background_card"
-        class="overflow-hidden pa-2 pa-md-5"
+        class="overflow-hidden pa-2 pa-md-5 relative"
         :class="
           isRouterHidden
             ? 'min-h-[calc(100vh-16px)]'
             : 'min-h-[calc(100vh-64px-16px)] md:min-h-[calc(100vh-64px-24px)]'
         "
       >
+        <transition name="slide-fade" mode="out-in">
+          <v-card
+            v-if="$nuxt.isOffline"
+            dark
+            color="error"
+            class="font-semibold text-sm text-center p-1 !absolute bottom-1 left-1 right-1 z-10"
+          >
+            <div>You are offline</div>
+          </v-card>
+        </transition>
+
         <transition :name="isFristLoad ? '' : 'slide-fade'" mode="out-in">
           <Nuxt v-if="!isRouterIndex && !isFristLoad" />
 

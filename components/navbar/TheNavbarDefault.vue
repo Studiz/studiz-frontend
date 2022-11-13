@@ -74,7 +74,7 @@
         fixed
         height="64"
         class="drop-shadow-md d-md-none background_card"
-        active-class="primary--text text-hidden"
+        active-class="primary--text"
         v-if="!isGuest && !isRouterHidden"
         shift
       >
