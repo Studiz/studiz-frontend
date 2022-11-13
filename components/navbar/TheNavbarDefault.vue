@@ -158,6 +158,7 @@ export default {
         localStorage.clear('user')
         localStorage.clear('userId')
         this.$store.commit('setUser', null)
+        this.$store.commit('DELETE_ALL_NOTIFICATION', null)
         this.$router.push('/join')
       })
     },

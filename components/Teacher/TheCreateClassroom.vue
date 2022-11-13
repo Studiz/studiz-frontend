@@ -2,6 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="600px" :key="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+        id="create-classroom"
         color="primary"
         class="w-full rounded-lg text-cap md:w-auto"
         height="48"

@@ -66,7 +66,7 @@
       />
     </div>
 
-    <the-waiting v-if="currentStatus === 'waiting'" />
+    <the-waiting-text v-if="currentStatus === 'waiting'" />
 
     <the-leader-board
       v-if="currentStatus === 'leaderBoard'"
@@ -95,7 +95,7 @@ import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 import TheCountDown from '~/components/quiz/TheCountDown.vue'
 import TheIntroQuestion from '~/components/quiz/TheIntroQuestion.vue'
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
-import TheWaiting from '~/components/quiz/TheWaiting.vue'
+import TheWaitingText from '~/components/TheWaitingText.vue'
 import layoutQuiz from '~/layouts/layoutQuiz.vue'
 import socket from '~/plugins/socket.io'
 
@@ -106,7 +106,7 @@ export default {
     TheCountDown,
     BaseQuestionLayoutMultiple,
     BaseQuestionText,
-    TheWaiting,
+    TheWaitingText,
     TheLeaderBoard,
     BaseQuestionLayoutTrueFalse,
     BaseQuestionLayoutPoll,
@@ -327,7 +327,6 @@ export default {
     socket.on('check-answer', (data) => {
       this.prepareBackendAnswer = data
     })
-
 
     socket.on('show-poll-result', (data) => {
       this.prepareBackendAnswer = data

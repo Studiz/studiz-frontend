@@ -1,17 +1,22 @@
 <template>
-  <div
-    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-  >
-    <div
-      class="inline-flex text-4xl font-bold items-end loading dark:loading text-right"
-    >
-      Waiting Host
-    </div>
+  <div class="inline-flex loading dark:loading text-right" :class="classFont">
+    {{ text }}
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    text: {
+      type: String,
+      default: 'Waiting Host',
+    },
+    classFont: {
+      type: String,
+      default: 'text-4xl font-bold',
+    },
+  },
+}
 </script>
 
 <style scoped>

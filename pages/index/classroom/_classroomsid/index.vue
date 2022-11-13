@@ -170,6 +170,9 @@ export default {
     isStudent() {
       return this.$store.getters.userRole == 'STUDENT' ? true : false
     },
+    userRole() {
+      return this.$store.getters.userRole
+    },
     renderClassroomName() {
       return this.classroom ? this.classroom?.name : 'No classroom name'
     },

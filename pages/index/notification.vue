@@ -22,13 +22,18 @@
         :index="i"
       />
     </div>
-    <div v-else class="text-center font-light">
+    <div v-else>
       <lottie-player
         class="custon-lottie-star w-48 h-48 mx-auto"
         autoplay
         src="https://assets10.lottiefiles.com/packages/lf20_lsklpwya.json"
       />
-      <span>No Notification</span>
+      <div class="text-center font-light space-y-2">
+        <div class="text-xl font-semibold">No Notification</div>
+        <div class="max-w-xs mx-auto">
+          When you have notifications, you will see them here.
+        </div>
+      </div>
     </div>
   </div>
 </template>

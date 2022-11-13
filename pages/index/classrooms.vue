@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="md:flex justify-between items-center space-y-2 md:space-y-0">
-      <h1 class="text-H1">Classroom</h1>
+      <h1 class="text-H1">Classrooms</h1>
 
       <v-dialog
         v-if="userRole === 'STUDENT'"
@@ -10,8 +10,10 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
+            id="join-classroom"
             v-bind="attrs"
             v-on="on"
+            v-show="classRoomList.length > 0"
             height="48"
             color="primary"
             class="text-cap w-full md:w-auto rounded-lg"
@@ -27,17 +29,19 @@
         </v-card>
       </v-dialog>
 
-      <the-create-classroom
-        :idModeEdit="idModeEditClassroom"
-        :classroomObj="classroomObjForEdit"
-        @close-dialog="idModeEditClassroom = false"
-        v-else
-      />
+      <div v-else v-show="classRoomList.length > 0">
+        <the-create-classroom
+          :idModeEdit="idModeEditClassroom"
+          :classroomObj="classroomObjForEdit"
+          @close-dialog="idModeEditClassroom = false"
+        />
+      </div>
     </div>
 
     <v-divider class="my-5" />
 
     <div
+      v-if="classRoomList.length > 0"
       class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 auto-rows-fr auto-cols-fr"
     >
       <base-classroom-item
@@ -48,6 +52,46 @@
         @open-dialog-edit-classroom="openDialogEditClassroom"
         @open-dialog-delete-classroom="openDialogDeleteClassroom"
       />
+    </div>
+
+    <div v-else>
+      <lottie-player
+        class="custon-lottie-star w-48 h-48 mx-auto"
+        autoplay
+        src="https://assets5.lottiefiles.com/packages/lf20_gepgb44u.json"
+      />
+
+      <div
+        v-if="userRole === 'STUDENT'"
+        class="text-center font-light space-y-2"
+      >
+        <div class="text-xl font-semibold">No Classroom</div>
+        <div>You can join classroom with PINCODE</div>
+        <v-btn
+          height="48"
+          color="primary"
+          class="text-cap w-full md:w-auto rounded-lg mt-4"
+          @click="clickJoinClassroom"
+          >Join classroom
+        </v-btn>
+      </div>
+
+      <div
+        v-if="userRole === 'TEACHER'"
+        class="text-center font-light space-y-2"
+      >
+        <div class="text-xl font-semibold">No Classroom</div>
+        <div class="max-w-sm mx-auto">
+          You can create a classroom for students to enter
+        </div>
+        <v-btn
+          height="48"
+          color="primary"
+          class="text-cap w-full md:w-auto rounded-lg mt-4"
+          @click="clickCreateClassroom"
+          >Create classroom
+        </v-btn>
+      </div>
     </div>
 
     <v-dialog
@@ -134,6 +178,12 @@ export default {
             message: err.response.message,
           })
         })
+    },
+    clickJoinClassroom() {
+      document.getElementById('join-classroom').click()
+    },
+    clickCreateClassroom() {
+      document.getElementById('create-classroom').click()
     },
     openDialogEditClassroom(classroomObj) {
       this.idModeEditClassroom = true
