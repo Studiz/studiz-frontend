@@ -8,7 +8,6 @@
 
     <div class="ring-1 ring-black ring-opacity-10 drop-shadow-sm rounded-lg">
       <v-data-table
-        hide-default-footer
         mobile-breakpoint="600"
         class="elevation-0 !rounded-lg cursor-pointer"
         item-key="startAtTimestamp"
@@ -20,7 +19,7 @@
         :headers="headers"
         :items="itemQuizHistory"
         :page.sync="page"
-        :items-per-page="itemsLength"
+        :items-per-page="10"
         @click:row="clickRow"
       >
         <template #top
@@ -175,7 +174,7 @@ export default {
                   (data) => data.studentAnswer
                 ).length
               })
-              item.quizData.avgAnswer = sumAnswers / memberInClass
+              item.quizData.avgAnswer = (sumAnswers / memberInClass).toFixed(2)
               item.quizData.startAt = item.quizData.startAt
               item.quizData.startAtTimestamp = Date.parse(
                 this.formatDateForParse(item.quizData.startAt)

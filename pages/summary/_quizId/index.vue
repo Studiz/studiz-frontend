@@ -126,7 +126,7 @@
           >Number of correct answers :
           {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
             numberQuestions
-          }}</v-card-text
+          }} (Not include poll)</v-card-text
         >
       </div>
     </v-card>

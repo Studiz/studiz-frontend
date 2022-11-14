@@ -34,6 +34,10 @@ export default {
     })
   },
 
+  setCreateAt(state, createAt) {
+    state.quizTemplate.createAt = createAt
+  },
+
   setLastUpdated(state, date) {
     state.quizTemplate.lastUpdated = date
   },
