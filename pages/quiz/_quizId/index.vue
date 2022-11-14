@@ -181,6 +181,7 @@ export default {
       isTimerToShowQuestion: null,
       membersInClass: [],
       numStudentAnswer: 0,
+      isPollAnswered: false,
     }
   },
   watch: {
@@ -198,6 +199,13 @@ export default {
     prepareBackendAnswer() {
       if (this.question.type === 'poll') {
         this.backendAnswer = this.prepareBackendAnswer
+      }
+    },
+    numStudentAnswer(newVal) {
+      if (this.question.type === 'poll') {
+        this.numStudentAnswer > 0
+          ? (this.isPollAnswered = true)
+          : (this.isPollAnswered = false)
       }
     },
   },
@@ -268,11 +276,12 @@ export default {
       this.userSelected = data
     },
     checkAnswer() {
-      if (this.question.type === 'poll') {
+      if (this.question.type === 'poll' && this.isPollAnswered) {
         if (this.$store.getters.userRole === 'TEACHER') {
           socket.emit('get-poll-result', {
             quizId: this.$route.params.quizId,
           })
+          this.isPollAnswered = false
         }
       } else {
         this.backendAnswer = this.prepareBackendAnswer
