@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-3 xl:space-y-5 max-w-6xl mx-auto">
+  <div class="space-y-3 xl:space-y-5 max-w-6xl mx-auto mb-16 mb-md-0">
     <v-card
       v-if="userRole == 'TEACHER'"
       flat
@@ -93,29 +93,30 @@
       class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
     />
 
-    <!-- <div class="flex md:flex-row flex-col-reverse gap-3"> -->
-
     <v-card
       flat
+      color="background_card"
       class="rounded-lg p-3 overflow-hidden drop-shadow-md flex-1 h-fit"
     >
-      <div class="flex flex-row items-center justify-center">
+      <div
+        class="flex flex-row items-center sm:justify-center relative gap-x-3"
+      >
         <v-img
-          class="rounded-full background_card"
+          class="rounded-full background_card w-16 h-16"
           :src="summaryData?.leaderboard?.winner?.image"
-          max-height="65px"
-          max-width="65px"
+          max-width="64px"
         />
-        <v-card-title
-          >The winner is
-          {{ summaryData?.leaderboard?.winner?.displayName }}</v-card-title
+        <div class="py-4 text-lg md:text-xl lg:text-2xl">
+          The winner is {{ summaryData?.leaderboard?.winner?.displayName }}
+        </div>
+        <div
+          class="absolute -left-3 -bottom-3 sm:relative sm:left-0 sm:bottom-0"
         >
-        <div>
           <lottie-player
             autoplay
             loop
             src="https://assets3.lottiefiles.com/packages/lf20_touohxv0.json"
-            style="width: 100px"
+            class="p-px background_card rounded-full w-9 sm:w-24"
           />
         </div>
       </div>
@@ -129,6 +130,7 @@
         >
       </div>
     </v-card>
+
     <the-summary-leader-board
       v-if="userRole == 'TEACHER'"
       :membersInClass="membersInClass"
@@ -145,26 +147,28 @@
     />
 
     <div
-      class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-3"
+      class="max-w-xl mx-auto background_card drop-shadow-md p-3 rounded-lg space-y-2"
       v-if="studentQuizData"
     >
-      <div class="flex justify-between">
-        <span class="text-lg font-semibold" v-if="userRole == 'TEACHER'">{{
-          student?.user?.displayName
-        }}</span>
-        <span class="text-lg font-semibold">Score: {{ studentScore }}</span>
+      <div class="flex justify-between flex-col sm:flex-row flex-wrap gap-2">
+        <span class="text-lg" v-if="userRole == 'TEACHER'">
+          User: {{ student?.user?.displayName }}
+        </span>
+        <span class="text-lg">Score: {{ studentScore }}</span>
       </div>
-      <div class="flex justify-between flex-wrap">
-        <span>Correct: {{ numberCorrectAnswers }}</span>
-        <span>Incorrect: {{ numberInCorrectAnswers }}</span>
+      <div class="flex justify-between flex-col sm:flex-row flex-wrap gap-2">
+        <span>✅ Correct: {{ numberCorrectAnswers }}</span>
+        <span>❌ Incorrect: {{ numberInCorrectAnswers }}</span>
       </div>
 
-      <base-summry-question-item
-        v-for="(question, index) in studentQuizData"
-        :key="`${question}-${index}`"
-        :index="index"
-        :question="question"
-      />
+      <div class="space-y-3">
+        <base-summry-question-item
+          v-for="(question, index) in studentQuizData"
+          :key="`${question}-${index}`"
+          :index="index"
+          :question="question"
+        />
+      </div>
     </div>
   </div>
 </template>

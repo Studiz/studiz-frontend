@@ -1,44 +1,43 @@
 <template>
   <div
     :id="`question-${question?.type}`"
-    class="p-2 pl-4 flex flex-col gap-2 items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
+    class="p-2 pl-4 pt-0 flex flex-col gap-2 items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
   >
     <div
-      class="absolute top-0 left-0 right-0 h-8 !bg-opacity-30 px-3 py-1"
+      class="w-[calc(100%+16px)] -ml-2 h-fit !bg-opacity-30 px-3 py-1"
       :class="renderIsCorrect"
     >
-      <div
-        v-if="renderIsCorrect === 'correct' || question.item"
-        class="flex justify-between w-full"
-      >
-        <div
-          v-if="renderIsCorrect === 'correct'"
-          class="text-right font-semibold text-green-500"
-        >
-          +{{ question?.score }}
+      <div class="flex justify-between gap-x-3">
+        <div class="text-xs whitespace-nowrap self-center">
+          {{ renderQuestionType() }}
         </div>
 
-        <div
-          v-if="question.item"
-          class="inline-flex items-center gap-x-1 text-xs h-6"
-        >
-          <v-icon size="12" :color="question.item.color">{{
-            question.item.icon
-          }}</v-icon>
-          <span
-            class="font-medium"
-            :class="`!text-[${question?.item?.color}]`"
-            >{{ question.item.name }}</span
+        <div class="inline-flex gap-x-3 items-center flex-wrap justify-end">
+          <div
+            v-if="question.item"
+            class="inline-flex items-center gap-x-1 text-xs self-center"
           >
+            <v-icon size="12" :color="question.item.color">{{
+              question.item.icon
+            }}</v-icon>
+            <span
+              class="font-medium whitespace-nowrap"
+              :class="`!text-[${question?.item?.color}]`"
+              >{{ question.item.name }}</span
+            >
+          </div>
+
+          <div
+            v-if="renderIsCorrect === 'correct'"
+            class="text-right font-semibold text-green-500 flex-none"
+          >
+            +{{ question?.score }}
+          </div>
         </div>
       </div>
     </div>
 
-    <div
-      v-if="question?.image || question?.score"
-      id="image"
-      class="flex flex-col self-center mt-8"
-    >
+    <div v-if="question?.image" id="image" class="flex flex-col self-center">
       <v-img
         v-if="question?.image"
         contain
@@ -106,6 +105,33 @@ export default {
           isCorrect: false,
         },
       ],
+      listQuizType: [
+        {
+          text: 'Single choice',
+          value: 'single',
+          disabled: false,
+        },
+        {
+          text: 'Multiple choice',
+          value: 'multiple',
+          disabled: false,
+        },
+        {
+          text: 'True or False',
+          value: 'true/false',
+          disabled: false,
+        },
+        {
+          text: 'Poll',
+          value: 'poll',
+          disabled: false,
+        },
+        {
+          text: 'Sort',
+          value: 'sort',
+          disabled: false,
+        },
+      ],
     }
   },
   methods: {
@@ -130,6 +156,12 @@ export default {
         })
         return index
       }
+    },
+    renderQuestionType() {
+      const type = this.listQuizType.find(
+        (type) => type.value === this.question.type
+      )
+      return type.text
     },
   },
   computed: {
