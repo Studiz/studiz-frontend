@@ -521,6 +521,9 @@ export default {
             })
           })
       } else {
+        let dateCreated = new Date()
+        dateCreated = dateCreated.toLocaleString('en-GB')
+        this.$store.commit('setCreateAt', dateCreated)
         TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
           .then((res) => {
             return res.data
@@ -590,7 +593,7 @@ export default {
       // let mm = String(dateCreated.getMonth() + 1).padStart(2, '0')
       // let yyyy = dateCreated.getFullYear()
       // dateCreated = mm + '/' + dd + '/' + yyyy
-      dateCreated = dateCreated.toLocaleString('en-GB', { timeZone: 'UTC' })
+      dateCreated = dateCreated.toLocaleString('en-GB')
 
       let teacher = structuredClone(this.$store.getters.user)
       teacher = {
