@@ -10,7 +10,7 @@
       <v-data-table
         hide-default-footer
         mobile-breakpoint="600"
-        class="elevation-0 !rounded-lg cursor-pointer"
+        class="elevation-0 !rounded-lg"
         item-key="startAtTimestamp"
         loading-text="Loading... Please wait"
         sort-by="startAtTimestamp"
@@ -255,5 +255,8 @@ export default {
 .v-data-table {
   background-color: var(--v-background-base) !important;
   @apply p-2;
+}
+:deep(tbody > tr) {
+  @apply cursor-pointer;
 }
 </style>

@@ -26,7 +26,7 @@
       <template v-slot:item.image="{ item }">
         <v-img
           v-if="item.image"
-          class="rounded-full"
+          class="rounded-full w-10 h-10 background"
           :src="item.image"
           :alt="item.name"
           max-width="40px"

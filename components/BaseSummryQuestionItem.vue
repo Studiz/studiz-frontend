@@ -4,10 +4,10 @@
     class="p-2 pl-4 pt-0 flex flex-col gap-2 items-start ring-1 ring-black/10 dark:ring-white/10 !rounded-lg overflow-hidden relative"
   >
     <div
-      class="w-[calc(100%+16px)] -ml-2 h-fit !bg-opacity-30 px-3 py-1"
+      class="w-[calc(100%+16px)] -ml-2 !bg-opacity-30 px-3 py-1"
       :class="renderIsCorrect"
     >
-      <div class="flex justify-between gap-x-3">
+      <div class="flex justify-between gap-x-3 min-h-[24px]">
         <div class="text-xs whitespace-nowrap self-center">
           {{ renderQuestionType() }}
         </div>
