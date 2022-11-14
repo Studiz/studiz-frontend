@@ -154,9 +154,11 @@
         <span class="text-lg" v-if="userRole == 'TEACHER'">
           User: {{ student?.user?.displayName }}
         </span>
-        <span class="text-lg">Score: {{ studentScore }}</span>
+        <div class="text-lg">
+          Score: <span class="font-semibold">{{ studentScore }}</span>
+        </div>
       </div>
-      <div class="flex justify-between flex-col sm:flex-row flex-wrap gap-2">
+      <div class="flex justify-between flex-col flex-wrap gap-2">
         <span>✅ Correct: {{ numberCorrectAnswers }}</span>
         <span>❌ Incorrect: {{ numberInCorrectAnswers }}</span>
       </div>
