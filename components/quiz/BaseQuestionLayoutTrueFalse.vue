@@ -84,7 +84,6 @@ export default {
       }
     },
     renderBackendAnswer() {
-      console.log(this.backendAnswer)
       this.isStepShowAnswer = true
       if (Object.keys(this.selectedChoice).length === 0) {
         this.choices.forEach((item, index) => {

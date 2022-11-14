@@ -119,11 +119,6 @@ export default {
   created() {
     this.mappingImage()
   },
-  // () {
-  //   console.log('Destroy')
-  //   this.imageInfo = []
-  //   this.previewImageList = []
-  // },
 }
 </script>
 

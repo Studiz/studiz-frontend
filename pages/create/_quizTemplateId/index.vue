@@ -521,6 +521,9 @@ export default {
             })
           })
       } else {
+        let dateCreated = new Date()
+        dateCreated = dateCreated.toLocaleString('en-GB', { timeZone: 'UTC' })
+        this.$store.commit('setCreateAt', dateCreated)
         TeacherService.createQuizTemplate(this.$store.getters.quizTemplate)
           .then((res) => {
             return res.data

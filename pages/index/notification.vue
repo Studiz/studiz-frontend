@@ -7,7 +7,7 @@
         height="48"
         color="primary"
         class="w-full md:w-auto rounded-lg"
-        @click="deleteAllNoti"
+        @click="deleteAllNotification"
       >
         <span class="normal-case">Clear all</span>
       </v-btn>
@@ -40,6 +40,8 @@
 
 <script>
 import BaseNotificationItem from '~/components/BaseNotificationItem.vue'
+import UserService from '~/services/UserService.js'
+
 export default {
   components: { BaseNotificationItem },
   head() {
@@ -48,8 +50,12 @@ export default {
     }
   },
   methods: {
-    deleteAllNoti() {
-      this.$store.commit('DELETE_ALL_NOTIFICATION')
+    deleteAllNotification() {
+      UserService.deleteAllNotification(localStorage.getItem('uid')).then(
+        (res) => {
+          this.$store.commit('DELETE_ALL_NOTIFICATION')
+        }
+      )
     },
   },
   computed: {

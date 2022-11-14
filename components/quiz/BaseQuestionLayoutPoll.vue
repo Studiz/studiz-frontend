@@ -72,7 +72,6 @@ export default {
     renderBackendAnswer() {
       this.isStepShowAnswer = true
       let mockBackendAnswer = [90, 0, 1, 40, 10, 20]
-      console.log(this.backendAnswer)
       this.choices.forEach((item, index) => {
         if (item.isSelect == false) {
           item.status = 'choice-blank'
