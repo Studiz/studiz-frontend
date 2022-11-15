@@ -3,9 +3,9 @@ export default {
     return state.classroom
   },
   students(state) {
-    return state.classroom.students ? state.classroom.students : []
+    return state.classroom?.students ? state.classroom.students : []
   },
-  quizzes(state) {
-    return state.classroom.quizzes ? state.classroom.quizzes : []
+  quizHistories(state) {
+    return state.classroom?.quizHistories ? state.classroom.quizHistories : []
   }
 };

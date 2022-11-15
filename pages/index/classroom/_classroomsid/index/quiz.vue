@@ -3,8 +3,11 @@
     class="elevation-0 !rounded-lg"
     mobile-breakpoint="0"
     :headers="headers"
-    :items="quizzes"
-    :items-per-page="10"
+    :items="quizHistories"
+    :page.sync="page"
+    :items-per-page="5"
+    @click:row="clickRow"
+    :search="search"
   >
     <template #top>
       <v-toolbar-title class="p-3 flex items-center flex-wrap gap-x-5">
@@ -19,16 +22,41 @@
         ></v-text-field>
       </v-toolbar-title>
     </template>
+
+    <template v-slot:item.startAt="{ item }">
+      <base-time-to-text :time="item.startAt" />
+    </template>
+
+    <template v-slot:item.image="{ item }">
+      <v-img
+        contain
+        class="rounded-full background_card w-10 h-10"
+        :src="item.image"
+        :alt="item.title"
+      ></v-img>
+    </template>
+
+    <template v-slot:item.winnerImage="{ item }">
+      <v-list-item-avatar color="primary" size="30px">
+        <v-img :src="item.winnerImage" :alt="item.winnerName" />
+      </v-list-item-avatar>
+    </template>
   </v-data-table>
 </template>
 
 <script>
-import ClassroomService from '~/services/ClassroomService'
+import BaseTimeToText from '~/components/BaseTimeToText.vue'
 export default {
+  components: { BaseTimeToText },
   head() {
     return {
       titleTemplate: '%s - Quiz',
     }
+  },
+  watch: {
+    itemsLength() {
+      this.showScoreDependOnRole()
+    },
   },
   data() {
     return {
@@ -37,27 +65,104 @@ export default {
         {
           text: 'Date',
           align: 'start',
-          value: 'date',
+          value: 'startAt',
         },
-        { text: 'Title', value: 'title' },
-        { text: 'Participants', align: 'end', value: 'numberOfParticipants' },
+        {
+          text: 'Image',
+          sortable: false,
+          value: 'image',
+          width: '40px',
+          align: 'center',
+        },
+        { text: 'Quiz title', value: 'title', align: 'start' },
+        {
+          text: 'Participants',
+          value: 'numberOfParticipants',
+          align: 'center',
+          width: '40px',
+          sortable: false,
+        },
+        {
+          text: '',
+          sortable: false,
+          value: 'winnerImage',
+          width: '40px',
+          align: 'center',
+        },
+        {
+          text: 'Winner',
+          align: 'start',
+          value: 'winnerName',
+        },
+        {
+          text: 'Total',
+          value: 'numberQuestions',
+          sortable: false,
+          align: 'end',
+        },
       ],
+      page: 1,
       search: '',
     }
   },
   methods: {
-    loadData() {
-      ClassroomService.getClassroom(this.$route.params.classroomsid).then(
-        (res) => {
-          this.$store.commit('setClassroom', res.data)
-          this.quizzes = this.$store.getters.quizzes
-        }
-      )
+    clickRow(item) {
+      this.$router.push({
+        name: 'summary-quizId',
+        params: {
+          quizId: item.quizId,
+        },
+      })
+    },
+    showScoreDependOnRole() {
+      if (this.isTeacher) {
+        this.headers.splice(6, 0, {
+          text: 'AVG correct',
+          value: 'avgCorrectAnswers',
+          sortable: false,
+          align: 'right',
+          class: 'avg-score-column',
+          width: 100,
+        })
+      } else {
+        this.headers.splice(6, 0, {
+          text: 'Correct Answers',
+          value: 'correctAnswers',
+          sortable: false,
+          align: 'right',
+          class: 'score-column',
+          width: 100,
+        })
+      }
     },
   },
-  created() {
-    this.loadData()
+  computed: {
+    quizHistories() {
+      return this.$store.getters.quizHistories.map((quizHistory) => {
+        return {
+          quizId: quizHistory.quizId,
+          startAt: quizHistory.quizData.startAt,
+          image: quizHistory.quizData.image,
+          title: quizHistory.quizData.title,
+          numberOfParticipants: quizHistory.leaderboard.members.length,
+          winnerImage: quizHistory.leaderboard.winner.image,
+          winnerName: quizHistory.leaderboard.winner.displayName,
+          correctAnswers: quizHistory?.members?.find(
+            (member) => member.user.uid === localStorage.getItem('uid')
+          ).numberCorrectAnswers,
+          avgCorrectAnswers: quizHistory.quizData.avgCorrectAnswers,
+          numberQuestions: quizHistory.quizData.numberQuestions,
+        }
+      })
+    },
+    itemsLength() {
+      return this.quizHistories.length
+    },
+    isTeacher() {
+      return this.$store.getters.userRole == 'TEACHER' ? true : false
+    },
   },
+  created() {},
   beforeRouteEnter(to, from, next) {
     if (from.name === 'index-classrooms') {
       history.replaceState({}, '', '/classrooms')
