@@ -620,6 +620,10 @@ export default {
         this.createQuizTemplateAndUploadImages()
       }
     },
+    removeEventListener() {
+      window.removeEventListener('beforeunload', this.leavePageHandler)
+      this.leavePageHandler = null
+    },
   },
   computed: {
     renderQuestion() {
@@ -656,6 +660,7 @@ export default {
   },
   destroyed() {
     this.resetQuizTemplate()
+    this.removeEventListener()
     this.$store.commit('setIsEditMode', false)
   },
 }
