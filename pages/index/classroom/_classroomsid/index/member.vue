@@ -58,15 +58,9 @@
     </template>
 
     <template v-slot:item.image="{ item }">
-      <div class="p-2">
-        <v-img
-          class="rounded-full"
-          :src="item.image"
-          :alt="item.name"
-          max-width="40px"
-          max-height="40px"
-        ></v-img>
-      </div>
+      <v-list-item-avatar color="primary" size="30px">
+        <v-img :src="item.image" :alt="item.name" />
+      </v-list-item-avatar>
     </template>
 
     <template #item.actions="{ item }" v-if="isTeacher">
@@ -91,7 +85,6 @@
 
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
-import ClassroomService from '~/services/ClassroomService'
 import TeacherService from '~/services/TeacherService'
 
 export default {
@@ -119,7 +112,6 @@ export default {
       { text: 'Name', value: 'name' },
       { text: '', value: 'actions', sortable: false, align: 'end' },
     ],
-    studentsInClass: [],
     selected: [],
     chooseOne: null,
 
@@ -136,28 +128,9 @@ export default {
     },
   },
 
-  created() {
-    this.loadData()
-    this.isloading = true
-  },
+  created() {},
 
   methods: {
-    loadData() {
-      ClassroomService.getClassroom(this.$route.params.classroomsid).then(
-        (res) => {
-          this.$store.commit('setClassroom', res.data)
-          this.isloading = false
-          this.studentsInClass = this.$store.getters.students.map((student) => {
-            return {
-              image: student.imageUrl,
-              displayName: student.displayName,
-              name: `${student.firstName} ${student.lastName}`,
-              id: student.id,
-            }
-          })
-        }
-      )
-    },
     removeOne(item) {
       this.propRemoveStudent = true
       this.chooseOne = item
@@ -185,8 +158,18 @@ export default {
     },
   },
   computed: {
+    studentsInClass() {
+      return this.$store.getters.students.map((student) => {
+        return {
+          image: student.imageUrl,
+          displayName: student.displayName,
+          name: `${student.firstName} ${student.lastName}`,
+          id: student.id,
+        }
+      })
+    },
     itemsPerPage() {
-      return this.studentsInClass.length
+      return this.studentsInClass?.length
     },
     isTeacher() {
       return this.$store.getters.userRole == 'TEACHER' ? true : false

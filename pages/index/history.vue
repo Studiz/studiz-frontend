@@ -99,7 +99,7 @@ export default {
           align: 'center',
         },
         {
-          text: 'Quiz name',
+          text: 'Quiz title',
           value: 'title',
         },
         {
@@ -122,7 +122,7 @@ export default {
         // },
         {
           text: 'Total',
-          value: 'totalQuestion',
+          value: 'numberQuestions',
           sortable: false,
           align: 'right',
         },
@@ -136,7 +136,7 @@ export default {
       if (this.isTeacher) {
         this.headers.splice(4, 0, {
           text: 'AVG answer',
-          value: 'avgAnswer',
+          value: 'avgCorrectAnswers',
           sortable: false,
           align: 'right',
           class: 'avg-score-column',
@@ -167,14 +167,6 @@ export default {
           .then((res) => {
             this.isloading = false
             this.itemQuizHistory = res.data.map((item) => {
-              let sumAnswers = 0
-              let memberInClass = item.members.length
-              item.members.forEach((member) => {
-                sumAnswers += member.quizData.filter(
-                  (data) => data.studentAnswer
-                ).length
-              })
-              item.quizData.avgAnswer = (sumAnswers / memberInClass).toFixed(2)
               item.quizData.startAt = item.quizData.startAt
               item.quizData.startAtTimestamp = Date.parse(
                 this.formatDateForParse(item.quizData.startAt)
