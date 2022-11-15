@@ -3,7 +3,7 @@
     <input-choice
       class="h-full"
       v-for="(item, index) in MappingAnswerWithOption"
-      :key="`${index}-${item}`"
+      :key="`${index}-${item}-${currentQuesiton}`"
       :option="item.option"
       :isCorrect="item.isCorrect"
       :index="index"
@@ -31,6 +31,15 @@ export default {
     questionType: {
       type: String,
       required: true,
+    },
+  },
+  watch: {
+    currentQuesiton() {
+      let answer
+      if (this.renderQuestionAnswer !== null) {
+        answer = this.renderQuestionAnswer ? 0 : 1
+        this.changeCorrectChoiceTrueFalse(answer)
+      }
     },
   },
   data() {
