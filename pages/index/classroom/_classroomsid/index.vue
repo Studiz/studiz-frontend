@@ -13,8 +13,8 @@
     />
 
     <div>
-      <div class="flex-wrap d-flex mb-4 -mt-5">
-        <h1 class="text-H1">
+      <div class="d-flex mb-4 -mt-5">
+        <h1 class="text-H1 truncate">
           {{ classroom ? classroom.name : '' }}
         </h1>
 
@@ -25,7 +25,12 @@
           colorBTN="secondary"
           btn2="primary"
         >
-          <template #namebtn>leave</template>
+          <template #icon>
+            <v-icon>mdi-exit-to-app</v-icon>
+          </template>
+          <template #namebtn>
+            <span class="ml-2 hidden md:block">leave</span></template
+          >
           <template #title>Are you sure to leave classroom?</template>
         </base-dialog-condition>
         <base-dialog-condition
