@@ -86,7 +86,7 @@
     </v-card>
 
     <lottie-player
-      v-if="isWinner"
+      v-if="isWinner && showAnimation"
       autoplay
       src="https://assets5.lottiefiles.com/private_files/lf30_ujs3c7ok.json"
       style="width: 500px"
@@ -126,7 +126,8 @@
           >Number of correct answers :
           {{ numberCorrectAnswers ? numberCorrectAnswers : 0 }}/{{
             numberQuestions
-          }} (Not include poll)</v-card-text
+          }}
+          (Not include poll)</v-card-text
         >
       </div>
     </v-card>
@@ -198,6 +199,8 @@ export default {
       membersInClass: [],
       studentQuizData: {},
       memberChosen: {},
+      timeoutWinner: null,
+      showAnimation: false,
     }
   },
   methods: {
@@ -297,6 +300,10 @@ export default {
       this.$router.push('/')
       localStorage.removeItem('memberId')
     })
+    this.showAnimation = true
+    this.timeoutWinner = setTimeout(() => {
+      this.showAnimation = false
+    }, 5000)
   },
   created() {},
 }

@@ -56,7 +56,7 @@
           }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link class="px-3" @click="logout()">
+      <v-list-item class="px-3" v-if="user" @click="logout()">
         <v-icon size="36px" color="red" left class="mr-4">mdi-logout</v-icon>
         <v-list-item-content>
           <v-list-item-title class="text-cap">Logout</v-list-item-title>
@@ -95,6 +95,9 @@ export default {
     user() {
       return this.$store.getters.user
     },
+    userRole() {
+      return this.$store.getters.userRole
+    },
     imageProfile() {
       return this.$store.getters.user ? this.$store.getters.user.imageUrl : ''
     },
@@ -109,7 +112,9 @@ export default {
       this.$fire.auth.signOut().then(() => {
         localStorage.clear('accessToken')
         localStorage.clear('user')
+        localStorage.clear('userId')
         this.$store.commit('setUser', null)
+        this.$store.commit('DELETE_ALL_NOTIFICATION', null)
         this.$router.push('/join')
       })
     },

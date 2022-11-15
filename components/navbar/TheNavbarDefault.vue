@@ -75,23 +75,22 @@
         height="64"
         class="drop-shadow-md d-md-none background_card"
         active-class="primary--text"
-        v-if="!isGuest && !isRouterHidden"
+        v-if="!isRouterHidden"
         shift
       >
         <v-btn
           color="background_card"
           height="64"
-          v-for="(b, index) in buttonNav"
+          v-for="(page, index) in renderNavDependOnRole"
           min-width="50"
           :key="index"
-          v-show="userRole == 'TEACHER' ? index !== 1 : index !== 2"
-          :to="b.to"
+          :to="page.to"
         >
-          <div :id="`bottom-nav-${b.title}`"></div>
+          <div :id="`bottom-nav-${page.title}`"></div>
           <span class="text text-xs tracking-tight normal-case"
-            >{{ b.title }}
+            >{{ page.title }}
           </span>
-          <v-icon>{{ b.icon }}</v-icon>
+          <v-icon>{{ page.icon }}</v-icon>
         </v-btn>
       </v-bottom-navigation>
     </transition>
@@ -116,7 +115,7 @@ export default {
           to: '/signup',
         },
       ],
-      buttonNav: [
+      buttonNavForStdent: [
         {
           title: 'Classroom',
           icon: '$vuetify.icons.classroom',
@@ -126,6 +125,23 @@ export default {
           title: 'Join quiz',
           icon: '$vuetify.icons.quiz',
           to: '/joinquiz',
+        },
+        {
+          title: 'Notification',
+          icon: '$vuetify.icons.notification',
+          to: '/notification',
+        },
+        {
+          title: 'More',
+          icon: '$vuetify.icons.more',
+          to: '/more',
+        },
+      ],
+      buttonNavForTeacher: [
+        {
+          title: 'Classroom',
+          icon: '$vuetify.icons.classroom',
+          to: '/classrooms',
         },
         {
           title: 'My library',
@@ -142,6 +158,18 @@ export default {
           icon: '$vuetify.icons.more',
           to: '/more',
         },
+      ],
+      buttonNavForGuest: [
+        {
+          title: 'Join quiz',
+          icon: '$vuetify.icons.quiz',
+          to: '/join',
+        },
+        // {
+        //   title: 'More',
+        //   icon: '$vuetify.icons.more',
+        //   to: '/more',
+        // },
       ],
       hiddenReouteName: [
         'index-history',
@@ -181,6 +209,15 @@ export default {
     },
     isRouterHidden() {
       return this.hiddenReouteName.includes(this.$route.name)
+    },
+    renderNavDependOnRole() {
+      if (this.userRole == 'STUDENT') {
+        return this.buttonNavForStdent
+      } else if (this.userRole == 'TEACHER') {
+        return this.buttonNavForTeacher
+      } else {
+        return this.buttonNavForGuest
+      }
     },
   },
 }
