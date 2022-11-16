@@ -39,10 +39,13 @@
                 />
               </div>
               <span
-                class="text-xs sm:text-base"
+                class="text-xs sm:text-base font-light"
                 :class="[expanded ? 'line-clamp-1' : 'line-clamp-3']"
               >
-                {{ notification.description }}
+                In classroom
+                <span class="font-medium">
+                  {{ notification?.classroomName }}</span
+                >
               </span>
             </div>
 
