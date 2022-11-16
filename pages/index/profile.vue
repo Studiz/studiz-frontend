@@ -84,7 +84,7 @@
         <div class="flex items-center h-16 px-4">
           <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Display name</span>
-            <span class="font-normal">{{ displayName }}</span>
+            <span class="font-normal line-clamp-1">{{ displayName }}</span>
           </div>
 
           <base-dialog-condition
@@ -122,12 +122,12 @@
           </base-dialog-condition>
         </div>
 
-        <v-divider />
+        <v-divider class="my-2 my-md-0" />
 
         <div class="flex items-center h-16 px-4">
           <div class="flex flex-col md:flex-row">
             <span class="w-40 font-semibold">Name</span>
-            <span class="font-normal">{{ name }}</span>
+            <span class="font-normal line-clamp-1">{{ name }}</span>
           </div>
           <base-dialog-condition
             @confirm="editInformation"
@@ -172,7 +172,7 @@
           </base-dialog-condition>
         </div>
 
-        <v-divider />
+        <v-divider class="my-2 md:my-0" />
 
         <div class="flex items-center h-16 px-4">
           <div class="flex flex-col md:flex-row">

@@ -56,7 +56,7 @@
         class="overflow-hidden pa-2 pa-md-5 relative"
         :class="
           isRouterHidden
-            ? 'min-h-[calc(100vh-16px)]'
+            ? 'min-h-[calc(100vh-16px)] md:min-h-[calc(100vh-64px-24px)]'
             : 'min-h-[calc(100vh-64px-16px)] md:min-h-[calc(100vh-64px-24px)]'
         "
       >
