@@ -86,6 +86,8 @@
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import TeacherService from '~/services/TeacherService'
+import ClassroomService from '~/services/ClassroomService'
+import socket from '~/plugins/socket.io'
 
 export default {
   components: { BaseDialogCondition },
@@ -131,6 +133,14 @@ export default {
   created() {},
 
   methods: {
+    loadData() {
+      ClassroomService.getClassroom(this.$route.params.classroomsid).then(
+        (res) => {
+          this.$store.commit('setClassroom', res.data)
+          this.isloading = false
+        }
+      )
+    },
     removeOne(item) {
       this.propRemoveStudent = true
       this.chooseOne = item
@@ -148,10 +158,12 @@ export default {
         this.$route.params.classroomsid,
         this.chooseOne.id
       ).then((res) => {
+        socket.emit('delete-event-classroom', this.$route.params.classroomsid)
         this.$store.commit('TOGGLE_ALERT', {
           type: 'success',
           message: res.data,
         })
+        this.isloading = true
         this.loadData()
         this.propRemoveStudent = false
       })

@@ -36,10 +36,11 @@
       ></v-img>
     </template>
 
-    <template v-slot:item.winnerImage="{ item }">
-      <v-list-item-avatar color="primary" size="30px">
+    <template v-slot:item.winnerName="{ item }">
+      <v-avatar color="primary" size="40px">
         <v-img :src="item.winnerImage" :alt="item.winnerName" />
-      </v-list-item-avatar>
+      </v-avatar>
+      <span class="pl-2"> {{ item.winnerName }} </span>
     </template>
   </v-data-table>
 </template>
@@ -53,11 +54,7 @@ export default {
       titleTemplate: '%s - Quiz',
     }
   },
-  watch: {
-    itemsLength() {
-      this.showScoreDependOnRole()
-    },
-  },
+  watch: {},
   data() {
     return {
       quizzes: [],
@@ -81,13 +78,6 @@ export default {
           align: 'center',
           width: '40px',
           sortable: false,
-        },
-        {
-          text: '',
-          sortable: false,
-          value: 'winnerImage',
-          width: '40px',
-          align: 'center',
         },
         {
           text: 'Winner',
@@ -116,7 +106,7 @@ export default {
     },
     showScoreDependOnRole() {
       if (this.isTeacher) {
-        this.headers.splice(6, 0, {
+        this.headers.splice(5, 0, {
           text: 'AVG correct',
           value: 'avgCorrectAnswers',
           sortable: false,
@@ -125,7 +115,7 @@ export default {
           width: 100,
         })
       } else {
-        this.headers.splice(6, 0, {
+        this.headers.splice(5, 0, {
           text: 'Correct Answers',
           value: 'correctAnswers',
           sortable: false,
@@ -149,7 +139,7 @@ export default {
           winnerName: quizHistory.leaderboard.winner.displayName,
           correctAnswers: quizHistory?.members?.find(
             (member) => member.user.uid === localStorage.getItem('uid')
-          ).numberCorrectAnswers,
+          )?.numberCorrectAnswers,
           avgCorrectAnswers: quizHistory.quizData.avgCorrectAnswers,
           numberQuestions: quizHistory.quizData.numberQuestions,
         }
@@ -162,7 +152,9 @@ export default {
       return this.$store.getters.userRole == 'TEACHER' ? true : false
     },
   },
-  created() {},
+  created() {
+    this.showScoreDependOnRole()
+  },
   beforeRouteEnter(to, from, next) {
     if (from.name === 'index-classrooms') {
       history.replaceState({}, '', '/classrooms')

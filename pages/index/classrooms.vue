@@ -133,6 +133,8 @@ import TeacherService from '../../services/TeacherService.js'
 import TheCreateClassroom from '~/components/Teacher/TheCreateClassroom.vue'
 import BaseClassroomItem from '~/components/BaseClassroomItem.vue'
 import TheInputJoin from '~/components/TheInputJoin.vue'
+import socket from '~/plugins/socket.io'
+
 export default {
   components: { TheCreateClassroom, TheInputJoin, BaseClassroomItem },
   head() {
@@ -169,6 +171,11 @@ export default {
               type: 'success',
               message: 'Joined classroom successfully',
             })
+            socket.emit(
+              'join-classrooms',
+              this.$store.getters.classRooms.map((classRoom) => classRoom.id)
+            )
+
             this.$router.push('/classrooms')
           })
         })
@@ -198,6 +205,8 @@ export default {
       this.$store.commit('TOGGLE_LOADING', true)
       TeacherService.deleteClassroom(this.classroomObjForDelete.id)
         .then((res) => {
+          socket.emit('delete-event-classroom', this.classroomObjForDelete.id)
+          socket.emit('leave-classrooms', this.classroomObjForDelete.id)
           UserService.signInGetProfile(localStorage.getItem('accessToken'))
             .then((res) => {
               this.$store.commit('setUser', res.data)

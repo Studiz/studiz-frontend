@@ -56,11 +56,19 @@ export default {
           this.$store.commit('SET_NOTIFICATION', res.data)
         }
       )
-
       this.$store.commit('TOGGLE_ALERT', {
         type: 'info',
         message: `Quiz ${notificationData.title} is starting`,
       })
+    })
+
+    socket.on('event-deleted', (classroomId) => {
+      UserService.signInGetProfile(localStorage.getItem('accessToken')).then(
+        (res) => {
+          this.$store.commit('setUser', res.data)
+        }
+      )
+      socket.emit('leave-classrooms', classroomId)
     })
 
     setTimeout(() => {
