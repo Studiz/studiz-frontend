@@ -21,7 +21,7 @@
           >
             <div class="min-w-[0vw] max-w-[100vw] my-auto overflow-hidden">
               <div
-                class="truncate pl-2"
+                class="truncate"
                 :class="[notification.isRead ? 'isRead' : 'font-bold new']"
               >
                 <span class="sm:text-xl">
@@ -34,12 +34,15 @@
                   :showTooltip="false"
                 />
               </div>
-              <div
-                class="text-xs sm:text-base pl-2"
+              <span
+                class="text-xs sm:text-base font-light"
                 :class="[expanded ? 'line-clamp-1' : 'line-clamp-3']"
               >
-                {{ notification.description }}
-              </div>
+                In classroom
+                <span class="font-medium">
+                  {{ notification?.classroomName }}</span
+                >
+              </span>
             </div>
 
             <div class="inline-flex gap-x-2">
@@ -153,7 +156,7 @@ export default {
 }
 
 :deep(.v-alert__icon) {
-  @apply !min-w-[20px] !h-5 sm:!min-w-[32px] sm:!h-8 md:!min-w-[48px] md:!h-12;
+  @apply !min-w-[20px] !w-5 !h-5 sm:!min-w-[32px] sm:!h-8 md:!min-w-[48px] md:!h-12;
 }
 
 :deep(.v-icon) {

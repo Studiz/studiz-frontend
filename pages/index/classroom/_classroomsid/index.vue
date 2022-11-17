@@ -106,6 +106,7 @@ import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import ClassroomService from '~/services/ClassroomService'
 import StudentService from '~/services/StudentService'
 import UserService from '~/services/UserService'
+import socket from '~/plugins/socket.io'
 export default {
   components: { BaseDialogCondition },
   head() {
@@ -147,6 +148,7 @@ export default {
         this.$store.getters.userId
       )
         .then(() => {
+          socket.emit('leave-classrooms', this.$route.params.classroomsid)
           UserService.signInGetProfile(
             localStorage.getItem('accessToken')
           ).then((res) => {

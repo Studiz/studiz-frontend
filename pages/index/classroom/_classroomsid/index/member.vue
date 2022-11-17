@@ -58,15 +58,9 @@
     </template>
 
     <template v-slot:item.image="{ item }">
-      <div class="p-2">
-        <v-img
-          class="rounded-full"
-          :src="item.image"
-          :alt="item.name"
-          max-width="40px"
-          max-height="40px"
-        ></v-img>
-      </div>
+      <v-list-item-avatar color="primary" size="30px">
+        <v-img :src="item.image" :alt="item.name" />
+      </v-list-item-avatar>
     </template>
 
     <template #item.actions="{ item }" v-if="isTeacher">
@@ -91,8 +85,9 @@
 
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
-import ClassroomService from '~/services/ClassroomService'
 import TeacherService from '~/services/TeacherService'
+import ClassroomService from '~/services/ClassroomService'
+import socket from '~/plugins/socket.io'
 
 export default {
   components: { BaseDialogCondition },
@@ -119,7 +114,6 @@ export default {
       { text: 'Name', value: 'name' },
       { text: '', value: 'actions', sortable: false, align: 'end' },
     ],
-    studentsInClass: [],
     selected: [],
     chooseOne: null,
 
@@ -136,10 +130,7 @@ export default {
     },
   },
 
-  created() {
-    this.loadData()
-    this.isloading = true
-  },
+  created() {},
 
   methods: {
     loadData() {
@@ -147,14 +138,6 @@ export default {
         (res) => {
           this.$store.commit('setClassroom', res.data)
           this.isloading = false
-          this.studentsInClass = this.$store.getters.students.map((student) => {
-            return {
-              image: student.imageUrl,
-              displayName: student.displayName,
-              name: `${student.firstName} ${student.lastName}`,
-              id: student.id,
-            }
-          })
         }
       )
     },
@@ -175,18 +158,30 @@ export default {
         this.$route.params.classroomsid,
         this.chooseOne.id
       ).then((res) => {
+        socket.emit('delete-event-classroom', this.$route.params.classroomsid)
         this.$store.commit('TOGGLE_ALERT', {
           type: 'success',
           message: res.data,
         })
+        this.isloading = true
         this.loadData()
         this.propRemoveStudent = false
       })
     },
   },
   computed: {
+    studentsInClass() {
+      return this.$store.getters.students.map((student) => {
+        return {
+          image: student.imageUrl,
+          displayName: student.displayName,
+          name: `${student.firstName} ${student.lastName}`,
+          id: student.id,
+        }
+      })
+    },
     itemsPerPage() {
-      return this.studentsInClass.length
+      return this.studentsInClass?.length
     },
     isTeacher() {
       return this.$store.getters.userRole == 'TEACHER' ? true : false
