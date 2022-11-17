@@ -409,7 +409,7 @@ export default {
   border-radius: 50px;
 }
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary-base);
+  background: var(--v-primary-darken3);
   border-radius: 50px;
 }
 </style>

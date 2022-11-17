@@ -119,7 +119,7 @@
         v-model="drawerQuizList"
         mobile-breakpoint="1264"
         width="208"
-        class="!h-64 lg:!h-full scrollbar"
+        class="!h-72 lg:!h-full scrollbar"
       >
         <v-list nav class="py-3 py-lg-2">
           <draggable
@@ -130,7 +130,7 @@
           >
             <transition-group
               type="transition"
-              class="gap-2 flex lg:flex-col overflow-auto scrollbar py-1 py-lg-0"
+              class="gap-2 flex lg:flex-col overflow-auto scrollbar py-2 py-lg-0"
             >
               <thumbnail
                 v-for="(item, index) in newDataQuestion"
@@ -181,7 +181,7 @@
       </v-navigation-drawer>
 
       <v-main>
-        <v-container fluid class="px-1 px-sm-3">
+        <v-container fluid class="px-1 px-lg-2">
           <slot />
         </v-container>
       </v-main>
@@ -391,12 +391,12 @@ export default {
 }
 :deep(.scrollbar
     > .v-navigation-drawer__content::-webkit-scrollbar-thumb:hover) {
-  background: var(--v-primary-base);
+  background: var(--v-primary-darken3);
   border-radius: 50px;
 }
 .scrollbar::-webkit-scrollbar {
   width: 5px;
-  height: 5px;
+  height: 8px;
 }
 .scrollbar::-webkit-scrollbar-track {
   background: transparent;
@@ -407,7 +407,7 @@ export default {
   border-radius: 50px;
 }
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--v-primary-base);
+  background: var(--v-primary-darken3);
   border-radius: 50px;
 }
 </style>
