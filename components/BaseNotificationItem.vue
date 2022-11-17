@@ -21,7 +21,7 @@
           >
             <div class="min-w-[0vw] max-w-[100vw] my-auto overflow-hidden">
               <div
-                class="truncate"
+                class="truncate pl-2"
                 :class="[notification.isRead ? 'isRead' : 'font-bold new']"
               >
                 <span class="sm:text-xl">
@@ -35,7 +35,7 @@
                 />
               </div>
               <span
-                class="text-xs sm:text-base font-light"
+                class="text-xs sm:text-base font-light pl-2"
                 :class="[expanded ? 'line-clamp-1' : 'line-clamp-3']"
               >
                 In classroom
