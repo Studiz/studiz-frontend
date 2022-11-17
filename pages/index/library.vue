@@ -17,6 +17,21 @@
 
     <v-divider class="my-5" />
 
+    <v-form ref="form" lazy-validation @submit.prevent="searchQuizTemplate">
+      <v-text-field
+        solo
+        v-model="searchQuizText"
+        prepend-inner-icon="mdi-magnify"
+        type="search"
+        @keypress.enter="searchQuizTemplate"
+      >
+        <template v-slot:label>
+          Search quiz <strong>name</strong> or
+          <strong><span class="hidden sm:inline">subject</span> tag</strong>
+        </template>
+      </v-text-field>
+    </v-form>
+
     <div v-if="isloadData" class="mx-auto w-fit">
       <the-waiting-text text="loading" classFont="" class="text-lg" />
     </div>
@@ -85,6 +100,7 @@ export default {
       },
       quizTemplates: [],
       isloadData: false,
+      searchQuizText: '',
     }
   },
   methods: {
@@ -98,6 +114,19 @@ export default {
         name: 'create-quizTemplateId',
         params: { quizTemplateId: 'new' },
       })
+    },
+    searchQuizTemplate() {
+      console.log('searchQuizTemplate')
+      // this.isloadData = true
+      // TeacherService.getQuizTemplates()
+      //   .then((response) => {
+      //     this.quizTemplates = response.data
+      //     this.isloadData = false
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //     this.isloadData = false
+      //   })                                 // AI Generated
     },
   },
   computed: {

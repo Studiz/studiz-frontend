@@ -12,23 +12,38 @@
       class="self-center background_card rounded-md"
     />
     <div class="flex flex-col gap-4">
-      <div class="flex w-full">
-        <div class="text-h5">
-          <span class="font-bold line-clamp-1">{{ quizTemplate.title }}</span>
+      <div class="flex flex-wrap w-full gap-2">
+        <div class="text-h5 font-bold line-clamp-1">
+          {{ quizTemplate.title }}
         </div>
+
+        <v-chip v-for="tag in quizTemplate?.tags" :key="tag">{{ tag }}</v-chip>
         <v-spacer></v-spacer>
         <div
-          class="absolute top-2 right-2 group-hover:visible group-hover:opacity-100 group-hover:w-auto group-hover:h-auto lg:opacity-0 lg:invisible transition-all"
+          class="absolute top-2 inline-flex gap-2 right-2 group-hover:visible group-hover:opacity-100 group-hover:w-auto group-hover:h-auto lg:opacity-0 lg:invisible transition-all"
         >
-          <v-btn icon center @click="editQuizTemplate">
-            <v-icon>$vuetify.icons.edit</v-icon>
-          </v-btn>
+          <div class="ring-1 ring-black ring-opacity-10 rounded-full">
+            <v-btn
+              fab
+              small
+              class="background_card elevation-0"
+              @click="editQuizTemplate"
+            >
+              <v-icon>$vuetify.icons.edit</v-icon>
+            </v-btn>
+          </div>
 
           <v-dialog v-model="dialogDelete" width="400">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon center v-bind="attrs" v-on="on">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
+              <div
+                v-bind="attrs"
+                v-on="on"
+                class="ring-1 ring-black ring-opacity-10 rounded-full"
+              >
+                <v-btn fab small class="background_card elevation-0">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </div>
             </template>
             <v-card>
               <v-card-title>

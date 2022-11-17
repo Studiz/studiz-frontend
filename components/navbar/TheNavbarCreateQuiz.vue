@@ -99,10 +99,10 @@
                     'Health and hygeine',
                     'Other',
                   ]"
-                  label="Choose relevant subject"
+                  label="Subject Tags"
                   :rules="[rules.required]"
                   v-model="quizTags"
-                  multiple
+                  deletable-chips
                   outlined
                   chips
                 ></v-autocomplete>
