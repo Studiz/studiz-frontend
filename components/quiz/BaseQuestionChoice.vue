@@ -81,10 +81,8 @@ export default {
         return 'md:text-lg lg:text-xl'
       } else if (length > 69) {
         return 'md:text-xl lg:text-2xl'
-      } else if (length > 24) {
+      } else if (length > 39) {
         return 'md:text-3xl lg:text-4xl'
-      } else if (length > 6) {
-        return 'md:text-4xl lg:text-5xl xl:text-6xl'
       } else if (length > 0) {
         return 'text-2xl md:text-3xl lg:text-4xl xl:text-5xl'
       }
