@@ -70,7 +70,7 @@
         <v-btn
           height="48"
           color="primary"
-          class="text-cap w-full md:w-auto rounded-lg mt-4"
+          class="text-cap rounded-lg mt-4"
           @click="clickJoinClassroom"
           >Join classroom
         </v-btn>
@@ -87,7 +87,7 @@
         <v-btn
           height="48"
           color="primary"
-          class="text-cap w-full md:w-auto rounded-lg mt-4"
+          class="text-cap rounded-lg mt-4"
           @click="clickCreateClassroom"
           >Create classroom
         </v-btn>
