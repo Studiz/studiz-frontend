@@ -24,6 +24,7 @@
       ]"
       autocomplete="off"
       @keypress="filterNumber()"
+      @keypress.enter="join()"
     />
 
     <slot></slot>

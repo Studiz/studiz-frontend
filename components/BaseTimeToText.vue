@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <v-tooltip bottom v-if="showTooltip">
       <template v-slot:activator="{ on, attrs }">
         <span v-bind="attrs" v-on="on" :class="textClass">
@@ -8,12 +8,11 @@
       </template>
       <span>{{ time }}</span>
     </v-tooltip>
-    <div v-else>
-      <span class="cursor-default" :class="textClass">
-        {{ timeToWords(formatDateForParse(time)) }}
-      </span>
-    </div>
-  </div>
+
+    <span v-else class="cursor-default" :class="textClass">
+      {{ timeToWords(formatDateForParse(time)) }}
+    </span>
+  </span>
 </template>
 
 <script>
