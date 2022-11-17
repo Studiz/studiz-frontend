@@ -183,7 +183,7 @@ export default {
           this.$store.commit('TOGGLE_LOADING', false)
           this.$store.commit('TOGGLE_ALERT', {
             type: 'error',
-            message: err.response.message,
+            message: err.response.data,
           })
         })
     },
@@ -223,7 +223,7 @@ export default {
               this.dialogDelete = false
               this.$store.commit('TOGGLE_ALERT', {
                 type: 'error',
-                message: err.response.message,
+                message: err.response.data,
               })
             })
         })

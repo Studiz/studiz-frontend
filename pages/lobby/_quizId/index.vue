@@ -150,6 +150,7 @@
 import LayoutQuiz from '~/layouts/layoutQuiz.vue'
 import TeacherService from '~/services/TeacherService'
 import StudentService from '~/services/StudentService'
+import UserService from '~/services/UserService.js'
 import { v4 as uuidv4 } from 'uuid'
 import socket from '~/plugins/socket.io'
 
@@ -320,12 +321,31 @@ export default {
         .then((res) => {
           this.$store.commit('setPinCode', res.data.pinCode)
           this.$store.commit('setQuizData', res.data.quizTemplate)
-          this.joinRoom()
-          this.$store.commit('TOGGLE_LOADING', false)
-          this.$store.commit('TOGGLE_ALERT', {
-            type: 'success',
-            message: 'Joined',
-          })
+        })
+        .then(() => {
+          if (localStorage.getItem('accessToken')) {
+            UserService.signInGetProfile(localStorage.getItem('accessToken'))
+              .then((res) => {
+                this.$store.commit('setUser', res.data)
+
+                this.$store.commit('TOGGLE_LOADING', false)
+                this.$store.commit('TOGGLE_ALERT', {
+                  type: 'success',
+                  message: 'Joined',
+                })
+                this.joinRoom()
+              })
+              .catch((err) => {
+                this.$store.commit('TOGGLE_LOADING', false)
+                this.$store.commit('TOGGLE_ALERT', {
+                  type: 'error',
+                  message: err.response.data,
+                })
+              })
+          } else {
+            this.joinRoom()
+            this.$store.commit('TOGGLE_LOADING', false)
+          }
         })
         .catch((err) => {
           if (err.response?.status === 400) {
@@ -345,6 +365,16 @@ export default {
         })
     }
   },
+}
+
+window.onbeforeunload = function (e) {
+  e = e || window.event
+  // For IE and Firefox prior to version 4
+  if (e) {
+    socket.disconnect()
+  }
+  // For Safari
+  socket.disconnect()
 }
 </script>
 
