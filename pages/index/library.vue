@@ -17,9 +17,15 @@
 
     <v-divider class="my-5" />
 
-    <v-form ref="form" lazy-validation @submit.prevent="searchQuizTemplate">
+    <v-form
+      ref="form"
+      lazy-validation
+      @submit.prevent="searchQuizTemplate"
+      class="space-y-2 mb-3"
+    >
       <v-text-field
         solo
+        hide-details
         v-model="searchQuizText"
         prepend-inner-icon="mdi-magnify"
         type="search"
@@ -30,6 +36,12 @@
           <strong><span class="hidden sm:inline">subject</span> tag</strong>
         </template>
       </v-text-field>
+
+      <v-chip-group multiple active-class="primary--text" @change="chooseTag">
+        <v-chip v-for="tag in 20" :key="tag" filter outlined>
+          {{ tag }} tag
+        </v-chip>
+      </v-chip-group>
     </v-form>
 
     <div v-if="isloadData" class="mx-auto w-fit">
@@ -117,6 +129,9 @@ export default {
     },
     searchQuizTemplate() {
       console.log('searchQuizTemplate') // AI Generated
+    },
+    chooseTag(event) {
+      console.log('chooseTag', event) // AI Generated
     },
   },
   computed: {
