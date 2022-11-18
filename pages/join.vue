@@ -57,6 +57,7 @@
             <v-container>
               <v-text-field
                 label="Dsiplay name"
+                type="text"
                 outlined
                 required
                 :rules="rules.nameRules"

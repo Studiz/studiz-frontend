@@ -70,6 +70,7 @@
               <div class="w-full">
                 <v-text-field
                   label="Title"
+                  type="text"
                   outlined
                   required
                   v-model="quizTitle"
@@ -78,6 +79,7 @@
                 ></v-text-field>
                 <v-textarea
                   label="Description"
+                  type="text"
                   outlined
                   required
                   v-model="quizDescription"
@@ -105,6 +107,7 @@
                   deletable-chips
                   outlined
                   chips
+                  multiple
                 ></v-autocomplete>
               </div>
               <div class="w-full space-y-5">

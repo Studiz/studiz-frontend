@@ -18,6 +18,7 @@
         <v-form ref="form" lazy-validation @submit.prevent="submit">
           <v-text-field
             required
+            type="email"
             label="E-mail"
             outlined
             v-model.trim="email"

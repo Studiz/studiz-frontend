@@ -28,6 +28,7 @@
         <v-container>
           <v-text-field
             label="Classroom name"
+            type="text"
             outlined
             required
             v-model="data.name"
@@ -36,12 +37,13 @@
           ></v-text-field>
           <v-text-field
             label="Description"
+            type="text"
             outlined
             v-model="data.description"
             :rules="rules.descriptionRules"
             :counter="100"
           ></v-text-field>
-          <v-autocomplete
+          <!-- <v-autocomplete
             :items="[
               'Reading',
               'Writing',
@@ -62,7 +64,7 @@
             multiple
             outlined
             chips
-          ></v-autocomplete>
+          ></v-autocomplete> -->
 
           <div>Theme colors</div>
           <v-radio-group
@@ -75,10 +77,11 @@
               on-icon="mdi-checkbox-marked-circle"
               v-for="color in colors"
               :key="color.classColor"
-              color="white"
               :value="color.classColor"
               :class="color.classColor"
               class="bg-gradient-to-br"
+              color="white"
+              type="radio"
             >
             </v-radio>
             <!-- :label="color.label" -->

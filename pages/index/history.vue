@@ -30,6 +30,7 @@
               label="Search"
               single-line
               hide-details
+              type="text"
             ></v-text-field>
           </v-toolbar-title>
         </template>

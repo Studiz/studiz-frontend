@@ -115,6 +115,7 @@
                     :rules="rules.nameRules"
                     :counter="50"
                     v-model="newDisplayName"
+                    type="text"
                   ></v-text-field>
                 </v-container>
               </v-form>
@@ -157,6 +158,7 @@
                     :rules="rules.nameRules"
                     :counter="50"
                     v-model="newFirstName"
+                    type="text"
                   ></v-text-field>
                   <v-text-field
                     label="Last name"
@@ -165,6 +167,7 @@
                     :rules="rules.nameRules"
                     :counter="50"
                     v-model="newLastName"
+                    type="text"
                   ></v-text-field>
                 </v-container>
               </v-form>

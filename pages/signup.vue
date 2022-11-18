@@ -31,6 +31,8 @@
               <v-form ref="form" lazy-validation @submit.prevent="submitEmail">
                 <v-text-field
                   required
+                  type="email"
+                  id="email"
                   label="E-mail"
                   outlined
                   v-model.trim="data.email"
@@ -134,12 +136,15 @@
                 ref="form2"
                 lazy-validation
                 @submit.prevent="createAccount"
+                autocomplete="off"
               >
                 <v-text-field
                   v-model.trim="data.fname"
                   :counter="30"
                   :rules="rules.nameRules"
                   label="First name"
+                  id="fname"
+                  type="text"
                   outlined
                   required
                 ></v-text-field>
@@ -148,6 +153,8 @@
                   :counter="30"
                   :rules="rules.nameRules"
                   label="Last name"
+                  id="lname"
+                  type="text"
                   outlined
                   required
                 ></v-text-field>
@@ -155,19 +162,23 @@
                   required
                   v-model="first_password"
                   outlined
+                  @keypress="inputPassword"
+                  id="new-password"
                   :append-icon="show_password1 ? 'mdi-eye' : 'mdi-eye-off'"
                   :rules="[rules.required, rules.min]"
                   :type="show_password1 ? 'text' : 'password'"
                   label="Password"
                   @click:append="show_password1 = !show_password1"
                 ></v-text-field>
+                <div></div>
                 <v-text-field
                   required
                   v-model="confirm_password"
                   outlined
+                  id="new-password"
                   :append-icon="show_password2 ? 'mdi-eye' : 'mdi-eye-off'"
                   :rules="rules.confirmPass"
-                  :type="show_password2 ? 'text' : 'password'"
+                  :type="show_password2 ? 'text' : 'pass'"
                   label="Confirm Password"
                   @click:append="show_password2 = !show_password2"
                 ></v-text-field>
@@ -220,7 +231,7 @@ export default {
       textError: '',
       first_password: '',
       confirm_password: '',
-      show_password1: false,
+      show_password1: true,
       show_password2: false,
       loading: false,
       isGoogleAccount: false,
@@ -304,6 +315,9 @@ export default {
     },
     async selectRole() {
       this.stepPage = 3
+    },
+    inputPassword() {
+      this.show_password1 = false
     },
     signUpWithGoogleAccount() {
       let userData = JSON.parse(localStorage.getItem('googleAccountSignUp'))
