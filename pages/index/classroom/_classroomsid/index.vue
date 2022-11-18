@@ -193,12 +193,18 @@ export default {
     }, 500)
   },
   created() {
-    ClassroomService.getClassroom(this.$route.params.classroomsid).then(
-      (res) => {
+    ClassroomService.getClassroom(this.$route.params.classroomsid)
+      .then((res) => {
         this.classroom = res.data
         this.$store.commit('setClassroom', res.data)
-      }
-    )
+      })
+      .catch((err) => {
+        this.$store.commit('TOGGLE_ALERT', {
+          type: 'error',
+          message: err.response.data,
+        })
+        this.$router.push('/classrooms')
+      })
   },
 }
 </script>
