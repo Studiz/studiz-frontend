@@ -31,15 +31,12 @@
         type="search"
         @keypress.enter="searchQuizTemplate"
       >
-        <template v-slot:label>
-          Search quiz <strong>name</strong> or
-          <strong><span class="hidden sm:inline">subject</span> tag</strong>
-        </template>
+        <template v-slot:label> Search quiz <strong>title</strong> </template>
       </v-text-field>
 
       <v-chip-group multiple active-class="primary--text" @change="chooseTag">
-        <v-chip v-for="tag in 20" :key="tag" filter outlined>
-          {{ tag }} tag
+        <v-chip v-for="tag in allTag" :key="tag" :value="tag" filter outlined>
+          {{ tag }}
         </v-chip>
       </v-chip-group>
     </v-form>
@@ -85,6 +82,7 @@ import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import TheWaitingText from '~/components/TheWaitingText.vue'
 import BaseQuizTemplateItem from '~/components/Teacher/BaseQuizTemplateItem.vue'
 import TeacherService from '~/services/TeacherService'
+import QuizService from '~/services/QuizService'
 
 export default {
   components: { BaseDialogCondition, BaseQuizTemplateItem, TheWaitingText },
@@ -110,9 +108,11 @@ export default {
             'DescriptionRules must be less than 10 characters',
         ],
       },
+      quizTemplatesData: [],
       quizTemplates: [],
       isloadData: false,
       searchQuizText: '',
+      allTag: '',
     }
   },
   methods: {
@@ -131,7 +131,18 @@ export default {
       console.log('searchQuizTemplate') // AI Generated
     },
     chooseTag(event) {
-      console.log('chooseTag', event) // AI Generated
+      this.quizTemplates = structuredClone(this.quizTemplatesData)
+      if (event.length > 0) {
+        this.quizTemplates = this.quizTemplatesData.filter((quizTemplate) => {
+          let isMatch = false
+          event.forEach((tag) => {
+            if (quizTemplate.tags.includes(tag)) {
+              isMatch = true
+            }
+          })
+          return isMatch
+        })
+      }
     },
   },
   computed: {
@@ -143,14 +154,9 @@ export default {
     },
     quizTemplateList() {
       return this.quizTemplates.filter((quizTemplate) => {
-        return (
-          quizTemplate.title
-            .toLowerCase()
-            .includes(this.searchQuizText.toLowerCase()) ||
-          quizTemplate.tags.some((tag) => {
-            return tag.toLowerCase().includes(this.searchQuizText.toLowerCase())
-          })
-        )
+        return quizTemplate.title
+          .toLowerCase()
+          .includes(this.searchQuizText.toLowerCase())
       })
     },
   },
@@ -158,7 +164,7 @@ export default {
     this.isloadData = true
     TeacherService.getQuizTemplate(localStorage.getItem('userId')).then(
       (res) => {
-        this.quizTemplates = res.data.sort((a, b) => {
+        this.quizTemplatesData = res.data.sort((a, b) => {
           let dateA = Date.parse(
             a.lastUpdated
               .replace(/(\/)/gi, '-')
@@ -172,9 +178,14 @@ export default {
           )
           return dateA < dateB ? 1 : -1
         })
+        this.quizTemplates = structuredClone(this.quizTemplatesData)
         this.isloadData = false
       }
     )
+    QuizService.getAllTag().then((res) => {
+      this.allTag = res.data.map((item) => item.tag)
+      this.allTag.push('Other')
+    })
   },
 }
 </script>

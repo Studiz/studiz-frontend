@@ -87,20 +87,7 @@
                   :rules="rules.quizDescription"
                 ></v-textarea>
                 <v-autocomplete
-                  :items="[
-                    'Reading',
-                    'Writing',
-                    'Coding',
-                    'Art',
-                    'Music',
-                    'Chemistry',
-                    'Physics',
-                    'Science',
-                    'Biology',
-                    'Mmathematics',
-                    'Health and hygeine',
-                    'Other',
-                  ]"
+                  :items="allTag"
                   label="Subject Tags"
                   :rules="[rules.required]"
                   v-model="quizTags"
@@ -178,6 +165,7 @@
 <script>
 import BaseDialogCondition from '../BaseDialogCondition.vue'
 import BaseButtonLightDarkMode from './BaseButtonLightDarkMode.vue'
+import QuizService from '~/services/QuizService'
 
 export default {
   components: { BaseDialogCondition, BaseButtonLightDarkMode },
@@ -208,6 +196,7 @@ export default {
           },
         ],
       },
+      allTag:[]
     }
   },
   computed: {
@@ -268,6 +257,12 @@ export default {
       this.quizImage = this.$store.getters.quizTemplate.image
       this.forceOpenDialog()
     }, 1000)
+  },
+  created() {
+    QuizService.getAllTag().then((res) => {
+      this.allTag = res.data.map((item) => item.tag)
+      this.allTag.push('Other')
+    })
   },
 }
 </script>
