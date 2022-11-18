@@ -38,7 +38,7 @@
 
     <div v-else-if="quizTemplatesLength > 0" class="space-y-2">
       <base-quiz-template-item
-        v-for="quizTemplate in quizTemplates"
+        v-for="quizTemplate in quizTemplateList"
         :quizTemplate="quizTemplate"
         :key="quizTemplate.id"
         @delete-quiz-template="deleteQuizTemplate"
@@ -116,17 +116,7 @@ export default {
       })
     },
     searchQuizTemplate() {
-      console.log('searchQuizTemplate')
-      // this.isloadData = true
-      // TeacherService.getQuizTemplates()
-      //   .then((response) => {
-      //     this.quizTemplates = response.data
-      //     this.isloadData = false
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //     this.isloadData = false
-      //   })                                 // AI Generated
+      console.log('searchQuizTemplate') // AI Generated
     },
   },
   computed: {
@@ -135,6 +125,18 @@ export default {
     },
     userRole() {
       return this.$store.getters.userRole ? this.$store.getters.userRole : ''
+    },
+    quizTemplateList() {
+      return this.quizTemplates.filter((quizTemplate) => {
+        return (
+          quizTemplate.title
+            .toLowerCase()
+            .includes(this.searchQuizText.toLowerCase()) ||
+          quizTemplate.tags.some((tag) => {
+            return tag.toLowerCase().includes(this.searchQuizText.toLowerCase())
+          })
+        )
+      })
     },
   },
   created() {
