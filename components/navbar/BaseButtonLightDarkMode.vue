@@ -100,6 +100,9 @@ export default {
     setTimeout(() => {
       this.mode()
     }, 10)
+
+    const modePreference = window.matchMedia('(prefers-color-scheme: dark)')
+    modePreference.addEventListener('change', () => this.mode())
   },
 }
 </script>
