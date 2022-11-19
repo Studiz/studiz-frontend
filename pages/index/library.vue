@@ -55,11 +55,13 @@
     </div>
 
     <div v-else-if="quizTemplatesLength == 0">
-      <lottie-player
-        class="custon-lottie-star w-48 h-48 mx-auto scale-[2.2]"
-        autoplay
-        src="https://assets3.lottiefiles.com/private_files/lf30_46kycmnm.json"
-      />
+      <div class="w-48 h-48 overflow-hidden mx-auto">
+        <lottie-player
+          class="custon-lottie-star w-48 h-48 scale-[2.2]"
+          autoplay
+          src="https://assets3.lottiefiles.com/private_files/lf30_46kycmnm.json"
+        />
+      </div>
       <div class="text-center font-light space-y-2">
         <div class="text-xl font-semibold">No quiz template</div>
         <div class="max-w-xs mx-auto">

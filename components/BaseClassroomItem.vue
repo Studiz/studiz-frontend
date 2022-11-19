@@ -12,7 +12,7 @@
     >
       <div class="flex flex-col gap-2">
         <div class="w-full">
-          <div class="text-h5 w-10/12 truncate white--text text-white">
+          <div class="text-h5 w-11/12 truncate white--text text-white">
             <span class="font-bold">{{ classroom.name }}</span>
           </div>
         </div>
