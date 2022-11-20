@@ -122,6 +122,7 @@ export default {
       this.quizTemplates = this.quizTemplates.filter(
         (quizTemplate) => quizTemplate.id !== id
       )
+      this.quizTemplatesData = this.quizTemplates
     },
     clickCreateQuizTemplate() {
       this.$router.push({

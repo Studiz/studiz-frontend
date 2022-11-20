@@ -103,6 +103,8 @@
 import TheItemsInventory from '../item/TheItemsInventory.vue'
 import BaseButtonLightDarkMode from './BaseButtonLightDarkMode.vue'
 import TheQuizProgressBar from './TheQuizProgressBar.vue'
+import socket from '~/plugins/socket.io'
+
 export default {
   components: {
     TheQuizProgressBar,
@@ -214,8 +216,10 @@ export default {
     setTextTime() {
       this.m = Math.floor((this.timeLimit % (1000 * 60 * 60)) / (1000 * 60))
       this.s = Math.floor((this.timeLimit % (1000 * 60)) / 1000)
-      document.getElementById('text-timer').innerHTML =
-        (this.m ? this.m + 'm ' : '') + this.s + 's'
+      if (document.getElementById('text-timer')) {
+        document.getElementById('text-timer').innerHTML =
+          (this.m ? this.m + 'm ' : '') + this.s + 's'
+      }
     },
 
     closeFullscreen() {
@@ -239,7 +243,11 @@ export default {
       this.$emit('next-question')
     },
     endGame() {
-      this.$emit('end-game')
+      if (confirm('Are you sure to end this game?')) {
+        socket.emit('end-game', {
+          quizId: this.$route.params.quizId,
+        })
+      }
     },
   },
 
