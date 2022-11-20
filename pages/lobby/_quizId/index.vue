@@ -224,9 +224,10 @@ export default {
       })
     },
     endGame() {
-      socket.emit('end-game', {
-        quizId: this.$route.params.quizId,
-      })
+      //Move to nav bar directly
+      // socket.emit('end-game', {
+      //   quizId: this.$route.params.quizId,
+      // })
     },
     copyToClipboard(data) {
       navigator.clipboard.writeText(data)
