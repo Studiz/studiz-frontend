@@ -35,7 +35,7 @@
         colorBTN="grey"
         height="44"
         maxwidth="1000px"
-        classBtn="!rounded-md !justify-start custom-btn absolutes flex-1"
+        classBtn="!rounded-md !justify-start"
         @close="closeForm"
         @open="formIsOpen = true"
         @confirm="saveQuizDetails"
@@ -196,7 +196,7 @@ export default {
           },
         ],
       },
-      allTag:[]
+      allTag: [],
     }
   },
   computed: {
