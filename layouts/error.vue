@@ -1,20 +1,27 @@
 <template>
-  <v-app dark class=" fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
-    <lottie-player
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-      autoplay
-      loop
-      src="https://assets4.lottiefiles.com/packages/lf20_lycfpytx.json"
-      style="width: 500px"
-    />
-    <!-- <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
+  <div class="h-[clac(100vh-60px)]">
+    <div v-if="error.statusCode === 404">
+      <transition :name="isFristLoad ? '' : 'slide-fade'" mode="out-in">
+        <lottie-player
+          v-if="!isFristLoad"
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-fit"
+          autoplay
+          loop
+          src="https://assets6.lottiefiles.com/packages/lf20_u1xuufn3.json"
+          style="width: 500px"
+        />
+      </transition>
+
+      <h1>{{ pageNotFound }}</h1>
+    </div>
     <h1 v-else>
       {{ otherError }}
-    </h1> -->
-    <NuxtLink to="/" class="z-50"> Home page </NuxtLink>
-  </v-app>
+    </h1>
+
+    <NuxtLink to="/">
+      <v-btn color="primary" class="mt-2">Home page</v-btn>
+    </NuxtLink>
+  </div>
 </template>
 
 <script>
@@ -28,8 +35,9 @@ export default {
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
+      pageNotFound: 'Page Not Found',
       otherError: 'An error occurred',
+      isFristLoad: true,
     }
   },
   head() {
@@ -38,6 +46,11 @@ export default {
     return {
       title,
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isFristLoad = false
+    }, 500)
   },
 }
 </script>
