@@ -4,7 +4,7 @@
       <transition :name="isFristLoad ? '' : 'slide-fade'" mode="out-in">
         <lottie-player
           v-if="!isFristLoad"
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-fit"
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-fit drop-shadow-lg"
           autoplay
           loop
           src="https://assets6.lottiefiles.com/packages/lf20_u1xuufn3.json"
