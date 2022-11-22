@@ -271,7 +271,6 @@ export default {
       if (this.$store.getters.useItem) {
         answer.item = this.$store.getters.useItem
       }
-
       socket.emit('select-choice', answer)
       this.userSelected = data
     },
@@ -286,6 +285,18 @@ export default {
       } else {
         this.backendAnswer = this.prepareBackendAnswer
         console.log('prepareBackendAnswer >> backendAnswer', this.backendAnswer)
+        if (!this.userSelected) {
+          if (this.$store.getters.userRole !== 'TEACHER') {
+            this.userSelected = null
+            let answer = {}
+            answer.quizId = this.$route.params.quizId
+            answer.memberId = localStorage.getItem('memberId')
+            if (this.$store.getters.useItem) {
+              answer.item = this.$store.getters.useItem
+            }
+            socket.emit('time-up', answer)
+          }
+        }
       }
     },
     nextQuestion() {

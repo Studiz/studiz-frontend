@@ -232,7 +232,12 @@ export default {
       QuizService.getQuizHistoryByQuizId(this.$route.params.quizId)
         .then((res) => {
           this.summaryData = res.data
-          this.membersInClass = res.data.members
+          this.membersInClass = res.data.members.map((member) => {
+            return {
+              ...member,
+              numberQuestions: res.data.quizData.numberQuestions,
+            }
+          })
           this.studentQuizData = this.student?.quizData
           this.$store.commit('TOGGLE_LOADING', false)
         })
@@ -292,18 +297,17 @@ export default {
     // if (confirm('Do you want to leave the room?')) {
     //   socket.disconnect()
     // }
+
+    if (localStorage.getItem('displayName')) {
+      localStorage.removeItem('memberId')
+    } else {
+      window.location.reload()
+    }
   },
+
   mounted() {
     // this.membersInClass = this.$route.params.summaryData?.leaderboard.members
     this.loadData()
-    socket.on('move-to-home', () => {
-      this.$store.commit('TOGGLE_ALERT', {
-        type: 'info',
-        message: 'The quiz has been ended by the teacher',
-      })
-      this.$router.push('/')
-      localStorage.removeItem('memberId')
-    })
     this.showAnimation = true
     this.timeoutWinner = setTimeout(() => {
       this.showAnimation = false

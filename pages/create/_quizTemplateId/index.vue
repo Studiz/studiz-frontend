@@ -541,7 +541,7 @@ export default {
                   (question) => question?.fileImage?.name
                 )
                 const item = questions[i]
-                if (item.fileImage.name) {
+                if (item.fileImage?.name) {
                   await TeacherService.updateImageQuestion(
                     res.data.id,
                     i,

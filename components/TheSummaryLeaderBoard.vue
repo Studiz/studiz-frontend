@@ -121,6 +121,12 @@ export default {
           sortable: false,
           align: 'end',
         },
+        {
+          text: 'Total',
+          value: 'numberQuestions',
+          sortable: false,
+          align: 'right',
+        },
       ]
 
       if (this.$route.path.startsWith('/summary')) {
@@ -144,6 +150,7 @@ export default {
           score: member.totalScore,
           numberCorrectAnswers: member.numberCorrectAnswers,
           numberInCorrectAnswers: member.numberInCorrectAnswers,
+          numberQuestions: member.numberQuestions,
         }
       })
     },
