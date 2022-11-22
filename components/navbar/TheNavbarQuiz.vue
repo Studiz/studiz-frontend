@@ -205,6 +205,7 @@ export default {
         if (this.timeLimit < 0) {
           document.getElementById('text-timer').innerHTML = 'Expired'
           this.$nuxt.$emit('remove-time-interval')
+          this.$emit('time-expired')
         }
       }, 1000)
 
@@ -267,7 +268,6 @@ export default {
       this.m = null
       this.s = null
       this.timeInterval = null
-      this.$emit('time-expired')
       this.$nuxt.$emit('time-expired', true)
     })
   },
