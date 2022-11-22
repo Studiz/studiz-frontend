@@ -85,13 +85,17 @@
       </div>
     </v-card>
 
-    <lottie-player
+    <div
+      class="fixed top-0 left-0 right-0 bottom-0 z-50"
       v-if="isWinner && showAnimation"
-      autoplay
-      src="https://assets5.lottiefiles.com/private_files/lf30_ujs3c7ok.json"
-      style="width: 500px"
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
-    />
+    >
+      <lottie-player
+        autoplay
+        src="https://assets5.lottiefiles.com/private_files/lf30_ujs3c7ok.json"
+        style="width: 500px"
+        class="mx-auto"
+      />
+    </div>
 
     <v-card
       flat

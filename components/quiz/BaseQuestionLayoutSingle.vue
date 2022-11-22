@@ -40,8 +40,12 @@ export default {
     },
   },
   watch: {
-    backendAnswer() {
-      this.renderBackendAnswer()
+    backendAnswer(newVal, oldVal) {
+      console.log('backendAnswer', newVal, oldVal)
+      if (newVal !== null) {
+        console.log('check')
+        this.renderBackendAnswer()
+      }
     },
   },
   data() {

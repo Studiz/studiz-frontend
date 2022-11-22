@@ -172,7 +172,7 @@ export default {
       },
       question: {},
       userSelected: null,
-      prepareBackendAnswer: 1,
+      prepareBackendAnswer: null,
       backendAnswer: null,
       time: null,
       timeInterval: null,
@@ -284,6 +284,7 @@ export default {
         }
       } else {
         this.backendAnswer = this.prepareBackendAnswer
+        console.log('prepareBackendAnswer >> backendAnswer', this.backendAnswer)
         if (!this.userSelected) {
           if (this.$store.getters.userRole !== 'TEACHER') {
             this.userSelected = null
@@ -346,6 +347,7 @@ export default {
   mounted() {
     socket.on('check-answer', (data) => {
       this.prepareBackendAnswer = data
+      console.log(this.prepareBackendAnswer)
     })
 
     socket.on('show-poll-result', (data) => {
@@ -386,6 +388,7 @@ export default {
   created() {
     if (this.$route.params.quizId !== 'quiztest') {
       this.prepareQuestion = this.$route.params.questionData
+      this.prepareBackendAnswer = 1
     }
 
     // this.currentStatus = 'introQuestion'
