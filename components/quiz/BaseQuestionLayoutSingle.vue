@@ -41,9 +41,9 @@ export default {
   },
   watch: {
     backendAnswer(newVal, oldVal) {
-      console.log('backendAnswer', newVal, oldVal)
+      // console.log('backendAnswer', newVal, oldVal)
       if (newVal !== null) {
-        console.log('check')
+        // console.log('check')
         this.renderBackendAnswer()
       }
     },
