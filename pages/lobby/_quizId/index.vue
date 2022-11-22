@@ -274,16 +274,6 @@ export default {
       })
     })
 
-    socket.on('quiz-end', () => {
-      this.$store.commit('TOGGLE_ALERT', {
-        type: 'info',
-        message: 'The quiz already ended',
-      })
-      this.$router.push('/')
-      localStorage.removeItem('displayName')
-      localStorage.removeItem('memberId')
-    })
-
     socket.on('move-to-home', () => {
       this.$store.commit('TOGGLE_ALERT', {
         type: 'info',
@@ -355,6 +345,9 @@ export default {
               type: 'info',
               message: err.response.data,
             })
+            this.$router.push('/')
+            localStorage.removeItem('displayName')
+            localStorage.removeItem('memberId')
           } else {
             this.$store.commit('TOGGLE_LOADING', false)
             this.$store.commit('TOGGLE_ALERT', {
