@@ -132,14 +132,14 @@
           <div class="line-clamp-2 w-full" v-if="member">
             {{ member.displayName }}
           </div>
-          <v-btn
+          <!-- <v-btn
             v-if="userRole == 'TEACHER'"
             color="erroraaa"
             text
             small
             class="group-hover:visible group-hover:w-auto group-hover:h-auto invisible w-0 h-0"
             >leave</v-btn
-          >
+          > -->
         </div>
       </div>
     </div>
