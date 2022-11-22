@@ -137,11 +137,17 @@ export default {
   methods: {
     renderIndexStudentAnswer(index) {
       if (this.question.type === 'multiple') {
-        return this.question.indexStudentAnswer?.includes(index)
-          ? 'selected'
+        return !(this.question.indexStudentAnswer == -1)
+          ? this.question.indexStudentAnswer?.includes(index)
+            ? 'selected'
+            : ''
           : ''
       } else {
-        return this.question.indexStudentAnswer === index ? 'selected' : ''
+        return !(this.question.indexStudentAnswer == -1)
+          ? this.question.indexStudentAnswer === index
+            ? 'selected'
+            : ''
+          : ''
       }
     },
     findMostSelected() {
