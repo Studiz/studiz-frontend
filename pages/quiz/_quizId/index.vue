@@ -388,8 +388,8 @@ export default {
   created() {
     if (this.$route.params.quizId !== 'quiztest') {
       this.prepareQuestion = this.$route.params.questionData
-      this.prepareBackendAnswer = 1
     }
+    this.prepareBackendAnswer = 1
 
     // this.currentStatus = 'introQuestion'
     // this.question = this.prepareQuestion
