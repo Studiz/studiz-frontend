@@ -98,7 +98,11 @@ export default {
             })
           })
           .catch((err) => {
-            alert(err)
+            console.log(err);
+            this.$store.commit('TOGGLE_ALERT', {
+              type: 'error',
+              message: "Invalid email or password",
+            })
             this.loading = false
           })
       }
