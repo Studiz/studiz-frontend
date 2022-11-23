@@ -301,7 +301,9 @@ export default {
     if (localStorage.getItem('displayName')) {
       localStorage.removeItem('memberId')
     } else {
-      window.location.reload()
+      if (this.$route.params.winnerId) {
+        window.location.reload()
+      }
     }
   },
 
