@@ -56,7 +56,7 @@
           >
             <v-container>
               <v-text-field
-                label="Dsiplay name"
+                label="Display name"
                 type="text"
                 outlined
                 required

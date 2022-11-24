@@ -2,12 +2,14 @@
   <v-data-table
     class="elevation-0 !rounded-lg"
     mobile-breakpoint="0"
+    sort-by="startAtTimestamp"
     :headers="headers"
     :items="quizHistories"
     :page.sync="page"
     :items-per-page="5"
-    @click:row="clickRow"
     :search="search"
+    :sort-desc="true"
+    @click:row="clickRow"
   >
     <template #top>
       <v-toolbar-title class="p-3 flex items-center flex-wrap gap-x-5">
@@ -38,9 +40,10 @@
     </template>
 
     <template v-slot:item.winnerName="{ item }">
-      <v-avatar color="primary" size="40px">
-        <v-img :src="item.winnerImage" :alt="item.winnerName" />
+      <v-avatar v-if="item.winnerImage" color="primary" size="40px">
+        <v-img :src="item.winnerImage" :alt="item.winnerImage" />
       </v-avatar>
+      <v-icon v-else size="40" color="white">mdi-account-circle</v-icon>
       <span class="pl-2"> {{ item.winnerName }} </span>
     </template>
   </v-data-table>
@@ -48,7 +51,9 @@
 
 <script>
 import BaseTimeToText from '~/components/BaseTimeToText.vue'
+import dateFormat from '~/plugins/date-format'
 export default {
+  mixins: [dateFormat],
   components: { BaseTimeToText },
   head() {
     return {
@@ -133,6 +138,9 @@ export default {
         return {
           quizId: quizHistory.quizId,
           startAt: quizHistory.quizData.startAt,
+          startAtTimestamp: Date.parse(
+            this.formatDateForParse(quizHistory.quizData.startAt)
+          ),
           image: quizHistory.quizData.image,
           title: quizHistory.quizData.title,
           numberOfParticipants: quizHistory.leaderboard.members.length,
