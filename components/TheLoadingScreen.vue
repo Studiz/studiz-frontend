@@ -5,10 +5,11 @@
     ]"
     class="cover-loading bg-white/50 dark:bg-black/50 backdrop-blur-sm block z-[99]"
   >
-    <!-- <div class="w-full h-full lds-ring">
+    <div v-if="$nuxt.isOffline" class="w-full h-full lds-ring">
       <span class="dot" v-for="i in 4" :key="i" />
-    </div> -->
+    </div>
     <lottie-player
+      v-else
       class="w-full h-full lds-ring"
       autoplay
       loop

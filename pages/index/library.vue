@@ -82,7 +82,7 @@
 <script>
 import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 import TheWaitingText from '~/components/TheWaitingText.vue'
-import BaseQuizTemplateItem from '~/components/Teacher/BaseQuizTemplateItem.vue'
+import BaseQuizTemplateItem from '~/components/teacherManage/BaseQuizTemplateItem.vue'
 import TeacherService from '~/services/TeacherService'
 import QuizService from '~/services/QuizService'
 

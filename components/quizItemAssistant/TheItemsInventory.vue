@@ -1,11 +1,15 @@
 <template>
   <v-footer fixed color="transparent" padless>
     <div
-      class="primary_shade p-2 rounded-lg w-fit mx-auto my-5 space-y-2"
-      v-if="$store.getters.canUseItem && $store.getters.items.length > 0 && questionType !== 'Poll'"
+      class="p-2 mx-auto my-5 space-y-2 rounded-lg primary_shade w-fit"
+      v-if="
+        $store.getters.canUseItem &&
+        $store.getters.items.length > 0 &&
+        questionType !== 'Poll'
+      "
     >
       <div>Item</div>
-      <div class="inline-flex gap-2 w-full justify-center">
+      <div class="inline-flex justify-center w-full gap-2">
         <!-- <v-btn
           color="black"
           x-large
@@ -17,7 +21,7 @@
 
         <div
           v-if="$store.getters.items.length > 0 && isQuiz"
-          class="inline-flex gap-2 flex-wrap justify-center"
+          class="inline-flex flex-wrap justify-center gap-2"
         >
           <base-item-btn
             v-for="(item, i) in $store.getters.items"
@@ -32,7 +36,7 @@
         </div>
         <div
           v-if="$store.getters.items.length > 0 && isLobby"
-          class="inline-flex gap-2 flex-wrap justify-center"
+          class="inline-flex flex-wrap justify-center gap-2"
         >
           <base-item-btn
             v-for="(item, i) in pickedItemList"
@@ -70,7 +74,7 @@
             class="overflow-hidden !min-h-[400px] max-h-[600px] w-full relative"
           >
             <!-- <div
-              class="absolute bottom-0 left-1/2 transform -translate-x-1/2 transition-all"
+              class="absolute bottom-0 transition-all transform -translate-x-1/2 left-1/2"
               :class="
                 dialogValue
                   ? 'w-[120%] sm:w-[90%] md:w-[60%] lg:w-auto'

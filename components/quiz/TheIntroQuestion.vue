@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import TheItemsInventory from '../item/TheItemsInventory.vue'
-import BaseQuestionText from './BaseQuestionText.vue'
+import TheItemsInventory from '~/components/quizItemAssistant/TheItemsInventory.vue'
+import BaseQuestionText from '~/components/quiz/BaseQuestionText.vue'
 export default {
   components: { BaseQuestionText, TheItemsInventory },
   props: {

@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import TheItemsInventory from '../item/TheItemsInventory.vue'
+import TheItemsInventory from '~/components/quizItemAssistant/TheItemsInventory.vue'
 import BaseButtonLightDarkMode from './BaseButtonLightDarkMode.vue'
 import TheQuizProgressBar from './TheQuizProgressBar.vue'
 import socket from '~/plugins/socket.io'
