@@ -43,7 +43,9 @@
       <v-avatar v-if="item.winnerImage" color="primary" size="40px">
         <v-img :src="item.winnerImage" :alt="item.winnerImage" />
       </v-avatar>
-      <v-icon v-else size="40" color="white">mdi-account-circle</v-icon>
+      <v-icon v-else size="40" class="background_card rounded-full"
+        >mdi-account-circle
+      </v-icon>
       <span class="pl-2"> {{ item.winnerName }} </span>
     </template>
   </v-data-table>
@@ -206,7 +208,9 @@ export default {
 :deep(tr > .text-start) {
   @apply whitespace-nowrap;
 }
-
+:deep(tbody > tr) {
+  @apply cursor-pointer;
+}
 .v-data-table {
   background-color: var(--v-background-base) !important;
   @apply p-2;
