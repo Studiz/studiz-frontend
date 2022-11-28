@@ -181,7 +181,7 @@
 </template>
 
 <script>
-import TheSummaryLeaderBoard from '~/components/TheSummaryLeaderBoard.vue'
+import TheSummaryLeaderBoard from '~/components/quiz/TheSummaryLeaderBoard.vue'
 import TheLeaderBoard from '~/components/quiz/TheLeaderBoard.vue'
 import QuizService from '~/services/QuizService'
 import socket from '~/plugins/socket.io'

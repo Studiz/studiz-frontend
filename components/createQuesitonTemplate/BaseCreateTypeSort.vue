@@ -11,7 +11,7 @@
           type="transition"
           class="gap-2 flex flex-col overflow-auto scrollbar py-1 py-lg-0"
         >
-          <input-choice
+          <base-create-input-choice
             v-for="(item, index) in newDataQuestion"
             :option="item.option"
             :key="`${index}-${item}`"
@@ -47,9 +47,9 @@
 
 <script>
 import draggable from 'vuedraggable'
-import InputChoice from './InputChoice.vue'
+import BaseCreateInputChoice from './BaseCreateInputChoice.vue'
 export default {
-  components: { draggable, InputChoice },
+  components: { draggable, BaseCreateInputChoice },
   props: {
     renderQuestionAnswer: {
       type: Object,

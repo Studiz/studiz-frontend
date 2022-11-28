@@ -16,14 +16,14 @@
     <div
       class="flex flex-col gap-3 h-[calc(100vh-calc(60px+24px))] scrollbar px-1 px-lg-1 pb-2"
     >
-      <input-question
+      <base-create-input-question
         class="flex-none"
         :currentQuesiton="currentQuesiton"
         :dataQuestion="renderQuestion"
         @save-input-question="saveInputQuestion"
       />
 
-      <input-image
+      <base-create-input-image
         class="flex-none md:flex-1"
         :currentQuesiton="currentQuesiton"
         :dataQuestion="renderQuestion"
@@ -35,7 +35,7 @@
         class="md:flex-1"
         :class="[renderQuestionType === 'true/false' ? 'flex-1' : 'flex-none']"
       >
-        <base-single-choice
+        <base-create-type-single
           v-if="renderQuestionType === 'single'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
@@ -46,7 +46,7 @@
           @add-option="addOption"
           @delete-option="deleteOption"
         />
-        <base-multiple-choice
+        <base-create-type-multiple
           v-if="renderQuestionType === 'multiple'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
@@ -58,14 +58,14 @@
           @add-option="addOption"
           @delete-option="deleteOption"
         />
-        <base-true-or-false
+        <base-create-type-true-false
           v-if="renderQuestionType === 'true/false'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
           :questionType="renderQuestionType"
           @change-correct-choice="changeCorrectChoiceTrueFalse"
         />
-        <base-poll
+        <base-create-type-poll
           v-if="renderQuestionType === 'poll'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
@@ -75,7 +75,7 @@
           @add-option="addOption"
           @delete-option="deleteOption"
         />
-        <base-sort
+        <base-create-type-sort
           v-if="renderQuestionType === 'sort'"
           :currentQuesiton="currentQuesiton"
           :renderQuestionAnswer="renderQuestionAnswer"
@@ -92,28 +92,26 @@
 </template>
 
 <script>
-import BaseMultipleChoice from '~/components/createquesiton/BaseMultipleChoice.vue'
-import BasePoll from '~/components/createquesiton/BasePoll.vue'
-import BaseSingleChoice from '~/components/createquesiton/BaseSingleChoice.vue'
-import BaseSort from '~/components/createquesiton/BaseSort.vue'
-import BaseTrueOrFalse from '~/components/createquesiton/BaseTrueOrFalse.vue'
-import InputChoice from '~/components/createquesiton/InputChoice.vue'
-import InputImage from '~/components/createquesiton/InputImage.vue'
-import InputQuestion from '~/components/createquesiton/InputQuestion.vue'
+import BaseCreateInputImage from '~/components/createQuesitonTemplate/BaseCreateInputImage.vue'
+import BaseCreateInputQuestion from '~/components/createQuesitonTemplate/BaseCreateInputQuestion.vue'
+import BaseCreateTypeMultiple from '~/components/createQuesitonTemplate/BaseCreateTypeMultiple.vue'
+import BaseCreateTypePoll from '~/components/createQuesitonTemplate/BaseCreateTypePoll.vue'
+import BaseCreateTypeSingle from '~/components/createQuesitonTemplate/BaseCreateTypeSingle.vue'
+import BaseCreateTypeSort from '~/components/createQuesitonTemplate/BaseCreateTypeSort.vue'
+import BaseCreateTypeTrueFalse from '~/components/createQuesitonTemplate/BaseCreateTypeTrueFalse.vue'
 import layoutCreate from '~/layouts/LayoutCreate.vue'
 import TeacherService from '~/services/TeacherService'
 
 export default {
   components: {
+    BaseCreateInputQuestion,
+    BaseCreateInputImage,
+    BaseCreateTypeSingle,
+    BaseCreateTypeMultiple,
+    BaseCreateTypeTrueFalse,
+    BaseCreateTypePoll,
+    BaseCreateTypeSort,
     layoutCreate,
-    InputChoice,
-    BaseSingleChoice,
-    BaseMultipleChoice,
-    InputQuestion,
-    InputImage,
-    BaseTrueOrFalse,
-    BasePoll,
-    BaseSort,
   },
   layout: 'layoutFree',
   head() {
@@ -144,7 +142,7 @@ export default {
               options: [
                 {
                   option: '',
-                  isCorrect: true,
+                  isCorrect: false,
                 },
                 {
                   option: '',

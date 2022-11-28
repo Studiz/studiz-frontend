@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 w-full h-full auto-rows-fr">
-    <input-choice
+    <base-create-input-choice
       class="h-full"
       v-for="(item, index) in MappingAnswerWithOption"
       :key="`${index}-${item}-${currentQuesiton}`"
@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import InputChoice from './InputChoice.vue'
+import BaseCreateInputChoice from './BaseCreateInputChoice.vue'
+
 export default {
-  components: { InputChoice },
+  components: { BaseCreateInputChoice },
   props: {
     renderQuestionAnswer: {
       type: Boolean | null,

@@ -3,7 +3,7 @@
     <div
       class="grid grid-cols-1 lg:grid-cols-2 gap-3 w-full h-full auto-rows-fr flex-1"
     >
-      <input-choice
+      <base-create-input-choice
         v-for="(item, index) in renderQuestionAnswer.options"
         :option="item.option"
         :key="`${index}-${item}`"
@@ -36,9 +36,10 @@
 </template>
 
 <script>
-import InputChoice from './InputChoice.vue'
+import BaseCreateInputChoice from './BaseCreateInputChoice.vue'
+
 export default {
-  components: { InputChoice },
+  components: {BaseCreateInputChoice  },
   props: {
     renderQuestionAnswer: {
       type: Object,

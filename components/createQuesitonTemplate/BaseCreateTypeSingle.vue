@@ -3,7 +3,7 @@
     <div
       class="grid grid-cols-1 lg:grid-cols-2 gap-3 w-full h-full auto-rows-fr flex-1"
     >
-      <input-choice
+      <base-create-input-choice
         v-for="(item, index) in renderQuestionAnswer.options"
         :option="item.option"
         :isCorrect="item.isCorrect"
@@ -15,8 +15,7 @@
         :questionType="questionType"
         :disableDelete="renderQuestionAnswer.options.length <= 2"
         @save-input-text="$emit('save-input-text', $event)"
-        @change-correct-choice="changeCorrectChoice"
-        @unselect-correct-choice="unSelectCorrectChoice"
+        @change-correct-choice="checkCorrectChoice"
         @delete-option="$emit('delete-option', $event)"
       />
     </div>
@@ -39,9 +38,9 @@
 </template>
 
 <script>
-import InputChoice from './InputChoice.vue'
+import BaseCreateInputChoice from './BaseCreateInputChoice.vue'
 export default {
-  components: { InputChoice },
+  components: {BaseCreateInputChoice  },
   props: {
     renderQuestionAnswer: {
       type: Object,
@@ -68,15 +67,10 @@ export default {
     addOption() {
       this.$emit('add-option')
     },
-    changeCorrectChoice(event) {
+    checkCorrectChoice(event) {
       this.$forceUpdate()
       this.$nuxt.$emit('force-update-thumbnail')
-      this.$emit('select-correct-choice', event)
-    },
-    unSelectCorrectChoice(event) {
-      this.$forceUpdate()
-      this.$nuxt.$emit('force-update-thumbnail')
-      this.$emit('unselect-correct-choice', event)
+      this.$emit('change-correct-choice', event)
     },
   },
 }

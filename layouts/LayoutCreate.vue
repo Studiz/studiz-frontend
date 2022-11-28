@@ -132,7 +132,7 @@
               type="transition"
               class="gap-2 flex lg:flex-col overflow-auto scrollbar py-2 py-lg-0"
             >
-              <thumbnail
+              <base-thumbnail
                 v-for="(item, index) in newDataQuestion"
                 :itemActive="selectItem"
                 :key="`${index}-${item}`"
@@ -192,18 +192,18 @@
 <script>
 import draggable from 'vuedraggable'
 import TheNavbarCreateQuiz from '~/components/navbar/TheNavbarCreateQuiz.vue'
-import Thumbnail from '~/components/createquesiton/Thumbnail.vue'
 import TheLoadingScreen from '~/components/TheLoadingScreen.vue'
 import TheAlertNotification from '~/components/TheAlertNotification.vue'
-import BaseBtnQuestionType from '~/components/createquesiton/BaseBtnQuestionType.vue'
+import BaseThumbnail from '~/components/createQuesitonTemplate/BaseThumbnail.vue'
+import BaseBtnQuestionType from '~/components/createQuesitonTemplate/BaseBtnQuestionType.vue'
 export default {
   components: {
     TheNavbarCreateQuiz,
     draggable,
-    Thumbnail,
     TheLoadingScreen,
-    BaseBtnQuestionType,
     TheAlertNotification,
+    BaseThumbnail,
+    BaseBtnQuestionType,
   },
   props: {
     quizTitle: {
