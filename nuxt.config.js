@@ -102,8 +102,10 @@ export default {
     webSocket: process.env.WEB_SOCKET_URL,
   },
   env: {
-    baseURL: process.env.BASE_URL,
-    webSocket: process.env.WEB_SOCKET_URL,
+    // baseURL: process.env.BASE_URL,
+    // webSocket: process.env.WEB_SOCKET_URL,
+    baseURL: 'https://www.studiz.games/studiz/api',
+    webSocket: 'https://www.studiz.games/',
   },
 
   router: {
