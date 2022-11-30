@@ -69,7 +69,6 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     [
@@ -93,12 +92,20 @@ export default {
       },
     ],
   ],
+
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+    webSocket: process.env.WEB_SOCKET_URL,
+  },
+  privateRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+    webSocket: process.env.WEB_SOCKET_URL,
+  },
   env: {
+    // baseURL: process.env.BASE_URL,
+    // webSocket: process.env.WEB_SOCKET_URL,
     baseURL: 'https://www.studiz.games/studiz/api',
-    // baseURL: "http://localhost:9091/api",
     webSocket: 'https://www.studiz.games/',
-    // webSocket: "http://localhost:9091",
-    FIRE_ENV: process.env.FIRE_ENV,
   },
 
   router: {
