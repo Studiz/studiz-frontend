@@ -33,16 +33,6 @@
           >
           <template #title>Are you sure to leave classroom?</template>
         </base-dialog-condition>
-        <base-dialog-condition
-          v-if="false"
-          @confirm="deleteclass"
-          colorBTN="red"
-          btn2="red"
-        >
-          <template #namebtn>Delete</template>
-          <template #title>Are you sure to delete classroom?</template>
-          <template #btn2>Delete</template>
-        </base-dialog-condition>
       </div>
       <p class="uppercase">
         pin code:
@@ -168,9 +158,6 @@ export default {
             message: err.response.message,
           })
         })
-    },
-    deleteclass() {
-      console.log('deleteclass')
     },
   },
   computed: {

@@ -39,7 +39,7 @@
 import BaseCreateInputChoice from './BaseCreateInputChoice.vue'
 
 export default {
-  components: {BaseCreateInputChoice  },
+  components: { BaseCreateInputChoice },
   props: {
     renderQuestionAnswer: {
       type: Object,
@@ -49,12 +49,12 @@ export default {
       type: Number,
       required: true,
     },
-    indexOfOptional: {
-      type: Array,
-    },
     questionType: {
       type: String,
       required: true,
+    },
+    indexOfOptional: {
+      type: Array,
     },
   },
   data() {

@@ -68,7 +68,6 @@
 
 <script>
 export default {
-  components: {},
   head() {
     return {
       title: 'More options',

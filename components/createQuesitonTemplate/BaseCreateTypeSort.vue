@@ -59,12 +59,12 @@ export default {
       type: Number,
       required: true,
     },
-    indexOfOptional: {
-      type: Array,
-    },
     questionType: {
       type: String,
       required: true,
+    },
+    indexOfOptional: {
+      type: Array,
     },
   },
   watch: {

@@ -60,14 +60,12 @@
 </template>
 
 <script>
-import BaseTimeToText from '~/components/BaseTimeToText.vue'
 import StudentService from '~/services/StudentService.js'
 import TeacherService from '~/services/TeacherService.js'
 import dateFormat from '~/plugins/date-format'
 
 export default {
   mixins: [dateFormat],
-  components: { BaseTimeToText },
   head() {
     return {
       title: 'Quiz History',

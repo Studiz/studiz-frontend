@@ -49,9 +49,7 @@
 </template>
 
 <script>
-import BaseDialogCondition from '~/components/BaseDialogCondition.vue'
 export default {
-  components: { BaseDialogCondition },
   props: {
     membersInClass: {
       type: Array,

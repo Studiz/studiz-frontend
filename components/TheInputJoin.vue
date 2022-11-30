@@ -43,11 +43,6 @@
 
 <script>
 export default {
-  props: {
-    showInput: {
-      type: Boolean,
-    },
-  },
   data() {
     return {
       pincode: '',
