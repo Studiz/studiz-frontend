@@ -91,13 +91,11 @@
 </template>
 
 <script>
-import dateFormat from '~/plugins/date-format'
 import BaseTimeToText from './BaseTimeToText.vue'
 import UserService from '~/services/UserService.js'
 
 export default {
   components: { BaseTimeToText },
-  mixins: [dateFormat],
   props: {
     notification: {
       type: Object,
