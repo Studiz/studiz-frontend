@@ -162,7 +162,7 @@
                   required
                   v-model="first_password"
                   outlined
-                  @keypress="inputPassword"
+                  @keypress="show_password1 = false"
                   id="new-password"
                   :append-icon="show_password1 ? 'mdi-eye' : 'mdi-eye-off'"
                   :rules="[rules.required, rules.min]"
@@ -175,10 +175,11 @@
                   required
                   v-model="confirm_password"
                   outlined
+                  @keypress="show_password2 = false"
                   id="new-password"
                   :append-icon="show_password2 ? 'mdi-eye' : 'mdi-eye-off'"
                   :rules="rules.confirmPass"
-                  :type="show_password2 ? 'text' : 'pass'"
+                  :type="show_password2 ? 'text' : 'password'"
                   label="Confirm Password"
                   @click:append="show_password2 = !show_password2"
                 ></v-text-field>
@@ -232,7 +233,7 @@ export default {
       first_password: '',
       confirm_password: '',
       show_password1: true,
-      show_password2: false,
+      show_password2: true,
       loading: false,
       isGoogleAccount: false,
       stepPage: 1,
@@ -315,9 +316,6 @@ export default {
     },
     async selectRole() {
       this.stepPage = 3
-    },
-    inputPassword() {
-      this.show_password1 = false
     },
     signUpWithGoogleAccount() {
       let userData = JSON.parse(localStorage.getItem('googleAccountSignUp'))
