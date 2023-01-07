@@ -58,7 +58,7 @@
           >
         </template>
         <template #title>Quiz details</template>
-        <template #btn2>save</template>
+        <template #btn2>done</template>
         <template #contain>
           <v-form
             ref="form"
