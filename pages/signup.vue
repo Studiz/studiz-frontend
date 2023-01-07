@@ -162,6 +162,7 @@
                   required
                   v-model="first_password"
                   outlined
+                  @focus="show_password1 = false"
                   @keypress="show_password1 = false"
                   id="new-password"
                   :append-icon="show_password1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -175,6 +176,7 @@
                   required
                   v-model="confirm_password"
                   outlined
+                  @focus="show_password2 = false"
                   @keypress="show_password2 = false"
                   id="new-password"
                   :append-icon="show_password2 ? 'mdi-eye' : 'mdi-eye-off'"

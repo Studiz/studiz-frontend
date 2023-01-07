@@ -57,7 +57,7 @@
             >Details</v-btn
           >
         </template>
-        <template #title>Create quiz</template>
+        <template #title>Quiz details</template>
         <template #btn2>save</template>
         <template #contain>
           <v-form
