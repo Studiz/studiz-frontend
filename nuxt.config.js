@@ -82,6 +82,7 @@ export default {
           messagingSenderId: '874564223143',
           appId: '1:874564223143:web:9d292f2f1f60fd61815b82',
           measurementId: 'G-1Z69XQJNN6',
+          onfirebaseHosting: true,
         },
         services: {
           auth: {
