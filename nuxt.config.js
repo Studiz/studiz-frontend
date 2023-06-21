@@ -104,8 +104,8 @@ export default {
   env: {
     // baseURL: process.env.BASE_URL,
     // webSocket: process.env.WEB_SOCKET_URL,
-    baseURL: '20.2.82.170/api',
-    webSocket: '20.2.82.170/',
+    baseURL: '20.2.82.170:9091/api',
+    webSocket: '20.2.82.170:9091/',
   },
 
   router: {
