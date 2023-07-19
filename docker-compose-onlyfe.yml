@@ -1,0 +1,13 @@
+version: "1"
+services:
+    frontend:
+        container_name: studiz-frontend
+        build: .
+        image: ghcr.io/studiz/studiz-frontend:dev
+        restart: on-failure
+        networks: 
+            - frontend
+        ports: 80:80
+networks:
+    frontend:
+        driver: bridge
