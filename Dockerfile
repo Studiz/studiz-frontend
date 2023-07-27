@@ -5,4 +5,4 @@ RUN npm install
 COPY ./ .
 RUN npm run generate
 CMD ["npm", "run", "dev"]
-EXPOSE  80
+EXPOSE  9090
