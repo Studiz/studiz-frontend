@@ -15,7 +15,7 @@ export default function ({
     }).catch(err => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('userId')
-      redirect('/login')
+     // redirect('/login')
     })
   }
   // if (!localStorage.getItem('accessToken') && !store.state.user) {
