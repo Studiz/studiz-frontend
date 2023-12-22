@@ -187,7 +187,7 @@ export default {
       this.isAuthenticated = true
     } else {
       this.isAuthenticated = false
-      this.$router.push('/join')
+      //this.$router.push('/join')
     }
   },
 }
