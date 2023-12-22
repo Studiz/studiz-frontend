@@ -1,5 +1,6 @@
 <template>
-  <div v-if="userRole == 'TEACHER'">
+  <div>
+    
     <div class="items-center justify-between space-y-2 md:flex md:space-y-0">
       <h1 class="text-H1">My library</h1>
       <v-btn
@@ -54,7 +55,7 @@
       />
     </div>
 
-    <div v-else-if="quizTemplatesLength == 0">
+    <div>
       <div class="w-48 h-48 overflow-hidden mx-auto">
         <lottie-player
           class="custon-lottie-star w-48 h-48 scale-[2.2]"
