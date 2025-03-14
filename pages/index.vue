@@ -26,7 +26,7 @@
           <div v-for="(page, index) in pages" :key="index">
             <v-divider class="my-2" v-if="index == 5"></v-divider>
             <v-list-item
-              v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2"
+              <!--  v-if="userRole == 'TEACHER' ? index !== 1 : index !== 2" -->
               :to="page.to"
               link
               active-class="primary--text"
